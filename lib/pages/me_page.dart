@@ -177,6 +177,9 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                         final Brightness brightness = MediaQuery.platformBrightnessOf(context);
                         BYRThemeManager.instance().autoSwitchDarkMode(brightness);
                       }
+                      if (mounted) {
+                        setState(() {});
+                      }
                       if (index == themeKeys.length + 1) {
                         showDialog(context: context, builder: (context) => ThemeImporterDialog());
                       }
