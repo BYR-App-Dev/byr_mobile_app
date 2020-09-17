@@ -52,10 +52,11 @@ class _SettingItemCellState extends State<SettingItemCell> {
         padding: EdgeInsets.symmetric(horizontal: 15),
         child: Row(
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: widget.leading,
-            ),
+            if (widget.leading != null)
+              Padding(
+                padding: EdgeInsets.only(right: 20),
+                child: widget.leading,
+              ),
             Expanded(
               child: Container(
                 margin: EdgeInsets.only(right: 20),
