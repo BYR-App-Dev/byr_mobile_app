@@ -101,7 +101,7 @@ class LocalStorage {
   }
 
   static Map<String, String> getLocalThemes() {
-    return _extract("localThemes").cast<String, String>() ?? Map<String, String>();
+    return _extract("localThemes")?.cast<String, String>() ?? Map<String, String>();
   }
 
   static Future<void> setLocalThemes(Map<String, String> v) async {

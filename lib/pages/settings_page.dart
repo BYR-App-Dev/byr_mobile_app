@@ -36,6 +36,7 @@ class SettingsPageState extends State<SettingsPage> {
           color: E().otherPagePrimaryColor,
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SettingItemCell(
                   title: "language".tr,
@@ -100,7 +101,7 @@ class SettingsPageState extends State<SettingsPage> {
                 ),
                 Divider(),
                 NonPaddingListTile(
-                  contentPadding: EdgeInsets.only(left: 35, right: 10),
+                  contentPadding: EdgeInsets.only(left: 15, right: 5),
                   title: Text(
                     "toptenScreenshotTrans".tr,
                     style: TextStyle(
@@ -119,7 +120,7 @@ class SettingsPageState extends State<SettingsPage> {
                 if (UniversalPlatform.isAndroid) Divider(),
                 if (UniversalPlatform.isAndroid)
                   NonPaddingListTile(
-                    contentPadding: EdgeInsets.only(left: 35, right: 10),
+                    contentPadding: EdgeInsets.only(left: 15, right: 5),
                     title: Text(
                       "publicTesting".tr,
                       style: TextStyle(
