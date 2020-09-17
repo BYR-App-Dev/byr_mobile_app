@@ -1,0 +1,2522 @@
+{
+    "version": {
+        "post_date": "TueApr2113:36:53CST2015",
+        "code": "1"
+    },
+    "board": [
+        {
+            "color": "6",
+            "name_cn": "意见与建议",
+            "name_cn_short": "意",
+            "name": "Advice"
+        },
+        {
+            "color": "15",
+            "name_cn": "站务公告栏",
+            "name_cn_short": "站",
+            "name": "Announce"
+        },
+        {
+            "color": "13",
+            "name_cn": "论坛使用帮助",
+            "name_cn_short": "助",
+            "name": "BBShelp"
+        },
+        {
+            "color": "12",
+            "name_cn": "竞猜",
+            "name_cn_short": "竞",
+            "name": "Bet"
+        },
+        {
+            "color": "11",
+            "name_cn": "版主及助理招聘区",
+            "name_cn_short": "聘",
+            "name": "BM_Market"
+        },
+        {
+            "color": "7",
+            "name_cn": "北邮人论坛十一周年站庆",
+            "name_cn_short": "庆",
+            "name": "BYR11"
+        },
+        {
+            "color": "18",
+            "name_cn": "北邮人站庆筹备委员会",
+            "name_cn_short": "庆",
+            "name": "BYRCelebrate"
+        },
+        {
+            "color": "19",
+            "name_cn": "业务合作与广告投放",
+            "name_cn_short": "业",
+            "name": "Cooperation"
+        },
+        {
+            "color": "19",
+            "name_cn": "论坛委员会",
+            "name_cn_short": "委",
+            "name": "ForumCommittee"
+        },
+        {
+            "color": "0",
+            "name_cn": "账号事务管理",
+            "name_cn_short": "账",
+            "name": "ID"
+        },
+        {
+            "color": "15",
+            "name_cn": "思想教育",
+            "name_cn_short": "思",
+            "name": "IdeologicalEducation"
+        },
+        {
+            "color": "10",
+            "name_cn": "更新与改进",
+            "name_cn_short": "更",
+            "name": "Progress"
+        },
+        {
+            "color": "12",
+            "name_cn": "积分",
+            "name_cn_short": "积",
+            "name": "Score"
+        },
+        {
+            "color": "17",
+            "name_cn": "站长信箱",
+            "name_cn_short": "站",
+            "name": "sysmail"
+        },
+        {
+            "color": "10",
+            "name_cn": "本站系统讨论区",
+            "name_cn_short": "系",
+            "name": "sysop"
+        },
+        {
+            "color": "18",
+            "name_cn": "新手测试区",
+            "name_cn_short": "新",
+            "name": "test"
+        },
+        {
+            "color": "14",
+            "name_cn": "北邮教务处",
+            "name_cn_short": "教",
+            "name": "AcademicAffairs"
+        },
+        {
+            "color": "7",
+            "name_cn": "北邮欢迎你",
+            "name_cn_short": "欢",
+            "name": "AimBUPT"
+        },
+        {
+            "color": "12",
+            "name_cn": "北邮生活",
+            "name_cn_short": "生",
+            "name": "BUPT"
+        },
+        {
+            "color": "15",
+            "name_cn": "校园网",
+            "name_cn_short": "网",
+            "name": "BUPTNet"
+        },
+        {
+            "color": "13",
+            "name_cn": "北邮邮局",
+            "name_cn_short": "邮",
+            "name": "BUPTPost"
+        },
+        {
+            "color": "11",
+            "name_cn": "北邮人公告栏",
+            "name_cn_short": "公",
+            "name": "BYR_Bulletin"
+        },
+        {
+            "color": "2",
+            "name_cn": "北邮校园卡",
+            "name_cn_short": "卡",
+            "name": "CampusCard"
+        },
+        {
+            "color": "3",
+            "name_cn": "悼念周先生",
+            "name_cn_short": "悼",
+            "name": "daonian"
+        },
+        {
+            "color": "0",
+            "name_cn": "北邮EID",
+            "name_cn_short": "E",
+            "name": "EID"
+        },
+        {
+            "color": "3",
+            "name_cn": "北邮关注",
+            "name_cn_short": "关",
+            "name": "Focus"
+        },
+        {
+            "color": "2",
+            "name_cn": "毕业生之家",
+            "name_cn_short": "毕",
+            "name": "Graduation"
+        },
+        {
+            "color": "17",
+            "name_cn": "北邮后勤处",
+            "name_cn_short": "勤",
+            "name": "Houqin"
+        },
+        {
+            "color": "11",
+            "name_cn": "北邮基建处",
+            "name_cn_short": "基",
+            "name": "JiJianChu"
+        },
+        {
+            "color": "8",
+            "name_cn": "军训快报",
+            "name_cn_short": "军",
+            "name": "Junxun"
+        },
+        {
+            "color": "12",
+            "name_cn": "北邮图书馆",
+            "name_cn_short": "图",
+            "name": "Library"
+        },
+        {
+            "color": "17",
+            "name_cn": "北邮记忆",
+            "name_cn_short": "记",
+            "name": "MyBUPT"
+        },
+        {
+            "color": "4",
+            "name_cn": "热点活动",
+            "name_cn_short": "热",
+            "name": "Recommend"
+        },
+        {
+            "color": "18",
+            "name_cn": "北邮保卫处",
+            "name_cn_short": "保",
+            "name": "SecurityDivision"
+        },
+        {
+            "color": "2",
+            "name_cn": "助学之家",
+            "name_cn_short": "助",
+            "name": "Selfsupport"
+        },
+        {
+            "color": "15",
+            "name_cn": "北邮学生处",
+            "name_cn_short": "学",
+            "name": "StudentAffairs"
+        },
+        {
+            "color": "18",
+            "name_cn": "邮问有答",
+            "name_cn_short": "邮",
+            "name": "StudentQuery"
+        },
+        {
+            "color": "13",
+            "name_cn": "辅导员之家",
+            "name_cn_short": "辅",
+            "name": "TeacherHome"
+        },
+        {
+            "color": "7",
+            "name_cn": "算法与程序设计竞赛",
+            "name_cn_short": "算",
+            "name": "ACM_ICPC"
+        },
+        {
+            "color": "9",
+            "name_cn": "BBS安装管理",
+            "name_cn_short": "B",
+            "name": "BBSMan_Dev"
+        },
+        {
+            "color": "5",
+            "name_cn": "北邮人开放平台",
+            "name_cn_short": "开",
+            "name": "BBSOpenAPI"
+        },
+        {
+            "color": "3",
+            "name_cn": "电子电路",
+            "name_cn_short": "电",
+            "name": "Circuit"
+        },
+        {
+            "color": "19",
+            "name_cn": "通信技术",
+            "name_cn_short": "通",
+            "name": "Communications"
+        },
+        {
+            "color": "10",
+            "name_cn": "C\/C++程序设计语言",
+            "name_cn_short": "C",
+            "name": "CPP"
+        },
+        {
+            "color": "12",
+            "name_cn": "数据库技术",
+            "name_cn_short": "数",
+            "name": "Database"
+        },
+        {
+            "color": "1",
+            "name_cn": ".NET程序设计",
+            "name_cn_short": "N",
+            "name": "dotNET"
+        },
+        {
+            "color": "9",
+            "name_cn": "经济学",
+            "name_cn_short": "经",
+            "name": "Economics"
+        },
+        {
+            "color": "18",
+            "name_cn": "嵌入式系统",
+            "name_cn_short": "嵌",
+            "name": "Embedded_System"
+        },
+        {
+            "color": "8",
+            "name_cn": "电脑硬件与维修",
+            "name_cn_short": "硬",
+            "name": "HardWare"
+        },
+        {
+            "color": "1",
+            "name_cn": "创新实践",
+            "name_cn_short": "创",
+            "name": "Innovation"
+        },
+        {
+            "color": "6",
+            "name_cn": "Java技术",
+            "name_cn_short": "J",
+            "name": "Java"
+        },
+        {
+            "color": "14",
+            "name_cn": "Linux操作系统",
+            "name_cn_short": "L",
+            "name": "Linux"
+        },
+        {
+            "color": "5",
+            "name_cn": "数学建模",
+            "name_cn_short": "数",
+            "name": "MathModel"
+        },
+        {
+            "color": "0",
+            "name_cn": "Matlab实验室",
+            "name_cn_short": "M",
+            "name": "Matlab"
+        },
+        {
+            "color": "10",
+            "name_cn": "机器学习与数据挖掘",
+            "name_cn_short": "机",
+            "name": "ML_DM"
+        },
+        {
+            "color": "5",
+            "name_cn": "移动互联网",
+            "name_cn_short": "移",
+            "name": "MobileInternet"
+        },
+        {
+            "color": "4",
+            "name_cn": "智能终端开发技术",
+            "name_cn_short": "智",
+            "name": "MobileTerminalAT"
+        },
+        {
+            "color": "12",
+            "name_cn": "笔记本电脑",
+            "name_cn_short": "笔",
+            "name": "Notebook"
+        },
+        {
+            "color": "2",
+            "name_cn": "办公软件",
+            "name_cn_short": "办",
+            "name": "OfficeTool"
+        },
+        {
+            "color": "7",
+            "name_cn": "科研与论文",
+            "name_cn_short": "科",
+            "name": "Paper"
+        },
+        {
+            "color": "0",
+            "name_cn": "Python",
+            "name_cn_short": "P",
+            "name": "Python"
+        },
+        {
+            "color": "7",
+            "name_cn": "搜索引擎",
+            "name_cn_short": "搜",
+            "name": "SearchEngine"
+        },
+        {
+            "color": "17",
+            "name_cn": "信息安全",
+            "name_cn_short": "信",
+            "name": "Security"
+        },
+        {
+            "color": "17",
+            "name_cn": "软件开发",
+            "name_cn_short": "软",
+            "name": "SoftDesign"
+        },
+        {
+            "color": "17",
+            "name_cn": "Windows操作系统",
+            "name_cn_short": "W",
+            "name": "Windows"
+        },
+        {
+            "color": "19",
+            "name_cn": "WWW技术",
+            "name_cn_short": "W",
+            "name": "WWWTechnology"
+        },
+        {
+            "color": "12",
+            "name_cn": "考研专版",
+            "name_cn_short": "考",
+            "name": "AimGraduate"
+        },
+        {
+            "color": "7",
+            "name_cn": "学为人师，行为世范",
+            "name_cn_short": "师",
+            "name": "BNU"
+        },
+        {
+            "color": "13",
+            "name_cn": "北邮互联网俱乐部",
+            "name_cn_short": "互",
+            "name": "BUPT_Internet_Club"
+        },
+        {
+            "color": "12",
+            "name_cn": "北邮人在上海",
+            "name_cn_short": "沪",
+            "name": "BYRatSH"
+        },
+        {
+            "color": "16",
+            "name_cn": "深圳邮人家",
+            "name_cn_short": "深",
+            "name": "BYRatSZ"
+        },
+        {
+            "color": "10",
+            "name_cn": "认证考试",
+            "name_cn_short": "认",
+            "name": "Certification"
+        },
+        {
+            "color": "7",
+            "name_cn": "公务员",
+            "name_cn_short": "公",
+            "name": "CivilServant"
+        },
+        {
+            "color": "8",
+            "name_cn": "管理咨询",
+            "name_cn_short": "管",
+            "name": "Consulting"
+        },
+        {
+            "color": "1",
+            "name_cn": "创业交流",
+            "name_cn_short": "创",
+            "name": "Entrepreneurship"
+        },
+        {
+            "color": "19",
+            "name_cn": "家庭生活",
+            "name_cn_short": "家",
+            "name": "FamilyLife"
+        },
+        {
+            "color": "9",
+            "name_cn": "金融职场",
+            "name_cn_short": "金",
+            "name": "Financecareer"
+        },
+        {
+            "color": "3",
+            "name_cn": "金融投资",
+            "name_cn_short": "金",
+            "name": "Financial"
+        },
+        {
+            "color": "10",
+            "name_cn": "飞跃重洋",
+            "name_cn_short": "飞",
+            "name": "GoAbroad"
+        },
+        {
+            "color": "10",
+            "name_cn": "安居乐业",
+            "name_cn_short": "安",
+            "name": "Home"
+        },
+        {
+            "color": "16",
+            "name_cn": "信息产业",
+            "name_cn_short": "信",
+            "name": "IT"
+        },
+        {
+            "color": "17",
+            "name_cn": "毕业生找工作",
+            "name_cn_short": "毕",
+            "name": "Job"
+        },
+        {
+            "color": "17",
+            "name_cn": "招聘信息专版",
+            "name_cn_short": "聘",
+            "name": "JobInfo"
+        },
+        {
+            "color": "1",
+            "name_cn": "跳槽就业",
+            "name_cn_short": "跳",
+            "name": "Jump"
+        },
+        {
+            "color": "18",
+            "name_cn": "网络资源",
+            "name_cn_short": "网",
+            "name": "NetResources"
+        },
+        {
+            "color": "7",
+            "name_cn": "海外北邮人",
+            "name_cn_short": "海",
+            "name": "Overseas"
+        },
+        {
+            "color": "19",
+            "name_cn": "兼职实习信息",
+            "name_cn_short": "兼",
+            "name": "ParttimeJob"
+        },
+        {
+            "color": "2",
+            "name_cn": "产品疯人院",
+            "name_cn_short": "产",
+            "name": "PMatBUPT"
+        },
+        {
+            "color": "11",
+            "name_cn": "学习交流区",
+            "name_cn_short": "学",
+            "name": "StudyShare"
+        },
+        {
+            "color": "14",
+            "name_cn": "天气预报",
+            "name_cn_short": "天",
+            "name": "Weather"
+        },
+        {
+            "color": "9",
+            "name_cn": "职场人生",
+            "name_cn_short": "职",
+            "name": "WorkLife"
+        },
+        {
+            "color": "4",
+            "name_cn": "天文",
+            "name_cn_short": "天",
+            "name": "Astronomy"
+        },
+        {
+            "color": "1",
+            "name_cn": "辩论",
+            "name_cn_short": "辩",
+            "name": "Debate"
+        },
+        {
+            "color": "6",
+            "name_cn": "视频制作",
+            "name_cn_short": "视",
+            "name": "DV"
+        },
+        {
+            "color": "1",
+            "name_cn": "英语吧",
+            "name_cn_short": "英",
+            "name": "EnglishBar"
+        },
+        {
+            "color": "11",
+            "name_cn": "奇闻异事",
+            "name_cn_short": "奇",
+            "name": "Ghost"
+        },
+        {
+            "color": "18",
+            "name_cn": "吉他",
+            "name_cn_short": "吉",
+            "name": "Guitar"
+        },
+        {
+            "color": "6",
+            "name_cn": "日语学习",
+            "name_cn_short": "日",
+            "name": "Japanese"
+        },
+        {
+            "color": "19",
+            "name_cn": "韩流吧",
+            "name_cn_short": "韩",
+            "name": "KoreanWind"
+        },
+        {
+            "color": "3",
+            "name_cn": "音乐交流区",
+            "name_cn_short": "音",
+            "name": "Music"
+        },
+        {
+            "color": "18",
+            "name_cn": "摄影",
+            "name_cn_short": "摄",
+            "name": "Photo"
+        },
+        {
+            "color": "8",
+            "name_cn": "诗词歌赋",
+            "name_cn_short": "诗",
+            "name": "Poetry"
+        },
+        {
+            "color": "14",
+            "name_cn": "心理健康在线",
+            "name_cn_short": "心",
+            "name": "PsyHealthOnline"
+        },
+        {
+            "color": "5",
+            "name_cn": "曲苑杂谈",
+            "name_cn_short": "曲",
+            "name": "Quyi"
+        },
+        {
+            "color": "16",
+            "name_cn": "书屋",
+            "name_cn_short": "书",
+            "name": "Reading"
+        },
+        {
+            "color": "8",
+            "name_cn": "科幻奇幻",
+            "name_cn_short": "科",
+            "name": "ScienceFiction"
+        },
+        {
+            "color": "17",
+            "name_cn": "T恤文化",
+            "name_cn_short": "T",
+            "name": "Tshirt"
+        },
+        {
+            "color": "6",
+            "name_cn": "美容护肤",
+            "name_cn_short": "美",
+            "name": "Beauty"
+        },
+        {
+            "color": "11",
+            "name_cn": "北邮愿望树",
+            "name_cn_short": "愿",
+            "name": "Blessing"
+        },
+        {
+            "color": "7",
+            "name_cn": "衣衣不舍",
+            "name_cn_short": "衣",
+            "name": "Clothing"
+        },
+        {
+            "color": "8",
+            "name_cn": "星雨星愿",
+            "name_cn_short": "星",
+            "name": "Constellations"
+        },
+        {
+            "color": "8",
+            "name_cn": "数字生活",
+            "name_cn_short": "数",
+            "name": "DigiLife"
+        },
+        {
+            "color": "5",
+            "name_cn": "创意生活",
+            "name_cn_short": "创",
+            "name": "DIYLife"
+        },
+        {
+            "color": "6",
+            "name_cn": "环境保护",
+            "name_cn_short": "环",
+            "name": "Environment"
+        },
+        {
+            "color": "2",
+            "name_cn": "情感的天空",
+            "name_cn_short": "情",
+            "name": "Feeling"
+        },
+        {
+            "color": "15",
+            "name_cn": "秀色可餐",
+            "name_cn_short": "秀",
+            "name": "Food"
+        },
+        {
+            "color": "2",
+            "name_cn": "缘来如此",
+            "name_cn_short": "缘",
+            "name": "Friends"
+        },
+        {
+            "color": "13",
+            "name_cn": "健康保健",
+            "name_cn_short": "健",
+            "name": "Health"
+        },
+        {
+            "color": "9",
+            "name_cn": "悄悄话",
+            "name_cn_short": "悄",
+            "name": "IWhisper"
+        },
+        {
+            "color": "17",
+            "name_cn": "失物招领与拾金不昧",
+            "name_cn_short": "失",
+            "name": "LostandFound"
+        },
+        {
+            "color": "8",
+            "name_cn": "谈天说地",
+            "name_cn_short": "谈",
+            "name": "Talking"
+        },
+        {
+            "color": "18",
+            "name_cn": "汽车之家",
+            "name_cn_short": "汽",
+            "name": "AutoMotor"
+        },
+        {
+            "color": "2",
+            "name_cn": "桌面游戏",
+            "name_cn_short": "桌",
+            "name": "BoardGame"
+        },
+        {
+            "color": "2",
+            "name_cn": "动漫交流区",
+            "name_cn_short": "动",
+            "name": "Comic"
+        },
+        {
+            "color": "17",
+            "name_cn": "闪客帝国",
+            "name_cn_short": "闪",
+            "name": "Flash"
+        },
+        {
+            "color": "15",
+            "name_cn": "煮酒论剑",
+            "name_cn_short": "煮",
+            "name": "Hero"
+        },
+        {
+            "color": "5",
+            "name_cn": "笑口常开",
+            "name_cn_short": "笑",
+            "name": "Joke"
+        },
+        {
+            "color": "7",
+            "name_cn": "K歌之王",
+            "name_cn_short": "歌",
+            "name": "KaraOK"
+        },
+        {
+            "color": "2",
+            "name_cn": "杀人俱乐部",
+            "name_cn_short": "杀",
+            "name": "KillBar"
+        },
+        {
+            "color": "4",
+            "name_cn": "电影",
+            "name_cn_short": "影",
+            "name": "Movie"
+        },
+        {
+            "color": "11",
+            "name_cn": "网络文学",
+            "name_cn_short": "文",
+            "name": "NetLiterature"
+        },
+        {
+            "color": "12",
+            "name_cn": "北邮人投票",
+            "name_cn_short": "投",
+            "name": "nVote"
+        },
+        {
+            "color": "4",
+            "name_cn": "宠物家园",
+            "name_cn_short": "宠",
+            "name": "Pet"
+        },
+        {
+            "color": "18",
+            "name_cn": "贴图秀",
+            "name_cn_short": "图",
+            "name": "Picture"
+        },
+        {
+            "color": "10",
+            "name_cn": "绿色心情",
+            "name_cn_short": "绿",
+            "name": "Plant"
+        },
+        {
+            "color": "1",
+            "name_cn": "BYR在线广播",
+            "name_cn_short": "广",
+            "name": "RadioOnline"
+        },
+        {
+            "color": "6",
+            "name_cn": "娱乐星天地",
+            "name_cn_short": "娱",
+            "name": "SuperStar"
+        },
+        {
+            "color": "8",
+            "name_cn": "海天游踪",
+            "name_cn_short": "海",
+            "name": "Travel"
+        },
+        {
+            "color": "19",
+            "name_cn": "电视剧",
+            "name_cn_short": "剧",
+            "name": "TV"
+        },
+        {
+            "color": "18",
+            "name_cn": "视频酷",
+            "name_cn_short": "视",
+            "name": "VideoCool"
+        },
+        {
+            "color": "7",
+            "name_cn": "田径",
+            "name_cn_short": "田",
+            "name": "Athletics"
+        },
+        {
+            "color": "7",
+            "name_cn": "羽毛球",
+            "name_cn_short": "羽",
+            "name": "Badminton"
+        },
+        {
+            "color": "18",
+            "name_cn": "篮球咖啡屋",
+            "name_cn_short": "篮",
+            "name": "Basketball"
+        },
+        {
+            "color": "4",
+            "name_cn": "台球",
+            "name_cn_short": "台",
+            "name": "Billiards"
+        },
+        {
+            "color": "6",
+            "name_cn": "棋牌",
+            "name_cn_short": "棋",
+            "name": "Chess"
+        },
+        {
+            "color": "12",
+            "name_cn": "梦想单车",
+            "name_cn_short": "梦",
+            "name": "Cycling"
+        },
+        {
+            "color": "0",
+            "name_cn": "舞蹈",
+            "name_cn_short": "舞",
+            "name": "Dancing"
+        },
+        {
+            "color": "11",
+            "name_cn": "足球吧",
+            "name_cn_short": "足",
+            "name": "Football"
+        },
+        {
+            "color": "18",
+            "name_cn": "极速赛车",
+            "name_cn_short": "速",
+            "name": "GSpeed"
+        },
+        {
+            "color": "1",
+            "name_cn": "健身房",
+            "name_cn_short": "健",
+            "name": "Gymnasium"
+        },
+        {
+            "color": "1",
+            "name_cn": "武术",
+            "name_cn_short": "武",
+            "name": "Kungfu"
+        },
+        {
+            "color": "18",
+            "name_cn": "橄榄球",
+            "name_cn_short": "橄",
+            "name": "Rugby"
+        },
+        {
+            "color": "0",
+            "name_cn": "天行毽",
+            "name_cn_short": "毽",
+            "name": "Shuttlecock"
+        },
+        {
+            "color": "15",
+            "name_cn": "滑板名堂",
+            "name_cn_short": "滑",
+            "name": "Sk8"
+        },
+        {
+            "color": "0",
+            "name_cn": "北邮刷天下",
+            "name_cn_short": "刷",
+            "name": "Skating"
+        },
+        {
+            "color": "9",
+            "name_cn": "碧水情深",
+            "name_cn_short": "碧",
+            "name": "Swim"
+        },
+        {
+            "color": "10",
+            "name_cn": "乒乓球",
+            "name_cn_short": "乒",
+            "name": "Tabletennis"
+        },
+        {
+            "color": "5",
+            "name_cn": "跆拳道",
+            "name_cn_short": "跆",
+            "name": "Taekwondo"
+        },
+        {
+            "color": "17",
+            "name_cn": "网球",
+            "name_cn_short": "网",
+            "name": "Tennis"
+        },
+        {
+            "color": "13",
+            "name_cn": "排球",
+            "name_cn_short": "排",
+            "name": "Volleyball"
+        },
+        {
+            "color": "2",
+            "name_cn": "地下城与勇士",
+            "name_cn_short": "地",
+            "name": "BUPTDNF"
+        },
+        {
+            "color": "0",
+            "name_cn": "反恐精英",
+            "name_cn_short": "反",
+            "name": "CStrike"
+        },
+        {
+            "color": "17",
+            "name_cn": "暗黑破坏神",
+            "name_cn_short": "暗",
+            "name": "Diablo"
+        },
+        {
+            "color": "19",
+            "name_cn": "Dota",
+            "name_cn_short": "刀",
+            "name": "Dota"
+        },
+        {
+            "color": "18",
+            "name_cn": "足球经理",
+            "name_cn_short": "足",
+            "name": "FootballManager"
+        },
+        {
+            "color": "8",
+            "name_cn": "英雄联盟",
+            "name_cn_short": "英",
+            "name": "LOL"
+        },
+        {
+            "color": "0",
+            "name_cn": "网络游戏",
+            "name_cn_short": "网",
+            "name": "OnlineGame"
+        },
+        {
+            "color": "5",
+            "name_cn": "电脑游戏",
+            "name_cn_short": "电",
+            "name": "PCGame"
+        },
+        {
+            "color": "8",
+            "name_cn": "跑跑卡丁车",
+            "name_cn_short": "跑",
+            "name": "PopKart"
+        },
+        {
+            "color": "19",
+            "name_cn": "电子游戏",
+            "name_cn_short": "电",
+            "name": "TVGame"
+        },
+        {
+            "color": "15",
+            "name_cn": "实况足球",
+            "name_cn_short": "实",
+            "name": "WE"
+        },
+        {
+            "color": "16",
+            "name_cn": "魔兽世界",
+            "name_cn_short": "魔",
+            "name": "WOW"
+        },
+        {
+            "color": "19",
+            "name_cn": "梦幻西游",
+            "name_cn_short": "梦",
+            "name": "Xyq"
+        },
+        {
+            "color": "6",
+            "name_cn": "情淮徽皖·安徽",
+            "name_cn_short": "皖",
+            "name": "Anhui"
+        },
+        {
+            "color": "13",
+            "name_cn": "粤广茶餐厅·广东",
+            "name_cn_short": "粤",
+            "name": "Cantonese"
+        },
+        {
+            "color": "6",
+            "name_cn": "巴渝人家·重庆",
+            "name_cn_short": "渝",
+            "name": "Chongqing"
+        },
+        {
+            "color": "10",
+            "name_cn": "八闽玲珑·福建",
+            "name_cn_short": "闽",
+            "name": "Fujian"
+        },
+        {
+            "color": "5",
+            "name_cn": "西凉故道·甘肃",
+            "name_cn_short": "陇",
+            "name": "Gansu"
+        },
+        {
+            "color": "9",
+            "name_cn": "桂香南疆·广西",
+            "name_cn_short": "桂",
+            "name": "Guangxi"
+        },
+        {
+            "color": "8",
+            "name_cn": "景秀黔城·贵州",
+            "name_cn_short": "黔",
+            "name": "Guizhou"
+        },
+        {
+            "color": "7",
+            "name_cn": "天涯海角·海南",
+            "name_cn_short": "琼",
+            "name": "Hainan"
+        },
+        {
+            "color": "11",
+            "name_cn": "燕赵情怀·河北",
+            "name_cn_short": "冀",
+            "name": "Hebei"
+        },
+        {
+            "color": "6",
+            "name_cn": "豫韵悠悠·河南",
+            "name_cn_short": "豫",
+            "name": "Henan"
+        },
+        {
+            "color": "19",
+            "name_cn": "楚天邮情·湖北",
+            "name_cn_short": "楚",
+            "name": "Hubei"
+        },
+        {
+            "color": "6",
+            "name_cn": "潇湘天下·湖南",
+            "name_cn_short": "湘",
+            "name": "Hunan"
+        },
+        {
+            "color": "19",
+            "name_cn": "翱翔雄鹰·内蒙古",
+            "name_cn_short": "蒙",
+            "name": "InnerMongolia"
+        },
+        {
+            "color": "0",
+            "name_cn": "江淮人家·江苏",
+            "name_cn_short": "苏",
+            "name": "Jiangsu"
+        },
+        {
+            "color": "17",
+            "name_cn": "江南西道·江西",
+            "name_cn_short": "赣",
+            "name": "Jiangxi"
+        },
+        {
+            "color": "16",
+            "name_cn": "东北一家人·东北",
+            "name_cn_short": "东",
+            "name": "NorthEast"
+        },
+        {
+            "color": "17",
+            "name_cn": "北京四合院·北京",
+            "name_cn_short": "京",
+            "name": "Peking"
+        },
+        {
+            "color": "2",
+            "name_cn": "青深似海·青海",
+            "name_cn_short": "青",
+            "name": "Qinghai"
+        },
+        {
+            "color": "11",
+            "name_cn": "三秦大地·陕西",
+            "name_cn_short": "秦",
+            "name": "Shaanxi"
+        },
+        {
+            "color": "10",
+            "name_cn": "齐鲁大地·山东",
+            "name_cn_short": "鲁",
+            "name": "Shandong"
+        },
+        {
+            "color": "0",
+            "name_cn": "桐叶封晋·山西",
+            "name_cn_short": "晋",
+            "name": "Shanxi"
+        },
+        {
+            "color": "11",
+            "name_cn": "蜀山邮侠·四川",
+            "name_cn_short": "蜀",
+            "name": "Sichuan"
+        },
+        {
+            "color": "8",
+            "name_cn": "九河下梢·天津",
+            "name_cn_short": "津",
+            "name": "Tianjin"
+        },
+        {
+            "color": "0",
+            "name_cn": "天山南北·新疆",
+            "name_cn_short": "新",
+            "name": "Xinjiang"
+        },
+        {
+            "color": "12",
+            "name_cn": "钱塘人家·浙江",
+            "name_cn_short": "浙",
+            "name": "Zhejiang"
+        },
+        {
+            "color": "6",
+            "name_cn": "商务广告及代理",
+            "name_cn_short": "商",
+            "name": "Ad_Agent"
+        },
+        {
+            "color": "9",
+            "name_cn": "跳蚤市场",
+            "name_cn_short": "跳",
+            "name": "Advertising"
+        },
+        {
+            "color": "4",
+            "name_cn": "二手书交易",
+            "name_cn_short": "书",
+            "name": "BookTrade"
+        },
+        {
+            "color": "1",
+            "name_cn": "北邮折扣",
+            "name_cn_short": "折",
+            "name": "BUPTDiscount"
+        },
+        {
+            "color": "17",
+            "name_cn": "拼团",
+            "name_cn_short": "拼",
+            "name": "Co_Buying"
+        },
+        {
+            "color": "4",
+            "name_cn": "电脑数码交易",
+            "name_cn_short": "电",
+            "name": "ComputerTrade"
+        },
+        {
+            "color": "19",
+            "name_cn": "房屋租赁",
+            "name_cn_short": "房",
+            "name": "House"
+        },
+        {
+            "color": "11",
+            "name_cn": "房屋中介",
+            "name_cn_short": "房",
+            "name": "House_Agent"
+        },
+        {
+            "color": "2",
+            "name_cn": "票务",
+            "name_cn_short": "票",
+            "name": "Ticket"
+        },
+        {
+            "color": "10",
+            "name_cn": "北邮人BT意见与建议",
+            "name_cn_short": "B",
+            "name": "BTadvice"
+        },
+        {
+            "color": "16",
+            "name_cn": "BT公告区",
+            "name_cn_short": "B",
+            "name": "BTannounce"
+        },
+        {
+            "color": "12",
+            "name_cn": "BT讨论区",
+            "name_cn_short": "B",
+            "name": "BTbt"
+        },
+        {
+            "color": "10",
+            "name_cn": "动漫种子发布区",
+            "name_cn_short": "动",
+            "name": "BTcomic"
+        },
+        {
+            "color": "15",
+            "name_cn": "BT投诉区",
+            "name_cn_short": "B",
+            "name": "BTcomplain"
+        },
+        {
+            "color": "3",
+            "name_cn": "资料种子发布区",
+            "name_cn_short": "资",
+            "name": "BTdocument"
+        },
+        {
+            "color": "9",
+            "name_cn": "游戏种子发布区",
+            "name_cn_short": "游",
+            "name": "BTgame"
+        },
+        {
+            "color": "14",
+            "name_cn": "电影种子发布区",
+            "name_cn_short": "电",
+            "name": "BTmovie"
+        },
+        {
+            "color": "9",
+            "name_cn": "音乐种子发布区",
+            "name_cn_short": "音",
+            "name": "BTmusic"
+        },
+        {
+            "color": "8",
+            "name_cn": "种子候选区",
+            "name_cn_short": "种",
+            "name": "BTPending"
+        },
+        {
+            "color": "15",
+            "name_cn": "BT悬赏区",
+            "name_cn_short": "B",
+            "name": "BTreward"
+        },
+        {
+            "color": "19",
+            "name_cn": "综艺种子发布区",
+            "name_cn_short": "综",
+            "name": "BTshow"
+        },
+        {
+            "color": "17",
+            "name_cn": "软件种子发布区",
+            "name_cn_short": "软",
+            "name": "BTsoftware"
+        },
+        {
+            "color": "4",
+            "name_cn": "体育种子发布区",
+            "name_cn_short": "体",
+            "name": "BTsport"
+        },
+        {
+            "color": "13",
+            "name_cn": "电视剧种子发布区",
+            "name_cn_short": "电",
+            "name": "BTtv"
+        },
+        {
+            "color": "9",
+            "name_cn": "内部讨论组",
+            "name_cn_short": "内",
+            "name": "BTzone"
+        },
+        {
+            "color": "14",
+            "name_cn": "ACE战队专区",
+            "name_cn_short": "A",
+            "name": "ACETeam"
+        },
+        {
+            "color": "14",
+            "name_cn": "北邮社团",
+            "name_cn_short": "社",
+            "name": "BuptAssociation"
+        },
+        {
+            "color": "12",
+            "name_cn": "阿里巴巴高校技术联盟",
+            "name_cn_short": "阿",
+            "name": "buptAUTA"
+        },
+        {
+            "color": "15",
+            "name_cn": "微软技术俱乐部",
+            "name_cn_short": "微",
+            "name": "BUPTMSTC"
+        },
+        {
+            "color": "14",
+            "name_cn": "北京邮电大学学生会",
+            "name_cn_short": "学",
+            "name": "BUPTStudentUnion"
+        },
+        {
+            "color": "17",
+            "name_cn": "北邮学生电视台",
+            "name_cn_short": "电",
+            "name": "BUPTSTV"
+        },
+        {
+            "color": "1",
+            "name_cn": "北邮今周",
+            "name_cn_short": "周",
+            "name": "BuptWeekly"
+        },
+        {
+            "color": "15",
+            "name_cn": "北邮民乐团",
+            "name_cn_short": "乐",
+            "name": "ChineseOrchestra"
+        },
+        {
+            "color": "1",
+            "name_cn": "北京邮电大学研究生会",
+            "name_cn_short": "研",
+            "name": "GraduateUnion"
+        },
+        {
+            "color": "15",
+            "name_cn": "甲骨文俱乐部",
+            "name_cn_short": "甲",
+            "name": "OracleClub"
+        },
+        {
+            "color": "13",
+            "name_cn": "北邮管弦乐团",
+            "name_cn_short": "管",
+            "name": "Orchestra"
+        },
+        {
+            "color": "17",
+            "name_cn": "爱乐家园",
+            "name_cn_short": "爱",
+            "name": "Philharmonic"
+        },
+        {
+            "color": "15",
+            "name_cn": "红十字会",
+            "name_cn_short": "红",
+            "name": "Redcross"
+        },
+        {
+            "color": "4",
+            "name_cn": "北邮职业发展协会",
+            "name_cn_short": "职",
+            "name": "SCDA"
+        },
+        {
+            "color": "0",
+            "name_cn": "学生国际交流协会",
+            "name_cn_short": "国",
+            "name": "SICA"
+        },
+        {
+            "color": "18",
+            "name_cn": "BUPT魔兽公会",
+            "name_cn_short": "魔",
+            "name": "WOWBuptGuild"
+        },
+        {
+            "color": "13",
+            "name_cn": "亿阳同心社",
+            "name_cn_short": "亿",
+            "name": "yiyang"
+        },
+        {
+            "color": "4",
+            "name_cn": "网络教育学院",
+            "name_cn_short": "网",
+            "name": "BUPTNU"
+        },
+        {
+            "color": "0",
+            "name_cn": "数字媒体与设计艺术学院",
+            "name_cn_short": "数",
+            "name": "DMDA"
+        },
+        {
+            "color": "8",
+            "name_cn": "研究生院",
+            "name_cn_short": "研",
+            "name": "GraduateSch"
+        },
+        {
+            "color": "7",
+            "name_cn": "宏福校区",
+            "name_cn_short": "宏",
+            "name": "HongFu"
+        },
+        {
+            "color": "10",
+            "name_cn": "网络技术研究院",
+            "name_cn_short": "网",
+            "name": "INTR"
+        },
+        {
+            "color": "3",
+            "name_cn": "信息光子学与光通信研究院",
+            "name_cn_short": "信",
+            "name": "IPOC"
+        },
+        {
+            "color": "9",
+            "name_cn": "国际学院",
+            "name_cn_short": "国",
+            "name": "IS"
+        },
+        {
+            "color": "11",
+            "name_cn": "自动化学院",
+            "name_cn_short": "自",
+            "name": "SA"
+        },
+        {
+            "color": "10",
+            "name_cn": "计算机学院",
+            "name_cn_short": "计",
+            "name": "SCS"
+        },
+        {
+            "color": "1",
+            "name_cn": "电子工程学院",
+            "name_cn_short": "电",
+            "name": "SEE"
+        },
+        {
+            "color": "0",
+            "name_cn": "经济管理学院",
+            "name_cn_short": "经",
+            "name": "SEM"
+        },
+        {
+            "color": "15",
+            "name_cn": "人文学院",
+            "name_cn_short": "人",
+            "name": "SH"
+        },
+        {
+            "color": "14",
+            "name_cn": "沙河校区",
+            "name_cn_short": "沙",
+            "name": "ShaHe"
+        },
+        {
+            "color": "1",
+            "name_cn": "信息与通信工程学院",
+            "name_cn_short": "信",
+            "name": "SICE"
+        },
+        {
+            "color": "1",
+            "name_cn": "原信息工程学院",
+            "name_cn_short": "信",
+            "name": "SIE"
+        },
+        {
+            "color": "1",
+            "name_cn": "语言学院",
+            "name_cn_short": "语",
+            "name": "SL"
+        },
+        {
+            "color": "14",
+            "name_cn": "公共管理学院",
+            "name_cn_short": "公",
+            "name": "SPM"
+        },
+        {
+            "color": "17",
+            "name_cn": "理学院",
+            "name_cn_short": "理",
+            "name": "SS"
+        },
+        {
+            "color": "7",
+            "name_cn": "软件学院",
+            "name_cn_short": "软",
+            "name": "SSE"
+        },
+        {
+            "color": "3",
+            "name_cn": "电信工程学院",
+            "name_cn_short": "电",
+            "name": "STE"
+        },
+        {
+            "color": "19",
+            "name_cn": "BBS各类历史统计记录",
+            "name_cn_short": "B",
+            "name": "BBSLists"
+        },
+        {
+            "color": "3",
+            "name_cn": "版面封禁记录",
+            "name_cn_short": "版",
+            "name": "denypost"
+        },
+        {
+            "color": "17",
+            "name_cn": "过滤文章记录",
+            "name_cn_short": "过",
+            "name": "Filter"
+        },
+        {
+            "color": "7",
+            "name_cn": "关键字文章记录",
+            "name_cn_short": "关",
+            "name": "keyword"
+        },
+        {
+            "color": "17",
+            "name_cn": "留言版记录",
+            "name_cn_short": "留",
+            "name": "notepad"
+        },
+        {
+            "color": "15",
+            "name_cn": "解封记录",
+            "name_cn_short": "解",
+            "name": "undenypost"
+        },
+        {
+            "color": "15",
+            "name_cn": "各板投票情况汇总",
+            "name_cn_short": "各",
+            "name": "vote"
+        },
+        {
+            "color": "13",
+            "name_cn": "考核区",
+            "name_cn_short": "考",
+            "name": "Assess"
+        },
+        {
+            "color": "7",
+            "name_cn": "BBS助理专区",
+            "name_cn_short": "B",
+            "name": "BBSAssistant"
+        },
+        {
+            "color": "13",
+            "name_cn": "版主申请",
+            "name_cn_short": "版",
+            "name": "BM_Apply"
+        },
+        {
+            "color": "6",
+            "name_cn": "站务区",
+            "name_cn_short": "站",
+            "name": "BM_Assistant"
+        },
+        {
+            "color": "11",
+            "name_cn": "版面巡查",
+            "name_cn_short": "版",
+            "name": "BM_Check"
+        },
+        {
+            "color": "6",
+            "name_cn": "回炉区",
+            "name_cn_short": "回",
+            "name": "BM_Hell"
+        },
+        {
+            "color": "7",
+            "name_cn": "版主办公室",
+            "name_cn_short": "版",
+            "name": "BM_Office"
+        },
+        {
+            "color": "11",
+            "name_cn": "版主培训区",
+            "name_cn_short": "版",
+            "name": "BM_test"
+        },
+        {
+            "color": "16",
+            "name_cn": "版主培训区1",
+            "name_cn_short": "版",
+            "name": "BM_test1"
+        },
+        {
+            "color": "2",
+            "name_cn": "版主培训区2",
+            "name_cn_short": "版",
+            "name": "BM_test2"
+        },
+        {
+            "color": "0",
+            "name_cn": "版主培训区3",
+            "name_cn_short": "版",
+            "name": "BM_test3"
+        },
+        {
+            "color": "19",
+            "name_cn": "论坛智囊团",
+            "name_cn_short": "智",
+            "name": "BMbrainpower"
+        },
+        {
+            "color": "13",
+            "name_cn": "版主管理",
+            "name_cn_short": "版",
+            "name": "BoardManager"
+        },
+        {
+            "color": "1",
+            "name_cn": "站务小黑屋",
+            "name_cn_short": "站",
+            "name": "FM_home"
+        },
+        {
+            "color": "0",
+            "name_cn": "优秀版主展评",
+            "name_cn_short": "优",
+            "name": "OutstandingBM"
+        },
+        {
+            "color": "8",
+            "name_cn": "竞猜会议室",
+            "name_cn_short": "竞",
+            "name": "RoomBet"
+        },
+        {
+            "color": "16",
+            "name_cn": "投诉工作室",
+            "name_cn_short": "投",
+            "name": "RoomCourt"
+        },
+        {
+            "color": "2",
+            "name_cn": "情感、悄悄、心理健康版务组",
+            "name_cn_short": "情",
+            "name": "RoomFeeling"
+        },
+        {
+            "color": "10",
+            "name_cn": "缘来版务组会议室",
+            "name_cn_short": "缘",
+            "name": "RoomFriends"
+        },
+        {
+            "color": "18",
+            "name_cn": "Job版务组会议室",
+            "name_cn_short": "J",
+            "name": "RoomJob"
+        },
+        {
+            "color": "8",
+            "name_cn": "贴图版务组会议室",
+            "name_cn_short": "贴",
+            "name": "RoomPicture"
+        },
+        {
+            "color": "0",
+            "name_cn": "文宣版务组会议室",
+            "name_cn_short": "文",
+            "name": "RoomPublicity"
+        },
+        {
+            "color": "17",
+            "name_cn": "谈天版务组会议室",
+            "name_cn_short": "谈",
+            "name": "RoomTalking"
+        },
+        {
+            "color": "12",
+            "name_cn": "职场、家庭生活版务组会议室",
+            "name_cn_short": "职",
+            "name": "RoomWorklife"
+        },
+        {
+            "color": "19",
+            "name_cn": "培训助理会议室",
+            "name_cn_short": "培",
+            "name": "TrainingAssistant"
+        },
+        {
+            "color": "1",
+            "name_cn": "三区广告乐园俱乐部",
+            "name_cn_short": "俱",
+            "name": "RoomAdvertise"
+        },
+        {
+            "color": "10",
+            "name_cn": "一区社团组织俱乐部",
+            "name_cn_short": "俱",
+            "name": "RoomAssociations"
+        },
+        {
+            "color": "18",
+            "name_cn": "一区大学校园俱乐部",
+            "name_cn_short": "俱",
+            "name": "RoomBUPT"
+        },
+        {
+            "color": "11",
+            "name_cn": "五区乡版俱乐部",
+            "name_cn_short": "俱",
+            "name": "RoomChina"
+        },
+        {
+            "color": "5",
+            "name_cn": "四区人文艺术俱乐部",
+            "name_cn_short": "俱",
+            "name": "RoomCulture"
+        },
+        {
+            "color": "13",
+            "name_cn": "五区生活时尚俱乐部",
+            "name_cn_short": "俱",
+            "name": "RoomFashion"
+        },
+        {
+            "color": "4",
+            "name_cn": "八区游戏对战俱乐部",
+            "name_cn_short": "俱",
+            "name": "RoomGame"
+        },
+        {
+            "color": "4",
+            "name_cn": "三区信息社会俱乐部",
+            "name_cn_short": "俱",
+            "name": "RoomInformation"
+        },
+        {
+            "color": "19",
+            "name_cn": "六区休闲娱乐俱乐部",
+            "name_cn_short": "俱",
+            "name": "RoomLeisure"
+        },
+        {
+            "color": "3",
+            "name_cn": "七区体育健身俱乐部",
+            "name_cn_short": "俱",
+            "name": "RoomSport"
+        },
+        {
+            "color": "8",
+            "name_cn": "二区学术科技俱乐部",
+            "name_cn_short": "俱",
+            "name": "RoomTechnology"
+        },
+        {
+            "color": "5",
+            "name_cn": "版面申请",
+            "name_cn_short": "版",
+            "name": "Board_Apply"
+        },
+        {
+            "color": "11",
+            "name_cn": "版面文档",
+            "name_cn_short": "版",
+            "name": "Board_Document"
+        },
+        {
+            "color": "19",
+            "name_cn": "版面管理",
+            "name_cn_short": "版",
+            "name": "Board_Management"
+        },
+        {
+            "color": "13",
+            "name_cn": "版面工作室",
+            "name_cn_short": "版",
+            "name": "RoomBoard"
+        },
+        {
+            "color": "14",
+            "name_cn": "第九缕阳光",
+            "name_cn_short": "九",
+            "name": "9thSunBeam"
+        },
+        {
+            "color": "0",
+            "name_cn": "北邮流浪猫志愿救助小组",
+            "name_cn_short": "流",
+            "name": "AlleyCats"
+        },
+        {
+            "color": "13",
+            "name_cn": "百花社团",
+            "name_cn_short": "百",
+            "name": "ASSNMGT"
+        },
+        {
+            "color": "19",
+            "name_cn": "学生科协",
+            "name_cn_short": "科",
+            "name": "AST"
+        },
+        {
+            "color": "14",
+            "name_cn": "Blog申请",
+            "name_cn_short": "B",
+            "name": "BlogApply"
+        },
+        {
+            "color": "5",
+            "name_cn": "Blog管理",
+            "name_cn_short": "B",
+            "name": "BlogManager"
+        },
+        {
+            "color": "8",
+            "name_cn": "版主俱乐部",
+            "name_cn_short": "版",
+            "name": "BM_Home"
+        },
+        {
+            "color": "11",
+            "name_cn": "保龄球",
+            "name_cn_short": "保",
+            "name": "Bowling"
+        },
+        {
+            "color": "7",
+            "name_cn": "校庆系列活动专版",
+            "name_cn_short": "校",
+            "name": "BUPT50"
+        },
+        {
+            "color": "11",
+            "name_cn": "IBM技术俱乐部",
+            "name_cn_short": "I",
+            "name": "BUPTIBMITClub"
+        },
+        {
+            "color": "1",
+            "name_cn": "校报学生工作室",
+            "name_cn_short": "报",
+            "name": "BuptnewsStudio"
+        },
+        {
+            "color": "8",
+            "name_cn": "北邮研究生报",
+            "name_cn_short": "研",
+            "name": "BUPTyb"
+        },
+        {
+            "color": "11",
+            "name_cn": "天涯邮子助学",
+            "name_cn_short": "天",
+            "name": "BUPTzx"
+        },
+        {
+            "color": "19",
+            "name_cn": "北邮人FTP专区",
+            "name_cn_short": "F",
+            "name": "BYR_FTP"
+        },
+        {
+            "color": "1",
+            "name_cn": "北邮人电影数据库",
+            "name_cn_short": "影",
+            "name": "BYRMovieDatabase"
+        },
+        {
+            "color": "3",
+            "name_cn": "北邮人内部事务讨论",
+            "name_cn_short": "内",
+            "name": "BYROffice"
+        },
+        {
+            "color": "13",
+            "name_cn": "北邮人工作室",
+            "name_cn_short": "工",
+            "name": "BYRStudio"
+        },
+        {
+            "color": "11",
+            "name_cn": "工作室大家园",
+            "name_cn_short": "工",
+            "name": "BYRStudioHome"
+        },
+        {
+            "color": "2",
+            "name_cn": "昌平校区",
+            "name_cn_short": "昌",
+            "name": "ChangPing"
+        },
+        {
+            "color": "4",
+            "name_cn": "基督教研究",
+            "name_cn_short": "基",
+            "name": "Christianity"
+        },
+        {
+            "color": "8",
+            "name_cn": "创业者俱乐部",
+            "name_cn_short": "创",
+            "name": "Chuangye"
+        },
+        {
+            "color": "8",
+            "name_cn": "中国通信学会北邮分部",
+            "name_cn_short": "通",
+            "name": "CIC_BUPT"
+        },
+        {
+            "color": "1",
+            "name_cn": "思科俱乐部",
+            "name_cn_short": "思",
+            "name": "CiscoAPIClub"
+        },
+        {
+            "color": "13",
+            "name_cn": "我爱我家",
+            "name_cn_short": "家",
+            "name": "CozyHome"
+        },
+        {
+            "color": "7",
+            "name_cn": "设计天堂",
+            "name_cn_short": "设",
+            "name": "Design"
+        },
+        {
+            "color": "4",
+            "name_cn": "暗黑HC",
+            "name_cn_short": "暗",
+            "name": "DiabloHC"
+        },
+        {
+            "color": "13",
+            "name_cn": "暗黑交易",
+            "name_cn_short": "暗",
+            "name": "DiabloTrade"
+        },
+        {
+            "color": "12",
+            "name_cn": "DIYer",
+            "name_cn_short": "D",
+            "name": "DIYer"
+        },
+        {
+            "color": "8",
+            "name_cn": "心灵之窗",
+            "name_cn_short": "心",
+            "name": "Eyes"
+        },
+        {
+            "color": "12",
+            "name_cn": "风尚",
+            "name_cn_short": "风",
+            "name": "Fashion"
+        },
+        {
+            "color": "6",
+            "name_cn": "风信子",
+            "name_cn_short": "风",
+            "name": "Fengxinzi"
+        },
+        {
+            "color": "14",
+            "name_cn": "新视界",
+            "name_cn_short": "新",
+            "name": "Freshsky"
+        },
+        {
+            "color": "13",
+            "name_cn": "游戏资源",
+            "name_cn_short": "游",
+            "name": "GameFTP"
+        },
+        {
+            "color": "11",
+            "name_cn": "古今寰宇",
+            "name_cn_short": "古",
+            "name": "GeoandHistory"
+        },
+        {
+            "color": "14",
+            "name_cn": "北邮女足",
+            "name_cn_short": "足",
+            "name": "GirlFootball"
+        },
+        {
+            "color": "7",
+            "name_cn": "围棋天地",
+            "name_cn_short": "棋",
+            "name": "Gogogo"
+        },
+        {
+            "color": "17",
+            "name_cn": "团购",
+            "name_cn_short": "团",
+            "name": "Group_Buying"
+        },
+        {
+            "color": "14",
+            "name_cn": "好门户工作组",
+            "name_cn_short": "好",
+            "name": "HaomenhuTeam"
+        },
+        {
+            "color": "11",
+            "name_cn": "HiAll俱乐部",
+            "name_cn_short": "H",
+            "name": "HiAllClub"
+        },
+        {
+            "color": "17",
+            "name_cn": "桑梓情深",
+            "name_cn_short": "桑",
+            "name": "Hometown"
+        },
+        {
+            "color": "18",
+            "name_cn": "优秀版主评选",
+            "name_cn_short": "优",
+            "name": "honor"
+        },
+        {
+            "color": "4",
+            "name_cn": "华夏文明",
+            "name_cn_short": "华",
+            "name": "Huaxia"
+        },
+        {
+            "color": "6",
+            "name_cn": "人文艺术",
+            "name_cn_short": "人",
+            "name": "Humanity"
+        },
+        {
+            "color": "1",
+            "name_cn": "IEEE北邮学生支部",
+            "name_cn_short": "I",
+            "name": "IEEEBUPT"
+        },
+        {
+            "color": "15",
+            "name_cn": "益智游戏",
+            "name_cn_short": "益",
+            "name": "IntelligentGame"
+        },
+        {
+            "color": "19",
+            "name_cn": "畅想物联",
+            "name_cn_short": "畅",
+            "name": "IOT"
+        },
+        {
+            "color": "5",
+            "name_cn": "就业咨询",
+            "name_cn_short": "就",
+            "name": "JobConsultation"
+        },
+        {
+            "color": "9",
+            "name_cn": "法律事务",
+            "name_cn_short": "法",
+            "name": "LawAffairs"
+        },
+        {
+            "color": "10",
+            "name_cn": "生命科学",
+            "name_cn_short": "生",
+            "name": "LifeScience"
+        },
+        {
+            "color": "19",
+            "name_cn": "伦敦奥运会",
+            "name_cn_short": "奥",
+            "name": "London2012"
+        },
+        {
+            "color": "13",
+            "name_cn": "数学物理方法",
+            "name_cn_short": "数",
+            "name": "MathPhys"
+        },
+        {
+            "color": "11",
+            "name_cn": "军事纵横",
+            "name_cn_short": "军",
+            "name": "Military"
+        },
+        {
+            "color": "19",
+            "name_cn": "小语种交流",
+            "name_cn_short": "小",
+            "name": "MinorityLanguage"
+        },
+        {
+            "color": "14",
+            "name_cn": "传奇2",
+            "name_cn_short": "传",
+            "name": "MIR2"
+        },
+        {
+            "color": "16",
+            "name_cn": "传奇3",
+            "name_cn_short": "传",
+            "name": "MIR3"
+        },
+        {
+            "color": "7",
+            "name_cn": "网秦手机杀毒",
+            "name_cn_short": "网",
+            "name": "MobileAntiVirus"
+        },
+        {
+            "color": "10",
+            "name_cn": "奇迹",
+            "name_cn_short": "奇",
+            "name": "MU"
+        },
+        {
+            "color": "10",
+            "name_cn": "音乐游戏",
+            "name_cn_short": "音",
+            "name": "MusicGame"
+        },
+        {
+            "color": "11",
+            "name_cn": "北邮穆斯林协会",
+            "name_cn_short": "穆",
+            "name": "Muslims"
+        },
+        {
+            "color": "19",
+            "name_cn": "我与祖国共奋进",
+            "name_cn_short": "祖",
+            "name": "NationalDay"
+        },
+        {
+            "color": "3",
+            "name_cn": "校园广播",
+            "name_cn_short": "播",
+            "name": "NETFM"
+        },
+        {
+            "color": "9",
+            "name_cn": "网络技术",
+            "name_cn_short": "网",
+            "name": "NetTechnology"
+        },
+        {
+            "color": "5",
+            "name_cn": "信息网络中心",
+            "name_cn_short": "信",
+            "name": "NIC"
+        },
+        {
+            "color": "8",
+            "name_cn": "塞上江南·宁夏",
+            "name_cn_short": "宁",
+            "name": "Ningxia"
+        },
+        {
+            "color": "1",
+            "name_cn": "北邮权益部",
+            "name_cn_short": "权",
+            "name": "OurRights"
+        },
+        {
+            "color": "19",
+            "name_cn": "仙剑奇侠",
+            "name_cn_short": "仙",
+            "name": "PAL"
+        },
+        {
+            "color": "8",
+            "name_cn": "泡泡堂",
+            "name_cn_short": "泡",
+            "name": "Poptang"
+        },
+        {
+            "color": "11",
+            "name_cn": "职业启蒙与规划",
+            "name_cn_short": "职",
+            "name": "qmcareer"
+        },
+        {
+            "color": "6",
+            "name_cn": "QQ游戏",
+            "name_cn_short": "Q",
+            "name": "QQGame"
+        },
+        {
+            "color": "11",
+            "name_cn": "万事屋",
+            "name_cn_short": "万",
+            "name": "Requirement"
+        },
+        {
+            "color": "0",
+            "name_cn": "海归",
+            "name_cn_short": "海",
+            "name": "Return"
+        },
+        {
+            "color": "4",
+            "name_cn": "仙境传说",
+            "name_cn_short": "仙",
+            "name": "RO"
+        },
+        {
+            "color": "16",
+            "name_cn": "机器人技术",
+            "name_cn_short": "机",
+            "name": "Robotics"
+        },
+        {
+            "color": "18",
+            "name_cn": "毕业歌会",
+            "name_cn_short": "毕",
+            "name": "RoomA"
+        },
+        {
+            "color": "6",
+            "name_cn": "计算机学院第十届科技节",
+            "name_cn_short": "计",
+            "name": "SCST10thSTF"
+        },
+        {
+            "color": "12",
+            "name_cn": "文法经济学院",
+            "name_cn_short": "文",
+            "name": "SHLE"
+        },
+        {
+            "color": "18",
+            "name_cn": "北邮人学生网络管理协会",
+            "name_cn_short": "网",
+            "name": "SNMA"
+        },
+        {
+            "color": "4",
+            "name_cn": "SPIE北邮学生俱乐部",
+            "name_cn_short": "S",
+            "name": "SPIEBUPT"
+        },
+        {
+            "color": "1",
+            "name_cn": "体育运动",
+            "name_cn_short": "体",
+            "name": "Sports"
+        },
+        {
+            "color": "1",
+            "name_cn": "星际争霸1_2",
+            "name_cn_short": "星",
+            "name": "StarCraft"
+        },
+        {
+            "color": "15",
+            "name_cn": "通信网络综合技术研究所",
+            "name_cn_short": "通",
+            "name": "STNT"
+        },
+        {
+            "color": "6",
+            "name_cn": "腾讯创新俱乐部",
+            "name_cn_short": "腾",
+            "name": "TIC"
+        },
+        {
+            "color": "12",
+            "name_cn": "战网管理",
+            "name_cn_short": "战",
+            "name": "ToraManagement"
+        },
+        {
+            "color": "15",
+            "name_cn": "电视节目预告",
+            "name_cn_short": "电",
+            "name": "TVList"
+        },
+        {
+            "color": "12",
+            "name_cn": "真情志愿者协会",
+            "name_cn_short": "真",
+            "name": "VABUPT"
+        },
+        {
+            "color": "9",
+            "name_cn": "魔兽争霸",
+            "name_cn_short": "魔",
+            "name": "WarCraft"
+        },
+        {
+            "color": "2",
+            "name_cn": "互联网发展小组",
+            "name_cn_short": "互",
+            "name": "WWWTeam"
+        },
+        {
+            "color": "3",
+            "name_cn": "大话西游2",
+            "name_cn_short": "大",
+            "name": "XY2"
+        },
+        {
+            "color": "12",
+            "name_cn": "益友读书社",
+            "name_cn_short": "益",
+            "name": "YiYou"
+        },
+        {
+            "color": "5",
+            "name_cn": "彩云之南·云南",
+            "name_cn_short": "彩",
+            "name": "Yunnan"
+        },
+        {
+            "color": "3",
+            "name_cn": "字符艺术俱乐部",
+            "name_cn_short": "字",
+            "name": "ANSIClub"
+        },
+        {
+            "color": "15",
+            "name_cn": "助理专区",
+            "name_cn_short": "助",
+            "name": "Assistant"
+        },
+        {
+            "color": "15",
+            "name_cn": "VOL开发小组",
+            "name_cn_short": "V",
+            "name": "BUPTVOL"
+        },
+        {
+            "color": "8",
+            "name_cn": "北邮人团队大事记",
+            "name_cn_short": "大",
+            "name": "BYR"
+        },
+        {
+            "color": "4",
+            "name_cn": "北邮人活动宣传",
+            "name_cn_short": "宣",
+            "name": "BYR_Publication"
+        },
+        {
+            "color": "9",
+            "name_cn": "北邮人团队主管专区",
+            "name_cn_short": "管",
+            "name": "BYRChief"
+        },
+        {
+            "color": "0",
+            "name_cn": "北邮人美工组",
+            "name_cn_short": "美",
+            "name": "BYRDesign"
+        },
+        {
+            "color": "5",
+            "name_cn": "北邮人技术组",
+            "name_cn_short": "技",
+            "name": "BYRDEV"
+        },
+        {
+            "color": "12",
+            "name_cn": "北邮人论坛FTP管理",
+            "name_cn_short": "F",
+            "name": "BYRForumFTP"
+        },
+        {
+            "color": "7",
+            "name_cn": "北邮人团队宏福专区",
+            "name_cn_short": "宏",
+            "name": "BYRHF"
+        },
+        {
+            "color": "17",
+            "name_cn": "北邮人在线广播",
+            "name_cn_short": "播",
+            "name": "BYRRadio"
+        },
+        {
+            "color": "5",
+            "name_cn": "北邮人之星",
+            "name_cn_short": "星",
+            "name": "BYRStar"
+        },
+        {
+            "color": "12",
+            "name_cn": "北邮人论坛志编辑部",
+            "name_cn_short": "志",
+            "name": "BYRZine"
+        },
+        {
+            "color": "13",
+            "name_cn": "北邮人技术助理",
+            "name_cn_short": "技术",
+            "name": "DEVAssistant"
+        },
+        {
+            "color": "4",
+            "name_cn": "北邮人外联专区",
+            "name_cn_short": "联",
+            "name": "External"
+        },
+        {
+            "color": "10",
+            "name_cn": "北邮人外联助理",
+            "name_cn_short": "联",
+            "name": "ExternalAssist"
+        },
+        {
+            "color": "18",
+            "name_cn": "北邮人团队作品展示",
+            "name_cn_short": "展",
+            "name": "Showcase"
+        },
+        {
+            "color": "14",
+            "name_cn": "北邮人微博",
+            "name_cn_short": "微",
+            "name": "WeiBo"
+        },
+        {
+            "color": "15",
+            "name_cn": "投诉辩论区",
+            "name_cn_short": "诉",
+            "name": "BYRCourt"
+        },
+        {
+            "color": "19",
+            "name_cn": "投诉与举报",
+            "name_cn_short": "举",
+            "name": "Complain"
+        },
+        {
+            "color": "5",
+            "name_cn": "北邮人论坛12周年站庆",
+            "name_cn_short": "庆",
+            "name": "BYR12"
+        },
+        {
+            "color": "15",
+            "name_cn": "炉石传说",
+            "name_cn_short": "炉",
+            "name": "Hearthstone"
+        }
+    ]
+}

@@ -1,0 +1,89 @@
+name: byr_mobile_app
+description: official mobile application for bbs.byr.cn
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^0.1.3
+  http: ^0.12.2
+  json_annotation: ^3.0.1
+  hive: ^1.4.4
+  hive_flutter: ^0.3.1
+  get: ^3.8.0
+  flutter_cache_manager: ^1.4.1
+  provider: ^4.3.2+1
+  path_provider: ^1.6.14
+  universal_platform: ^0.1.3
+  tuple: ^1.0.3
+  transparent_image: ^1.0.0
+  cached_network_image: ^2.2.0+1
+  font_awesome_flutter: ^8.8.1
+  pull_to_refresh: ^1.6.1
+  flutter_gifimage: ^1.0.0
+  shimmer: ^1.1.1
+  qr_flutter: ^3.1.0
+  markdown: ^2.1.8
+  flutter_markdown: ^0.4.3
+  fast_gbk: ^0.1.2+1
+  image_picker: ^0.6.7+6
+  url_launcher: ^5.5.2
+  extended_text_field: ^3.0.1
+  extended_image: ^1.0.0
+  characters: ^1.0.0
+  share: ^0.6.5
+  audioplayers: ^0.15.1
+  file_picker: ^1.13.3
+  permission_handler: ^5.0.1+1
+  flutter_audio_recorder: ^0.5.5
+  flutter_staggered_grid_view: ^0.3.2
+  flutter_icons: ^1.0.0+1
+  ota_update: ^2.4.1
+  uni_links: ^0.4.0
+  modal_bottom_sheet: ^0.2.0+1	
+  toast: ^0.1.5	
+  like_button: ^1.0.1
+  gallery_saver:
+    git:
+      url: git://github.com/BYR-App-Dev/gallery_saver
+  scroll_to_index: 
+    git:
+      url: git://github.com/wdjwxh/scroll-to-index
+  tinycolor: 
+    git:
+      url: git://github.com/BYR-App-Dev/tinycolor
+  loaded_list_view:
+    git:
+      url: git://github.com/DawenZhang/LoadedListView
+  secrets:
+    git:
+      url: ssh://git@github.com/BYR-App-Dev/secrets.git
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^1.10.0
+  mobx_codegen: ^1.0.0
+  json_serializable: ^3.4.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - resources/em/
+    - resources/user/
+    - resources/board/
+    - resources/refresher/bupt_heart_beat/
+    - resources/refresher/aircon_summer/
+    - resources/refresher/memory_of_bupt/
+    - resources/welcome_page/
+    - resources/login_page/
+    - resources/thread/
+  fonts:
+   - family:  BYRIcons
+     fonts:
+      - asset: fonts/BYRIcons.ttf

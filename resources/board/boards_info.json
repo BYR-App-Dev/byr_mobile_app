@@ -1,0 +1,1184 @@
+{
+	"boards": [{
+			"name": "Beauty",
+			"description": "美容护肤"
+		},
+		{
+			"name": "Blessing",
+			"description": "北邮愿望树",
+			"allow_attachment": false
+		},
+		{
+			"name": "Clothing",
+			"description": "衣衣不舍"
+		},
+		{
+			"name": "Constellations",
+			"description": "星雨星愿"
+		},
+		{
+			"name": "DigiLife",
+			"description": "数字生活"
+		},
+		{
+			"name": "DIYLife",
+			"description": "创意生活"
+		},
+		{
+			"name": "Environment",
+			"description": "环境保护"
+		},
+		{
+			"name": "Feeling",
+			"description": "情感的天空"
+		},
+		{
+			"name": "Food",
+			"description": "秀色可餐"
+		},
+		{
+			"name": "Friends",
+			"description": "缘来如此"
+		},
+		{
+			"name": "Health",
+			"description": "健康保健"
+		},
+		{
+			"name": "IWhisper",
+			"description": "悄悄话",
+			"allow_attachment": false,
+			"allow_anonymous": true
+		},
+		{
+			"name": "LostandFound",
+			"description": "失物招领与拾金不昧"
+		},
+		{
+			"name": "Talking",
+			"description": "谈天说地",
+			"allow_attachment": false
+		},
+		{
+			"name": "AutoMotor",
+			"description": "汽车之家"
+		},
+		{
+			"name": "BoardGame",
+			"description": "桌面游戏"
+		},
+		{
+			"name": "Comic",
+			"description": "动漫交流区"
+		},
+		{
+			"name": "Flash",
+			"description": "闪客帝国",
+			"is_read_only": true
+		},
+		{
+			"name": "Hero",
+			"description": "煮酒论剑"
+		},
+		{
+			"name": "Joke",
+			"description": "笑口常开"
+		},
+		{
+			"name": "KaraOK",
+			"description": "K歌之王"
+		},
+		{
+			"name": "KillBar",
+			"description": "杀人俱乐部"
+		},
+		{
+			"name": "Movie",
+			"description": "电影"
+		},
+		{
+			"name": "NetLiterature",
+			"description": "网络文学"
+		},
+		{
+			"name": "nVote",
+			"description": "北邮人投票",
+			"allow_attachment": false
+		},
+		{
+			"name": "Pet",
+			"description": "宠物家园"
+		},
+		{
+			"name": "Picture",
+			"description": "贴图秀"
+		},
+		{
+			"name": "Plant",
+			"description": "绿色心情"
+		},
+		{
+			"name": "RadioOnline",
+			"description": "BYR在线广播"
+		},
+		{
+			"name": "SuperStar",
+			"description": "娱乐星天地"
+		},
+		{
+			"name": "Travel",
+			"description": "海天游踪"
+		},
+		{
+			"name": "TV",
+			"description": "电视剧"
+		},
+		{
+			"name": "VideoCool",
+			"description": "视频酷"
+		},
+		{
+			"name": "AcademicAffairs",
+			"description": "北邮教务处"
+		},
+		{
+			"name": "AimBUPT",
+			"description": "北邮欢迎你"
+		},
+		{
+			"name": "BUPT",
+			"description": "北邮生活"
+		},
+		{
+			"name": "BUPTNet",
+			"description": "校园网"
+		},
+		{
+			"name": "BUPTPost",
+			"description": "北邮邮局"
+		},
+		{
+			"name": "BYR_Bulletin",
+			"description": "北邮人公告栏"
+		},
+		{
+			"name": "CampusCard",
+			"description": "北邮校园卡"
+		},
+		{
+			"name": "daonian",
+			"description": "悼念周先生"
+		},
+		{
+			"name": "EID",
+			"description": "北邮EID"
+		},
+		{
+			"name": "Focus",
+			"description": "北邮关注"
+		},
+		{
+			"name": "Graduation",
+			"description": "毕业生之家"
+		},
+		{
+			"name": "Houqin",
+			"description": "北邮后勤处"
+		},
+		{
+			"name": "jiaowu_newSystem",
+			"description": "本科教务新系统"
+		},
+		{
+			"name": "JiJianChu",
+			"description": "北邮基建处"
+		},
+		{
+			"name": "Junxun",
+			"description": "军训快报"
+		},
+		{
+			"name": "Library",
+			"description": "北邮图书馆"
+		},
+		{
+			"name": "MyBUPT",
+			"description": "北邮记忆"
+		},
+		{
+			"name": "Recommend",
+			"description": "热点活动",
+			"allow_post": false
+		},
+		{
+			"name": "SecurityDivision",
+			"description": "北邮保卫处"
+		},
+		{
+			"name": "Selfsupport",
+			"description": "助学之家"
+		},
+		{
+			"name": "StudentAffairs",
+			"description": "北邮学生处"
+		},
+		{
+			"name": "StudentQuery",
+			"description": "邮问有答"
+		},
+		{
+			"name": "Astronomy",
+			"description": "天文"
+		},
+		{
+			"name": "Debate",
+			"description": "辩论"
+		},
+		{
+			"name": "DV",
+			"description": "视频制作"
+		},
+		{
+			"name": "EnglishBar",
+			"description": "英语吧"
+		},
+		{
+			"name": "Ghost",
+			"description": "奇闻异事"
+		},
+		{
+			"name": "Guitar",
+			"description": "吉他"
+		},
+		{
+			"name": "Japanese",
+			"description": "日语学习"
+		},
+		{
+			"name": "KoreanWind",
+			"description": "韩流吧"
+		},
+		{
+			"name": "Music",
+			"description": "音乐交流区"
+		},
+		{
+			"name": "Photo",
+			"description": "摄影"
+		},
+		{
+			"name": "Poetry",
+			"description": "诗词歌赋"
+		},
+		{
+			"name": "PsyHealthOnline",
+			"description": "心理健康在线"
+		},
+		{
+			"name": "Quyi",
+			"description": "曲苑杂谈"
+		},
+		{
+			"name": "Reading",
+			"description": "书屋",
+			"allow_attachment": false
+		},
+		{
+			"name": "ScienceFiction",
+			"description": "科幻奇幻"
+		},
+		{
+			"name": "Tshirt",
+			"description": "T恤文化"
+		},
+		{
+			"name": "Anhui",
+			"description": "情淮徽皖·安徽"
+		},
+		{
+			"name": "Cantonese",
+			"description": "粤广茶餐厅·广东"
+		},
+		{
+			"name": "Chongqing",
+			"description": "巴渝人家·重庆"
+		},
+		{
+			"name": "Fujian",
+			"description": "八闽玲珑·福建"
+		},
+		{
+			"name": "Gansu",
+			"description": "西凉故道·甘肃"
+		},
+		{
+			"name": "Guangxi",
+			"description": "桂香南疆·广西"
+		},
+		{
+			"name": "Guizhou",
+			"description": "景秀黔城·贵州"
+		},
+		{
+			"name": "Hainan",
+			"description": "天涯海角·海南"
+		},
+		{
+			"name": "Hebei",
+			"description": "燕赵情怀·河北"
+		},
+		{
+			"name": "Henan",
+			"description": "豫韵悠悠·河南"
+		},
+		{
+			"name": "Hubei",
+			"description": "楚天邮情·湖北"
+		},
+		{
+			"name": "Hunan",
+			"description": "潇湘天下·湖南"
+		},
+		{
+			"name": "InnerMongolia",
+			"description": "翱翔雄鹰·内蒙古"
+		},
+		{
+			"name": "Jiangsu",
+			"description": "江淮人家·江苏"
+		},
+		{
+			"name": "Jiangxi",
+			"description": "江南西道·江西"
+		},
+		{
+			"name": "NorthEast",
+			"description": "东北一家人·东北"
+		},
+		{
+			"name": "Peking",
+			"description": "北京四合院·北京"
+		},
+		{
+			"name": "Qinghai",
+			"description": "青深似海·青海"
+		},
+		{
+			"name": "Shaanxi",
+			"description": "三秦大地·陕西"
+		},
+		{
+			"name": "Shandong",
+			"description": "齐鲁大地·山东"
+		},
+		{
+			"name": "Shanxi",
+			"description": "桐叶封晋·山西"
+		},
+		{
+			"name": "Sichuan",
+			"description": "蜀山邮侠·四川"
+		},
+		{
+			"name": "Tianjin",
+			"description": "九河下梢·天津"
+		},
+		{
+			"name": "Xinjiang",
+			"description": "天山南北·新疆"
+		},
+		{
+			"name": "Zhejiang",
+			"description": "钱塘人家·浙江"
+		},
+		{
+			"name": "AimGraduate",
+			"description": "考研专版"
+		},
+		{
+			"name": "BNU",
+			"description": "学为人师，行为世范"
+		},
+		{
+			"name": "BUPT_Internet_Club",
+			"description": "北邮互联网俱乐部",
+			"allow_post": false
+		},
+		{
+			"name": "BYRatSH",
+			"description": "北邮人在上海"
+		},
+		{
+			"name": "BYRatSZ",
+			"description": "深圳邮人家"
+		},
+		{
+			"name": "Certification",
+			"description": "认证考试"
+		},
+		{
+			"name": "CivilServant",
+			"description": "公务员"
+		},
+		{
+			"name": "Consulting",
+			"description": "管理咨询"
+		},
+		{
+			"name": "Entrepreneurship",
+			"description": "创业交流"
+		},
+		{
+			"name": "FamilyLife",
+			"description": "家庭生活"
+		},
+		{
+			"name": "Financecareer",
+			"description": "金融职场",
+			"allow_attachment": false
+		},
+		{
+			"name": "Financial",
+			"description": "金融投资"
+		},
+		{
+			"name": "GoAbroad",
+			"description": "飞跃重洋"
+		},
+		{
+			"name": "Home",
+			"description": "安居乐业"
+		},
+		{
+			"name": "IT",
+			"description": "信息产业"
+		},
+		{
+			"name": "Job",
+			"description": "毕业生找工作"
+		},
+		{
+			"name": "JobInfo",
+			"description": "招聘信息专版"
+		},
+		{
+			"name": "Jump",
+			"description": "跳槽就业",
+			"allow_attachment": false
+		},
+		{
+			"name": "NetResources",
+			"description": "网络资源"
+		},
+		{
+			"name": "Overseas",
+			"description": "海外北邮人"
+		},
+		{
+			"name": "ParttimeJob",
+			"description": "兼职实习信息"
+		},
+		{
+			"name": "PMatBUPT",
+			"description": "产品疯人院"
+		},
+		{
+			"name": "StudyShare",
+			"description": "学习交流区"
+		},
+		{
+			"name": "Weather",
+			"description": "天气预报",
+			"allow_post": false,
+			"allow_attachment": false
+		},
+		{
+			"name": "WorkLife",
+			"description": "职场人生"
+		},
+		{
+			"name": "Advice",
+			"description": "意见与建议"
+		},
+		{
+			"name": "Announce",
+			"description": "站务公告栏",
+			"allow_post": false
+		},
+		{
+			"name": "BBShelp",
+			"description": "论坛使用帮助"
+		},
+		{
+			"name": "Bet",
+			"description": "竞猜",
+			"allow_attachment": false
+		},
+		{
+			"name": "BM_Market",
+			"description": "版主及助理招聘区"
+		},
+		{
+			"name": "BYR12",
+			"description": "北邮人论坛十二周年站庆"
+		},
+		{
+			"name": "Cooperation",
+			"description": "业务合作与广告投放"
+		},
+		{
+			"name": "ForumCommittee",
+			"description": "论坛委员会"
+		},
+		{
+			"name": "ID",
+			"description": "帐号事务管理",
+			"allow_attachment": false
+		},
+		{
+			"name": "Progress",
+			"description": "更新与改进"
+		},
+		{
+			"name": "Score",
+			"description": "积分",
+			"allow_post": false,
+			"allow_attachment": false
+		},
+		{
+			"name": "sysop",
+			"description": "本站系统讨论区"
+		},
+		{
+			"name": "test",
+			"description": "新手测试区",
+			"allow_attachment": false
+		},
+		{
+			"name": "Athletics",
+			"description": "田径"
+		},
+		{
+			"name": "Badminton",
+			"description": "羽毛球"
+		},
+		{
+			"name": "Basketball",
+			"description": "篮球咖啡屋"
+		},
+		{
+			"name": "Billiards",
+			"description": "台球"
+		},
+		{
+			"name": "Chess",
+			"description": "棋牌"
+		},
+		{
+			"name": "Cycling",
+			"description": "梦想单车"
+		},
+		{
+			"name": "Dancing",
+			"description": "舞蹈"
+		},
+		{
+			"name": "Football",
+			"description": "足球吧"
+		},
+		{
+			"name": "GSpeed",
+			"description": "极速赛车"
+		},
+		{
+			"name": "Gymnasium",
+			"description": "健身房"
+		},
+		{
+			"name": "Kungfu",
+			"description": "武术"
+		},
+		{
+			"name": "Rugby",
+			"description": "橄榄球"
+		},
+		{
+			"name": "Shuttlecock",
+			"description": "天行毽"
+		},
+		{
+			"name": "Sk8",
+			"description": "滑板名堂"
+		},
+		{
+			"name": "Skating",
+			"description": "北邮刷天下"
+		},
+		{
+			"name": "Ski_Snowboard",
+			"description": "滑雪"
+		},
+		{
+			"name": "Swim",
+			"description": "碧水情深"
+		},
+		{
+			"name": "Tabletennis",
+			"description": "乒乓球"
+		},
+		{
+			"name": "Taekwondo",
+			"description": "跆拳道"
+		},
+		{
+			"name": "Tennis",
+			"description": "网球"
+		},
+		{
+			"name": "Volleyball",
+			"description": "排球"
+		},
+		{
+			"name": "ACM_ICPC",
+			"description": "算法与程序设计竞赛"
+		},
+		{
+			"name": "BBSMan_Dev",
+			"description": "BBS安装管理",
+			"allow_post": false,
+			"allow_attachment": false
+		},
+		{
+			"name": "BBSOpenAPI",
+			"description": "北邮人开放平台"
+		},
+		{
+			"name": "Circuit",
+			"description": "电子电路"
+		},
+		{
+			"name": "Communications",
+			"description": "通信技术"
+		},
+		{
+			"name": "CPP",
+			"description": "C/C++程序设计语言"
+		},
+		{
+			"name": "Database",
+			"description": "数据库技术",
+			"allow_attachment": false
+		},
+		{
+			"name": "dotNET",
+			"description": ".NET程序设计"
+		},
+		{
+			"name": "Economics",
+			"description": "经济学"
+		},
+		{
+			"name": "Embedded_System",
+			"description": "嵌入式系统"
+		},
+		{
+			"name": "Golang",
+			"description": "Go语言"
+		},
+		{
+			"name": "HardWare",
+			"description": "电脑硬件与维修"
+		},
+		{
+			"name": "Innovation",
+			"description": "创新实践"
+		},
+		{
+			"name": "Java",
+			"description": "Java技术"
+		},
+		{
+			"name": "JavaScript",
+			"description": "JavaScript语言"
+		},
+		{
+			"name": "Linux",
+			"description": "Linux操作系统"
+		},
+		{
+			"name": "Makerclub",
+			"description": "创客与开源硬件",
+			"allow_attachment": false
+		},
+		{
+			"name": "MathModel",
+			"description": "数学建模"
+		},
+		{
+			"name": "Matlab",
+			"description": "Matlab实验室"
+		},
+		{
+			"name": "ML_DM",
+			"description": "机器学习与数据挖掘"
+		},
+		{
+			"name": "MobileInternet",
+			"description": "移动互联网"
+		},
+		{
+			"name": "MobileTerminalAT",
+			"description": "智能终端开发技术"
+		},
+		{
+			"name": "Notebook",
+			"description": "笔记本电脑"
+		},
+		{
+			"name": "OfficeTool",
+			"description": "办公软件"
+		},
+		{
+			"name": "Paper",
+			"description": "科研与论文"
+		},
+		{
+			"name": "Python",
+			"description": "Python"
+		},
+		{
+			"name": "Robot",
+			"description": "机器人"
+		},
+		{
+			"name": "SearchEngine",
+			"description": "搜索引擎"
+		},
+		{
+			"name": "Security",
+			"description": "信息安全"
+		},
+		{
+			"name": "Smartcar",
+			"description": "智能车"
+		},
+		{
+			"name": "SoftDesign",
+			"description": "软件开发"
+		},
+		{
+			"name": "Visualization",
+			"description": "大数据可视化"
+		},
+		{
+			"name": "Windows",
+			"description": "Windows操作系统"
+		},
+		{
+			"name": "WWWTechnology",
+			"description": "WWW技术"
+		},
+		{
+			"name": "BUPTDNF",
+			"description": "地下城与勇士"
+		},
+		{
+			"name": "CStrike",
+			"description": "反恐精英"
+		},
+		{
+			"name": "Diablo",
+			"description": "暗黑破坏神"
+		},
+		{
+			"name": "Dota",
+			"description": "Dota"
+		},
+		{
+			"name": "FootballManager",
+			"description": "足球经理"
+		},
+		{
+			"name": "Hearthstone",
+			"description": "炉石传说"
+		},
+		{
+			"name": "LOL",
+			"description": "英雄联盟"
+		},
+		{
+			"name": "OnlineGame",
+			"description": "网络游戏"
+		},
+		{
+			"name": "OverWatch",
+			"description": "守望先锋"
+		},
+		{
+			"name": "PCGame",
+			"description": "电脑游戏"
+		},
+		{
+			"name": "PopKart",
+			"description": "跑跑卡丁车"
+		},
+		{
+			"name": "PUBG",
+			"description": "绝地求生"
+		},
+		{
+			"name": "TVGame",
+			"description": "电子游戏"
+		},
+		{
+			"name": "WE",
+			"description": "实况足球"
+		},
+		{
+			"name": "WOW",
+			"description": "魔兽世界"
+		},
+		{
+			"name": "Xyq",
+			"description": "梦幻西游"
+		},
+		{
+			"name": "notepad",
+			"description": "留言版记录",
+			"allow_post": false,
+			"allow_attachment": false
+		},
+		{
+			"name": "vote",
+			"description": "各板投票情况汇总",
+			"allow_post": false,
+			"allow_attachment": false
+		},
+		{
+			"name": "BM_Apply",
+			"description": "版主申请",
+			"allow_attachment": false
+		},
+		{
+			"name": "BoardManager",
+			"description": "版主管理",
+			"allow_post": false
+		},
+		{
+			"name": "OutstandingBM",
+			"description": "优秀版主展评"
+		},
+		{
+			"name": "Board_Apply",
+			"description": "版面申请",
+			"allow_attachment": false
+		},
+		{
+			"name": "Board_Document",
+			"description": "版面文档",
+			"allow_post": false,
+			"allow_attachment": false
+		},
+		{
+			"name": "Board_Management",
+			"description": "版面管理",
+			"allow_post": false
+		},
+		{
+			"name": "BYR",
+			"description": "北邮人团队大事记",
+			"allow_post": false
+		},
+		{
+			"name": "BYRStar",
+			"description": "北邮人之星",
+			"allow_post": false,
+			"allow_attachment": false
+		},
+		{
+			"name": "Showcase",
+			"description": "北邮人团队作品展示"
+		},
+		{
+			"name": "cnAdmin",
+			"description": "全国转信管理",
+			"allow_post": false,
+			"allow_attachment": false
+		},
+		{
+			"name": "cnAnnounce",
+			"description": "全国转信重要公告",
+			"allow_post": false,
+			"allow_attachment": false
+		},
+		{
+			"name": "cnLists",
+			"description": "全国转信统计表",
+			"allow_post": false,
+			"allow_attachment": false
+		},
+		{
+			"name": "cnTest",
+			"description": "转信测试",
+			"allow_attachment": false
+		},
+		{
+			"name": "BYRCourt",
+			"description": "投诉辩论区",
+			"allow_post": false
+		},
+		{
+			"name": "Complain",
+			"description": "投诉与举报"
+		},
+		{
+			"name": "ACETeam",
+			"description": "ACE战队专区"
+		},
+		{
+			"name": "BuptAssociation",
+			"description": "北邮社团"
+		},
+		{
+			"name": "buptAUTA",
+			"description": "阿里巴巴高校技术联盟"
+		},
+		{
+			"name": "BUPTMSTC",
+			"description": "微软技术俱乐部"
+		},
+		{
+			"name": "BUPTStudentUnion",
+			"description": "北京邮电大学学生会"
+		},
+		{
+			"name": "BUPTSTV",
+			"description": "北邮学生电视台"
+		},
+		{
+			"name": "BuptWeekly",
+			"description": "北邮今周"
+		},
+		{
+			"name": "ChineseOrchestra",
+			"description": "北邮民乐团"
+		},
+		{
+			"name": "GraduateUnion",
+			"description": "北京邮电大学研究生会"
+		},
+		{
+			"name": "OracleClub",
+			"description": "甲骨文俱乐部"
+		},
+		{
+			"name": "Orchestra",
+			"description": "北邮管弦乐团"
+		},
+		{
+			"name": "Philharmonic",
+			"description": "爱乐家园"
+		},
+		{
+			"name": "Redcross",
+			"description": "红十字会"
+		},
+		{
+			"name": "SCDA",
+			"description": "北邮职业发展协会"
+		},
+		{
+			"name": "SICA",
+			"description": "学生国际交流协会"
+		},
+		{
+			"name": "WOWBuptGuild",
+			"description": "BUPT魔兽公会"
+		},
+		{
+			"name": "BUPTNU",
+			"description": "网络教育学院"
+		},
+		{
+			"name": "DMDA",
+			"description": "数字媒体与设计艺术学院"
+		},
+		{
+			"name": "GraduateSch",
+			"description": "研究生院"
+		},
+		{
+			"name": "HongFu",
+			"description": "宏福校区"
+		},
+		{
+			"name": "INTR",
+			"description": "网络技术研究院"
+		},
+		{
+			"name": "IPOC",
+			"description": "信息光子学与光通信研究院"
+		},
+		{
+			"name": "IS",
+			"description": "国际学院"
+		},
+		{
+			"name": "SA",
+			"description": "自动化学院"
+		},
+		{
+			"name": "SCS",
+			"description": "计算机学院"
+		},
+		{
+			"name": "SCSS",
+			"description": "网络空间安全学院"
+		},
+		{
+			"name": "SEE",
+			"description": "电子工程学院"
+		},
+		{
+			"name": "SEM",
+			"description": "经济管理学院"
+		},
+		{
+			"name": "SH",
+			"description": "人文学院"
+		},
+		{
+			"name": "ShaHe",
+			"description": "沙河校区"
+		},
+		{
+			"name": "SICE",
+			"description": "信息与通信工程学院"
+		},
+		{
+			"name": "SIE",
+			"description": "原信息工程学院"
+		},
+		{
+			"name": "SL",
+			"description": "语言学院",
+			"is_read_only": true
+		},
+		{
+			"name": "SPM",
+			"description": "公共管理学院"
+		},
+		{
+			"name": "SS",
+			"description": "理学院"
+		},
+		{
+			"name": "SSE",
+			"description": "软件学院"
+		},
+		{
+			"name": "STE",
+			"description": "电信工程学院"
+		},
+		{
+			"name": "Ad_Agent",
+			"description": "商务广告及代理"
+		},
+		{
+			"name": "Advertising",
+			"description": "跳蚤市场"
+		},
+		{
+			"name": "BookTrade",
+			"description": "二手书交易"
+		},
+		{
+			"name": "BUPTDiscount",
+			"description": "北邮折扣",
+			"is_read_only": true
+		},
+		{
+			"name": "Co_Buying",
+			"description": "拼团"
+		},
+		{
+			"name": "ComputerTrade",
+			"description": "电脑数码交易"
+		},
+		{
+			"name": "House",
+			"description": "房屋租赁"
+		},
+		{
+			"name": "House_Agent",
+			"description": "房屋中介",
+			"allow_post": false
+		},
+		{
+			"name": "Ticket",
+			"description": "票务",
+			"allow_attachment": false
+		},
+		{
+			"name": "BTadvice",
+			"description": "北邮人BT意见与建议"
+		},
+		{
+			"name": "BTannounce",
+			"description": "BT公告区",
+			"allow_post": false
+		},
+		{
+			"name": "BTbt",
+			"description": "BT讨论区"
+		},
+		{
+			"name": "BTcomic",
+			"description": "动漫种子发布区"
+		},
+		{
+			"name": "BTcomplain",
+			"description": "BT投诉区"
+		},
+		{
+			"name": "BTdocument",
+			"description": "资料种子发布区"
+		},
+		{
+			"name": "BTgame",
+			"description": "游戏种子发布区"
+		},
+		{
+			"name": "BTmovie",
+			"description": "电影种子发布区"
+		},
+		{
+			"name": "BTmusic",
+			"description": "音乐种子发布区"
+		},
+		{
+			"name": "BTPending",
+			"description": "种子候选区"
+		},
+		{
+			"name": "BTreward",
+			"description": "BT悬赏区"
+		},
+		{
+			"name": "BTshow",
+			"description": "综艺种子发布区"
+		},
+		{
+			"name": "BTsoftware",
+			"description": "软件种子发布区"
+		},
+		{
+			"name": "BTsport",
+			"description": "体育种子发布区"
+		},
+		{
+			"name": "BTtv",
+			"description": "电视剧种子发布区"
+		}
+	]
+}
