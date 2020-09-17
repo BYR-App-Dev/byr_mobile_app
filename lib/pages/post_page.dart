@@ -18,7 +18,6 @@ import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
 import 'package:byr_mobile_app/reusable_components/no_padding_list_tile.dart';
 import 'package:byr_mobile_app/reusable_components/parsed_text.dart';
 import 'package:byr_mobile_app/reusable_components/post_article_provider.dart';
-import 'package:byr_mobile_app/reusable_components/thread_cell.dart';
 import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
