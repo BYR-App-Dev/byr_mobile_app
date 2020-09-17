@@ -18,6 +18,7 @@ import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
 import 'package:byr_mobile_app/reusable_components/no_padding_list_tile.dart';
 import 'package:byr_mobile_app/reusable_components/parsed_text.dart';
 import 'package:byr_mobile_app/reusable_components/post_article_provider.dart';
+import 'package:byr_mobile_app/reusable_components/thread_cell.dart';
 import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -550,69 +551,102 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
           highlightColor: E().editPageBackgroundColor.withOpacity(0.12),
           splashColor: BoardInfo.getBoardIconColor(_toBoard).withOpacity(0.15),
           onTap: () {},
-          child: ListTile(
-            contentPadding: EdgeInsets.only(
-              top: 0,
-              left: 18,
-              right: 18,
-            ),
-            title: Column(
+          child: Container(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        ClickableAvatar(
-                          radius: 18,
-                          imageLink:
-                              userSnapshot.hasData ? NForumService.makeGetURL(userSnapshot.data.faceUrl ?? "") : null,
-                          emptyUser: (_toBoard == 'IWhisper' && _anonymous)
-                              ? true
-                              : userSnapshot.hasData ? userSnapshot.data?.faceUrl == null : true,
-                          onTap: null,
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Column(
+                ListTile(
+                  contentPadding: EdgeInsets.only(
+                    top: 0,
+                    left: 18,
+                    right: 18,
+                  ),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                (_toBoard == 'IWhisper' && _anonymous)
-                                    ? 'IWhisper#XXX'
-                                    : userSnapshot.hasData ? userSnapshot.data?.id : "username",
-                                style: TextStyle(
-                                    fontSize: 18.0,
-                                    color: (_toBoard == 'IWhisper' && _anonymous)
-                                        ? E().otherUserIdColor
-                                        : ConstColors.getUsernameColor(
-                                            userSnapshot.hasData ? userSnapshot.data?.gender : null)),
+                            children: <Widget>[
+                              ClickableAvatar(
+                                radius: 18,
+                                imageLink: userSnapshot.hasData
+                                    ? NForumService.makeGetURL(userSnapshot.data.faceUrl ?? "")
+                                    : null,
+                                emptyUser: (_toBoard == 'IWhisper' && _anonymous)
+                                    ? true
+                                    : userSnapshot.hasData ? userSnapshot.data?.faceUrl == null : true,
+                                onTap: null,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(
-                                    NForumTextParser.getArticlePositionName(
-                                        _updateMode ? _articleModel.position : (_reid == null ? 0 : 9999)),
-                                    style: TextStyle(fontSize: 12.0, color: E().threadPageOtherTextColor),
-                                  ),
-                                  Text(
-                                    '  ' + Helper.convTimestampToRelative(DateTime.now().millisecondsSinceEpoch),
-                                    style: TextStyle(fontSize: 12.0, color: E().threadPageOtherTextColor),
-                                  ),
-                                ],
+                              Container(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      (_toBoard == 'IWhisper' && _anonymous)
+                                          ? 'IWhisper#XXX'
+                                          : userSnapshot.hasData ? userSnapshot.data?.id : "username",
+                                      style: TextStyle(
+                                          fontSize: 18.0,
+                                          color: (_toBoard == 'IWhisper' && _anonymous)
+                                              ? E().otherUserIdColor
+                                              : ConstColors.getUsernameColor(
+                                                  userSnapshot.hasData ? userSnapshot.data?.gender : null)),
+                                    ),
+                                    Text(
+                                      Helper.convTimestampToRelative(DateTime.now().millisecondsSinceEpoch),
+                                      style: TextStyle(fontSize: 12.0, color: E().threadPageOtherTextColor),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
+                          Text(
+                            NForumTextParser.getArticlePositionName(
+                                _updateMode ? _articleModel.position : (_reid == null ? 0 : 9999)),
+                            style: TextStyle(fontSize: 12.0, color: E().threadPageOtherTextColor),
+                          ),
+                        ],
+                      ),
+                      (title == null || title == "")
+                          ? Container()
+                          : Container(
+                              padding: EdgeInsets.only(
+                                top: 15,
+                                bottom: 10,
+                              ),
+                              child: Text(
+                                title,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: E().threadPageTitleColor,
+                                ),
+                              ),
+                            ),
+                    ],
+                  ),
+                  subtitle: Container(
+                    padding: (title == null || title == "") ? EdgeInsets.only(left: 45) : EdgeInsets.zero,
+                    child: ParsedText.preview(
+                      text: (content + _replyTail).trim().replaceAll(RegExp(r'\n+--\n*$'), '\n'),
+                      uploads: value.item3.map<PreviewUpload>((e) => PreviewUpload(e.item1, e.item2)).toList(),
+                      title: title,
                     ),
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
                     Expanded(
+                      flex: 1,
                       child: Container(
                           child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           IconButton(
                             padding: EdgeInsets.all(0),
@@ -627,32 +661,28 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
                         ],
                       )),
                     ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          IconButton(
+                            padding: EdgeInsets.all(0),
+                            icon: Icon(Icons.thumb_down, color: E().threadPageVoteUpDownUnpickedColor),
+                            iconSize: 24,
+                            onPressed: () {},
+                          ),
+                          Text(
+                            '0',
+                            style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
+                          ),
+                        ],
+                      )),
+                    ),
                   ],
                 ),
-                (title == null || title == "")
-                    ? Container()
-                    : Container(
-                        padding: EdgeInsets.only(
-                          top: 15,
-                          bottom: 10,
-                        ),
-                        child: Text(
-                          title,
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            color: E().threadPageTitleColor,
-                          ),
-                        ),
-                      ),
               ],
-            ),
-            subtitle: Container(
-              padding: (title == null || title == "") ? EdgeInsets.only(left: 45) : EdgeInsets.zero,
-              child: ParsedText.preview(
-                text: (content + _replyTail).trim().replaceAll(RegExp(r'\n+--\n*$'), '\n'),
-                uploads: value.item3.map<PreviewUpload>((e) => PreviewUpload(e.item1, e.item2)).toList(),
-                title: title,
-              ),
             ),
           ),
         );
