@@ -542,15 +542,26 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     }
   }
 
-  showBottomActionSheet({ThreadArticleModel articleModel, String content}) {
+  showBottomActionSheet({ArticleBaseModel articleModel, String content}) {
     content = NForumTextParser.computeEmojiStr(content);
-    var actions = ["copy".tr];
-    if (articleModel != null && articleModel.isAdmin) {
+    var actions = [
+      if (widget.arg.boardName != 'IWhisper')
+        (data.authorToShow == articleModel.user?.id ? ("cancelTrans".tr + " ") : "") + "onlyAuthor".tr,
+    ];
+    actions.add("copy".tr);
+    if (articleModel != null &&
+        articleModel.runtimeType == ThreadArticleModel &&
+        (articleModel as ThreadArticleModel).isAdmin) {
       actions.add("edit".tr);
       actions.add("delete".tr);
     }
     AdaptiveComponents.showBottomSheet(context, actions, onItemTap: (int index) async {
       if (index == 0) {
+        if (articleModel.user?.id != null && articleModel.user.id.isNotEmpty) {
+          _author(articleModel.user?.id);
+        }
+      }
+      if (index == 1) {
         Clipboard.setData(ClipboardData(text: content));
         scaffoldKey.currentState.removeCurrentSnackBar();
         scaffoldKey.currentState.showSnackBar(
@@ -560,20 +571,20 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
           ),
         );
       }
-      if (index == 1) {
+      if (index == 2) {
         var result = await navigator.pushNamed(
           'post_page',
           arguments: PostPageRouteArg(
             board: null,
             updateMode: true,
-            articleModel: articleModel,
+            articleModel: articleModel as ThreadArticleModel,
           ),
         );
         if (result == true) {
           afterEdit();
         }
       }
-      if (index == 2) deleteArticle(articleModel.id);
+      if (index == 3) deleteArticle((articleModel as ThreadArticleModel).id);
       return;
     });
   }
@@ -588,10 +599,13 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     int j = i - delSubjectLength;
     if (i == 0 && data.currentMinPage == 1) {
       if (j == -1) {
+        if (data.authorToShow != null && data.authorToShow.isNotEmpty) {
+          return Container();
+        }
         return Container(
           alignment: Alignment.center,
           child: Image.asset(
-            'resources/delete_bg.png',
+            'resources/thread/delete_bg.png',
           ),
         );
       }
@@ -620,6 +634,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         },
         _author,
         authorShown: data.authorToShow,
+        threadAuthor: data.thread?.user?.id,
       );
     }
 
@@ -634,6 +649,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         data.boardName,
         () {
           showBottomActionSheet(
+            articleModel: threadArticleObject,
             content: threadArticleObject.content,
           );
         },
@@ -649,6 +665,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
           _votedownArticle(threadArticleObject.boardName, threadArticleObject.id);
         },
         _author,
+        threadAuthor: data.thread?.user?.id,
       );
     }
 
@@ -676,6 +693,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         _votedownArticle(threadArticleObject.boardName, threadArticleObject.id);
       },
       _author,
+      threadAuthor: data.thread?.user?.id,
     );
   }
 
@@ -703,12 +721,14 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     if (data.currentMinPage <= 1 && index == 0 && (data.thread.likeArticles?.length ?? 0) > 0) {
       return Row(
         children: <Widget>[
-          Image.asset(
-            'resources/thread/like_posts.png',
-            width: 30,
-            height: 30,
-          ),
-          Text("hotRepliesTrans".tr, style: TextStyle(color: E().threadPageOtherTextColor)),
+          if (data.authorToShow == null || data.authorToShow.isEmpty)
+            Image.asset(
+              'resources/thread/like_posts.png',
+              width: 30,
+              height: 30,
+            ),
+          if (data.authorToShow == null || data.authorToShow.isEmpty)
+            Text("hotRepliesTrans".tr, style: TextStyle(color: E().threadPageOtherTextColor)),
           Expanded(
             child: Divider(
               indent: 20,
@@ -726,15 +746,17 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
             (data.thread.article.length > 1 && data.thread.article[0].isSubject == true))) {
       return Row(
         children: <Widget>[
-          Image.asset(
-            'resources/thread/all_posts.png',
-            width: 30,
-            height: 30,
-          ),
-          Text(
-            "allRepliesTrans".tr,
-            style: TextStyle(color: E().threadPageOtherTextColor),
-          ),
+          if (data.authorToShow == null || data.authorToShow.isEmpty)
+            Image.asset(
+              'resources/thread/all_posts.png',
+              width: 30,
+              height: 30,
+            ),
+          if (data.authorToShow == null || data.authorToShow.isEmpty)
+            Text(
+              "allRepliesTrans".tr,
+              style: TextStyle(color: E().threadPageOtherTextColor),
+            ),
           Expanded(
             child: Divider(
               indent: 20,

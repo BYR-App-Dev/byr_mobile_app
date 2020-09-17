@@ -369,6 +369,7 @@ class ThreadPageListCell<T> extends StatefulWidget {
   final Function onOnlyAuthor;
   final bool isSubject;
   final String authorShown;
+  final String threadAuthor;
 
   ThreadPageListCell(
     this.data,
@@ -382,6 +383,7 @@ class ThreadPageListCell<T> extends StatefulWidget {
     this.onOnlyAuthor, {
     this.isSubject = false,
     this.authorShown = '',
+    this.threadAuthor = "",
   });
 
   @override
@@ -403,6 +405,7 @@ class ThreadPageListSubjectCell<T> extends ThreadPageListCell<T> {
     Function onOnlyAuthor, {
     isSubject = false,
     authorShown = '',
+    String threadAuthor = "",
   }) : super(
           data,
           dataLayouter,
@@ -415,6 +418,7 @@ class ThreadPageListSubjectCell<T> extends ThreadPageListCell<T> {
           onOnlyAuthor,
           isSubject: isSubject,
           authorShown: authorShown,
+          threadAuthor: threadAuthor,
         );
   @override
   ThreadPageSubjectCellState createState() {
@@ -482,23 +486,89 @@ class ThreadPageSubjectCellState extends ThreadPageListCellState {
       l.getBoardDescription(d),
     );
   }
+}
 
-  Widget buildBottomRow(ThreadPageListCellDataLayouter l, dynamic d) {
+class ThreadPageListCellState extends State<ThreadPageListCell> {
+  Widget buildNamePosTime(ThreadPageListCellDataLayouter l, dynamic d) {
     return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Expanded(
-          flex: 1,
+        ClickableAvatar(
+          radius: 18,
+          emptyUser: l.getIsUserEmpty(d),
+          imageLink: l.getUserImageLink(d),
+          onTap: () {
+            if (l.getIsUserEmpty(d)) {
+              return;
+            }
+            navigator.pushNamed(
+              "profile_page",
+              arguments: l.getUser(d),
+            );
+          },
+        ),
+        Container(
+          padding: EdgeInsets.only(left: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      l.getUsername(d),
+                      style: TextStyle(fontSize: 18.0, color: l.getUsernameColor(d)),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 2),
+                  ),
+                  if (l.getPositionName(d) != "positionTransAuthor".tr && widget.threadAuthor == l.getUsername(d))
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 2),
+                      child: Text(
+                        "positionTransAuthor".tr,
+                        style: TextStyle(fontSize: 12.0, color: l.getTimeColor(d)),
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: l.getTimeColor(d),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5.0),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              Text(
+                l.getTimeText(d),
+                style: TextStyle(fontSize: 12.0, color: l.getTimeColor(d)),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildTopRightCorner(ThreadPageListCellDataLayouter l, dynamic d) {
+    return
+        // Expanded(
+        //   child:
+        Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Container(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               IconButton(
                 padding: EdgeInsets.all(0),
-                icon: Icon(
-                  Icons.thumb_up,
-                  color: l.getIsLiked(d) ? E().threadPageVoteUpPickedColor : E().threadPageVoteUpDownUnpickedColor,
-                ),
+                icon: Icon(Icons.thumb_up,
+                    color: l.getIsLiked(d) ? E().threadPageVoteUpPickedColor : E().threadPageVoteUpDownUnpickedColor),
                 iconSize: 24,
                 onPressed: () {
                   if (l.getIsLiked(d)) {
@@ -516,44 +586,14 @@ class ThreadPageSubjectCellState extends ThreadPageListCellState {
               ),
               Text(
                 l.getLikes(d).toString(),
-                style: TextStyle(fontSize: 14.0, color: E().threadPageOtherTextColor),
+                style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
               ),
             ],
           ),
         ),
-        Visibility(
-          visible: l.getBoardName(d) != 'IWhisper',
-          child: Expanded(
-            flex: 1,
-            child: ButtonTheme(
-                minWidth: 100,
-                child: FlatButton.icon(
-                  onPressed: () {
-                    widget.onOnlyAuthor(l.getUsername(d));
-                  },
-                  icon: Icon(
-                    Icons.supervisor_account,
-                    size: 24,
-                    color: widget.authorShown == l.getUsername(d)
-                        ? E().threadPageButtonSelectedColor
-                        : E().threadPageButtonUnselectedColor,
-                  ),
-                  label: Text("onlyAuthor".tr,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: widget.authorShown == l.getUsername(d)
-                            ? E().threadPageTextSelectedColor
-                            : E().threadPageTextUnselectedColor,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.normal,
-                      )),
-                )),
-          ),
-        ),
-        Expanded(
-          flex: 1,
+        Container(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               IconButton(
                 padding: EdgeInsets.all(0),
@@ -586,148 +626,18 @@ class ThreadPageSubjectCellState extends ThreadPageListCellState {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final d = widget.data;
-    final l = widget.dataLayouter;
-    return Column(
-      children: [
-        super.build(context),
-        buildBottomRow(l, d),
-      ],
-    );
-  }
-}
-
-class ThreadPageListCellState extends State<ThreadPageListCell> {
-  Widget buildNamePosTime(ThreadPageListCellDataLayouter l, dynamic d) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        ClickableAvatar(
-          radius: 18,
-          emptyUser: l.getIsUserEmpty(d),
-          imageLink: l.getUserImageLink(d),
-          onTap: () {
-            if (l.getIsUserEmpty(d)) {
-              return;
-            }
-            navigator.pushNamed(
-              "profile_page",
-              arguments: l.getUser(d),
-            );
-          },
-        ),
-        Container(
-          padding: EdgeInsets.only(left: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l.getUsername(d),
-                style: TextStyle(fontSize: 18.0, color: l.getUsernameColor(d)),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    l.getPositionName(d),
-                    style: TextStyle(fontSize: 12.0, color: l.getPositionColor(d)),
-                  ),
-                  Text(
-                    '  ' + l.getTimeText(d),
-                    style: TextStyle(fontSize: 12.0, color: l.getTimeColor(d)),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildTopRightCorner(ThreadPageListCellDataLayouter l, dynamic d) {
-    return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                IconButton(
-                  padding: EdgeInsets.all(0),
-                  icon: Icon(Icons.thumb_up,
-                      color: l.getIsLiked(d) ? E().threadPageVoteUpPickedColor : E().threadPageVoteUpDownUnpickedColor),
-                  iconSize: 24,
-                  onPressed: () {
-                    if (l.getIsLiked(d)) {
-                      return;
-                    }
-                    this.widget.likeit();
-                    l.setIsLiked(d, true);
-                    l.setLikes(d, l.getLikes(d) + 1);
-                    l.setVotedowns(d, l.getVotedowns(d) - (l.getIsVotedown(d) ? 1 : 0));
-                    l.setIsVotedown(d, false);
-                    if (mounted) {
-                      setState(() {});
-                    }
-                  },
-                ),
-                Text(
-                  l.getLikes(d).toString(),
-                  style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                IconButton(
-                  padding: EdgeInsets.all(0),
-                  icon: Icon(Icons.thumb_down,
-                      color: l.getIsVotedown(d)
-                          ? E().threadPageVoteDownPickedColor
-                          : E().threadPageVoteUpDownUnpickedColor),
-                  iconSize: 24,
-                  onPressed: () {
-                    if (l.getIsVotedown(d)) {
-                      return;
-                    }
-                    this.widget.votedownit();
-                    l.setIsVotedown(d, true);
-                    l.setLikes(d, l.getLikes(d) - (l.getIsLiked(d) ? 1 : 0));
-                    l.setVotedowns(d, l.getVotedowns(d) + 1);
-                    l.setIsLiked(d, false);
-                    if (mounted) {
-                      setState(() {});
-                    }
-                  },
-                ),
-                Text(
-                  l.getIsVotedownNumberShow(d) ? l.getVotedowns(d).toString() : " ",
-                  style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget buildTitle(ThreadPageListCellDataLayouter l, dynamic d) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             buildNamePosTime(l, d),
-            buildTopRightCorner(l, d),
+            Text(
+              l.getPositionName(d),
+              style: TextStyle(fontSize: 12.0, color: l.getPositionColor(d)),
+            ),
           ],
         ),
         (this.widget.title == null || this.widget.title == "")
@@ -793,6 +703,80 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
     );
   }
 
+  Widget buildBottomRow(ThreadPageListCellDataLayouter l, dynamic d) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              IconButton(
+                padding: EdgeInsets.all(0),
+                icon: Icon(
+                  Icons.thumb_up,
+                  color: l.getIsLiked(d) ? E().threadPageVoteUpPickedColor : E().threadPageVoteUpDownUnpickedColor,
+                ),
+                iconSize: 24,
+                onPressed: () {
+                  if (l.getIsLiked(d)) {
+                    return;
+                  }
+                  this.widget.likeit();
+                  l.setIsLiked(d, true);
+                  l.setLikes(d, l.getLikes(d) + 1);
+                  l.setVotedowns(d, l.getVotedowns(d) - (l.getIsVotedown(d) ? 1 : 0));
+                  l.setIsVotedown(d, false);
+                  if (mounted) {
+                    setState(() {});
+                  }
+                },
+              ),
+              Text(
+                l.getLikes(d).toString(),
+                style: TextStyle(fontSize: 14.0, color: E().threadPageOtherTextColor),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              IconButton(
+                padding: EdgeInsets.all(0),
+                icon: Icon(Icons.thumb_down,
+                    color:
+                        l.getIsVotedown(d) ? E().threadPageVoteDownPickedColor : E().threadPageVoteUpDownUnpickedColor),
+                iconSize: 24,
+                onPressed: () {
+                  if (l.getIsVotedown(d)) {
+                    return;
+                  }
+                  this.widget.votedownit();
+                  l.setIsVotedown(d, true);
+                  l.setLikes(d, l.getLikes(d) - (l.getIsLiked(d) ? 1 : 0));
+                  l.setVotedowns(d, l.getVotedowns(d) + 1);
+                  l.setIsLiked(d, false);
+                  if (mounted) {
+                    setState(() {});
+                  }
+                },
+              ),
+              Text(
+                l.getIsVotedownNumberShow(d) ? l.getVotedowns(d).toString() : " ",
+                style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final d = widget.data;
@@ -804,17 +788,22 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
       onLongPress: () {
         this.widget.onLongPress();
       },
-      child: ListTile(
-        contentPadding: EdgeInsets.only(
-          top: 0,
-          left: 18,
-          right: 18,
-        ),
-        onTap: () {
-          this.widget.onTap();
-        },
-        title: buildTitle(l, d),
-        subtitle: buildSubtitle(l, d),
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            contentPadding: EdgeInsets.only(
+              top: 0,
+              left: 18,
+              right: 18,
+            ),
+            onTap: () {
+              this.widget.onTap();
+            },
+            title: buildTitle(l, d),
+            subtitle: buildSubtitle(l, d),
+          ),
+          buildBottomRow(l, d),
+        ],
       ),
     );
   }

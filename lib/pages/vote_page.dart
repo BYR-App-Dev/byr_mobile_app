@@ -633,10 +633,13 @@ class VotePageState extends ThreadPageBaseState<VotePage, VoteData> {
     int j = i - delSubjectLength;
     if (i == 0 && data.currentMinPage == 1) {
       if (j == -1) {
+        if (data.authorToShow != null && data.authorToShow.isNotEmpty) {
+          return Container();
+        }
         return Container(
           alignment: Alignment.center,
           child: Image.asset(
-            'resources/delete_bg.png',
+            'resources/thread/delete_bg.png',
           ),
         );
       }
