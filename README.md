@@ -26,7 +26,7 @@
             static const String androidVersionsLink = ANDROID VERSIONS LINK
         }
         ```
-    - 替换此项目```/pubspec.yaml```的如下内容为上步所见仓库的URL
+    - 替换此项目```/pubspec.yaml```的如下内容为上步所建仓库的URL
         ```
         secrets:
         git:
