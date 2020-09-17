@@ -181,7 +181,7 @@ class LocalStorage {
   }
 
   static Map<String, bool> getFeatureKeys() {
-    return _extract("featureKeys").cast<String, bool>() ?? Map<String, bool>();
+    return _extract("featureKeys")?.cast<String, bool>() ?? Map<String, bool>();
   }
 
   static Future<void> setFeatureKeys(Map<String, bool> v) async {
