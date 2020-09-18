@@ -157,7 +157,7 @@ class LocalStorage {
   }
 
   static bool getIsAnonymous() {
-    return _extract("isAnonymous")?.cast<bool>() ?? true;
+    return _extract("isAnonymous") ?? true;
   }
 
   static Future<void> setIsAnonymous(bool v) async {
