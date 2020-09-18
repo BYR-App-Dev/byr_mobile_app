@@ -163,7 +163,7 @@ Map<String, dynamic> _$ToptenModelToJson(ToptenModel instance) => <String, dynam
 FrontArticleModel _$FrontArticleModelFromJson(Map<String, dynamic> json) {
   return FrontArticleModel(
     id: json['id'] as int,
-    groupId: json['group_id'] as int,
+    groupId: json['group_id'],
     replyId: json['reply_id'] as int,
     flag: json['flag'] as String,
     position: json['position'] as int,
@@ -173,8 +173,8 @@ FrontArticleModel _$FrontArticleModelFromJson(Map<String, dynamic> json) {
     isAdmin: json['is_admin'] as bool,
     title: json['title'] as String,
     user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
-    postTime: json['post_time'] as int,
-    boardName: json['board_name'] as String,
+    postTime: json['post_time'],
+    boardName: json['board_name'],
     boardDescription: json['board_description'] as String,
     content: json['content'] as String,
     attachment:
@@ -226,11 +226,11 @@ Map<String, dynamic> _$TimelineModelToJson(TimelineModel instance) => <String, d
 
 ArticleBaseModel _$ArticleBaseModelFromJson(Map<String, dynamic> json) {
   return ArticleBaseModel(
-    groupId: json['group_id'] as int,
+    groupId: json['group_id'],
     title: json['title'] as String,
     user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
-    postTime: json['post_time'] as int,
-    boardName: json['board_name'] as String,
+    postTime: json['post_time'],
+    boardName: json['board_name'],
   );
 }
 
@@ -255,8 +255,8 @@ ThreadArticleModel _$ThreadArticleModelFromJson(Map<String, dynamic> json) {
     isAdmin: json['is_admin'] as bool,
     title: json['title'] as String,
     user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
-    postTime: json['post_time'] as int,
-    boardName: json['board_name'] as String,
+    postTime: json['post_time'],
+    boardName: json['board_name'],
     boardDescription: json['board_description'] as String,
     content: json['content'] as String,
     attachment:
@@ -296,7 +296,7 @@ Map<String, dynamic> _$ThreadArticleModelToJson(ThreadArticleModel instance) => 
 LikeArticleModel _$LikeArticleModelFromJson(Map<String, dynamic> json) {
   return LikeArticleModel(
     id: json['id'] as int,
-    groupId: json['group_id'] as int,
+    groupId: json['group_id'],
     replyId: json['reply_id'] as int,
     flag: json['flag'] as String,
     position: json['position'] as int,
@@ -306,8 +306,8 @@ LikeArticleModel _$LikeArticleModelFromJson(Map<String, dynamic> json) {
     isAdmin: json['is_admin'] as bool,
     title: json['title'] as String,
     user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
-    postTime: json['post_time'] as int,
-    boardName: json['board_name'] as String,
+    postTime: json['post_time'],
+    boardName: json['board_name'],
     boardDescription: json['board_description'] as String,
     content: json['content'] as String,
     attachment:
@@ -783,22 +783,22 @@ CollectionArticleModel _$CollectionArticleModelFromJson(Map<String, dynamic> jso
   return CollectionArticleModel(
     createdTime: json['createdTime'],
     title: json['title'] as String,
-    postTime: json['post_time'] as int,
-    boardName: json['board_name'] as String,
+    postTime: json['post_time'],
+    boardName: json['bname'],
     number: json['num'],
-    groupId: json['group_id'] as int,
+    groupId: json['gid'],
     user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
   );
 }
 
 Map<String, dynamic> _$CollectionArticleModelToJson(CollectionArticleModel instance) => <String, dynamic>{
-      'group_id': instance.groupId,
-      'title': instance.title,
-      'user': instance.user,
-      'post_time': instance.postTime,
-      'board_name': instance.boardName,
       'createdTime': instance.createdTime,
+      'title': instance.title,
+      'post_time': instance.postTime,
+      'bname': instance.boardName,
       'num': instance.number,
+      'gid': instance.groupId,
+      'user': instance.user,
     };
 
 CollectionModel _$CollectionModelFromJson(Map<String, dynamic> json) {
@@ -820,15 +820,15 @@ ReferModel _$ReferModelFromJson(Map<String, dynamic> json) {
   return ReferModel(
     index: json['index'] as int,
     id: json['id'] as int,
-    groupId: json['group_id'] as int,
+    groupId: json['group_id'],
     replyId: json['reply_id'] as int,
-    boardName: json['board_name'] as String,
+    boardName: json['board_name'],
     title: json['title'] as String,
     pos: json['pos'] as int,
     user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     time: json['time'] as int,
     isRead: json['is_read'] as bool,
-  )..postTime = json['post_time'] as int;
+  )..postTime = json['post_time'];
 }
 
 Map<String, dynamic> _$ReferModelToJson(ReferModel instance) => <String, dynamic>{

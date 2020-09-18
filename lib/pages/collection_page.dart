@@ -42,7 +42,11 @@ class CollectionPageState extends ArticleListBasePageState<CollectionModel, Coll
       splashColor: E().threadListBackgroundColor.withOpacity(0.15),
       onTap: () {
         Navigator.pushNamed(context, "thread_page",
-            arguments: ThreadPageRouteArg(collectionArticleObject.boardName, collectionArticleObject.groupId));
+            arguments: ThreadPageRouteArg(
+                collectionArticleObject.boardName,
+                collectionArticleObject.groupId.runtimeType == String
+                    ? int.tryParse(collectionArticleObject.groupId)
+                    : collectionArticleObject.groupId));
       },
       onLongPress: () {
         AdaptiveComponents.showAlertDialog(
@@ -50,7 +54,11 @@ class CollectionPageState extends ArticleListBasePageState<CollectionModel, Coll
           title: "removeCollectionTrans".tr,
           onDismiss: (result) {
             if (result == AlertResult.confirm) {
-              NForumService.removeCollection(collectionArticleObject.boardName, collectionArticleObject.groupId)
+              NForumService.removeCollection(
+                      collectionArticleObject.boardName,
+                      collectionArticleObject.groupId.runtimeType == String
+                          ? int.tryParse(collectionArticleObject.groupId)
+                          : collectionArticleObject.groupId)
                   .then((value) {
                 data.articleList.article.removeAt(index);
                 if (mounted) {

@@ -198,13 +198,13 @@ class FrontArticleModel extends ArticleBaseModel {
         );
 
   @JsonKey(name: 'group_id')
-  int groupId;
+  var groupId;
   String title;
   UserModel user;
   @JsonKey(name: 'post_time')
-  int postTime;
+  var postTime;
   @JsonKey(name: 'board_name')
-  String boardName;
+  var boardName;
   int id;
   @JsonKey(name: 'reply_id')
   int replyId;
@@ -267,13 +267,13 @@ class ArticleBaseModel extends PageableBaseModel {
   }) : super();
 
   @JsonKey(name: 'group_id')
-  int groupId;
+  var groupId;
   String title;
   UserModel user;
   @JsonKey(name: 'post_time')
-  int postTime;
+  var postTime;
   @JsonKey(name: 'board_name')
-  String boardName;
+  var boardName;
 
   factory ArticleBaseModel.fromJson(Map<String, dynamic> json) => _$ArticleBaseModelFromJson(json);
 
@@ -335,13 +335,13 @@ class ThreadArticleModel extends ArticleBaseModel {
         );
 
   @JsonKey(name: 'group_id')
-  int groupId;
+  var groupId;
   String title;
   UserModel user;
   @JsonKey(name: 'post_time')
-  int postTime;
+  var postTime;
   @JsonKey(name: 'board_name')
-  String boardName;
+  var boardName;
   int id;
   @JsonKey(name: 'reply_id')
   int replyId;
@@ -406,13 +406,13 @@ class LikeArticleModel extends ArticleBaseModel {
         );
 
   @JsonKey(name: 'group_id')
-  int groupId;
+  var groupId;
   String title;
   UserModel user;
   @JsonKey(name: 'post_time')
-  int postTime;
+  var postTime;
   @JsonKey(name: 'board_name')
-  String boardName;
+  var boardName;
   int id;
   @JsonKey(name: 'reply_id')
   int replyId;
@@ -1011,17 +1011,16 @@ class FavBoardsModel {
 
 @JsonSerializable()
 class CollectionArticleModel extends ArticleBaseModel {
-  @JsonKey(name: 'group_id')
-  int groupId;
-  String title;
-  UserModel user;
-  @JsonKey(name: 'post_time')
-  int postTime;
-  @JsonKey(name: 'board_name')
-  String boardName;
   var createdTime;
+  String title;
+  var postTime;
+  @JsonKey(name: 'bname')
+  var boardName;
   @JsonKey(name: 'num')
   var number;
+  @JsonKey(name: 'gid')
+  var groupId;
+  UserModel user;
 
   CollectionArticleModel({
     this.createdTime,
@@ -1068,11 +1067,11 @@ class ReferModel extends ArticleBaseModel {
   int index;
   int id;
   @JsonKey(name: 'group_id')
-  int groupId;
+  var groupId;
   @JsonKey(name: 'reply_id')
   int replyId;
   @JsonKey(name: 'board_name')
-  String boardName;
+  var boardName;
   String title;
   int pos;
   UserModel user;
