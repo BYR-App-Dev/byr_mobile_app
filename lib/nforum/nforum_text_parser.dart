@@ -16,7 +16,7 @@ class NForumTextParser {
   static RegExp threadPattern = RegExp(r'article\/(\w+)\/(\d+)');
   static RegExp betPattern = RegExp(r'bet\/view\/(\d+)');
   static RegExp votePattern = RegExp(r'vote\/view\/(\d+)');
-  static RegExp boardPattern = RegExp(r'board\/(\w+)$');
+  static RegExp boardPattern = RegExp(r'board\/(\w+)\/*$');
   static RegExp emojiPattern = RegExp(r'\[bbsemoji([0-9|,]*?)\]');
   static RegExp quotePattern = RegExp(r'【 ?在.*的大作中提到: ?】 ?(\n:.*)*');
 
