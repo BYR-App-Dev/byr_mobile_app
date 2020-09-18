@@ -48,8 +48,7 @@ class ThreadBasePageRouteArg {
   final int startingPosition;
   final bool keepAlive;
 
-  ThreadBasePageRouteArg(this.boardName, this.groupId,
-      {this.startingPage = 1, this.startingPosition = -1, this.keepAlive = true});
+  ThreadBasePageRouteArg(this.boardName, this.groupId, {this.startingPage = 1, this.startingPosition = -1, this.keepAlive = true});
 }
 
 abstract class ThreadBasePage extends StatefulWidget {
@@ -63,14 +62,8 @@ abstract class ThreadBasePage extends StatefulWidget {
   }
 }
 
-class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData extends ThreadBaseData>
-    extends State<BaseThreadPage>
-    with
-        ScrollableListMixin<BaseThreadPage, BaseThreadData>,
-        PagerMixin,
-        AutomaticKeepAliveClientMixin,
-        ReplyFormMixin,
-        InitializationFailureViewMixin {
+class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData extends ThreadBaseData> extends State<BaseThreadPage>
+    with ScrollableListMixin<BaseThreadPage, BaseThreadData>, PagerMixin, AutomaticKeepAliveClientMixin, ReplyFormMixin, InitializationFailureViewMixin {
   GlobalKey<ScaffoldState> scaffoldKey;
   int refreshFactor;
   RefreshController refreshController;
@@ -138,10 +131,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
 
   Future<void> shareArticle() async {
     if (data.thread?.id != null) {
-      await Share.share(data.thread.title +
-          ": " +
-          NForumService.makeThreadURL(data.thread.boardName, data.thread.groupId) +
-          ' 北邮人论坛');
+      await Share.share(data.thread.title + ": " + NForumService.makeThreadURL(data.thread.boardName, data.thread.groupId) + ' 北邮人论坛');
     }
   }
 
@@ -316,9 +306,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
           setState(() {});
         }
         SchedulerBinding.instance.addPostFrameCallback((_) {
-          int target = data.thread.pagination.itemPageCount +
-              (currentMinPage <= 1 ? (data.thread.likeArticles?.length ?? 0) : 0) -
-              1;
+          int target = data.thread.pagination.itemPageCount + (currentMinPage <= 1 ? (data.thread.likeArticles?.length ?? 0) : 0) - 1;
           scrollController
             ..jumpTo(scrollController.position.maxScrollExtent - startingMaxExtent)
             ..scrollToIndex(target, duration: Duration(milliseconds: 600), preferPosition: AutoScrollPosition.end)
@@ -329,9 +317,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   }
 
   Future<void> lastBottomDataLoader({Function afterLoad}) {
-    return NForumService.getThread(data.boardName, data.groupId,
-            page: data.currentMaxPage + 1, author: data.authorToShow)
-        .then((thread) {
+    return NForumService.getThread(data.boardName, data.groupId, page: data.currentMaxPage + 1, author: data.authorToShow).then((thread) {
       if (data.authorToShow != null && data.authorToShow != "") {
         thread.likeArticles = [];
       }
@@ -427,12 +413,8 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   @override
   void scrollSolver(int index1, int index2, double extentBefore, double extentAfter) {
     if (index1 != null && index2 != null) {
-      int _page = min(
-          ((index1 - (data.thread.likeArticles?.length ?? 0)) ~/ PageConfig.pageItemCount) + data.currentMinPage,
-          maxPage);
-      int _page2 = min(
-          ((index2 - (data.thread.likeArticles?.length ?? 0)) ~/ PageConfig.pageItemCount) + data.currentMinPage,
-          maxPage);
+      int _page = min(((index1 - (data.thread.likeArticles?.length ?? 0)) ~/ PageConfig.pageItemCount) + data.currentMinPage, maxPage);
+      int _page2 = min(((index2 - (data.thread.likeArticles?.length ?? 0)) ~/ PageConfig.pageItemCount) + data.currentMinPage, maxPage);
       if (!(currentPage >= _page && currentPage <= _page2)) {
         currentPage = _page;
         pagerRedraw();
@@ -447,9 +429,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   Future<void> autoAddBottom() {
     if (data.currentMaxPage < data.thread.pagination.pageAllCount) {
       isLoading = true;
-      return NForumService.getThread(data.boardName, data.groupId,
-              page: data.currentMaxPage + 1, author: data.authorToShow)
-          .then((thread) {
+      return NForumService.getThread(data.boardName, data.groupId, page: data.currentMaxPage + 1, author: data.authorToShow).then((thread) {
         if (data.authorToShow != null && data.authorToShow != "") {
           thread.likeArticles = [];
         }
@@ -537,13 +517,10 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   showBottomActionSheet({ArticleBaseModel articleModel, String content}) {
     content = NForumTextParser.computeEmojiStr(content);
     var actions = [
-      if (widget.arg.boardName != 'IWhisper')
-        (data.authorToShow == articleModel.user?.id ? ("cancelTrans".tr + " ") : "") + "onlyAuthor".tr,
+      if (widget.arg.boardName != 'IWhisper') (data.authorToShow == articleModel.user?.id ? ("cancelTrans".tr + " ") : "") + "onlyAuthor".tr,
     ];
     actions.add("copy".tr);
-    if (articleModel != null &&
-        articleModel.runtimeType == ThreadArticleModel &&
-        (articleModel as ThreadArticleModel).isAdmin) {
+    if (articleModel != null && articleModel.runtimeType == ThreadArticleModel && (articleModel as ThreadArticleModel).isAdmin) {
       actions.add("edit".tr);
       actions.add("delete".tr);
     }
@@ -624,9 +601,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
       );
     }
 
-    if (data.currentMinPage <= 1 &&
-        (data.thread.likeArticles?.length ?? 0) > 0 &&
-        i <= (data.thread.likeArticles?.length ?? 0)) {
+    if (data.currentMinPage <= 1 && (data.thread.likeArticles?.length ?? 0) > 0 && i <= (data.thread.likeArticles?.length ?? 0)) {
       var threadArticleObject = data.thread.likeArticles[i - 1];
       return ThreadPageListCell<LikeArticleModel>(
         threadArticleObject,
@@ -701,8 +676,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
               width: 30,
               height: 30,
             ),
-          if (data.authorToShow == null || data.authorToShow.isEmpty)
-            Text("hotRepliesTrans".tr, style: TextStyle(color: E().threadPageOtherTextColor)),
+          if (data.authorToShow == null || data.authorToShow.isEmpty) Text("hotRepliesTrans".tr, style: TextStyle(color: E().threadPageOtherTextColor)),
           Expanded(
             child: Divider(
               indent: 20,
@@ -1077,127 +1051,114 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
             ),
           ],
         ),
-        body: Scaffold(
-          body: Container(
-            color: E().threadPageBackgroundColor,
-            child: SafeArea(
-              child: Material(
-                color: E().threadPageBackgroundColor,
-                child: Center(
-                  child: widgetCase(
-                    initializationStatus,
-                    {
-                      InitializationStatus.Initializing: buildLoadingView(),
-                      InitializationStatus.Failed: buildLoadingFailedView(),
-                      InitializationStatus.Initialized: Column(
-                        children: <Widget>[
-                          Expanded(
-                            child: Stack(
-                              children: <Widget>[
-                                if (screenshotStatus == ScreenshotStatus.Dismissed)
-                                  RefresherFactory(
-                                    refreshFactor,
-                                    refreshController,
-                                    screenshotStatus == ScreenshotStatus.Dismissed ? true : false,
-                                    screenshotStatus == ScreenshotStatus.Dismissed ? true : false,
-                                    onTopRefresh,
-                                    onBottomRefresh,
-                                    buildList(),
-                                  )
-                                else
-                                  buildList(),
-                                if (screenshotStatus == ScreenshotStatus.Dismissed)
-                                  buildPager()
-                                else
-                                  Positioned(
-                                    right: 15,
-                                    bottom: 15,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: E().threadPageButtonUnselectedColor.lighten(30),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(40.0),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          if (screenshotStatus == ScreenshotStatus.Previewing)
-                                            Text(
-                                              (lengthPercentage * 100).ceil().toString() +
-                                                  "%" +
-                                                  ((lengthPercentage * 100).ceil() > 100 ? ("\n" + "screenshotOverLength".tr) : ""),
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: (lengthPercentage * 100).ceil() > 100
-                                                      ? E().threadPageTextSelectedColor
-                                                      : E().threadPageTextUnselectedColor),
-                                            ),
-                                          Row(
-                                            children: [
-                                              if (screenshotStatus == ScreenshotStatus.Selecting)
-                                                IconButton(
-                                                  icon: Icon(Icons.check_circle, color: E().threadPageButtonUnselectedColor),
-                                                  onPressed: () {
-                                                    previewing();
-                                                  },
-                                                )
-                                              else if (screenshotStatus == ScreenshotStatus.Previewing)
-                                                IconButton(
-                                                  icon: Icon(Icons.save, color: E().threadPageButtonUnselectedColor),
-                                                  onPressed: () {
-                                                    capturing();
-                                                  },
-                                                )
-                                              else if (screenshotStatus == ScreenshotStatus.Capturing)
-                                                IconButton(
-                                                  icon: Icon(Icons.hourglass_empty, color: E().threadPageButtonUnselectedColor),
-                                                  onPressed: () {
-                                                    capturing();
-                                                  },
-                                                ),
-                                              if (screenshotStatus == ScreenshotStatus.Selecting)
-                                                IconButton(
-                                                  icon: Icon(Icons.cancel, color: E().threadPageButtonUnselectedColor),
-                                                  onPressed: () {
-                                                    cancelScreenshot();
-                                                  },
-                                                )
-                                              else if (screenshotStatus == ScreenshotStatus.Previewing)
-                                                IconButton(
-                                                  icon: Icon(Icons.remove_circle, color: E().threadPageButtonUnselectedColor),
-                                                  onPressed: () {
-                                                    backToSelecting();
-                                                  },
-                                                ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+        backgroundColor: E().threadPageBackgroundColor,
+        body: widgetCase(
+          initializationStatus,
+          {
+            InitializationStatus.Initializing: buildLoadingView(),
+            InitializationStatus.Failed: buildLoadingFailedView(),
+            InitializationStatus.Initialized: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Stack(
+                    children: <Widget>[
+                      if (screenshotStatus == ScreenshotStatus.Dismissed)
+                        RefresherFactory(
+                          refreshFactor,
+                          refreshController,
+                          screenshotStatus == ScreenshotStatus.Dismissed ? true : false,
+                          screenshotStatus == ScreenshotStatus.Dismissed ? true : false,
+                          onTopRefresh,
+                          onBottomRefresh,
+                          buildList(),
+                        )
+                      else
+                        buildList(),
+                      if (screenshotStatus == ScreenshotStatus.Dismissed)
+                        buildPager()
+                      else
+                        Positioned(
+                          right: 15,
+                          bottom: 15,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: E().threadPageButtonUnselectedColor.lighten(30),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(40.0),
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+                                if (screenshotStatus == ScreenshotStatus.Previewing)
+                                  Text(
+                                    (lengthPercentage * 100).ceil().toString() +
+                                        "%" +
+                                        ((lengthPercentage * 100).ceil() > 100 ? ("\n" + "screenshotOverLength".tr) : ""),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: (lengthPercentage * 100).ceil() > 100 ? E().threadPageTextSelectedColor : E().threadPageTextUnselectedColor),
                                   ),
+                                Row(
+                                  children: [
+                                    if (screenshotStatus == ScreenshotStatus.Selecting)
+                                      IconButton(
+                                        icon: Icon(Icons.check_circle, color: E().threadPageButtonUnselectedColor),
+                                        onPressed: () {
+                                          previewing();
+                                        },
+                                      )
+                                    else if (screenshotStatus == ScreenshotStatus.Previewing)
+                                      IconButton(
+                                        icon: Icon(Icons.save, color: E().threadPageButtonUnselectedColor),
+                                        onPressed: () {
+                                          capturing();
+                                        },
+                                      )
+                                    else if (screenshotStatus == ScreenshotStatus.Capturing)
+                                      IconButton(
+                                        icon: Icon(Icons.hourglass_empty, color: E().threadPageButtonUnselectedColor),
+                                        onPressed: () {
+                                          capturing();
+                                        },
+                                      ),
+                                    if (screenshotStatus == ScreenshotStatus.Selecting)
+                                      IconButton(
+                                        icon: Icon(Icons.cancel, color: E().threadPageButtonUnselectedColor),
+                                        onPressed: () {
+                                          cancelScreenshot();
+                                        },
+                                      )
+                                    else if (screenshotStatus == ScreenshotStatus.Previewing)
+                                      IconButton(
+                                        icon: Icon(Icons.remove_circle, color: E().threadPageButtonUnselectedColor),
+                                        onPressed: () {
+                                          backToSelecting();
+                                        },
+                                      ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
-                          if (screenshotStatus == ScreenshotStatus.Dismissed)
-                            data.thread != null && data.thread.id != null
-                                ? MultiProvider(
-                                    providers: [
-                                      ChangeNotifierProvider<EmoticonPanelProvider>(
-                                        create: (_) => EmoticonPanelProvider(),
-                                      ),
-                                    ],
-                                    child: buildReplyForm(),
-                                  )
-                                : Container(),
-                        ],
-                      ),
-                    },
-                    buildLoadingView(),
+                        ),
+                    ],
                   ),
                 ),
-              ),
+                if (screenshotStatus == ScreenshotStatus.Dismissed)
+                  data.thread != null && data.thread.id != null
+                      ? MultiProvider(
+                          providers: [
+                            ChangeNotifierProvider<EmoticonPanelProvider>(
+                              create: (_) => EmoticonPanelProvider(),
+                            ),
+                          ],
+                          child: buildReplyForm(),
+                        )
+                      : Container(),
+              ],
             ),
-          ),
+          },
+          buildLoadingView(),
         ),
       ),
     );
