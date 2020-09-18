@@ -354,6 +354,7 @@ class BoardmarksPageState extends State<BoardmarksPage>
                                                 size: 24,
                                                 onPressed: () {
                                                   _controller.clear();
+                                                  _onSearch();
                                                 },
                                                 icon: Icons.clear)
                                             : SizedBox.shrink(),
