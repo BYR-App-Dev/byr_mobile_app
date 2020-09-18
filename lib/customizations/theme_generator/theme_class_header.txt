@@ -1,0 +1,10 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
+export 'theme_manager.dart';
+
+class BYRTheme {
+  factory BYRTheme.fromJson(Map<String, dynamic> json) => inputJson(json);
+
+  Map<String, dynamic> toJson() => outputJson(this);
