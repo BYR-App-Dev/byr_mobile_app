@@ -28,9 +28,15 @@ class ReferboxPageState extends ArticleListBasePageState<ReferBoxModel, Referbox
     data = ArticleListBaseData<ReferBoxModel>()
       ..dataRequestHandler = widget.referType == ReferType.Reply
           ? (int page) {
+              if (page == 1) {
+                Get.find<MessageController>().getMsgCount();
+              }
               return NForumService.getReply(page);
             }
           : (int page) {
+              if (page == 1) {
+                Get.find<MessageController>().getMsgCount();
+              }
               return NForumService.getAt(page);
             };
     super.initialization();
@@ -44,6 +50,9 @@ class ReferboxPageState extends ArticleListBasePageState<ReferBoxModel, Referbox
       splashColor: E().threadListBackgroundColor.withOpacity(0.15),
       onTap: () {
         NForumService.setReferRead(this.widget.referType, referArticleObject.index);
+        if (referArticleObject.isRead == false) {
+          Get.find<MessageController>().getMsgCount();
+        }
         referArticleObject.isRead = true;
         if (mounted) {
           setState(() {});

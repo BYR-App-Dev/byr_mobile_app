@@ -30,6 +30,9 @@ class MailboxPageState extends PageableListBasePageState<MailBoxModel, MailboxPa
   void initialization() {
     data = MailboxBaseData<MailBoxModel>()
       ..dataRequestHandler = (int page) {
+        if (page == 1) {
+          Get.find<MessageController>().getMsgCount();
+        }
         return NForumService.getMailBox(page);
       };
     super.initialization();
@@ -45,6 +48,9 @@ class MailboxPageState extends PageableListBasePageState<MailBoxModel, MailboxPa
         highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
         splashColor: E().threadListBackgroundColor.withOpacity(0.15),
         onTap: () {
+          if (object.isRead == false) {
+            Get.find<MessageController>().getMsgCount();
+          }
           object.isRead = true;
           if (mounted) {
             setState(() {});
