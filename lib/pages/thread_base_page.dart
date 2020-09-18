@@ -229,14 +229,6 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     });
   }
 
-  _likeArticle(String name, int id) {
-    NForumService.likeArticle(name, id).then((status) {});
-  }
-
-  _votedownArticle(String name, int id) {
-    NForumService.votedownArticle(name, id).then((status) {});
-  }
-
   Future<void> _author(String authorToShow) {
     if (data.authorToShow == null || data.authorToShow == "") {
       data.authorToShow = authorToShow;
@@ -622,15 +614,9 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
           );
         },
         () {
-          changeReplyPointer(threadArticleObject.id, threadArticleObject.position,
-              NForumTextParser.makeReplyQuote(threadArticleObject.user.id, threadArticleObject.content));
+          changeReplyPointer(
+              threadArticleObject.id, threadArticleObject.position, NForumTextParser.makeReplyQuote(threadArticleObject.user.id, threadArticleObject.content));
           changePlaceHolder();
-        },
-        () {
-          _likeArticle(threadArticleObject.boardName, threadArticleObject.id);
-        },
-        () {
-          _votedownArticle(threadArticleObject.boardName, threadArticleObject.id);
         },
         _author,
         authorShown: data.authorToShow,
@@ -654,15 +640,9 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
           );
         },
         () {
-          changeReplyPointer(threadArticleObject.id, threadArticleObject.position,
-              NForumTextParser.makeReplyQuote(threadArticleObject.user.id, threadArticleObject.content));
+          changeReplyPointer(
+              threadArticleObject.id, threadArticleObject.position, NForumTextParser.makeReplyQuote(threadArticleObject.user.id, threadArticleObject.content));
           changePlaceHolder();
-        },
-        () {
-          _likeArticle(threadArticleObject.boardName, threadArticleObject.id);
-        },
-        () {
-          _votedownArticle(threadArticleObject.boardName, threadArticleObject.id);
         },
         _author,
         threadAuthor: data.thread?.user?.id,
@@ -682,15 +662,9 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         );
       },
       () {
-        changeReplyPointer(threadArticleObject.id, threadArticleObject.position,
-            NForumTextParser.makeReplyQuote(threadArticleObject.user.id, threadArticleObject.content));
+        changeReplyPointer(
+            threadArticleObject.id, threadArticleObject.position, NForumTextParser.makeReplyQuote(threadArticleObject.user.id, threadArticleObject.content));
         changePlaceHolder();
-      },
-      () {
-        _likeArticle(threadArticleObject.boardName, threadArticleObject.id);
-      },
-      () {
-        _votedownArticle(threadArticleObject.boardName, threadArticleObject.id);
       },
       _author,
       threadAuthor: data.thread?.user?.id,
@@ -782,9 +756,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     }
     return data.thread == null || data.thread.id == null
         ? 1
-        : (data.thread.article.length +
-            (data.currentMinPage <= 1 ? (data.thread.likeArticles?.length ?? 0) : 0) +
-            (delSubjectLength));
+        : (data.thread.article.length + (data.currentMinPage <= 1 ? (data.thread.likeArticles?.length ?? 0) : 0) + (delSubjectLength));
   }
 
   Future<bool> onCollectButtonTapped(
@@ -1054,17 +1026,13 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                 start: AppBarCustomization.appBarIsColorfulTitle()
                     ? BoardInfo.getBoardColor(widget.arg.boardName).withOpacity(0.5)
                     : Colors.orange.withOpacity(0.5),
-                end: AppBarCustomization.appBarIsColorfulTitle()
-                    ? BoardInfo.getBoardColor(widget.arg.boardName)
-                    : Colors.orange,
+                end: AppBarCustomization.appBarIsColorfulTitle() ? BoardInfo.getBoardColor(widget.arg.boardName) : Colors.orange,
               ),
               bubblesColor: BubblesColor(
                 dotPrimaryColor: AppBarCustomization.appBarIsColorfulTitle()
                     ? BoardInfo.getBoardColor(widget.arg.boardName).withOpacity(0.5)
                     : Colors.orange.withOpacity(0.5),
-                dotSecondaryColor: AppBarCustomization.appBarIsColorfulTitle()
-                    ? BoardInfo.getBoardColor(widget.arg.boardName)
-                    : Colors.orange,
+                dotSecondaryColor: AppBarCustomization.appBarIsColorfulTitle() ? BoardInfo.getBoardColor(widget.arg.boardName) : Colors.orange,
               ),
               onTap: (bool isCollected) {
                 HapticFeedback.heavyImpact();
@@ -1077,8 +1045,8 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
               onSelected: (choice) {
                 switch (choice) {
                   case "goboard":
-                    return Navigator.of(context).pushNamedAndRemoveUntil("board_page", ModalRoute.withName('home_page'),
-                        arguments: BoardPageRouteArg(data.boardName));
+                    return Navigator.of(context)
+                        .pushNamedAndRemoveUntil("board_page", ModalRoute.withName('home_page'), arguments: BoardPageRouteArg(data.boardName));
                   case "report":
                     AdaptiveComponents.showAlertDialog(
                       context,
@@ -1157,9 +1125,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                                             Text(
                                               (lengthPercentage * 100).ceil().toString() +
                                                   "%" +
-                                                  ((lengthPercentage * 100).ceil() > 100
-                                                      ? ("\n" + "screenshotOverLength".tr)
-                                                      : ""),
+                                                  ((lengthPercentage * 100).ceil() > 100 ? ("\n" + "screenshotOverLength".tr) : ""),
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   color: (lengthPercentage * 100).ceil() > 100
@@ -1170,8 +1136,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                                             children: [
                                               if (screenshotStatus == ScreenshotStatus.Selecting)
                                                 IconButton(
-                                                  icon: Icon(Icons.check_circle,
-                                                      color: E().threadPageButtonUnselectedColor),
+                                                  icon: Icon(Icons.check_circle, color: E().threadPageButtonUnselectedColor),
                                                   onPressed: () {
                                                     previewing();
                                                   },
@@ -1185,8 +1150,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                                                 )
                                               else if (screenshotStatus == ScreenshotStatus.Capturing)
                                                 IconButton(
-                                                  icon: Icon(Icons.hourglass_empty,
-                                                      color: E().threadPageButtonUnselectedColor),
+                                                  icon: Icon(Icons.hourglass_empty, color: E().threadPageButtonUnselectedColor),
                                                   onPressed: () {
                                                     capturing();
                                                   },
@@ -1200,8 +1164,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                                                 )
                                               else if (screenshotStatus == ScreenshotStatus.Previewing)
                                                 IconButton(
-                                                  icon: Icon(Icons.remove_circle,
-                                                      color: E().threadPageButtonUnselectedColor),
+                                                  icon: Icon(Icons.remove_circle, color: E().threadPageButtonUnselectedColor),
                                                   onPressed: () {
                                                     backToSelecting();
                                                   },

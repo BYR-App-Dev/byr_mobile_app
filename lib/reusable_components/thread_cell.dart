@@ -5,10 +5,13 @@ import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/nforum/nforum_text_parser.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
+import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
 import 'package:byr_mobile_app/reusable_components/parsed_text.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:like_button/like_button.dart';
 
 class ThreadPageListCellArticleLayouter extends ThreadPageListCellDataLayouter<ThreadArticleModel> {
   @override
@@ -114,9 +117,7 @@ class ThreadPageListCellArticleLayouter extends ThreadPageListCellDataLayouter<T
   Color getUsernameColor(ThreadArticleModel d) {
     return d.user?.gender == null
         ? E().otherUserIdColor
-        : (d.user.gender == 'f'
-            ? E().femaleUserIdColor
-            : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
+        : (d.user.gender == 'f' ? E().femaleUserIdColor : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
   }
 
   @override
@@ -166,6 +167,16 @@ class ThreadPageListCellArticleLayouter extends ThreadPageListCellDataLayouter<T
   @override
   String getBoardName(ThreadArticleModel d) {
     return d.boardName;
+  }
+
+  @override
+  int getArticleId(ThreadArticleModel d) {
+    return d.id;
+  }
+
+  @override
+  bool isLikeModel(ThreadArticleModel d) {
+    return false;
   }
 }
 
@@ -269,9 +280,7 @@ class ThreadPageListCellLikeArticleLayouter extends ThreadPageListCellDataLayout
   Color getUsernameColor(LikeArticleModel d) {
     return d.user?.gender == null
         ? E().otherUserIdColor
-        : (d.user.gender == 'f'
-            ? E().femaleUserIdColor
-            : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
+        : (d.user.gender == 'f' ? E().femaleUserIdColor : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
   }
 
   @override
@@ -321,6 +330,16 @@ class ThreadPageListCellLikeArticleLayouter extends ThreadPageListCellDataLayout
   String getBoardName(LikeArticleModel d) {
     return d.boardName;
   }
+
+  @override
+  int getArticleId(LikeArticleModel d) {
+    return d.id;
+  }
+
+  @override
+  bool isLikeModel(LikeArticleModel d) {
+    return true;
+  }
 }
 
 abstract class ThreadPageListCellDataLayouter<T> {
@@ -354,6 +373,8 @@ abstract class ThreadPageListCellDataLayouter<T> {
   UserModel getUser(T d);
   void like(T d);
   void votedown(T d);
+  int getArticleId(T d);
+  bool isLikeModel(T d);
 }
 
 class ThreadPageListCell<T> extends StatefulWidget {
@@ -364,8 +385,6 @@ class ThreadPageListCell<T> extends StatefulWidget {
   final String boardName;
   final Function onLongPress;
   final Function onTap;
-  final Function likeit;
-  final Function votedownit;
   final Function onOnlyAuthor;
   final bool isSubject;
   final String authorShown;
@@ -378,8 +397,6 @@ class ThreadPageListCell<T> extends StatefulWidget {
     this.boardName,
     this.onLongPress,
     this.onTap,
-    this.likeit,
-    this.votedownit,
     this.onOnlyAuthor, {
     this.isSubject = false,
     this.authorShown = '',
@@ -400,8 +417,6 @@ class ThreadPageListSubjectCell<T> extends ThreadPageListCell<T> {
     String boardName,
     Function onLongPress,
     Function onTap,
-    Function likeit,
-    Function votedownit,
     Function onOnlyAuthor, {
     isSubject = false,
     authorShown = '',
@@ -413,8 +428,6 @@ class ThreadPageListSubjectCell<T> extends ThreadPageListCell<T> {
           boardName,
           onLongPress,
           onTap,
-          likeit,
-          votedownit,
           onOnlyAuthor,
           isSubject: isSubject,
           authorShown: authorShown,
@@ -554,78 +567,6 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
     );
   }
 
-  Widget buildTopRightCorner(ThreadPageListCellDataLayouter l, dynamic d) {
-    return
-        // Expanded(
-        //   child:
-        Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              IconButton(
-                padding: EdgeInsets.all(0),
-                icon: Icon(Icons.thumb_up,
-                    color: l.getIsLiked(d) ? E().threadPageVoteUpPickedColor : E().threadPageVoteUpDownUnpickedColor),
-                iconSize: 24,
-                onPressed: () {
-                  if (l.getIsLiked(d)) {
-                    return;
-                  }
-                  this.widget.likeit();
-                  l.setIsLiked(d, true);
-                  l.setLikes(d, l.getLikes(d) + 1);
-                  l.setVotedowns(d, l.getVotedowns(d) - (l.getIsVotedown(d) ? 1 : 0));
-                  l.setIsVotedown(d, false);
-                  if (mounted) {
-                    setState(() {});
-                  }
-                },
-              ),
-              Text(
-                l.getLikes(d).toString(),
-                style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              IconButton(
-                padding: EdgeInsets.all(0),
-                icon: Icon(Icons.thumb_down,
-                    color:
-                        l.getIsVotedown(d) ? E().threadPageVoteDownPickedColor : E().threadPageVoteUpDownUnpickedColor),
-                iconSize: 24,
-                onPressed: () {
-                  if (l.getIsVotedown(d)) {
-                    return;
-                  }
-                  this.widget.votedownit();
-                  l.setIsVotedown(d, true);
-                  l.setLikes(d, l.getLikes(d) - (l.getIsLiked(d) ? 1 : 0));
-                  l.setVotedowns(d, l.getVotedowns(d) + 1);
-                  l.setIsLiked(d, false);
-                  if (mounted) {
-                    setState(() {});
-                  }
-                },
-              ),
-              Text(
-                l.getIsVotedownNumberShow(d) ? l.getVotedowns(d).toString() : " ",
-                style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget buildTitle(ThreadPageListCellDataLayouter l, dynamic d) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -695,85 +636,136 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
                 ],
               ),
             )
-          : ParsedText.uploaded(
-              text: l.getContent(d),
-              uploads: l.getAttachmentFiles(d),
-              title: l.getTitle(d),
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                ParsedText.uploaded(
+                  text: l.getContent(d),
+                  uploads: l.getAttachmentFiles(d),
+                  title: l.getTitle(d),
+                ),
+                Container(
+                  child: buildBottomRow(l, d),
+                  margin: EdgeInsets.only(top: 10, bottom: 5),
+                ),
+              ],
             ),
     );
   }
 
   Widget buildBottomRow(ThreadPageListCellDataLayouter l, dynamic d) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              IconButton(
-                padding: EdgeInsets.all(0),
-                icon: Icon(
-                  Icons.thumb_up,
-                  color: l.getIsLiked(d) ? E().threadPageVoteUpPickedColor : E().threadPageVoteUpDownUnpickedColor,
-                ),
-                iconSize: 24,
-                onPressed: () {
-                  if (l.getIsLiked(d)) {
-                    return;
-                  }
-                  this.widget.likeit();
+    TextStyle textStyle = TextStyle(fontSize: 14.0, color: E().threadPageOtherTextColor);
+    return DefaultTextStyle(
+      style: textStyle,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          LikeButton(
+            isLiked: l.getIsLiked(d),
+            likeBuilder: (bool voteUp) {
+              return Icon(
+                FontAwesomeIcons.thumbsUp,
+                color: voteUp ? E().threadPageVoteUpPickedColor : E().threadPageVoteUpDownUnpickedColor,
+                size: 18,
+              );
+            },
+            size: 18,
+            circleColor: CircleColor(
+              start: E().threadPageVoteUpPickedColor.withOpacity(0.5),
+              end: E().threadPageVoteUpPickedColor,
+            ),
+            bubblesColor: BubblesColor(
+              dotPrimaryColor: E().threadPageVoteUpPickedColor,
+              dotSecondaryColor: E().threadPageVoteUpPickedColor.withOpacity(0.5),
+            ),
+            likeCount: l.getLikes(d),
+            likeCountPadding: EdgeInsets.only(left: 5),
+            countBuilder: (int voteUpCount, bool voteUp, String text) {
+              return Text(
+                ' 赞($voteUpCount)',
+                style: voteUp ? textStyle.copyWith(color: E().threadPageVoteUpPickedColor) : null,
+              );
+            },
+            onTap: (bool voteUp) async {
+              if (voteUp) {
+                AdaptiveComponents.showToast(context, '赞后不能取消');
+                return Future.value(voteUp);
+              }
+              final flag = await NForumService.likeArticle(l.getBoardName(d), l.getArticleId(d));
+              // 成功
+              if (flag) {
+                // 取消踩的状态
+                if (l.getIsVotedown(d)) {
                   l.setIsLiked(d, true);
                   l.setLikes(d, l.getLikes(d) + 1);
                   l.setVotedowns(d, l.getVotedowns(d) - (l.getIsVotedown(d) ? 1 : 0));
                   l.setIsVotedown(d, false);
-                  if (mounted) {
-                    setState(() {});
+                  setState(() {});
+                }
+                return Future.value(!voteUp);
+              } else {
+                AdaptiveComponents.showToast(context, '操作失败');
+                return Future.value(voteUp);
+              }
+            },
+          ),
+          // 热门回复不显示踩
+          if (!l.isLikeModel(d))
+            Container(
+              margin: EdgeInsets.only(left: 50),
+              child: LikeButton(
+                isLiked: l.getIsVotedown(d),
+                likeBuilder: (bool voteDown) {
+                  return Icon(
+                    FontAwesomeIcons.thumbsDown,
+                    color: voteDown ? E().threadPageVoteDownPickedColor : E().threadPageVoteUpDownUnpickedColor,
+                    size: 18,
+                  );
+                },
+                size: 18,
+                circleColor: CircleColor(
+                  start: E().threadPageVoteDownPickedColor.withOpacity(0.5),
+                  end: E().threadPageVoteDownPickedColor,
+                ),
+                bubblesColor: BubblesColor(
+                  dotPrimaryColor: E().threadPageVoteDownPickedColor,
+                  dotSecondaryColor: E().threadPageVoteDownPickedColor.withOpacity(0.5),
+                ),
+                likeCount: l.getVotedowns(d),
+                likeCountPadding: EdgeInsets.only(left: 5),
+                countBuilder: (int voteDownCount, bool voteDown, String text) {
+                  return Text(
+                    ' 踩($voteDownCount)',
+                    style: voteDown ? textStyle.copyWith(color: E().threadPageVoteDownPickedColor) : null,
+                  );
+                },
+                onTap: (bool voteDown) async {
+                  if (voteDown) {
+                    AdaptiveComponents.showToast(context, '踩后不能取消');
+                    return Future.value(voteDown);
+                  }
+                  final flag = await NForumService.votedownArticle(l.getBoardName(d), l.getArticleId(d));
+                  // 成功
+                  if (flag) {
+                    // 取消赞的状态
+                    if (l.getIsLiked(d)) {
+                      l.setIsVotedown(d, true);
+                      l.setLikes(d, l.getLikes(d) - (l.getIsLiked(d) ? 1 : 0));
+                      l.setVotedowns(d, l.getVotedowns(d) + 1);
+                      l.setIsLiked(d, false);
+                      setState(() {});
+                    }
+                    return Future.value(!voteDown);
+                  } else {
+                    AdaptiveComponents.showToast(context, '操作失败');
+                    return Future.value(voteDown);
                   }
                 },
               ),
-              Text(
-                l.getLikes(d).toString(),
-                style: TextStyle(fontSize: 14.0, color: E().threadPageOtherTextColor),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              IconButton(
-                padding: EdgeInsets.all(0),
-                icon: Icon(Icons.thumb_down,
-                    color:
-                        l.getIsVotedown(d) ? E().threadPageVoteDownPickedColor : E().threadPageVoteUpDownUnpickedColor),
-                iconSize: 24,
-                onPressed: () {
-                  if (l.getIsVotedown(d)) {
-                    return;
-                  }
-                  this.widget.votedownit();
-                  l.setIsVotedown(d, true);
-                  l.setLikes(d, l.getLikes(d) - (l.getIsLiked(d) ? 1 : 0));
-                  l.setVotedowns(d, l.getVotedowns(d) + 1);
-                  l.setIsLiked(d, false);
-                  if (mounted) {
-                    setState(() {});
-                  }
-                },
-              ),
-              Text(
-                l.getIsVotedownNumberShow(d) ? l.getVotedowns(d).toString() : " ",
-                style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
-              ),
-            ],
-          ),
-        ),
-      ],
+            ),
+        ],
+      ),
     );
   }
 
@@ -788,22 +780,17 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
       onLongPress: () {
         this.widget.onLongPress();
       },
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            contentPadding: EdgeInsets.only(
-              top: 0,
-              left: 18,
-              right: 18,
-            ),
-            onTap: () {
-              this.widget.onTap();
-            },
-            title: buildTitle(l, d),
-            subtitle: buildSubtitle(l, d),
-          ),
-          buildBottomRow(l, d),
-        ],
+      child: ListTile(
+        contentPadding: EdgeInsets.only(
+          top: 0,
+          left: 18,
+          right: 18,
+        ),
+        onTap: () {
+          this.widget.onTap();
+        },
+        title: buildTitle(l, d),
+        subtitle: buildSubtitle(l, d),
       ),
     );
   }
