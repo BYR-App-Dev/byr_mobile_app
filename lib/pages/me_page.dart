@@ -273,6 +273,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                     ? ClickableAvatar(
                         radius: 20,
                         emptyUser: snapshot.data?.faceUrl == null,
+                        isWhisper: (snapshot.data?.id ?? "").startsWith("IWhisper"),
                         imageLink: NForumService.makeGetURL(snapshot.data?.faceUrl ?? ""),
                         onTap: () {
                           if (snapshot.data?.faceUrl == null) {

@@ -355,6 +355,7 @@ class _SearchThreadPageState extends State<SearchThreadPage> with TickerProvider
                     ),
                     child: ClickableAvatar(
                       radius: 10,
+                      isWhisper: (article.user?.id ?? "").startsWith("IWhisper"),
                       imageLink: NForumService.makeGetURL(article.user?.faceUrl ?? ""),
                       emptyUser: article.user == null || article.user.faceUrl == null,
                     ),

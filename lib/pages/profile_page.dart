@@ -108,6 +108,7 @@ class ProfilePage extends StatelessWidget {
                                         child: ClickableAvatar(
                                           radius: 45,
                                           onTap: null,
+                                          isWhisper: (user?.id ?? "").startsWith("IWhisper"),
                                           imageLink: NForumService.makeGetURL(user.faceUrl),
                                           emptyUser: !GetUtils.isURL(user?.faceUrl),
                                         ),

@@ -91,6 +91,7 @@ class CollectionPageState extends ArticleListBasePageState<CollectionModel, Coll
                   ClickableAvatar(
                     radius: 10,
                     imageLink: NForumService.makeGetURL(collectionArticleObject.user?.faceUrl ?? ""),
+                    isWhisper: (collectionArticleObject.user?.id ?? "").startsWith("IWhisper"),
                     emptyUser: collectionArticleObject.user?.faceUrl == null,
                   ),
                   Container(

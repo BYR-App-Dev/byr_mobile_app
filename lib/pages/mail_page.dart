@@ -57,6 +57,7 @@ class MailPageState extends State<MailPage> with AutomaticKeepAliveClientMixin {
               ClickableAvatar(
                 radius: 20,
                 imageLink: NForumService.makeGetURL(_mailObject.user?.faceUrl ?? ""),
+                isWhisper: (_mailObject.user?.id ?? "").startsWith("IWhisper"),
                 emptyUser: _mailObject.user?.faceUrl == null,
                 onTap: () {
                   navigator.pushNamed(

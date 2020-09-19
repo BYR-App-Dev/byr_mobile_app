@@ -118,7 +118,9 @@ class ThreadPageListCellArticleLayouter extends ThreadPageListCellDataLayouter<T
   Color getUsernameColor(ThreadArticleModel d) {
     return d.user?.gender == null
         ? E().otherUserIdColor
-        : (d.user.gender == 'f' ? E().femaleUserIdColor : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
+        : (d.user.gender == 'f'
+            ? E().femaleUserIdColor
+            : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
   }
 
   @override
@@ -281,7 +283,9 @@ class ThreadPageListCellLikeArticleLayouter extends ThreadPageListCellDataLayout
   Color getUsernameColor(LikeArticleModel d) {
     return d.user?.gender == null
         ? E().otherUserIdColor
-        : (d.user.gender == 'f' ? E().femaleUserIdColor : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
+        : (d.user.gender == 'f'
+            ? E().femaleUserIdColor
+            : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
   }
 
   @override
@@ -542,6 +546,7 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
       children: <Widget>[
         ClickableAvatar(
           radius: 18,
+          isWhisper: (l.getUser(d)?.id ?? "").startsWith("IWhisper"),
           emptyUser: l.getIsUserEmpty(d),
           imageLink: l.getUserImageLink(d),
           onTap: () {

@@ -67,6 +67,7 @@ class ReferboxPageState extends ArticleListBasePageState<ReferBoxModel, Referbox
           children: <Widget>[
             ClickableAvatar(
               radius: 20,
+              isWhisper: (referArticleObject.user?.id ?? "").startsWith("IWhisper"),
               imageLink: NForumService.makeGetURL(referArticleObject.user?.faceUrl ?? ""),
               emptyUser: referArticleObject.user?.faceUrl == null,
             ),

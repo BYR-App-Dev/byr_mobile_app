@@ -436,6 +436,7 @@ class PostInfoView extends StatelessWidget {
       children: <Widget>[
         ClickableAvatar(
           radius: 18,
+          isWhisper: (user?.id ?? "").startsWith("IWhisper"),
           imageLink: NForumService.makeGetURL(user?.faceUrl ?? ""),
           emptyUser: !GetUtils.isURL(user?.faceUrl),
           onTap: !GetUtils.isURL(user?.faceUrl)

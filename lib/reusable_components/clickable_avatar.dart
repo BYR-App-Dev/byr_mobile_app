@@ -8,12 +8,14 @@ class ClickableAvatar extends StatelessWidget {
   final bool emptyUser;
   final String imageLink;
   final onTap;
+  final isWhisper;
   const ClickableAvatar({
     Key key,
     @required this.radius,
     @required this.emptyUser,
     this.imageLink,
     this.onTap,
+    this.isWhisper = false,
   }) : super(key: key);
 
   @override
@@ -27,20 +29,30 @@ class ClickableAvatar extends StatelessWidget {
       ),
       decoration: BoxDecoration(color: Colors.transparent, shape: BoxShape.circle),
     );
-    Widget avatar = emptyUser
-        ? placeHolder
-        : CachedNetworkImage(
+    Widget avatar = isWhisper
+        ? Container(
             alignment: Alignment.center,
-            color: E().userPageSecondaryBackgroundColor,
-            imageUrl: imageLink,
-            imageBuilder: (context, imageProvider) => CircleAvatar(
-              backgroundColor: E().userPageSecondaryBackgroundColor,
-              radius: radius,
-              backgroundImage: imageProvider,
+            child: Image.asset(
+              "resources/user/whisper_face.gif",
+              width: radius * 2,
+              height: radius * 2,
             ),
-            placeholder: (context, url) => placeHolder,
-            errorWidget: (context, url, error) => placeHolder,
-          );
+            decoration: BoxDecoration(color: Colors.transparent, shape: BoxShape.circle),
+          )
+        : emptyUser
+            ? placeHolder
+            : CachedNetworkImage(
+                alignment: Alignment.center,
+                color: E().userPageSecondaryBackgroundColor,
+                imageUrl: imageLink,
+                imageBuilder: (context, imageProvider) => CircleAvatar(
+                  backgroundColor: E().userPageSecondaryBackgroundColor,
+                  radius: radius,
+                  backgroundImage: imageProvider,
+                ),
+                placeholder: (context, url) => placeHolder,
+                errorWidget: (context, url, error) => placeHolder,
+              );
     if (onTap != null) {
       return GestureDetector(
         child: avatar,

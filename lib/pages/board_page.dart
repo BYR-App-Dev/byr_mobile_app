@@ -108,6 +108,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                   ClickableAvatar(
                     radius: 10,
                     imageLink: NForumService.makeGetURL(boardArticleObject.user?.faceUrl ?? ""),
+                    isWhisper: (boardArticleObject.user?.id ?? "").startsWith("IWhisper"),
                     emptyUser: boardArticleObject.user == null || boardArticleObject.user.faceUrl == null,
                   ),
                   Container(
@@ -548,6 +549,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                   ClickableAvatar(
                     radius: 10,
                     imageLink: NForumService.makeGetURL(boardArticleObject.user?.faceUrl ?? ""),
+                    isWhisper: (boardArticleObject.user?.id ?? "").startsWith("IWhisper"),
                     emptyUser: !GetUtils.isURL(boardArticleObject.user?.faceUrl),
                   ),
                   Container(
@@ -677,6 +679,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                             ClickableAvatar(
                               radius: 10,
                               imageLink: NForumService.makeGetURL(boardArticleObject.user?.faceUrl ?? ""),
+                              isWhisper: (boardArticleObject.user?.id ?? "").startsWith("IWhisper"),
                               emptyUser: !GetUtils.isURL(boardArticleObject.user?.faceUrl),
                             ),
                             Container(

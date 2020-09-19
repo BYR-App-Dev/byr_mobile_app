@@ -571,6 +571,7 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
                             children: <Widget>[
                               ClickableAvatar(
                                 radius: 18,
+                                isWhisper: (userSnapshot.data?.id ?? "").startsWith("IWhisper"),
                                 imageLink: userSnapshot.hasData
                                     ? NForumService.makeGetURL(userSnapshot.data.faceUrl ?? "")
                                     : null,

@@ -63,6 +63,7 @@ class MailboxPageState extends PageableListBasePageState<MailBoxModel, MailboxPa
             children: <Widget>[
               ClickableAvatar(
                 radius: 20,
+                isWhisper: (object.user?.id ?? "").startsWith("IWhisper"),
                 imageLink: NForumService.makeGetURL(object.user?.faceUrl ?? ""),
                 emptyUser: object.user?.faceUrl == null,
               ),
