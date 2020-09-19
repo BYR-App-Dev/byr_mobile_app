@@ -118,9 +118,7 @@ class ThreadPageListCellArticleLayouter extends ThreadPageListCellDataLayouter<T
   Color getUsernameColor(ThreadArticleModel d) {
     return d.user?.gender == null
         ? E().otherUserIdColor
-        : (d.user.gender == 'f'
-            ? E().femaleUserIdColor
-            : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
+        : (d.user.gender == 'f' ? E().femaleUserIdColor : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
   }
 
   @override
@@ -283,9 +281,7 @@ class ThreadPageListCellLikeArticleLayouter extends ThreadPageListCellDataLayout
   Color getUsernameColor(LikeArticleModel d) {
     return d.user?.gender == null
         ? E().otherUserIdColor
-        : (d.user.gender == 'f'
-            ? E().femaleUserIdColor
-            : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
+        : (d.user.gender == 'f' ? E().femaleUserIdColor : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
   }
 
   @override
@@ -519,7 +515,6 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
         }
         l.setIsLiked(d, true);
       } else {
-        AdaptiveComponents.showToast(context, '操作失败');
         _voteUpKey?.currentState?.handleIsLikeChanged(false);
       }
     });
@@ -534,7 +529,6 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
         }
         l.setIsVotedown(d, true);
       } else {
-        AdaptiveComponents.showToast(context, '操作失败');
         _voteDownKey?.currentState?.handleIsLikeChanged(false);
       }
     });
