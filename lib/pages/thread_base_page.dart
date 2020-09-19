@@ -65,8 +65,10 @@ abstract class ThreadBasePage extends StatefulWidget {
 class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData extends ThreadBaseData> extends State<BaseThreadPage>
     with ScrollableListMixin<BaseThreadPage, BaseThreadData>, PagerMixin, AutomaticKeepAliveClientMixin, ReplyFormMixin, InitializationFailureViewMixin {
   GlobalKey<ScaffoldState> scaffoldKey;
+  GlobalKey moreKey;
   int refreshFactor;
   RefreshController refreshController;
+  OverlayEntry _popUpMenuOverlay;
 
   InitializationStatus initializationStatus;
   bool isLoading;
@@ -88,6 +90,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   void initState() {
     super.initState();
     scaffoldKey = GlobalKey<ScaffoldState>();
+    moreKey = GlobalKey();
 
     firstPageJump = 0;
 
@@ -133,60 +136,6 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     if (data.thread?.id != null) {
       await Share.share(data.thread.title + ": " + NForumService.makeThreadURL(data.thread.boardName, data.thread.groupId) + ' 北邮人论坛');
     }
-  }
-
-  getThreadMoreMenu(BuildContext context) {
-    return <PopupMenuEntry<String>>[
-      PopupMenuItem<String>(
-        value: 'goboard',
-        child: Text(
-          "backToBoardTrans".tr,
-          style: TextStyle(
-            color: E().threadPageTopBarMenuColor,
-          ),
-        ),
-      ),
-      PopupMenuItem<String>(
-        value: 'report',
-        child: Text(
-          "reportTrans".tr,
-          style: TextStyle(
-            color: E().threadPageTopBarMenuColor,
-          ),
-        ),
-      ),
-      data.boardName == 'IWhisper'
-          ? PopupMenuItem<String>(
-              value: 'anonymous',
-              child: Text(
-                data.isAnonymous ? "unAnonymous".tr : "anonymous".tr,
-                style: TextStyle(
-                  color: E().threadPageTopBarMenuColor,
-                ),
-              ),
-            )
-          : null,
-      screenshotStatus == ScreenshotStatus.Dismissed
-          ? PopupMenuItem<String>(
-              value: 'screenshot',
-              child: Text(
-                "screenshotPage".tr,
-                style: TextStyle(
-                  color: E().threadPageTopBarMenuColor,
-                ),
-              ),
-            )
-          : null,
-      PopupMenuItem<String>(
-        value: 'share',
-        child: Text(
-          "share".tr,
-          style: TextStyle(
-            color: E().threadPageTopBarMenuColor,
-          ),
-        ),
-      ),
-    ];
   }
 
   @override
@@ -975,6 +924,107 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     }
   }
 
+  Widget _itemWidget(
+    IconData iconData,
+    String title, {
+    VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        _popUpMenuOverlay?.remove();
+        if (onTap != null) onTap();
+      },
+      child: Container(
+        height: 40,
+        alignment: Alignment.centerLeft,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Icon(
+              iconData,
+              size: 15,
+              color: E().threadPageTopBarMenuColor,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: E().threadPageTopBarMenuColor,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  showPopupMenu({
+    double radius = 5.0,
+    double arrowSize = 10,
+    double rightMargin = 10,
+    double bottomMargin = 10,
+    Color barrierColor = Colors.black12,
+    Color backgroundColor = Colors.white,
+    Widget child,
+    Color dividerColor,
+  }) {
+    if (moreKey.currentContext == null) {
+      return;
+    }
+    RenderBox renderBox = moreKey.currentContext.findRenderObject();
+    Offset offset = renderBox.localToGlobal(Offset.zero);
+    double centerX = offset.dx + renderBox.size.width / 2;
+    Size deviceSize = MediaQuery.of(context).size;
+    double arrowMargin = deviceSize.width - (arrowSize / 2 + rightMargin + centerX);
+    double arrowTop = renderBox.size.height / 2 + offset.dy + bottomMargin;
+    _popUpMenuOverlay = OverlayEntry(
+      builder: (context) {
+        return Stack(
+          children: <Widget>[
+            GestureDetector(
+              onTap: () => _popUpMenuOverlay?.remove(),
+              child: Container(
+                width: deviceSize.width,
+                height: deviceSize.height,
+                color: barrierColor,
+              ),
+            ),
+            Positioned(
+              top: arrowTop,
+              right: rightMargin + arrowMargin,
+              child: ClipPath(
+                child: Container(
+                  width: arrowSize,
+                  height: arrowSize,
+                  color: backgroundColor,
+                ),
+                clipper: _ArrowClipper(),
+              ),
+            ),
+            Positioned(
+              top: arrowTop + arrowSize,
+              right: rightMargin,
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(radius)),
+                child: Container(
+                  color: backgroundColor,
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Material(
+                    child: child,
+                    color: Colors.transparent,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    Overlay.of(context).insert(_popUpMenuOverlay);
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -1013,41 +1063,66 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                 return onCollectButtonTapped(isCollected);
               },
             ),
-            PopupMenuButton<String>(
-              color: E().topBarBackgroundColor,
-              itemBuilder: (context) => getThreadMoreMenu(context),
-              onSelected: (choice) {
-                switch (choice) {
-                  case "goboard":
-                    return Navigator.of(context)
-                        .pushNamedAndRemoveUntil("board_page", ModalRoute.withName('home_page'), arguments: BoardPageRouteArg(data.boardName));
-                  case "report":
-                    AdaptiveComponents.showAlertDialog(
-                      context,
-                      title: "reportConfirmTrans".tr,
-                      onDismiss: (result) {
-                        print(result);
-                      },
-                    );
-                    return null;
-                  case "anonymous":
-                    NForumSpecs.setAnonymous(value: !data.isAnonymous);
-                    data.isAnonymous = !data.isAnonymous;
-                    if (mounted) {
-                      setState(() {});
-                    }
-                    return null;
-                  case "screenshot":
-                    captureScreenshot();
-                    return null;
-                  case "share":
-                    shareArticle();
-                    return null;
-                  default:
-                    return null;
-                }
-              },
+            IconButton(
+              key: moreKey,
               icon: Icon(Icons.more_horiz, size: 30),
+              onPressed: () {
+                showPopupMenu(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      _itemWidget(
+                        FontAwesomeIcons.thList,
+                        "backToBoardTrans".tr,
+                        onTap: () {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                            "board_page",
+                            ModalRoute.withName('home_page'),
+                            arguments: BoardPageRouteArg(data.boardName),
+                          );
+                        },
+                      ),
+                      if (data.boardName == 'IWhisper')
+                        _itemWidget(
+                          data.isAnonymous ? FontAwesomeIcons.solidEyeSlash : FontAwesomeIcons.solidEye,
+                          data.isAnonymous ? "unAnonymous".tr : "anonymous".tr,
+                          onTap: () {
+                            NForumSpecs.setAnonymous(value: !data.isAnonymous);
+                            data.isAnonymous = !data.isAnonymous;
+                            if (mounted) {
+                              setState(() {});
+                            }
+                          },
+                        ),
+                      if (screenshotStatus == ScreenshotStatus.Dismissed)
+                        _itemWidget(
+                          FontAwesomeIcons.camera,
+                          "screenshotPage".tr,
+                          onTap: captureScreenshot,
+                        ),
+                      _itemWidget(
+                        FontAwesomeIcons.shareAlt,
+                        "share".tr,
+                        onTap: shareArticle,
+                      ),
+                      _itemWidget(
+                        FontAwesomeIcons.exclamationCircle,
+                        "reportTrans".tr,
+                        onTap: () {
+                          AdaptiveComponents.showAlertDialog(
+                            context,
+                            title: "reportConfirmTrans".tr,
+                            onDismiss: (result) {
+                              print(result);
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -1162,5 +1237,21 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         ),
       ),
     );
+  }
+}
+
+class _ArrowClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.moveTo(0, size.height);
+    path.lineTo(size.width / 2, size.height / 2);
+    path.lineTo(size.width, size.height);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
   }
 }
