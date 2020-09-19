@@ -509,12 +509,13 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
   _voteUp(ThreadPageListCellDataLayouter l, dynamic d) {
     NForumService.likeArticle(l.getBoardName(d), l.getArticleId(d)).then((flag) {
       if (flag) {
-        if (l.getIsVotedown(d)) {
-          // 取消踩的状态
-          _voteDownKey?.currentState?.handleIsLikeChanged(false);
-        }
         l.setIsLiked(d, true);
+        l.setIsVotedown(d, false);
       } else {
+        if (l.getIsVotedown(d)) {
+          // 返回原始的状态
+          _voteDownKey?.currentState?.handleIsLikeChanged(true);
+        }
         _voteUpKey?.currentState?.handleIsLikeChanged(false);
       }
     });
@@ -523,12 +524,13 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
   _voteDown(ThreadPageListCellDataLayouter l, dynamic d) {
     NForumService.votedownArticle(l.getBoardName(d), l.getArticleId(d)).then((flag) {
       if (flag) {
-        if (l.getIsLiked(d)) {
-          // 取消赞的状态
-          _voteUpKey?.currentState?.handleIsLikeChanged(false);
-        }
         l.setIsVotedown(d, true);
+        l.setIsLiked(d, false);
       } else {
+        if (l.getIsLiked(d)) {
+          // 返回原始的状态
+          _voteUpKey?.currentState?.handleIsLikeChanged(true);
+        }
         _voteDownKey?.currentState?.handleIsLikeChanged(false);
       }
     });
@@ -727,6 +729,10 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
               if (voteUp) {
                 AdaptiveComponents.showToast(context, '赞后不能取消');
               } else {
+                if (l.getIsVotedown(d)) {
+                  // 取消踩的状态
+                  _voteDownKey?.currentState?.handleIsLikeChanged(false);
+                }
                 _voteUp(l, d);
               }
               return Future.value(true);
@@ -769,6 +775,10 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
                   if (voteDown) {
                     AdaptiveComponents.showToast(context, '踩后不能取消');
                   } else {
+                    if (l.getIsLiked(d)) {
+                      // 取消赞的状态
+                      _voteUpKey?.currentState?.handleIsLikeChanged(false);
+                    }
                     _voteDown(l, d);
                   }
                   return Future.value(true);
