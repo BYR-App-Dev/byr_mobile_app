@@ -118,7 +118,9 @@ class ThreadPageListCellArticleLayouter extends ThreadPageListCellDataLayouter<T
   Color getUsernameColor(ThreadArticleModel d) {
     return d.user?.gender == null
         ? E().otherUserIdColor
-        : (d.user.gender == 'f' ? E().femaleUserIdColor : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
+        : (d.user.gender == 'f'
+            ? E().femaleUserIdColor
+            : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
   }
 
   @override
@@ -281,7 +283,9 @@ class ThreadPageListCellLikeArticleLayouter extends ThreadPageListCellDataLayout
   Color getUsernameColor(LikeArticleModel d) {
     return d.user?.gender == null
         ? E().otherUserIdColor
-        : (d.user.gender == 'f' ? E().femaleUserIdColor : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
+        : (d.user.gender == 'f'
+            ? E().femaleUserIdColor
+            : (d.user.gender == 'm' ? E().maleUserIdColor : E().otherUserIdColor));
   }
 
   @override
@@ -508,31 +512,43 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
 
   _voteUp(ThreadPageListCellDataLayouter l, dynamic d) {
     NForumService.likeArticle(l.getBoardName(d), l.getArticleId(d)).then((flag) {
-      if (flag) {
-        l.setIsLiked(d, true);
-        l.setIsVotedown(d, false);
-      } else {
-        if (l.getIsVotedown(d)) {
-          // 返回原始的状态
-          _voteDownKey?.currentState?.handleIsLikeChanged(true);
-        }
-        _voteUpKey?.currentState?.handleIsLikeChanged(false);
+      // if (flag) {
+      // l.setIsLiked(d, true);
+      // l.setIsVotedown(d, false);
+      // } else {
+      //   if (l.getIsVotedown(d)) {
+      //     // 返回原始的状态
+      //     _voteDownKey?.currentState?.handleIsLikeChanged(true);
+      //   }
+      //   _voteUpKey?.currentState?.handleIsLikeChanged(false);
+      // }
+    }).catchError((_) {
+      if (l.getIsVotedown(d)) {
+        // 返回原始的状态
+        _voteDownKey?.currentState?.handleIsLikeChanged(true);
       }
+      _voteUpKey?.currentState?.handleIsLikeChanged(false);
     });
   }
 
   _voteDown(ThreadPageListCellDataLayouter l, dynamic d) {
     NForumService.votedownArticle(l.getBoardName(d), l.getArticleId(d)).then((flag) {
-      if (flag) {
-        l.setIsVotedown(d, true);
-        l.setIsLiked(d, false);
-      } else {
-        if (l.getIsLiked(d)) {
-          // 返回原始的状态
-          _voteUpKey?.currentState?.handleIsLikeChanged(true);
-        }
-        _voteDownKey?.currentState?.handleIsLikeChanged(false);
+      // if (flag) {
+      // l.setIsVotedown(d, true);
+      // l.setIsLiked(d, false);
+      // } else {
+      //   if (l.getIsLiked(d)) {
+      //     // 返回原始的状态
+      //     _voteUpKey?.currentState?.handleIsLikeChanged(true);
+      //   }
+      //   _voteDownKey?.currentState?.handleIsLikeChanged(false);
+      // }
+    }).catchError((_) {
+      if (l.getIsLiked(d)) {
+        // 返回原始的状态
+        _voteUpKey?.currentState?.handleIsLikeChanged(true);
       }
+      _voteDownKey?.currentState?.handleIsLikeChanged(false);
     });
   }
 
@@ -726,13 +742,15 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
             },
             onTap: (bool voteUp) async {
               HapticFeedback.lightImpact();
-              if (voteUp) {
+              if (l.getIsLiked(d)) {
                 AdaptiveComponents.showToast(context, '赞后不能取消');
               } else {
                 if (l.getIsVotedown(d)) {
                   // 取消踩的状态
                   _voteDownKey?.currentState?.handleIsLikeChanged(false);
                 }
+                l.setIsLiked(d, true);
+                l.setIsVotedown(d, false);
                 _voteUp(l, d);
               }
               return Future.value(true);
@@ -772,13 +790,15 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
                 },
                 onTap: (bool voteDown) async {
                   HapticFeedback.lightImpact();
-                  if (voteDown) {
+                  if (l.getIsVotedown(d)) {
                     AdaptiveComponents.showToast(context, '踩后不能取消');
                   } else {
                     if (l.getIsLiked(d)) {
                       // 取消赞的状态
                       _voteUpKey?.currentState?.handleIsLikeChanged(false);
                     }
+                    l.setIsVotedown(d, true);
+                    l.setIsLiked(d, false);
                     _voteDown(l, d);
                   }
                   return Future.value(true);
