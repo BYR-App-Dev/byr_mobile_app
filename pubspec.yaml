@@ -48,7 +48,9 @@ dependencies:
   uni_links: ^0.4.0
   modal_bottom_sheet: ^0.2.0+1	
   toast: ^0.1.5	
-  like_button: ^1.0.1
+  like_button:
+    git:
+      url: git://github.com/w1874/like_button
   gallery_saver:
     git:
       url: git://github.com/BYR-App-Dev/gallery_saver

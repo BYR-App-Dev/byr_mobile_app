@@ -9,6 +9,7 @@ import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
 import 'package:byr_mobile_app/reusable_components/parsed_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
@@ -502,6 +503,39 @@ class ThreadPageSubjectCellState extends ThreadPageListCellState {
 }
 
 class ThreadPageListCellState extends State<ThreadPageListCell> {
+  final GlobalKey<LikeButtonState> _voteUpKey = GlobalKey<LikeButtonState>();
+  final GlobalKey<LikeButtonState> _voteDownKey = GlobalKey<LikeButtonState>();
+
+  _voteUp(ThreadPageListCellDataLayouter l, dynamic d) {
+    NForumService.likeArticle(l.getBoardName(d), l.getArticleId(d)).then((flag) {
+      if (flag) {
+        if (l.getIsVotedown(d)) {
+          // 取消踩的状态
+          _voteDownKey?.currentState?.handleIsLikeChanged(false);
+        }
+        l.setIsLiked(d, true);
+      } else {
+        AdaptiveComponents.showToast(context, '操作失败');
+        _voteUpKey?.currentState?.handleIsLikeChanged(false);
+      }
+    });
+  }
+
+  _voteDown(ThreadPageListCellDataLayouter l, dynamic d) {
+    NForumService.votedownArticle(l.getBoardName(d), l.getArticleId(d)).then((flag) {
+      if (flag) {
+        if (l.getIsLiked(d)) {
+          // 取消赞的状态
+          _voteUpKey?.currentState?.handleIsLikeChanged(false);
+        }
+        l.setIsVotedown(d, true);
+      } else {
+        AdaptiveComponents.showToast(context, '操作失败');
+        _voteDownKey?.currentState?.handleIsLikeChanged(false);
+      }
+    });
+  }
+
   Widget buildNamePosTime(ThreadPageListCellDataLayouter l, dynamic d) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -662,6 +696,7 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           LikeButton(
+            key: _voteUpKey,
             isLiked: l.getIsLiked(d),
             likeBuilder: (bool voteUp) {
               return Icon(
@@ -679,6 +714,7 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
               dotPrimaryColor: E().threadPageVoteUpPickedColor,
               dotSecondaryColor: E().threadPageVoteUpPickedColor.withOpacity(0.5),
             ),
+            likeCountAnimationType: LikeCountAnimationType.none,
             likeCount: l.getLikes(d),
             likeCountPadding: EdgeInsets.only(left: 5),
             countBuilder: (int voteUpCount, bool voteUp, String text) {
@@ -688,26 +724,13 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
               );
             },
             onTap: (bool voteUp) async {
+              HapticFeedback.lightImpact();
               if (voteUp) {
                 AdaptiveComponents.showToast(context, '赞后不能取消');
-                return Future.value(voteUp);
-              }
-              final flag = await NForumService.likeArticle(l.getBoardName(d), l.getArticleId(d));
-              // 成功
-              if (flag) {
-                // 取消踩的状态
-                if (l.getIsVotedown(d)) {
-                  l.setIsLiked(d, true);
-                  l.setLikes(d, l.getLikes(d) + 1);
-                  l.setVotedowns(d, l.getVotedowns(d) - (l.getIsVotedown(d) ? 1 : 0));
-                  l.setIsVotedown(d, false);
-                  setState(() {});
-                }
-                return Future.value(!voteUp);
               } else {
-                AdaptiveComponents.showToast(context, '操作失败');
-                return Future.value(voteUp);
+                _voteUp(l, d);
               }
+              return Future.value(true);
             },
           ),
           // 热门回复不显示踩
@@ -715,6 +738,7 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
             Container(
               margin: EdgeInsets.only(left: 50),
               child: LikeButton(
+                key: _voteDownKey,
                 isLiked: l.getIsVotedown(d),
                 likeBuilder: (bool voteDown) {
                   return Icon(
@@ -732,6 +756,7 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
                   dotPrimaryColor: E().threadPageVoteDownPickedColor,
                   dotSecondaryColor: E().threadPageVoteDownPickedColor.withOpacity(0.5),
                 ),
+                likeCountAnimationType: LikeCountAnimationType.none,
                 likeCount: l.getVotedowns(d),
                 likeCountPadding: EdgeInsets.only(left: 5),
                 countBuilder: (int voteDownCount, bool voteDown, String text) {
@@ -741,26 +766,13 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
                   );
                 },
                 onTap: (bool voteDown) async {
+                  HapticFeedback.lightImpact();
                   if (voteDown) {
                     AdaptiveComponents.showToast(context, '踩后不能取消');
-                    return Future.value(voteDown);
-                  }
-                  final flag = await NForumService.votedownArticle(l.getBoardName(d), l.getArticleId(d));
-                  // 成功
-                  if (flag) {
-                    // 取消赞的状态
-                    if (l.getIsLiked(d)) {
-                      l.setIsVotedown(d, true);
-                      l.setLikes(d, l.getLikes(d) - (l.getIsLiked(d) ? 1 : 0));
-                      l.setVotedowns(d, l.getVotedowns(d) + 1);
-                      l.setIsLiked(d, false);
-                      setState(() {});
-                    }
-                    return Future.value(!voteDown);
                   } else {
-                    AdaptiveComponents.showToast(context, '操作失败');
-                    return Future.value(voteDown);
+                    _voteDown(l, d);
                   }
+                  return Future.value(true);
                 },
               ),
             ),
