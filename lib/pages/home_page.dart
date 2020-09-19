@@ -46,7 +46,6 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
   @override
   initState() {
     initUniLinks();
-
     if (UniversalPlatform.isAndroid) {
       NForumService.getAndroidLatest().then((jsonMap) {
         String _ignoreVersion = LocalStorage.getIgnoreVersion();
@@ -81,8 +80,10 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
       (msg) {
         switch (msg) {
           case "AppLifecycleState.resumed":
-            final Brightness brightness = MediaQuery.platformBrightnessOf(context);
-            BYRThemeManager.instance().autoSwitchDarkMode(brightness);
+            if (BYRThemeManager.instance().getIsAutoSwitchDarkModel() == true) {
+              final Brightness brightness = MediaQuery.platformBrightnessOf(context);
+              BYRThemeManager.instance().autoSwitchDarkMode(brightness);
+            }
             SystemChrome.setSystemUIOverlayStyle(
               SystemUiOverlayStyle(
                 statusBarColor: E().statusBarColor,

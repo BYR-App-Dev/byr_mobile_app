@@ -55,7 +55,7 @@ class BYRThemeManager {
         await importLocalTheme(ts.value, null, BYRTheme.originLightTheme);
       }
     }
-    BYRThemeManager.instance().turnTheme(LocalStorage.getCurrentTheme());
+    await BYRThemeManager.instance().turnTheme(LocalStorage.getCurrentTheme());
   }
 
   Future<void> removeTheme(themeName) async {

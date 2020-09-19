@@ -1,3 +1,4 @@
+import 'package:byr_mobile_app/customizations/theme_manager.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/pages/login_page.dart';
 import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
@@ -35,6 +36,10 @@ class WelcomePageState extends State<WelcomePage> {
   void initState() {
     initializationStatus = InitializationStatus.Initializing;
     startupApp().then((value) {
+      if (BYRThemeManager.instance().getIsAutoSwitchDarkModel() == true) {
+        final Brightness brightness = MediaQuery.platformBrightnessOf(context);
+        BYRThemeManager.instance().autoSwitchDarkMode(brightness);
+      }
       initializePage();
       Future.delayed(Duration(seconds: 3), () {
         if (NForumService.currentToken == null) {
