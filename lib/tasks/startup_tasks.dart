@@ -36,7 +36,7 @@ class StartupTasks {
     }
   }
 
-  static Future<void> initializeMessage() async {
+  static void initializeMessage() {
     Get.put(MessageController());
   }
 

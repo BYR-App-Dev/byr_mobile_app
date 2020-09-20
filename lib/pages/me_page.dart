@@ -4,10 +4,14 @@ import 'package:byr_mobile_app/local_objects/local_storage.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
+import 'package:byr_mobile_app/pages/web_page.dart';
 import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
+import 'package:byr_mobile_app/reusable_components/search_user_dialog.dart';
 import 'package:byr_mobile_app/reusable_components/setting_item_cell.dart';
+import 'package:byr_mobile_app/reusable_components/tapped_dialog.dart';
 import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
@@ -209,21 +213,23 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                 showArrow: false,
                 onTap: () {
                   showDialog(
-                    builder: (c) => SimpleDialog(
-                      backgroundColor: E().mePageBackgroundColor,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(20),
-                          child: Text(
-                            "aboutTrans".tr,
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: E().settingItemCellMainColor,
-                            ),
-                            textAlign: TextAlign.left,
+                    builder: (c) => TappedDialog(
+                      timeToReach: 6,
+                      content: Container(
+                        padding: EdgeInsets.all(20),
+                        child: Text(
+                          "aboutTrans".tr,
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: E().settingItemCellMainColor,
                           ),
+                          textAlign: TextAlign.left,
                         ),
-                      ],
+                      ),
+                      action: () {
+                        navigator.push(CupertinoPageRoute(
+                            builder: (_) => WebPage(WebPageRouteArg("https://bbs.byr.cn/n/board/IWhisper"))));
+                      },
                     ),
                     context: context,
                   );
@@ -244,71 +250,90 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
         color: E().mePageBackgroundColor,
         child: Column(
           children: <Widget>[
-            UserAccountsDrawerHeader(
-              margin: EdgeInsets.zero,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                image: DecorationImage(
-                    image: SharedObjects.welImage,
-                    colorFilter: ColorFilter.mode(
-                        (E().mePageBackgroundColor.red +
-                                        E().mePageBackgroundColor.green +
-                                        E().mePageBackgroundColor.blue) /
-                                    3 >
-                                128
-                            ? Colors.black.withOpacity(0.25)
-                            : Colors.black.withOpacity(0.6),
-                        BlendMode.darken),
-                    alignment: FractionalOffset.topLeft,
-                    fit: BoxFit.cover),
-              ),
-              currentAccountPicture: FutureBuilder(
-                builder: (context, snapshot) => snapshot.hasData
-                    ? ClickableAvatar(
-                        radius: 20,
-                        emptyUser: snapshot.data?.faceUrl == null,
-                        isWhisper: (snapshot.data?.id ?? "").startsWith("IWhisper"),
-                        imageLink: NForumService.makeGetURL(snapshot.data?.faceUrl ?? ""),
-                        onTap: () {
-                          if (snapshot.data?.faceUrl == null) {
-                            return;
-                          }
-                          navigator.pushNamed(
-                            "profile_page",
-                            arguments: snapshot.data,
-                          );
+            Stack(
+              children: <Widget>[
+                UserAccountsDrawerHeader(
+                  margin: EdgeInsets.zero,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    image: DecorationImage(
+                        image: SharedObjects.welImage,
+                        colorFilter: ColorFilter.mode(
+                            (E().mePageBackgroundColor.red +
+                                            E().mePageBackgroundColor.green +
+                                            E().mePageBackgroundColor.blue) /
+                                        3 >
+                                    128
+                                ? Colors.black.withOpacity(0.25)
+                                : Colors.black.withOpacity(0.6),
+                            BlendMode.darken),
+                        alignment: FractionalOffset.topLeft,
+                        fit: BoxFit.cover),
+                  ),
+                  currentAccountPicture: FutureBuilder(
+                    builder: (context, snapshot) => snapshot.hasData
+                        ? ClickableAvatar(
+                            radius: 20,
+                            emptyUser: snapshot.data?.faceUrl == null,
+                            isWhisper: (snapshot.data?.id ?? "").startsWith("IWhisper"),
+                            imageLink: NForumService.makeGetURL(snapshot.data?.faceUrl ?? ""),
+                            onTap: () {
+                              if (snapshot.data?.faceUrl == null) {
+                                return;
+                              }
+                              navigator.pushNamed(
+                                "profile_page",
+                                arguments: snapshot.data,
+                              );
+                            },
+                          )
+                        : ClickableAvatar(
+                            radius: 20,
+                            emptyUser: true,
+                            imageLink: null,
+                            onTap: null,
+                          ),
+                    future: SharedObjects.me,
+                  ),
+                  accountName: FutureBuilder(
+                    builder: (context, snapshot) => snapshot.hasData
+                        ? Text(snapshot.data?.id, style: HStyle.titleNav())
+                        : Text("", style: HStyle.titleNav()),
+                    future: SharedObjects.me,
+                  ),
+                  accountEmail: FutureBuilder(
+                    builder: (context, snapshot) => snapshot.hasData
+                        ? Text(snapshot.data?.userName, style: HStyle.bodyWhite())
+                        : Text("", style: HStyle.bodyWhite()),
+                    future: SharedObjects.me,
+                  ),
+                  onDetailsPressed: () {
+                    _showDrawerContents = !_showDrawerContents;
+                    if (mounted) {
+                      setState(() {});
+                    }
+                    if (_showDrawerContents)
+                      _controller.reverse();
+                    else
+                      _controller.forward();
+                  },
+                ),
+                SafeArea(
+                  bottom: false,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () {
+                          showDialog(context: context, builder: (context) => SearchUserDialog());
                         },
-                      )
-                    : ClickableAvatar(
-                        radius: 20,
-                        emptyUser: true,
-                        imageLink: null,
-                        onTap: null,
                       ),
-                future: SharedObjects.me,
-              ),
-              accountName: FutureBuilder(
-                builder: (context, snapshot) => snapshot.hasData
-                    ? Text(snapshot.data?.id, style: HStyle.titleNav())
-                    : Text("", style: HStyle.titleNav()),
-                future: SharedObjects.me,
-              ),
-              accountEmail: FutureBuilder(
-                builder: (context, snapshot) => snapshot.hasData
-                    ? Text(snapshot.data?.userName, style: HStyle.bodyWhite())
-                    : Text("", style: HStyle.bodyWhite()),
-                future: SharedObjects.me,
-              ),
-              onDetailsPressed: () {
-                _showDrawerContents = !_showDrawerContents;
-                if (mounted) {
-                  setState(() {});
-                }
-                if (_showDrawerContents)
-                  _controller.reverse();
-                else
-                  _controller.forward();
-              },
+                    ],
+                  ),
+                ),
+              ],
             ),
             Expanded(
               child: Stack(
