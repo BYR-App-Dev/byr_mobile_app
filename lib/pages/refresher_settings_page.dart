@@ -69,8 +69,8 @@ class RefresherSettingsPageState extends State<RefresherSettingsPage> {
                               Icons.delete,
                               color: E().otherPageButtonColor,
                             ),
-                            onPressed: () {
-                              BYRRefresherManager.instance().removeRefresher(entryList[index].key);
+                            onPressed: () async {
+                              await BYRRefresherManager.instance().removeRefresher(entryList[index].key);
                               if (mounted) {
                                 setState(() {});
                               }

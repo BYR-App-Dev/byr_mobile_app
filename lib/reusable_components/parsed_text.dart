@@ -184,102 +184,11 @@ class ParsedText extends StatelessWidget {
                   AdaptiveComponents.showToast(context, "themeAdd".tr + "fail".tr);
                 }
               }).catchError((handleError) {
-                // Navigator.pop(context);
                 print(handleError);
                 AdaptiveComponents.showToast(context, "themeAdd".tr + "fail".tr);
               });
             }
           });
-          showDialog<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  backgroundColor: E().dialogBackgroundColor,
-                  content: Text(
-                    "themeAdd".tr + " " + uploadedExtractor.getFileName(uploads[upId]),
-                    style: TextStyle(
-                      fontSize: 17.0,
-                      color: E().dialogTitleColor,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text(
-                        "themeAdd".tr,
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          color: E().dialogButtonTextColor,
-                        ),
-                      ),
-                      onPressed: () {
-                        BYRThemeManager.instance()
-                            .importOnlineTheme(
-                                uploadedExtractor.getShowUrl(uploads[upId]), null, BYRTheme.originLightTheme)
-                            .then((succeeded) {
-                          if (succeeded) {
-                            String currentThemeName = BYRThemeManager.instance().currentTheme.themeName;
-                            BYRThemeManager.instance().turnTheme(currentThemeName);
-                            Navigator.pop(context);
-                            showDialog(
-                                context: context,
-                                builder: (context) => SimpleDialog(
-                                      backgroundColor: E().dialogBackgroundColor,
-                                      title: Text(
-                                        "succeed".tr,
-                                        style: TextStyle(
-                                          fontSize: 17.0,
-                                          color: E().dialogTitleColor,
-                                        ),
-                                      ),
-                                      titlePadding: EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 24.0),
-                                    ));
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (context) => SimpleDialog(
-                                      backgroundColor: E().dialogBackgroundColor,
-                                      title: Text(
-                                        "fail".tr,
-                                        style: TextStyle(
-                                          fontSize: 17.0,
-                                          color: E().dialogTitleColor,
-                                        ),
-                                      ),
-                                      titlePadding: EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 24.0),
-                                    ));
-                          }
-                        }).catchError((handleError) {
-                          showDialog(
-                              context: context,
-                              builder: (context) => SimpleDialog(
-                                    backgroundColor: E().dialogBackgroundColor,
-                                    title: Text(
-                                      "fail".tr,
-                                      style: TextStyle(
-                                        fontSize: 17.0,
-                                        color: E().dialogTitleColor,
-                                      ),
-                                    ),
-                                    titlePadding: EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 24.0),
-                                  ));
-                        });
-                      },
-                    ),
-                    FlatButton(
-                      child: Text(
-                        "cancelTrans".tr,
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          color: E().dialogButtonTextColor,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              });
         },
       );
     };
@@ -304,93 +213,23 @@ class ParsedText extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          showDialog<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  backgroundColor: E().dialogBackgroundColor,
-                  content: Text(
-                    "refresherAdd".tr + " " + uploadedExtractor.getFileName(uploads[upId]),
-                    style: TextStyle(
-                      fontSize: 17.0,
-                      color: E().dialogTitleColor,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text(
-                        "refresherAdd".tr,
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          color: E().dialogButtonTextColor,
-                        ),
-                      ),
-                      onPressed: () {
-                        BYRRefresherManager.instance()
-                            .importOnlineRefresher(uploadedExtractor.getShowUrl(uploads[upId]), null)
-                            .then((succeeded) {
-                          if (succeeded) {
-                            Navigator.pop(context);
-                            showDialog(
-                                context: context,
-                                builder: (context) => SimpleDialog(
-                                      backgroundColor: E().dialogBackgroundColor,
-                                      title: Text(
-                                        "succeed".tr,
-                                        style: TextStyle(
-                                          fontSize: 17.0,
-                                          color: E().dialogTitleColor,
-                                        ),
-                                      ),
-                                      titlePadding: EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 24.0),
-                                    ));
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (context) => SimpleDialog(
-                                      backgroundColor: E().dialogBackgroundColor,
-                                      title: Text(
-                                        "fail".tr,
-                                        style: TextStyle(
-                                          fontSize: 17.0,
-                                          color: E().dialogTitleColor,
-                                        ),
-                                      ),
-                                      titlePadding: EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 24.0),
-                                    ));
-                          }
-                        }).catchError((handleError) {
-                          showDialog(
-                              context: context,
-                              builder: (context) => SimpleDialog(
-                                    backgroundColor: E().dialogBackgroundColor,
-                                    title: Text(
-                                      "fail".tr,
-                                      style: TextStyle(
-                                        fontSize: 17.0,
-                                        color: E().dialogTitleColor,
-                                      ),
-                                    ),
-                                    titlePadding: EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 24.0),
-                                  ));
-                        });
-                      },
-                    ),
-                    FlatButton(
-                      child: Text(
-                        "cancelTrans".tr,
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          color: E().dialogButtonTextColor,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
+          AdaptiveComponents.showAlertDialog(context,
+              title: "refresherAdd".tr + uploadedExtractor.getFileName(uploads[upId]), onDismiss: (value) {
+            if (value == AlertResult.confirm) {
+              BYRRefresherManager.instance()
+                  .importOnlineRefresher(uploadedExtractor.getShowUrl(uploads[upId]), null)
+                  .then((succeeded) {
+                if (succeeded) {
+                  AdaptiveComponents.showToast(context, "refresherAdd".tr + "succeed".tr);
+                } else {
+                  AdaptiveComponents.showToast(context, "refresherAdd".tr + "fail".tr);
+                }
+              }).catchError((handleError) {
+                print(handleError);
+                AdaptiveComponents.showToast(context, "refresherAdd".tr + "fail".tr);
               });
+            }
+          });
         },
       );
     };

@@ -1,4 +1,5 @@
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
+import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,49 +46,13 @@ class _RefresherImporterDialogState extends State<RefresherImporterDialog> {
           onPressed: () {
             BYRRefresherManager.instance().importOnlineRefresher(urlController.text, null).then((succeeded) {
               if (succeeded) {
-                Navigator.pop(context);
-                showDialog(
-                    context: context,
-                    builder: (context) => SimpleDialog(
-                          backgroundColor: E().dialogBackgroundColor,
-                          title: Text(
-                            "succeed".tr,
-                            style: TextStyle(
-                              fontSize: 17.0,
-                              color: E().dialogTitleColor,
-                            ),
-                          ),
-                          titlePadding: EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 24.0),
-                        ));
+                AdaptiveComponents.showToast(context, "refresherAdd".tr + "succeed".tr);
               } else {
-                showDialog(
-                    context: context,
-                    builder: (context) => SimpleDialog(
-                          backgroundColor: E().dialogBackgroundColor,
-                          title: Text(
-                            "fail".tr,
-                            style: TextStyle(
-                              fontSize: 17.0,
-                              color: E().dialogTitleColor,
-                            ),
-                          ),
-                          titlePadding: EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 24.0),
-                        ));
+                AdaptiveComponents.showToast(context, "refresherAdd".tr + "fail".tr);
               }
             }).catchError((handleError) {
-              showDialog(
-                  context: context,
-                  builder: (context) => SimpleDialog(
-                        backgroundColor: E().dialogBackgroundColor,
-                        title: Text(
-                          "fail".tr,
-                          style: TextStyle(
-                            fontSize: 17.0,
-                            color: E().dialogTitleColor,
-                          ),
-                        ),
-                        titlePadding: EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 24.0),
-                      ));
+              print(handleError);
+              AdaptiveComponents.showToast(context, "refresherAdd".tr + "fail".tr);
             });
           },
           child: Text(

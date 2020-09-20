@@ -67,8 +67,8 @@ class ThemeSettingsPageState extends State<ThemeSettingsPage> {
                               Icons.delete,
                               color: E().otherPageButtonColor,
                             ),
-                            onPressed: () {
-                              BYRThemeManager.instance().removeTheme(entryList[index].key);
+                            onPressed: () async {
+                              await BYRThemeManager.instance().removeTheme(entryList[index].key);
                               if (mounted) {
                                 setState(() {});
                               }
