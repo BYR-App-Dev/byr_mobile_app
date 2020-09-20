@@ -48,6 +48,9 @@ class BoardmarksPageState extends State<BoardmarksPage>
   @override
   void initialization() {
     initializationStatus = InitializationStatus.Initializing;
+    if (mounted) {
+      setState(() {});
+    }
     NForumService.getBanner().then((b) {
       NForumService.getFavBoards().then((f) {
         initializationStatus = InitializationStatus.Initialized;
@@ -75,9 +78,6 @@ class BoardmarksPageState extends State<BoardmarksPage>
   void refreshErrorHandling(e) {
     setFailureInfo(e);
     _refreshController.refreshFailed();
-    if (mounted) {
-      setState(() {});
-    }
   }
 
   void setFailureInfo(e) {

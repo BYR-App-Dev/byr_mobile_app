@@ -46,6 +46,9 @@ class SectionPageState extends State<SectionPage> with AutomaticKeepAliveClientM
   @override
   void initialization() {
     initializationStatus = InitializationStatus.Initializing;
+    if (mounted) {
+      setState(() {});
+    }
     if (_isRoot) {
       NForumService.getSections().then(
         (sections) {

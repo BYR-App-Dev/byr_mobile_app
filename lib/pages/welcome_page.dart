@@ -35,6 +35,9 @@ class WelcomePageState extends State<WelcomePage> {
   @override
   void initState() {
     initializationStatus = InitializationStatus.Initializing;
+    if (mounted) {
+      setState(() {});
+    }
     startupApp().then((value) {
       if (BYRThemeManager.instance().getIsAutoSwitchDarkModel() == true) {
         final Brightness brightness = MediaQuery.platformBrightnessOf(context);

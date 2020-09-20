@@ -14,6 +14,9 @@ mixin InitializableMixin<T extends StatefulWidget> on State<T> {
   void initializationErrorHandling(e) {
     setFailureInfo(e);
     initializationStatus = InitializationStatus.Failed;
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void setFailureInfo(e) {
@@ -45,22 +48,24 @@ class InitializationFailureView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Text(
-          failureInfo,
-          style: TextStyle(color: textColor),
-        ),
-        IconButton(
-          icon: Icon(
-            Icons.refresh,
-            color: buttonColor,
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Text(
+            failureInfo,
+            style: TextStyle(color: textColor),
           ),
-          onPressed: refresh,
-        ),
-      ],
+          IconButton(
+            icon: Icon(
+              Icons.refresh,
+              color: buttonColor,
+            ),
+            onPressed: refresh,
+          ),
+        ],
+      ),
     );
   }
 }

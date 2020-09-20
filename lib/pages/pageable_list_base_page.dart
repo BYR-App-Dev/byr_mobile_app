@@ -44,6 +44,9 @@ abstract class PageableListBasePageState<Y extends PageableListBaseModel, Z exte
 
   void initialization() {
     initializationStatus = InitializationStatus.Initializing;
+    if (mounted) {
+      setState(() {});
+    }
     failureInfo = '';
 
     initialDataLoader(afterLoad: () {
@@ -104,6 +107,9 @@ abstract class PageableListBasePageState<Y extends PageableListBaseModel, Z exte
     isBottomLoading = false;
     setFailureInfo(e);
     initializationStatus = InitializationStatus.Failed;
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void refreshErrorHandling(e) {

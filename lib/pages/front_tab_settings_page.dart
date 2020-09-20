@@ -30,6 +30,9 @@ class _FrontTabSettingPageState extends State<FrontTabSettingPage> with Initiali
   @override
   void initialization() {
     initializationStatus = InitializationStatus.Initializing;
+    if (mounted) {
+      setState(() {});
+    }
     NForumService.getFavBoards().then((f) {
       f.board.forEach((b) {
         if (b.name != null && b.name.length > 0 && _tabs.indexWhere((tab) => tab.key == b.name) == -1) {
