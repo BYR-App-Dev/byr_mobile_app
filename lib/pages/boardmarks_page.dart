@@ -508,5 +508,5 @@ class BoardmarksPageState extends State<BoardmarksPage>
   }
 
   @override
-  bool get wantKeepAlive => false;
+  bool get wantKeepAlive => true;
 }
