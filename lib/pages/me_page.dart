@@ -7,7 +7,6 @@ import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
 import 'package:byr_mobile_app/reusable_components/setting_item_cell.dart';
-import 'package:byr_mobile_app/reusable_components/theme_import_dialog.dart';
 import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
