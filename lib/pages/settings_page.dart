@@ -5,6 +5,7 @@ import 'package:byr_mobile_app/customizations/translator_manager.dart';
 import 'package:byr_mobile_app/local_objects/local_storage.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/pages/refresher_settings_page.dart';
+import 'package:byr_mobile_app/pages/theme_settings_page.dart';
 import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/byr_app_bar.dart';
 import 'package:byr_mobile_app/reusable_components/no_padding_list_tile.dart';
@@ -82,6 +83,13 @@ class SettingsPageState extends State<SettingsPage> {
                         }
                       },
                     );
+                  },
+                ),
+                Divider(),
+                SettingItemCell(
+                  title: "themeSettings".tr,
+                  onTap: () {
+                    Navigator.of(context).push(CupertinoPageRoute(builder: (_) => ThemeSettingsPage()));
                   },
                 ),
                 Divider(),

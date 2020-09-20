@@ -160,9 +160,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                   List<BYRTheme> themeValues = BYRThemeManager.instance().themeMap.values.toList();
                   AdaptiveComponents.showBottomSheet(
                     context,
-                    themeValues.map((value) => value.themeDisplayName).toList()
-                      ..add("themeAuto".tr)
-                      ..add("themeAdd".tr),
+                    themeValues.map((value) => value.themeDisplayName).toList()..add("themeAuto".tr),
                     textStyle: TextStyle(
                       color: E().settingItemCellMainColor,
                       fontSize: 16,
@@ -179,9 +177,6 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                       }
                       if (mounted) {
                         setState(() {});
-                      }
-                      if (index == themeKeys.length + 1) {
-                        showDialog(context: context, builder: (context) => ThemeImporterDialog());
                       }
                     },
                   );
