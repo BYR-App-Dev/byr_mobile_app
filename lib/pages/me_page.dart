@@ -203,6 +203,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
               SettingItemCell(
                 leading: Icon(Icons.settings, color: E().settingItemCellMainColor),
                 title: "settings".tr,
+                newFeatureKey: 'setting',
                 onTap: () {
                   Navigator.pushNamed(context, "settings_page");
                 },
