@@ -7,7 +7,6 @@ import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/pages/web_page.dart';
 import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
-import 'package:byr_mobile_app/reusable_components/search_user_dialog.dart';
 import 'package:byr_mobile_app/reusable_components/setting_item_cell.dart';
 import 'package:byr_mobile_app/reusable_components/tapped_dialog.dart';
 import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
@@ -29,10 +28,12 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
   bool _showDrawerContents = true;
   UserModel user;
   List users;
+  final userIdController = TextEditingController();
 
   @override
   void dispose() {
     _controller.dispose();
+    userIdController.dispose();
     super.dispose();
   }
 
@@ -203,6 +204,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
               SettingItemCell(
                 leading: Icon(Icons.settings, color: E().settingItemCellMainColor),
                 title: "settings".tr,
+                newFeatureKey: 'setting',
                 onTap: () {
                   Navigator.pushNamed(context, "settings_page");
                 },
@@ -327,7 +329,29 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                       IconButton(
                         icon: Icon(Icons.search),
                         onPressed: () {
-                          showDialog(context: context, builder: (context) => SearchUserDialog());
+                          AdaptiveComponents.showAlertDialog(
+                            context,
+                            title: "search".tr + "loginUsernameTrans".tr,
+                            contentWidget: Material(
+                              child: TextField(
+                                autofocus: true,
+                                controller: userIdController,
+                                decoration: InputDecoration(labelText: 'id'),
+                                style: TextStyle(color: E().dialogContentColor),
+                                maxLines: 1,
+                              ),
+                              color: Colors.transparent,
+                            ),
+                            onDismiss: (result) {
+                              if (result == AlertResult.confirm) {
+                                NForumService.getUserInfo(userIdController.text).then((value) {
+                                  navigator.pushNamed("profile_page", arguments: value);
+                                }).catchError((e) {
+                                  AdaptiveComponents.showToast(context, e.toString());
+                                });
+                              }
+                            },
+                          );
                         },
                       ),
                     ],

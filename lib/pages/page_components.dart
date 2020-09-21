@@ -10,7 +10,8 @@ import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/nforum/nforum_text_parser.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/controller_insert_text.dart';
-import 'package:byr_mobile_app/reusable_components/custom_text_selection_controls.dart';
+import 'package:byr_mobile_app/reusable_components/custom_cupertino_text_selection_controls.dart';
+import 'package:byr_mobile_app/reusable_components/custom_material_text_selection_controls.dart';
 import 'package:byr_mobile_app/reusable_components/emoticon_panel.dart';
 import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
 import 'package:byr_mobile_app/reusable_components/screenshot_controller.dart';
@@ -86,9 +87,7 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
                           absorbing: true,
                           child: Container(
                             color: screenshotIndexes[(index / 2).floor()] ?? false
-                                ? E().isThemeDarkStyle
-                                    ? E().threadPageBackgroundColor.lighten(10)
-                                    : E().threadPageBackgroundColor.darken(10)
+                                ? E().isThemeDarkStyle ? E().threadPageBackgroundColor.lighten(10) : E().threadPageBackgroundColor.darken(10)
                                 : E().threadPageBackgroundColor,
                             child: buildCell(
                               context,
@@ -922,7 +921,10 @@ class TextFormFieldWrapperState extends State<TextFormFieldWrapper> {
     return Container(
         height: 50,
         child: ExtendedTextField(
-          textSelectionControls: CustomTextSelectionControls(
+          textSelectionControls: Platform.isAndroid ? CustomMaterialTextSelectionControls(
+            canCancelTarget: widget.canCancelReplyTarget,
+            cancelTarget: widget.cancelReplyTarget,
+          ): CustomCupertinoTextSelectionControls(
             canCancelTarget: widget.canCancelReplyTarget,
             cancelTarget: widget.cancelReplyTarget,
           ),

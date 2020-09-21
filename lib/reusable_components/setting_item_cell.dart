@@ -23,10 +23,7 @@ class SettingItemCell extends StatefulWidget {
 
 class _SettingItemCellState extends State<SettingItemCell> {
   _closeFeatureHint() {
-    if (widget.newFeatureKey != null &&
-        widget.newFeatureKey.isNotEmpty &&
-        LocalStorage.getFeatureKeys()[widget.newFeatureKey] != null &&
-        LocalStorage.getFeatureKeys()[widget.newFeatureKey] == true) {
+    if (widget.newFeatureKey != null && widget.newFeatureKey.isNotEmpty && (LocalStorage.getFeatureKeys()[widget.newFeatureKey] ?? true) == true) {
       Map<String, bool> featureKeys = LocalStorage.getFeatureKeys();
       featureKeys[widget.newFeatureKey] = false;
       LocalStorage.setFeatureKeys(featureKeys);
@@ -81,10 +78,7 @@ class _SettingItemCellState extends State<SettingItemCell> {
                   ),
                 ),
               ),
-            if (widget.newFeatureKey != null &&
-                widget.newFeatureKey.isNotEmpty &&
-                LocalStorage.getFeatureKeys()[widget.newFeatureKey] != null &&
-                LocalStorage.getFeatureKeys()[widget.newFeatureKey] == true)
+            if (widget.newFeatureKey != null && widget.newFeatureKey.isNotEmpty && (LocalStorage.getFeatureKeys()[widget.newFeatureKey] ?? true) == true)
               Padding(
                 padding: EdgeInsets.only(right: 10),
                 child: Container(
