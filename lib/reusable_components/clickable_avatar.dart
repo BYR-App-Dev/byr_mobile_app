@@ -31,13 +31,17 @@ class ClickableAvatar extends StatelessWidget {
     );
     Widget avatar = isWhisper
         ? Container(
+            width: radius * 2,
+            height: radius * 2,
             alignment: Alignment.center,
-            child: Image.asset(
-              "resources/user/whisper_face.jpg",
-              width: radius * 2,
-              height: radius * 2,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(radius),
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: AssetImage("resources/user/whisper_face.jpg"),
+              ),
             ),
-            decoration: BoxDecoration(color: Colors.transparent, shape: BoxShape.circle),
           )
         : emptyUser
             ? placeHolder
