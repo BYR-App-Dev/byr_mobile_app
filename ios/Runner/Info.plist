@@ -35,6 +35,8 @@
 		<string>Share images with other users</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>Use microphone to record audio messages</string>
+		<key>NSSpeechRecognitionUsageDescription</key>
+		<string>Use speech recognition to input text</string>
 		<key>NSAppleMusicUsageDescription</key>
 		<string>Share media with other users</string>
 		<key>kTCCServiceMediaLibrary</key>

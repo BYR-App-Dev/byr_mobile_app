@@ -9,6 +9,7 @@ import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/pages/page_components.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
+import 'package:byr_mobile_app/pages/web_page.dart';
 import 'package:byr_mobile_app/reusable_components/circle_icon_button.dart';
 import 'package:byr_mobile_app/reusable_components/no_padding_list_tile.dart';
 import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
@@ -18,6 +19,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:speech_recognition/speech_recognition.dart';
 
 class BoardmarksPage extends StatefulWidget {
   @override
@@ -32,6 +34,9 @@ class BoardmarksPageState extends State<BoardmarksPage>
   FavBoardsModel favBoards;
   PageController controller;
   String _search = "";
+  bool isSpeeching = false;
+
+  SpeechRecognition _speech = SpeechRecognition();
 
   TextEditingController _controller = TextEditingController();
   Timer _timer;
@@ -368,6 +373,45 @@ class BoardmarksPageState extends State<BoardmarksPage>
                                         border: UnderlineInputBorder(
                                             borderSide: BorderSide(width: 0, color: E().sectionPageBackgroundColor))),
                                   )),
+                                  Container(
+                                    color: E().sectionPageBackgroundColor,
+                                    child: IconButton(
+                                      icon:
+                                          Icon(!isSpeeching ? Icons.mic : Icons.stop, color: E().otherPageButtonColor),
+                                      onPressed: () {
+                                        if (!isSpeeching) {
+                                          _speech.setRecognitionResultHandler((String text) {
+                                            if (text.toString().contains("芝麻开门") ||
+                                                text.toString().contains("open the door")) {
+                                              _speech.stop().then((value) {
+                                                isSpeeching = false;
+                                                setState(() {});
+                                              });
+                                              navigator.push(CupertinoPageRoute(
+                                                  builder: (_) =>
+                                                      WebPage(WebPageRouteArg("https://bbs.byr.cn/n/board/IWhisper"))));
+                                            } else {
+                                              _controller.text += text;
+                                            }
+                                          });
+                                          _speech.setRecognitionCompleteHandler(() {
+                                            isSpeeching = false;
+                                            setState(() {});
+                                          });
+                                          _speech.activate().then((res) => setState(() {
+                                                _speech.listen(locale: Locale("zh", "CN").toString()).then((result) {
+                                                  isSpeeching = true;
+                                                });
+                                              }));
+                                        } else {
+                                          _speech.stop().then((value) {
+                                            isSpeeching = false;
+                                            setState(() {});
+                                          });
+                                        }
+                                      },
+                                    ),
+                                  ),
                                   Container(
                                     color: E().sectionPageBackgroundColor,
                                     child: IconButton(

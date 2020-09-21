@@ -806,6 +806,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  speech_recognition:
+    dependency: "direct main"
+    description:
+      name: speech_recognition
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0+1"
   sqflite:
     dependency: transitive
     description:
