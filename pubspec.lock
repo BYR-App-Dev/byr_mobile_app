@@ -809,9 +809,11 @@ packages:
   speech_recognition:
     dependency: "direct main"
     description:
-      name: speech_recognition
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: master
+      resolved-ref: b365120266f66022f648604c592481e4763e0232
+      url: "https://github.com/BYR-App-Dev/speech_recognition.git"
+    source: git
     version: "0.3.0+1"
   sqflite:
     dependency: transitive

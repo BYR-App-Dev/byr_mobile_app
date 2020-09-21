@@ -50,7 +50,10 @@ dependencies:
   toast: ^0.1.5	
   webview_flutter: ^0.3.22+1
   video_player: ^0.10.12+3
-  speech_recognition: "^0.3.0"
+  speech_recognition:
+    git:
+      url: https://github.com/BYR-App-Dev/speech_recognition.git
+      ref: master
   like_button:
     git:
       url: git://github.com/w1874/like_button

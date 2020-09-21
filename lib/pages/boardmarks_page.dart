@@ -17,6 +17,7 @@ import 'package:byr_mobile_app/reusable_components/refreshers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:speech_recognition/speech_recognition.dart';
@@ -376,38 +377,40 @@ class BoardmarksPageState extends State<BoardmarksPage>
                                   Container(
                                     color: E().sectionPageBackgroundColor,
                                     child: IconButton(
-                                      icon:
-                                          Icon(!isSpeeching ? Icons.mic : Icons.stop, color: E().otherPageButtonColor),
+                                      icon: Icon(
+                                          !isSpeeching ? FlutterIcons.microphone_mco : FlutterIcons.text_to_speech_mco,
+                                          color: E().otherPageButtonColor),
                                       onPressed: () {
                                         if (!isSpeeching) {
-                                          _speech.setRecognitionResultHandler((String text) {
-                                            if (text.toString().contains("芝麻开门") ||
-                                                text.toString().contains("open the door")) {
-                                              _speech.stop().then((value) {
+                                          _speech.activate().then((res) {
+                                            _speech.setRecognitionCompleteHandler((String text) {
+                                              if (isSpeeching) {
                                                 isSpeeching = false;
+                                                if (mounted) {
+                                                  setState(() {});
+                                                }
+                                                if (text.toString().contains("芝麻开门")) {
+                                                  navigator.push(CupertinoPageRoute(
+                                                      builder: (_) => WebPage(
+                                                          WebPageRouteArg("https://bbs.byr.cn/n/board/IWhisper"))));
+                                                } else {
+                                                  _controller.text += text;
+                                                }
+                                              }
+                                            });
+                                            _speech.listen(locale: Locale("zh", "CN").toString()).then((result) {
+                                              isSpeeching = true;
+                                              if (mounted) {
                                                 setState(() {});
-                                              });
-                                              navigator.push(CupertinoPageRoute(
-                                                  builder: (_) =>
-                                                      WebPage(WebPageRouteArg("https://bbs.byr.cn/n/board/IWhisper"))));
-                                            } else {
-                                              _controller.text += text;
-                                            }
+                                              }
+                                            });
                                           });
-                                          _speech.setRecognitionCompleteHandler(() {
-                                            isSpeeching = false;
-                                            setState(() {});
-                                          });
-                                          _speech.activate().then((res) => setState(() {
-                                                _speech.listen(locale: Locale("zh", "CN").toString()).then((result) {
-                                                  isSpeeching = true;
-                                                });
-                                              }));
                                         } else {
-                                          _speech.stop().then((value) {
-                                            isSpeeching = false;
+                                          isSpeeching = false;
+                                          if (mounted) {
                                             setState(() {});
-                                          });
+                                          }
+                                          _speech.stop().then((value) {});
                                         }
                                       },
                                     ),
