@@ -54,17 +54,17 @@ class StartupTasks {
   static Future<void> initializeNForumLocalData() async {
     NForumSpecs.initializeNForumSpecs();
     NForumService.loadCurrentToken();
-    await NForumService.loadMe().catchError((_) {});
+    NForumService.loadMe().catchError((_) {});
   }
 
   static Future<void> startupAll() async {
     await initializeLocalStorage();
     await makeDownloadDirectory();
     initializeAppConfigs();
+    await initializeNForumLocalData();
     initializeLocale();
     await initializeTheme();
     await initializeRefresher();
-    await initializeNForumLocalData();
     await BoardInfo.load();
     await BoardAttInfo.load();
     initializeMessage();

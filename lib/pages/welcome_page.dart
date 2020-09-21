@@ -34,6 +34,7 @@ class WelcomePageState extends State<WelcomePage> {
 
   @override
   void initState() {
+    super.initState();
     initializationStatus = InitializationStatus.Initializing;
     if (mounted) {
       setState(() {});
@@ -52,7 +53,6 @@ class WelcomePageState extends State<WelcomePage> {
         }
       });
     });
-    super.initState();
   }
 
   @override
