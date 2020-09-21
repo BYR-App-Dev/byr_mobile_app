@@ -1,4 +1,3 @@
-import 'package:byr_mobile_app/configurations/configurations.dart';
 import 'package:get/get.dart';
 
 class Translation extends Translations {
@@ -47,11 +46,7 @@ class Translation extends Translations {
     "sectionButtonTrans": "分区",
     "collectionTrans": "收藏夹",
     "subSectionTrans": "子分区",
-    "aboutTrans": "此应用为北京邮电大学北邮人论坛的官方客户端。" +
-        "\n\n当前版本 " +
-        AppConfigs.version +
-        "\n\n意见反馈请发送至意见与建议版" +
-        "\n\n开发者为: \nwdjwxh\npaper777 (后台)\nhuanwoyeye (设计)\nMoby22 (设计)\ndss886 (Android)\nicyfox (Android)\nfriparia (iOS)\ndarkfrost (iOS)\nnmslwsnd (iOS)\n\n此应用于2019~2020年使用Flutter重新开发。\n\n刷新动画鸣谢: \n北邮心跳 by zifeiyu4024\n有空调酱的北邮夏 by buddleia\nmemory of BUPT by cdddemy\n",
+    "feedbackTrans": "意见反馈",
     "skipTrans": "跳过",
     "downloadImageTrans": "下载",
     "saveTrans": "保存",
@@ -258,11 +253,7 @@ class Translation extends Translations {
     "sectionButtonTrans": "分區",
     "collectionTrans": "收藏夾",
     "subSectionTrans": "子分區",
-    "aboutTrans": "此應用程式為北京郵電大學北郵人論壇之官方客戶端。" +
-        "\n\n當前版本 " +
-        AppConfigs.version +
-        "\n\n意見反饋請發送于意見與建議版" +
-        "\n\n開發者為: \nwdjwxh\npaper777 (伺服器)\nhuanwoyeye (設計)\nMoby22 (設計)\ndss886 (Android)\nicyfox (Android)\nfriparia (iOS)\ndarkfrost (iOS)\nnmslwsnd (iOS)\n\n此應用程式于2019~2020年基於Flutter重新開發。刷新動畫鳴謝: \n北邮心跳 by zifeiyu4024\n有空调酱的北邮夏 by buddleia\nmemory of BUPT by cdddemy\n",
+    "feedbackTrans": "意見反饋",
     "skipTrans": "跳過",
     "downloadImageTrans": "下載",
     "saveTrans": "儲存",
@@ -469,12 +460,7 @@ class Translation extends Translations {
     "sectionButtonTrans": "Sections",
     "collectionTrans": "Collection",
     "subSectionTrans": "Sub Section",
-    "aboutTrans":
-        "This app is the official mobile client of the BYR BBS (bbs.byr.cn) which is the BBS of Beijing University of Posts and Telecommunications, China(BUPT)." +
-            "\n\nThe current version is " +
-            AppConfigs.version +
-            "\n\nFeedback please post on Advice board" +
-            "\n\nThe developers are \nwdjwxh\npaper777 (server-side)\nhuanwoyeye (design)\nMoby22 (design)\ndss886 (Android)\nicyfox (Android)\nfriparia (iOS)\ndarkfrost (iOS)\nnmslwsnd (iOS)\n\nThis app is re-developed in 2019~2020 using Flutter.\n\nRefresh animation credit: \n北邮心跳 by zifeiyu4024\n有空调酱的北邮夏 by buddleia\nmemory of BUPT by cdddemy\n",
+    "feedbackTrans": "Feedback",
     "skipTrans": "skip",
     "downloadImageTrans": "Download",
     "saveTrans": "Save",

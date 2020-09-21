@@ -82,6 +82,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - resources/
     - resources/em/
     - resources/user/
     - resources/board/

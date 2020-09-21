@@ -3,16 +3,16 @@ import 'package:byr_mobile_app/customizations/theme_manager.dart';
 import 'package:byr_mobile_app/local_objects/local_storage.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
+import 'package:byr_mobile_app/pages/about_page.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
-import 'package:byr_mobile_app/pages/web_page.dart';
 import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
 import 'package:byr_mobile_app/reusable_components/setting_item_cell.dart';
-import 'package:byr_mobile_app/reusable_components/tapped_dialog.dart';
 import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class MePage extends StatefulWidget {
@@ -65,11 +65,9 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
         if (index >= users.length) {
           return ListTile(
             title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[Text('+ ' + "addAccount".tr, style: TextStyle(color: E().mePageTextColor))]),
+                mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[Text('+ ' + "addAccount".tr, style: TextStyle(color: E().mePageTextColor))]),
             onTap: () async {
-              var t = await Navigator.of(context)
-                  .pushNamed('login_page', arguments: LoginPageRouteArg(isAddingMoreAccount: true));
+              var t = await Navigator.of(context).pushNamed('login_page', arguments: LoginPageRouteArg(isAddingMoreAccount: true));
               if (t != null) {
                 user = await SharedObjects.me;
                 users = NForumService.getAllUser();
@@ -92,18 +90,11 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                   }
                 }
               },
-              leading: Icon(Icons.stars,
-                  color: users[index]['token'] == NForumService.currentToken
-                      ? E().mePageSelectedColor
-                      : E().mePageTextColor),
+              leading: Icon(Icons.stars, color: users[index]['token'] == NForumService.currentToken ? E().mePageSelectedColor : E().mePageTextColor),
               title: Text(users[index]['id'],
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: users[index]['token'] == NForumService.currentToken
-                          ? E().mePageSelectedColor
-                          : E().mePageTextColor)),
+                  style: TextStyle(fontSize: 16, color: users[index]['token'] == NForumService.currentToken ? E().mePageSelectedColor : E().mePageTextColor)),
               trailing: ButtonTheme(
                 padding: EdgeInsets.all(0),
                 minWidth: 40,
@@ -155,9 +146,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
               SettingItemCell(
                 leading: Icon(MaterialIcons.wb_sunny, color: E().settingItemCellMainColor),
                 title: "themeStyleTrans".tr,
-                value: LocalStorage.getIsAutoTheme()
-                    ? "themeAuto".tr
-                    : BYRThemeManager.instance().themeMap[E().themeName].themeDisplayName,
+                value: LocalStorage.getIsAutoTheme() ? "themeAuto".tr : BYRThemeManager.instance().themeMap[E().themeName].themeDisplayName,
                 showArrow: false,
                 onTap: () {
                   List<String> themeKeys = BYRThemeManager.instance().themeMap.keys.toList();
@@ -210,31 +199,28 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                 },
               ),
               SettingItemCell(
-                leading: Icon(MaterialCommunityIcons.alert_box_outline, color: E().settingItemCellMainColor),
-                title: "aboutButtonTrans".tr,
-                showArrow: false,
+                leading: Icon(Icons.local_post_office, color: E().settingItemCellMainColor),
+                title: "feedbackTrans".tr,
                 onTap: () {
-                  showDialog(
-                    builder: (c) => TappedDialog(
-                      timeToReach: 6,
-                      content: Container(
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          "aboutTrans".tr,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: E().settingItemCellMainColor,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
+                  navigator.pushNamed(
+                    'post_page',
+                    arguments: PostPageRouteArg(
+                      board: BoardModel(
+                        name: 'advice',
+                        description: '意见与建议',
+                        allowAnonymous: false,
+                        allowPost: true,
+                        allowAttachment: true,
                       ),
-                      action: () {
-                        navigator.push(CupertinoPageRoute(
-                            builder: (_) => WebPage(WebPageRouteArg("https://bbs.byr.cn/n/board/IWhisper"))));
-                      },
                     ),
-                    context: context,
                   );
+                },
+              ),
+              SettingItemCell(
+                leading: Icon(FontAwesomeIcons.exclamationCircle, color: E().settingItemCellMainColor),
+                title: "aboutButtonTrans".tr,
+                onTap: () {
+                  navigator.push(CupertinoPageRoute(builder: (_) => AboutPage()));
                 },
               ),
             ],
@@ -261,11 +247,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                     image: DecorationImage(
                         image: SharedObjects.welImage,
                         colorFilter: ColorFilter.mode(
-                            (E().mePageBackgroundColor.red +
-                                            E().mePageBackgroundColor.green +
-                                            E().mePageBackgroundColor.blue) /
-                                        3 >
-                                    128
+                            (E().mePageBackgroundColor.red + E().mePageBackgroundColor.green + E().mePageBackgroundColor.blue) / 3 > 128
                                 ? Colors.black.withOpacity(0.25)
                                 : Colors.black.withOpacity(0.6),
                             BlendMode.darken),
@@ -298,15 +280,12 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                     future: SharedObjects.me,
                   ),
                   accountName: FutureBuilder(
-                    builder: (context, snapshot) => snapshot.hasData
-                        ? Text(snapshot.data?.id, style: HStyle.titleNav())
-                        : Text("", style: HStyle.titleNav()),
+                    builder: (context, snapshot) => snapshot.hasData ? Text(snapshot.data?.id, style: HStyle.titleNav()) : Text("", style: HStyle.titleNav()),
                     future: SharedObjects.me,
                   ),
                   accountEmail: FutureBuilder(
-                    builder: (context, snapshot) => snapshot.hasData
-                        ? Text(snapshot.data?.userName, style: HStyle.bodyWhite())
-                        : Text("", style: HStyle.bodyWhite()),
+                    builder: (context, snapshot) =>
+                        snapshot.hasData ? Text(snapshot.data?.userName, style: HStyle.bodyWhite()) : Text("", style: HStyle.bodyWhite()),
                     future: SharedObjects.me,
                   ),
                   onDetailsPressed: () {
