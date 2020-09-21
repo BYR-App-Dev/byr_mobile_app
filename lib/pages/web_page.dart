@@ -29,22 +29,22 @@ class WebPageState extends State<WebPage> {
   }
 
   void finishedLoading(String url) async {
-    print(url);
     if (this.controller != null) {
       if (url.startsWith("https://bbs.byr.cn/n/login")) {
         Tuple2 userIdAndPassword = await showDialog(context: context, child: LoginDialog());
         String userid = userIdAndPassword.item1;
         String password = userIdAndPassword.item2;
-        print(userid);
-        print(password);
-        this.controller.evaluateJavascript("javascript:document.getElementsByName('username')[0].value = '" +
-            userid +
-            "';" +
-            "var event = new Event('input');document.getElementsByName('username')[0].dispatchEvent(event);" +
-            "document.getElementsByName('password')[0].value = '" +
-            password +
-            "';" +
-            "var event = new Event('input');document.getElementsByName('password')[0].dispatchEvent(event);");
+        this.controller.evaluateJavascript(
+              "javascript:document.getElementsByName('username')[0].value = '" +
+                  userid +
+                  "';" +
+                  "var event = new Event('input');document.getElementsByName('username')[0].dispatchEvent(event);" +
+                  "document.getElementsByName('password')[0].value = '" +
+                  password +
+                  "';" +
+                  "var event = new Event('input');document.getElementsByName('password')[0].dispatchEvent(event);" +
+                  "var event = new MouseEvent('click');document.getElementsByClassName('button')[0].dispatchEvent(event);",
+            );
       }
     }
   }
