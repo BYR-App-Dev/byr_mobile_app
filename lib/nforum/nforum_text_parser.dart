@@ -109,7 +109,7 @@ class NForumTextParser {
   }
 
   static String makeReplyQuote(String username, String s) {
-    String t = removeBBSQuote(s);
+    String t = removeBBSQuote(s).replaceAll("--\n\n", "\n");
     String ttt = (t.length > 180 ? t.substring(0, t.indexOf('\n', 180)) : t);
     String tttt = ttt.length < 250 ? ttt : ttt.substring(0, ttt.lastIndexOf('\n'));
     tttt = tttt.length > 250 ? tttt.substring(0, 250) : tttt;
