@@ -17,6 +17,7 @@ import 'package:byr_mobile_app/reusable_components/refreshers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
@@ -382,27 +383,29 @@ class BoardmarksPageState extends State<BoardmarksPage>
                                           color: E().otherPageButtonColor),
                                       onPressed: () {
                                         if (!isSpeeching) {
-                                          _speech.activate().then((res) {
-                                            _speech.setRecognitionCompleteHandler((String text) {
-                                              if (isSpeeching) {
-                                                isSpeeching = false;
+                                          FlutterAudioRecorder.hasPermissions.then((v) {
+                                            _speech.activate().then((res) {
+                                              _speech.setRecognitionCompleteHandler((String text) {
+                                                if (isSpeeching) {
+                                                  isSpeeching = false;
+                                                  if (mounted) {
+                                                    setState(() {});
+                                                  }
+                                                  if (text.toString().contains("芝麻开门")) {
+                                                    navigator.push(CupertinoPageRoute(
+                                                        builder: (_) => WebPage(
+                                                            WebPageRouteArg("https://bbs.byr.cn/n/board/IWhisper"))));
+                                                  } else {
+                                                    _controller.text += text;
+                                                  }
+                                                }
+                                              });
+                                              _speech.listen(locale: Locale("zh", "CN").toString()).then((result) {
+                                                isSpeeching = true;
                                                 if (mounted) {
                                                   setState(() {});
                                                 }
-                                                if (text.toString().contains("芝麻开门")) {
-                                                  navigator.push(CupertinoPageRoute(
-                                                      builder: (_) => WebPage(
-                                                          WebPageRouteArg("https://bbs.byr.cn/n/board/IWhisper"))));
-                                                } else {
-                                                  _controller.text += text;
-                                                }
-                                              }
-                                            });
-                                            _speech.listen(locale: Locale("zh", "CN").toString()).then((result) {
-                                              isSpeeching = true;
-                                              if (mounted) {
-                                                setState(() {});
-                                              }
+                                              });
                                             });
                                           });
                                         } else {
