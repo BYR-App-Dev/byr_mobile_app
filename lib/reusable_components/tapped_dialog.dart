@@ -24,6 +24,7 @@ class TappedDialog extends StatelessWidget {
             if (times < timeToReach) {
               return;
             }
+            times = 0;
             action();
           },
           child: content,

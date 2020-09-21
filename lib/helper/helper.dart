@@ -72,10 +72,10 @@ class Helper {
         diff.inSeconds > 0 && diff.inMinutes == 0 ||
         diff.inMinutes > 0 && diff.inHours == 0 ||
         diff.inHours > 0 && diff.inDays == 0) {
-      time = "timeTodayTrans".tr.replaceFirst('%', format.format(date));
+      time = "timeTodayTrans".trArgs([format.format(date)]);
     } else {
       if (diff.inDays == 1) {
-        time = "timeYesterdayTrans".tr.replaceFirst('%', format.format(date));
+        time = "timeYesterdayTrans".trArgs([format.format(date)]);
       } else {
         time = ymdFormat.format(date);
       }

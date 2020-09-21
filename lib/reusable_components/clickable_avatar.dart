@@ -33,7 +33,7 @@ class ClickableAvatar extends StatelessWidget {
         ? Container(
             alignment: Alignment.center,
             child: Image.asset(
-              "resources/user/whisper_face.gif",
+              "resources/user/whisper_face.jpg",
               width: radius * 2,
               height: radius * 2,
             ),
