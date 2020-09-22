@@ -13,7 +13,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'dart:ui' as ui;
 
 class MePage extends StatefulWidget {
   @override
@@ -251,71 +253,86 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
           children: <Widget>[
             Stack(
               children: <Widget>[
-                UserAccountsDrawerHeader(
-                  margin: EdgeInsets.zero,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    image: DecorationImage(
-                        image: SharedObjects.welImage,
-                        colorFilter: ColorFilter.mode(
-                            (E().mePageBackgroundColor.red +
-                                            E().mePageBackgroundColor.green +
-                                            E().mePageBackgroundColor.blue) /
-                                        3 >
-                                    128
-                                ? Colors.black.withOpacity(0.25)
-                                : Colors.black.withOpacity(0.6),
-                            BlendMode.darken),
-                        alignment: FractionalOffset.topLeft,
-                        fit: BoxFit.cover),
-                  ),
-                  currentAccountPicture: FutureBuilder(
-                    builder: (context, snapshot) => snapshot.hasData
-                        ? ClickableAvatar(
-                            radius: 20,
-                            emptyUser: snapshot.data?.faceUrl == null,
-                            isWhisper: (snapshot.data?.id ?? "").startsWith("IWhisper"),
-                            imageLink: NForumService.makeGetURL(snapshot.data?.faceUrl ?? ""),
-                            onTap: () {
-                              if (snapshot.data?.faceUrl == null) {
-                                return;
-                              }
-                              navigator.pushNamed(
-                                "profile_page",
-                                arguments: snapshot.data,
-                              );
-                            },
-                          )
-                        : ClickableAvatar(
-                            radius: 20,
-                            emptyUser: true,
-                            imageLink: null,
-                            onTap: null,
-                          ),
-                    future: SharedObjects.me,
-                  ),
-                  accountName: FutureBuilder(
-                    builder: (context, snapshot) => snapshot.hasData
-                        ? Text(snapshot.data?.id, style: HStyle.titleNav())
-                        : Text("", style: HStyle.titleNav()),
-                    future: SharedObjects.me,
-                  ),
-                  accountEmail: FutureBuilder(
-                    builder: (context, snapshot) => snapshot.hasData
-                        ? Text(snapshot.data?.userName, style: HStyle.bodyWhite())
-                        : Text("", style: HStyle.bodyWhite()),
-                    future: SharedObjects.me,
-                  ),
-                  onDetailsPressed: () {
-                    _showDrawerContents = !_showDrawerContents;
-                    if (mounted) {
-                      setState(() {});
+                GestureDetector(
+                  onLongPress: () {
+                    if (SharedObjects.welImageInfo.bytes.length > 0) {
+                      AdaptiveComponents.showAlertDialog(
+                        context,
+                        title: "saveTrans".tr,
+                        onDismiss: (result) {
+                          if (result == AlertResult.confirm) {
+                            GallerySaver.saveImage(SharedObjects.welImageInfo.path, albumName: 'BYRDownload');
+                          }
+                        },
+                      );
                     }
-                    if (_showDrawerContents)
-                      _controller.reverse();
-                    else
-                      _controller.forward();
                   },
+                  child: UserAccountsDrawerHeader(
+                    margin: EdgeInsets.zero,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      image: DecorationImage(
+                          image: SharedObjects.welImage,
+                          colorFilter: ColorFilter.mode(
+                              (E().mePageBackgroundColor.red +
+                                              E().mePageBackgroundColor.green +
+                                              E().mePageBackgroundColor.blue) /
+                                          3 >
+                                      128
+                                  ? Colors.black.withOpacity(0.25)
+                                  : Colors.black.withOpacity(0.6),
+                              BlendMode.darken),
+                          alignment: FractionalOffset.topLeft,
+                          fit: BoxFit.cover),
+                    ),
+                    currentAccountPicture: FutureBuilder(
+                      builder: (context, snapshot) => snapshot.hasData
+                          ? ClickableAvatar(
+                              radius: 20,
+                              emptyUser: snapshot.data?.faceUrl == null,
+                              isWhisper: (snapshot.data?.id ?? "").startsWith("IWhisper"),
+                              imageLink: NForumService.makeGetURL(snapshot.data?.faceUrl ?? ""),
+                              onTap: () {
+                                if (snapshot.data?.faceUrl == null) {
+                                  return;
+                                }
+                                navigator.pushNamed(
+                                  "profile_page",
+                                  arguments: snapshot.data,
+                                );
+                              },
+                            )
+                          : ClickableAvatar(
+                              radius: 20,
+                              emptyUser: true,
+                              imageLink: null,
+                              onTap: null,
+                            ),
+                      future: SharedObjects.me,
+                    ),
+                    accountName: FutureBuilder(
+                      builder: (context, snapshot) => snapshot.hasData
+                          ? Text(snapshot.data?.id, style: HStyle.titleNav())
+                          : Text("", style: HStyle.titleNav()),
+                      future: SharedObjects.me,
+                    ),
+                    accountEmail: FutureBuilder(
+                      builder: (context, snapshot) => snapshot.hasData
+                          ? Text(snapshot.data?.userName, style: HStyle.bodyWhite())
+                          : Text("", style: HStyle.bodyWhite()),
+                      future: SharedObjects.me,
+                    ),
+                    onDetailsPressed: () {
+                      _showDrawerContents = !_showDrawerContents;
+                      if (mounted) {
+                        setState(() {});
+                      }
+                      if (_showDrawerContents)
+                        _controller.reverse();
+                      else
+                        _controller.forward();
+                    },
+                  ),
                 ),
                 SafeArea(
                   bottom: false,
