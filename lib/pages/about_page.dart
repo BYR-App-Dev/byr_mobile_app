@@ -5,28 +5,54 @@ import 'package:byr_mobile_app/reusable_components/byr_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+class _Contributor {
+  String id;
+  String description;
+  _Contributor(this.id, this.description);
+}
+
 class AboutPage extends StatefulWidget {
   @override
   _AboutPageState createState() => _AboutPageState();
 }
 
 class _AboutPageState extends State<AboutPage> {
-  _buildUserList(List<String> ids) {
-    return GridView.count(
-      padding: EdgeInsets.all(0),
-      scrollDirection: Axis.vertical,
-      crossAxisCount: 4,
-      crossAxisSpacing: 10,
-      mainAxisSpacing: 10,
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      children: ids
-          .map(
-            (id) => AboutPageUserWidget(
-              id: id,
+  _buildCell(String title, List<_Contributor> contributors) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(top: 20),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: E().otherPagePrimaryTextColor,
             ),
-          )
-          .toList(),
+          ),
+        ),
+        Divider(),
+        Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: ListView.separated(
+            padding: EdgeInsets.all(0),
+            itemBuilder: (_, index) {
+              if (index < contributors.length) {
+                return AboutPageUserWidget(
+                  id: contributors[index].id,
+                  description: contributors[index].description,
+                );
+              }
+              return null;
+            },
+            separatorBuilder: (_, index) => Divider(),
+            itemCount: contributors.length + 1,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+          ),
+        ),
+      ],
     );
   }
 
@@ -44,7 +70,7 @@ class _AboutPageState extends State<AboutPage> {
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: constraint.maxHeight),
               child: Container(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(vertical: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -78,18 +104,10 @@ class _AboutPageState extends State<AboutPage> {
                         ),
                       ),
                     ),
-                    Text(
-                      '    此应用为北京邮电大学北邮人论坛的官方客户端，于2019~2020年使用Flutter重新开发。',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: E().otherPagePrimaryTextColor,
-                      ),
-                    ),
                     Container(
-                      margin: EdgeInsets.only(bottom: 10, top: 20),
+                      margin: EdgeInsets.symmetric(horizontal: 15),
                       child: Text(
-                        'APP贡献人员:',
+                        '    此应用为北京邮电大学北邮人论坛的官方客户端，于2019~2020年使用Flutter重新开发。',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -98,101 +116,47 @@ class _AboutPageState extends State<AboutPage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      margin: EdgeInsets.only(left: 15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          _buildUserList(['wdjwxh']),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              '设计:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: E().otherPageSecondaryTextColor,
-                              ),
-                            ),
+                          _buildCell(
+                            '开发人员',
+                            [
+                              _Contributor('wdjwxh', ''),
+                              _Contributor('darkfrost', ''),
+                              _Contributor('nmslwsnd', ''),
+                            ],
                           ),
-                          _buildUserList(['huanwoyeye', 'Moby22']),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              'Android开发:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: E().otherPageSecondaryTextColor,
-                              ),
-                            ),
+                          _buildCell(
+                            '其他开发人员致谢',
+                            [
+                              _Contributor('paper777', '后台'),
+                              _Contributor('dss886', 'Android'),
+                              _Contributor('icyfox', 'Android'),
+                              _Contributor('friparia', 'IOS'),
+                              _Contributor('huanwoyeye', '设计'),
+                              _Contributor('Moby22', '设计'),
+                            ],
                           ),
-                          _buildUserList(['dss886', 'icyfox']),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              'iOS开发:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: E().otherPageSecondaryTextColor,
-                              ),
-                            ),
+                          _buildCell(
+                            '刷新动画致谢',
+                            [
+                              _Contributor('zifeiyu4024', '#北邮心跳'),
+                              _Contributor('buddleia', '#有空调酱的北邮夏'),
+                              _Contributor('cdddemy', '#Memory of BUPT'),
+                            ],
                           ),
-                          _buildUserList(['friparia', 'darkfrost', 'nmslwsnd']),
                         ],
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(bottom: 10, top: 20),
-                      child: Text(
-                        '刷新动画致谢:',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: E().otherPagePrimaryTextColor,
-                        ),
+                      margin: EdgeInsets.only(
+                        bottom: 10,
+                        top: 20,
+                        left: 15,
+                        right: 15,
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              '#北邮心跳',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: E().otherPageSecondaryTextColor,
-                              ),
-                            ),
-                          ),
-                          _buildUserList(['zifeiyu4024']),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              '#有空调酱的北邮夏',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: E().otherPageSecondaryTextColor,
-                              ),
-                            ),
-                          ),
-                          _buildUserList(['buddleia']),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              '#Memory of BUPT',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: E().otherPageSecondaryTextColor,
-                              ),
-                            ),
-                          ),
-                          _buildUserList(['cdddemy']),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 10, top: 20),
                       alignment: Alignment.center,
                       child: Text(
                         'Powered by BYR-Team © 2009-2020. All Rights Reserved',

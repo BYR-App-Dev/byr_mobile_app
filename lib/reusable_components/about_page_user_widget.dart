@@ -1,3 +1,5 @@
+import 'package:byr_mobile_app/customizations/const_colors.dart';
+import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
@@ -35,13 +37,20 @@ class _AboutPageUserWidgetState extends State<AboutPageUserWidget> {
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = TextStyle(
-      color: Colors.grey,
-      fontSize: 14,
+      color: E().otherPagePrimaryTextColor,
+      fontSize: 16,
     );
-    return LayoutBuilder(
-      builder: (context, constraint) {
-        double size = constraint.maxWidth * 0.70;
-        return Column(
+    double size = 40;
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        if (_userModel != null) {
+          navigator.pushNamed("profile_page", arguments: _userModel);
+        }
+      },
+      child: Container(
+        height: 40.0,
+        child: Row(
           children: <Widget>[
             _isLoading
                 ? Icon(
@@ -58,23 +67,35 @@ class _AboutPageUserWidgetState extends State<AboutPageUserWidget> {
                       isWhisper: (_userModel?.id ?? "").startsWith("IWhisper"),
                       imageLink: NForumService.makeGetURL(_userModel.faceUrl),
                       emptyUser: !GetUtils.isURL(_userModel?.faceUrl),
-                      onTap: () {
-                        navigator.pushNamed("profile_page", arguments: _userModel);
-                      },
                     ),
                   ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: 5,
-              ),
-              child: Text(
-                widget.id,
-                style: textStyle,
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 10,
+                ),
+                child: Text(
+                  widget.id,
+                  style: textStyle.copyWith(
+                    color: ConstColors.getUsernameColor(_userModel?.gender),
+                  ),
+                ),
               ),
             ),
+            if (widget.description.isNotEmpty)
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 5,
+                  right: 15,
+                ),
+                child: Text(
+                  widget.description,
+                  style: textStyle.copyWith(color: E().otherPageSecondaryTextColor),
+                ),
+              ),
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 }
