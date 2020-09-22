@@ -159,7 +159,7 @@ class _AboutPageState extends State<AboutPage> {
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        'Powered by BYR-Team © 2009-2020. All Rights Reserved',
+                        'Powered by BYR-Team © 2009-2020. All Rights Reserved.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
