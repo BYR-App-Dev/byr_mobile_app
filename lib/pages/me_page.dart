@@ -218,7 +218,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                     'post_page',
                     arguments: PostPageRouteArg(
                       board: BoardModel(
-                        name: 'advice',
+                        name: 'Advice',
                         description: '意见与建议',
                         allowAnonymous: false,
                         allowPost: true,
