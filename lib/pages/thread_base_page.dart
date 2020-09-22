@@ -492,6 +492,10 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
       if (widget.arg.boardName != 'IWhisper')
         (data.authorToShow == articleModel.user?.id ? ("cancelTrans".tr + " ") : "") + "onlyAuthor".tr,
     ];
+    int offset = -1;
+    if (widget.arg.boardName != 'IWhisper') {
+      offset = 0;
+    }
     actions.add("copy".tr);
     if (articleModel != null &&
         articleModel.runtimeType == ThreadArticleModel &&
@@ -500,12 +504,12 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
       actions.add("delete".tr);
     }
     AdaptiveComponents.showBottomSheet(context, actions, onItemTap: (int index) async {
-      if (index == 0) {
+      if (index == 0 + offset) {
         if (articleModel.user?.id != null && articleModel.user.id.isNotEmpty) {
           _author(articleModel.user?.id);
         }
       }
-      if (index == 1) {
+      if (index == 1 + offset) {
         Clipboard.setData(ClipboardData(text: content));
         scaffoldKey.currentState.removeCurrentSnackBar();
         scaffoldKey.currentState.showSnackBar(
@@ -515,7 +519,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
           ),
         );
       }
-      if (index == 2) {
+      if (index == 2 + offset) {
         var result = await navigator.pushNamed(
           'post_page',
           arguments: PostPageRouteArg(
@@ -528,7 +532,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
           afterEdit();
         }
       }
-      if (index == 3) deleteArticle((articleModel as ThreadArticleModel).id);
+      if (index == 3 + offset) deleteArticle((articleModel as ThreadArticleModel).id);
       return;
     });
   }
