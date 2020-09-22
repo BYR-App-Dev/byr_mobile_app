@@ -67,6 +67,5 @@ class StartupTasks {
     await initializeRefresher();
     await BoardInfo.load();
     await BoardAttInfo.load();
-    initializeMessage();
   }
 }

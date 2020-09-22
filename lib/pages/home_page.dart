@@ -10,6 +10,7 @@ import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/ota_dialog.dart';
 import 'package:byr_mobile_app/reusable_components/tap_bottom_navigation_bar.dart';
+import 'package:byr_mobile_app/tasks/startup_tasks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,6 +46,7 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
 
   @override
   initState() {
+    StartupTasks.initializeMessage();
     initUniLinks();
     if (UniversalPlatform.isAndroid) {
       NForumService.getAndroidLatest().then((jsonMap) {
