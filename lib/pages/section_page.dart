@@ -202,7 +202,7 @@ class SectionPageState extends State<SectionPage> with AutomaticKeepAliveClientM
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             CircleAvatar(
-              backgroundColor: BoardInfo.getBoardIconColor(boardObject),
+              backgroundColor: BoardInfo.getBoardIconColor(boardObject.name),
               child: Text(
                 boardObject.getBoardCnShort(),
                 style: TextStyle(

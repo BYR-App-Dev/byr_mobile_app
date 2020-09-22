@@ -417,7 +417,7 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
                         title: Row(
                           children: <Widget>[
                             CircleAvatar(
-                              backgroundColor: BoardInfo.getBoardIconColor(favBoards.board[index]),
+                              backgroundColor: BoardInfo.getBoardIconColor(favBoards.board[index].name),
                               child: Text(
                                 favBoards.board[index].getBoardCnShort(),
                                 style: TextStyle(

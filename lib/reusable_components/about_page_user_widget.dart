@@ -58,6 +58,9 @@ class _AboutPageUserWidgetState extends State<AboutPageUserWidget> {
                       isWhisper: (_userModel?.id ?? "").startsWith("IWhisper"),
                       imageLink: NForumService.makeGetURL(_userModel.faceUrl),
                       emptyUser: !GetUtils.isURL(_userModel?.faceUrl),
+                      onTap: () {
+                        navigator.pushNamed("profile_page", arguments: _userModel);
+                      },
                     ),
                   ),
             Padding(

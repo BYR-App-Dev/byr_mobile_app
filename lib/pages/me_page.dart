@@ -65,9 +65,11 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
         if (index >= users.length) {
           return ListTile(
             title: Row(
-                mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[Text('+ ' + "addAccount".tr, style: TextStyle(color: E().mePageTextColor))]),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[Text('+ ' + "addAccount".tr, style: TextStyle(color: E().mePageTextColor))]),
             onTap: () async {
-              var t = await Navigator.of(context).pushNamed('login_page', arguments: LoginPageRouteArg(isAddingMoreAccount: true));
+              var t = await Navigator.of(context)
+                  .pushNamed('login_page', arguments: LoginPageRouteArg(isAddingMoreAccount: true));
               if (t != null) {
                 user = await SharedObjects.me;
                 users = NForumService.getAllUser();
@@ -90,11 +92,18 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                   }
                 }
               },
-              leading: Icon(Icons.stars, color: users[index]['token'] == NForumService.currentToken ? E().mePageSelectedColor : E().mePageTextColor),
+              leading: Icon(Icons.stars,
+                  color: users[index]['token'] == NForumService.currentToken
+                      ? E().mePageSelectedColor
+                      : E().mePageTextColor),
               title: Text(users[index]['id'],
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 16, color: users[index]['token'] == NForumService.currentToken ? E().mePageSelectedColor : E().mePageTextColor)),
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: users[index]['token'] == NForumService.currentToken
+                          ? E().mePageSelectedColor
+                          : E().mePageTextColor)),
               trailing: ButtonTheme(
                 padding: EdgeInsets.all(0),
                 minWidth: 40,
@@ -146,7 +155,9 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
               SettingItemCell(
                 leading: Icon(MaterialIcons.wb_sunny, color: E().settingItemCellMainColor),
                 title: "themeStyleTrans".tr,
-                value: LocalStorage.getIsAutoTheme() ? "themeAuto".tr : BYRThemeManager.instance().themeMap[E().themeName].themeDisplayName,
+                value: LocalStorage.getIsAutoTheme()
+                    ? "themeAuto".tr
+                    : BYRThemeManager.instance().themeMap[E().themeName].themeDisplayName,
                 showArrow: false,
                 onTap: () {
                   List<String> themeKeys = BYRThemeManager.instance().themeMap.keys.toList();
@@ -247,7 +258,11 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                     image: DecorationImage(
                         image: SharedObjects.welImage,
                         colorFilter: ColorFilter.mode(
-                            (E().mePageBackgroundColor.red + E().mePageBackgroundColor.green + E().mePageBackgroundColor.blue) / 3 > 128
+                            (E().mePageBackgroundColor.red +
+                                            E().mePageBackgroundColor.green +
+                                            E().mePageBackgroundColor.blue) /
+                                        3 >
+                                    128
                                 ? Colors.black.withOpacity(0.25)
                                 : Colors.black.withOpacity(0.6),
                             BlendMode.darken),
@@ -280,12 +295,15 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                     future: SharedObjects.me,
                   ),
                   accountName: FutureBuilder(
-                    builder: (context, snapshot) => snapshot.hasData ? Text(snapshot.data?.id, style: HStyle.titleNav()) : Text("", style: HStyle.titleNav()),
+                    builder: (context, snapshot) => snapshot.hasData
+                        ? Text(snapshot.data?.id, style: HStyle.titleNav())
+                        : Text("", style: HStyle.titleNav()),
                     future: SharedObjects.me,
                   ),
                   accountEmail: FutureBuilder(
-                    builder: (context, snapshot) =>
-                        snapshot.hasData ? Text(snapshot.data?.userName, style: HStyle.bodyWhite()) : Text("", style: HStyle.bodyWhite()),
+                    builder: (context, snapshot) => snapshot.hasData
+                        ? Text(snapshot.data?.userName, style: HStyle.bodyWhite())
+                        : Text("", style: HStyle.bodyWhite()),
                     future: SharedObjects.me,
                   ),
                   onDetailsPressed: () {
@@ -324,10 +342,13 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                             onDismiss: (result) {
                               if (result == AlertResult.confirm) {
                                 NForumService.getUserInfo(userIdController.text).then((value) {
+                                  userIdController.clear();
                                   navigator.pushNamed("profile_page", arguments: value);
                                 }).catchError((e) {
                                   AdaptiveComponents.showToast(context, e.toString());
                                 });
+                              } else {
+                                userIdController.clear();
                               }
                             },
                           );
