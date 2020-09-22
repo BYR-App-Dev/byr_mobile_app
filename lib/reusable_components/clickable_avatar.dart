@@ -36,7 +36,6 @@ class ClickableAvatar extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.transparent,
-              borderRadius: BorderRadius.circular(radius),
               shape: BoxShape.circle,
               image: DecorationImage(
                 image: AssetImage("resources/user/whisper_face.jpg"),
