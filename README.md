@@ -4,7 +4,7 @@
 中文|[EN](README-EN.md)
 
 ## 编译并运行
-- 安装[Flutter](https://flutter.dev/docs/get-started/)，中国大陆地区用户可访问[官方中国大陆地区网站](https://flutter.cn/docs/get-started/)
+- 安装[Flutter](https://flutter.dev/docs/get-started/)，中国大陆地区用户可访问[官方中国大陆地区网站](https://flutter.cn/docs/get-started/)，版本1.17.5
 - 配置Secrets
     - 在北邮人论坛[相关版面](https://bbs.byr.cn/#!board/BBSOpenAPI)申请*clientID*、*认证链接*、*identifier*等信息
     - 新建一个私有仓库命名为*Secrets*包含如下文件结构
