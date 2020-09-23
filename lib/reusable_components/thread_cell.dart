@@ -710,7 +710,7 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
       style: textStyle,
       child: Row(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           LikeButton(
             key: _voteUpKey,
