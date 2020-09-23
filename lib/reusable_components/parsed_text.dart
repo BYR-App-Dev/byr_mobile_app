@@ -254,7 +254,7 @@ class ParsedText extends StatelessWidget {
             barrierLabel: "PicDialog",
             pageBuilder: (c, _, __) => PicSwiper(
               index: 0,
-              pics: [],
+              pics: [PicSwiperItem(picUrl: url)],
             ),
             context: context,
           );
