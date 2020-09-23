@@ -46,6 +46,8 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
 
   @override
   initState() {
+    super.initState();
+    selectedIndex = 0;
     StartupTasks.initializeMessage();
     initUniLinks();
     if (UniversalPlatform.isAndroid) {
@@ -74,7 +76,6 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
         systemNavigationBarIconBrightness: !E().isThemeDarkStyle ? Brightness.dark : Brightness.light,
       ),
     );
-    super.initState();
   }
 
   void handleAppLifecycleState() {
@@ -115,7 +116,7 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
     BYRThemeManager.instance().autoSwitchDarkMode(brightness);
   }
 
-  int selectedIndex = 0;
+  int selectedIndex;
 
   void onItemTapped(int index, int oldIndex) {
     if (index == 2) {
@@ -131,18 +132,18 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Obx(
-      () => Scaffold(
-        body: IndexedStack(
-          index: selectedIndex > 2 ? selectedIndex - 1 : selectedIndex,
-          children: <Widget>[
-            FrontPage(),
-            DiscoverPage(),
-            MessagePage(),
-            MePage(),
-          ],
-        ),
-        bottomNavigationBar: Container(
+    return Scaffold(
+      body: IndexedStack(
+        index: selectedIndex > 2 ? selectedIndex - 1 : selectedIndex,
+        children: <Widget>[
+          FrontPage(),
+          DiscoverPage(),
+          MessagePage(),
+          MePage(),
+        ],
+      ),
+      bottomNavigationBar: Obx(
+        () => Container(
           decoration: BoxDecoration(
             border: Border(
               top: BorderSide(color: E().bottomBarBackgroundColor.darken(5), width: 1),
