@@ -31,7 +31,7 @@ mixin InitializableMixin<T extends StatefulWidget> on State<T> {
         failureInfo = "dataExceptionTrans".tr;
         break;
       default:
-        failureInfo = e.toString();
+        failureInfo = "Unknown Exception";
         break;
     }
   }

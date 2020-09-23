@@ -99,7 +99,7 @@ class BoardmarksPageState extends State<BoardmarksPage>
         failureInfo = "dataExceptionTrans".tr;
         break;
       default:
-        failureInfo = e.toString();
+        failureInfo = "Unknown Exception";
         break;
     }
   }
@@ -319,7 +319,12 @@ class BoardmarksPageState extends State<BoardmarksPage>
             initializationStatus,
             {
               InitializationStatus.Initializing: _buildLoadingView(),
-              InitializationStatus.Failed: buildLoadingFailedView(),
+              InitializationStatus.Failed: InitializationFailureView(
+                failureInfo: failureInfo,
+                textColor: E().sectionPageContentColor,
+                buttonColor: E().sectionPageContentColor,
+                refresh: initialization,
+              ),
               InitializationStatus.Initialized: RefresherFactory(
                 factor,
                 _refreshController,

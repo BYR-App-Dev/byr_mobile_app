@@ -84,7 +84,7 @@ class _FrontTabSettingPageState extends State<FrontTabSettingPage> with Initiali
         failureInfo = "dataExceptionTrans".tr;
         break;
       default:
-        failureInfo = e.toString();
+        failureInfo = "Unknown Exception";
         break;
     }
   }
@@ -122,7 +122,12 @@ class _FrontTabSettingPageState extends State<FrontTabSettingPage> with Initiali
           {
             InitializationStatus.Initializing: buildLoadingView(),
             InitializationStatus.Failed: Center(
-              child: buildLoadingFailedView(),
+              child: InitializationFailureView(
+                failureInfo: failureInfo,
+                textColor: E().otherPagePrimaryTextColor,
+                buttonColor: E().otherPagePrimaryTextColor,
+                refresh: initialization,
+              ),
             ),
             InitializationStatus.Initialized: initializationStatus != InitializationStatus.Initialized
                 ? Container(

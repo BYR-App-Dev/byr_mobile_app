@@ -954,7 +954,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         failureInfo = "dataExceptionTrans".tr;
         break;
       default:
-        failureInfo = e.toString();
+        failureInfo = "Unknown Exception";
         break;
     }
   }

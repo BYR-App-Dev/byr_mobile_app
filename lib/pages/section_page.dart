@@ -116,7 +116,7 @@ class SectionPageState extends State<SectionPage> with AutomaticKeepAliveClientM
         failureInfo = "dataExceptionTrans".tr;
         break;
       default:
-        failureInfo = e.toString();
+        failureInfo = "Unknown Exception";
         break;
     }
   }
@@ -328,7 +328,12 @@ class SectionPageState extends State<SectionPage> with AutomaticKeepAliveClientM
             initializationStatus,
             {
               InitializationStatus.Initializing: _buildLoadingView(),
-              InitializationStatus.Failed: buildLoadingFailedView(),
+              InitializationStatus.Failed: InitializationFailureView(
+                failureInfo: failureInfo,
+                textColor: E().sectionPageContentColor,
+                buttonColor: E().sectionPageContentColor,
+                refresh: initialization,
+              ),
               InitializationStatus.Initialized: initializationStatus != InitializationStatus.Initialized
                   ? _buildLoadingView()
                   : Column(
