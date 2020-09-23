@@ -24,6 +24,7 @@ class MessageController extends GetxController {
   @override
   void onInit() {
     getMsgCount();
+    startCountDownTimer();
     super.onInit();
   }
 
