@@ -333,48 +333,65 @@ class NForumParsedText extends StatelessWidget {
       NForumTextParsingConfig parsingConfig, String str, TextStyle defT, GestureRecognizer rec, RegExpMatch quote) {
     return [
       TextSpan(
-        children: _bbText(parsingConfig, str.substring(0, quote.start), defT, rec),
+        children: _bbText(parsingConfig, str.substring(0, quote.start).trim(), defT, rec),
         recognizer: rec,
       ),
       WidgetSpan(
-        child: Stack(
-          overflow: Overflow.visible,
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(Get.context).size.width,
-              margin: EdgeInsets.only(top: 10),
-              color: E().isThemeDarkStyle
-                  ? Color.fromARGB(
-                      255,
-                      E().threadPageBackgroundColor.red + 8,
-                      E().threadPageBackgroundColor.green + 9,
-                      E().threadPageBackgroundColor.blue + 10,
-                    )
-                  : Color.fromARGB(
-                      255,
-                      E().threadPageBackgroundColor.red - 10,
-                      E().threadPageBackgroundColor.green - 9,
-                      E().threadPageBackgroundColor.blue - 8,
+        child: Container(
+          margin: EdgeInsets.only(top: 8.0),
+          color: E().isThemeDarkStyle
+              ? Color.fromARGB(
+                  255,
+                  E().threadPageBackgroundColor.red + 8,
+                  E().threadPageBackgroundColor.green + 9,
+                  E().threadPageBackgroundColor.blue + 10,
+                )
+              : Color.fromARGB(
+                  255,
+                  E().threadPageBackgroundColor.red - 10,
+                  E().threadPageBackgroundColor.green - 9,
+                  E().threadPageBackgroundColor.blue - 8,
+                ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                child: Transform.rotate(
+                  angle: math.pi,
+                  child: Icon(
+                    Icons.format_quote,
+                    color: parsingConfig.quoteColor,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: E().isThemeDarkStyle
+                      ? Color.fromARGB(
+                          255,
+                          E().threadPageBackgroundColor.red + 8,
+                          E().threadPageBackgroundColor.green + 9,
+                          E().threadPageBackgroundColor.blue + 10,
+                        )
+                      : Color.fromARGB(
+                          255,
+                          E().threadPageBackgroundColor.red - 10,
+                          E().threadPageBackgroundColor.green - 9,
+                          E().threadPageBackgroundColor.blue - 8,
+                        ),
+                  padding: EdgeInsets.only(top: 8.0, left: 0, bottom: 8, right: 8),
+                  child: Text(
+                    _stripText(_retrieveEmojis(str.substring(quote.start, quote.end))),
+                    style: defT.copyWith(
+                      color: parsingConfig.quoteColor,
                     ),
-              padding: EdgeInsets.only(top: 8.0, left: 18, bottom: 8, right: 8),
-              child: Text(
-                _stripText(_retrieveEmojis(str.substring(quote.start, quote.end))),
-                style: defT.copyWith(
-                  color: parsingConfig.quoteColor,
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              top: 10,
-              child: Transform.rotate(
-                angle: math.pi,
-                child: Icon(
-                  Icons.format_quote,
-                  color: parsingConfig.quoteColor,
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       TextSpan(
