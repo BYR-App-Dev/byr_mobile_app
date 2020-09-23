@@ -42,6 +42,9 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
   void initState() {
     super.initState();
     users = NForumService.getAllUser();
+    if (SharedObjects.me == null) {
+      SharedObjects.me = NForumService.getSelfUserInfo();
+    }
     SharedObjects.me.then((userInfo) {
       user = userInfo;
     });

@@ -110,11 +110,13 @@ class NForumService {
   static Future<void> loadMe() async {
     Map<String, String> tokenMap = LocalStorage.getTokensWithIds();
     var selfInfo = getSelfUserInfo();
-    if (selfInfo != null && await selfInfo != null) {
+    if (selfInfo != null) {
       SharedObjects.me = selfInfo;
       UserModel userInfo = await SharedObjects.me;
-      tokenMap[currentToken] = userInfo.id;
-      await LocalStorage.setTokensWithIds(tokenMap);
+      if (userInfo != null) {
+        tokenMap[currentToken] = userInfo.id;
+        await LocalStorage.setTokensWithIds(tokenMap);
+      }
     }
     return true;
   }
