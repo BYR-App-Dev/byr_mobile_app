@@ -87,7 +87,9 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
                           absorbing: true,
                           child: Container(
                             color: screenshotIndexes[(index / 2).floor()] ?? false
-                                ? E().isThemeDarkStyle ? E().threadPageBackgroundColor.lighten(10) : E().threadPageBackgroundColor.darken(10)
+                                ? E().isThemeDarkStyle
+                                    ? E().threadPageBackgroundColor.lighten(10)
+                                    : E().threadPageBackgroundColor.darken(10)
                                 : E().threadPageBackgroundColor,
                             child: buildCell(
                               context,
@@ -489,7 +491,7 @@ class ThreadPagerState extends State<ThreadPager> {
         ? Container()
         : Positioned(
             right: 15,
-            bottom: 15,
+            bottom: 40,
             child: AnimatedOpacity(
               opacity: maxPage > 1 ? 1.0 : 0,
               duration: Duration(milliseconds: 100),
@@ -921,13 +923,15 @@ class TextFormFieldWrapperState extends State<TextFormFieldWrapper> {
     return Container(
         height: 50,
         child: ExtendedTextField(
-          textSelectionControls: Platform.isAndroid ? CustomMaterialTextSelectionControls(
-            canCancelTarget: widget.canCancelReplyTarget,
-            cancelTarget: widget.cancelReplyTarget,
-          ): CustomCupertinoTextSelectionControls(
-            canCancelTarget: widget.canCancelReplyTarget,
-            cancelTarget: widget.cancelReplyTarget,
-          ),
+          textSelectionControls: Platform.isAndroid
+              ? CustomMaterialTextSelectionControls(
+                  canCancelTarget: widget.canCancelReplyTarget,
+                  cancelTarget: widget.cancelReplyTarget,
+                )
+              : CustomCupertinoTextSelectionControls(
+                  canCancelTarget: widget.canCancelReplyTarget,
+                  cancelTarget: widget.cancelReplyTarget,
+                ),
           maxLines: null,
           textInputAction: TextInputAction.newline,
           controller: widget.replyController,
