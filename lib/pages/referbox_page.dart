@@ -49,9 +49,10 @@ class ReferboxPageState extends ArticleListBasePageState<ReferBoxModel, Referbox
       highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
       splashColor: E().threadListBackgroundColor.withOpacity(0.15),
       onTap: () {
-        NForumService.setReferRead(this.widget.referType, referArticleObject.index);
         if (referArticleObject.isRead == false) {
-          Get.find<MessageController>().getMsgCount();
+          NForumService.setReferRead(this.widget.referType, referArticleObject.index).then((value) {
+            Get.find<MessageController>().getMsgCount();
+          });
         }
         referArticleObject.isRead = true;
         if (mounted) {

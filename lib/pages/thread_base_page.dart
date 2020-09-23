@@ -503,7 +503,8 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
       actions.add("edit".tr);
       actions.add("delete".tr);
     }
-    AdaptiveComponents.showBottomSheet(context, actions, onItemTap: (int index) async {
+    AdaptiveComponents.showBottomSheet(context, actions,
+        textStyle: TextStyle(fontSize: 17, color: E().threadListTileTitleColor), onItemTap: (int index) async {
       if (index == 0 + offset) {
         if (articleModel.user?.id != null && articleModel.user.id.isNotEmpty) {
           _author(articleModel.user?.id);

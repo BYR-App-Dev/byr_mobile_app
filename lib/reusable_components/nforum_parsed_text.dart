@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
+import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/nforum/nforum_text_parser.dart';
+import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -335,29 +337,46 @@ class NForumParsedText extends StatelessWidget {
         recognizer: rec,
       ),
       WidgetSpan(
-        child: Row(
+        child: Stack(
+          overflow: Overflow.visible,
           children: <Widget>[
-            Transform.rotate(
-              angle: math.pi,
-              child: Icon(
-                Icons.format_quote,
-                color: parsingConfig.quoteColor,
-              ),
-            ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.only(left: 5),
-                height: 0.4,
-                color: parsingConfig.quoteColor,
+                width: MediaQuery.of(Get.context).size.width,
+                margin: EdgeInsets.only(top: 10),
+                color: E().isThemeDarkStyle
+                    ? Color.fromARGB(
+                        255,
+                        E().threadPageBackgroundColor.red + 8,
+                        E().threadPageBackgroundColor.green + 9,
+                        E().threadPageBackgroundColor.blue + 10,
+                      )
+                    : Color.fromARGB(
+                        255,
+                        E().threadPageBackgroundColor.red - 10,
+                        E().threadPageBackgroundColor.green - 9,
+                        E().threadPageBackgroundColor.blue - 8,
+                      ),
+                padding: EdgeInsets.only(top: 8.0, left: 18, bottom: 8, right: 8),
+                child: Text(
+                  _stripText(_retrieveEmojis(str.substring(quote.start, quote.end))),
+                  style: defT.copyWith(
+                    color: parsingConfig.quoteColor,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 10,
+              child: Transform.rotate(
+                angle: math.pi,
+                child: Icon(
+                  Icons.format_quote,
+                  color: parsingConfig.quoteColor,
+                ),
               ),
             ),
           ],
-        ),
-      ),
-      TextSpan(
-        text: _stripText(_retrieveEmojis(str.substring(quote.start, quote.end))),
-        style: defT.copyWith(
-          color: parsingConfig.quoteColor,
         ),
       ),
       TextSpan(

@@ -248,7 +248,7 @@ class AdaptiveComponents {
         title: Center(
           child: Text(
             "cancelTrans".tr,
-            style: (textStyle ?? TextStyle()).copyWith(color: Colors.blue),
+            style: (textStyle ?? TextStyle()).copyWith(color: Colors.grey),
           ),
         ),
         onTap: () {
