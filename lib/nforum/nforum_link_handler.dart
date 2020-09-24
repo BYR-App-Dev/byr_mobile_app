@@ -32,12 +32,9 @@ class NForumLinkHandler {
   }
 
   static bool webLinkHandler(String url) {
-    if (GetUtils.isURL(url)) {
-      canLaunch(url).then((r) {
-        launch(url);
-      });
-      return true;
-    }
-    return false;
+    canLaunch(url).then((r) {
+      launch(url);
+    });
+    return true;
   }
 }
