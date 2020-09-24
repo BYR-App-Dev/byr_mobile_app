@@ -966,6 +966,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     VoidCallback onTap,
   }) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () {
         _popUpMenuOverlay?.remove();
         if (onTap != null) onTap();
@@ -973,6 +974,13 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
       child: Container(
         height: 40,
         alignment: Alignment.centerLeft,
+        padding: EdgeInsets.only(right: 20),
+        margin: EdgeInsets.only(left: 20),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: E().otherPageDividerColor, width: 1),
+          ),
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -1046,7 +1054,6 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                 borderRadius: BorderRadius.all(Radius.circular(radius)),
                 child: Container(
                   color: backgroundColor,
-                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Material(
                     child: child,
                     color: Colors.transparent,
@@ -1108,58 +1115,60 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
               icon: Icon(Icons.more_horiz, size: 30),
               onPressed: () {
                 showPopupMenu(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      _itemWidget(
-                        FontAwesomeIcons.thList,
-                        "backToBoardTrans".tr,
-                        onTap: () {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                            "board_page",
-                            ModalRoute.withName('home_page'),
-                            arguments: BoardPageRouteArg(data.boardName),
-                          );
-                        },
-                      ),
-                      if (data.boardName == 'IWhisper')
+                  child: IntrinsicWidth(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
                         _itemWidget(
-                          data.isAnonymous ? FontAwesomeIcons.solidEyeSlash : FontAwesomeIcons.solidEye,
-                          data.isAnonymous ? "unAnonymous".tr : "anonymous".tr,
+                          FontAwesomeIcons.thList,
+                          "backToBoardTrans".tr,
                           onTap: () {
-                            NForumSpecs.setAnonymous(value: !data.isAnonymous);
-                            data.isAnonymous = !data.isAnonymous;
-                            if (mounted) {
-                              setState(() {});
-                            }
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              "board_page",
+                              ModalRoute.withName('home_page'),
+                              arguments: BoardPageRouteArg(data.boardName),
+                            );
                           },
                         ),
-                      if (screenshotStatus == ScreenshotStatus.Dismissed)
-                        _itemWidget(
-                          FontAwesomeIcons.camera,
-                          "screenshotPage".tr,
-                          onTap: captureScreenshot,
-                        ),
-                      _itemWidget(
-                        FontAwesomeIcons.shareAlt,
-                        "share".tr,
-                        onTap: shareArticle,
-                      ),
-                      _itemWidget(
-                        FontAwesomeIcons.exclamationCircle,
-                        "reportTrans".tr,
-                        onTap: () {
-                          AdaptiveComponents.showAlertDialog(
-                            context,
-                            title: "reportConfirmTrans".tr,
-                            onDismiss: (result) {
-                              print(result);
+                        if (data.boardName == 'IWhisper')
+                          _itemWidget(
+                            data.isAnonymous ? FontAwesomeIcons.solidEyeSlash : FontAwesomeIcons.solidEye,
+                            data.isAnonymous ? "unAnonymous".tr : "anonymous".tr,
+                            onTap: () {
+                              NForumSpecs.setAnonymous(value: !data.isAnonymous);
+                              data.isAnonymous = !data.isAnonymous;
+                              if (mounted) {
+                                setState(() {});
+                              }
                             },
-                          );
-                        },
-                      ),
-                    ],
+                          ),
+                        if (screenshotStatus == ScreenshotStatus.Dismissed)
+                          _itemWidget(
+                            FontAwesomeIcons.camera,
+                            "screenshotPage".tr,
+                            onTap: captureScreenshot,
+                          ),
+                        _itemWidget(
+                          FontAwesomeIcons.shareAlt,
+                          "share".tr,
+                          onTap: shareArticle,
+                        ),
+                        _itemWidget(
+                          FontAwesomeIcons.exclamationCircle,
+                          "reportTrans".tr,
+                          onTap: () {
+                            AdaptiveComponents.showAlertDialog(
+                              context,
+                              title: "reportConfirmTrans".tr,
+                              onDismiss: (result) {
+                                print(result);
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
