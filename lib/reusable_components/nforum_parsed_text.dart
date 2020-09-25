@@ -333,7 +333,7 @@ class NForumParsedText extends StatelessWidget {
       NForumTextParsingConfig parsingConfig, String str, TextStyle defT, GestureRecognizer rec, RegExpMatch quote) {
     return [
       TextSpan(
-        children: _bbText(parsingConfig, str.substring(0, quote.start).trim(), defT, rec),
+        children: _bbText(parsingConfig, str.substring(0, quote.start).trim() + "\n", defT, rec),
         recognizer: rec,
       ),
       WidgetSpan(
@@ -383,7 +383,7 @@ class NForumParsedText extends StatelessWidget {
                         ),
                   padding: EdgeInsets.only(top: 8.0, left: 0, bottom: 8, right: 8),
                   child: Text(
-                    _stripText(_retrieveEmojis(str.substring(quote.start, quote.end))),
+                    _stripText(_retrieveEmojis(str.substring(quote.start, quote.end))).trim() + "\n",
                     style: defT.copyWith(
                       color: parsingConfig.quoteColor,
                     ),
