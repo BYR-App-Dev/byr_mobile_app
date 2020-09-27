@@ -339,19 +339,23 @@ class NForumParsedText extends StatelessWidget {
       WidgetSpan(
         child: Container(
           margin: EdgeInsets.only(top: 8.0),
-          color: E().isThemeDarkStyle
-              ? Color.fromARGB(
-                  255,
-                  E().threadPageBackgroundColor.red + 8,
-                  E().threadPageBackgroundColor.green + 9,
-                  E().threadPageBackgroundColor.blue + 10,
-                )
-              : Color.fromARGB(
-                  255,
-                  E().threadPageBackgroundColor.red - 10,
-                  E().threadPageBackgroundColor.green - 9,
-                  E().threadPageBackgroundColor.blue - 8,
-                ),
+          padding: EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: E().isThemeDarkStyle
+                ? Color.fromARGB(
+              255,
+              E().threadPageBackgroundColor.red + 8,
+              E().threadPageBackgroundColor.green + 9,
+              E().threadPageBackgroundColor.blue + 10,
+            )
+                : Color.fromARGB(
+              255,
+              E().threadPageBackgroundColor.red - 10,
+              E().threadPageBackgroundColor.green - 9,
+              E().threadPageBackgroundColor.blue - 8,
+            ),
+            borderRadius: BorderRadius.circular(5),
+          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
@@ -367,26 +371,10 @@ class NForumParsedText extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Container(
-                  color: E().isThemeDarkStyle
-                      ? Color.fromARGB(
-                          255,
-                          E().threadPageBackgroundColor.red + 8,
-                          E().threadPageBackgroundColor.green + 9,
-                          E().threadPageBackgroundColor.blue + 10,
-                        )
-                      : Color.fromARGB(
-                          255,
-                          E().threadPageBackgroundColor.red - 10,
-                          E().threadPageBackgroundColor.green - 9,
-                          E().threadPageBackgroundColor.blue - 8,
-                        ),
-                  padding: EdgeInsets.only(top: 8.0, left: 0, bottom: 8, right: 8),
-                  child: Text(
-                    _stripText(_retrieveEmojis(str.substring(quote.start, quote.end))).trim() + "\n",
-                    style: defT.copyWith(
-                      color: parsingConfig.quoteColor,
-                    ),
+                child: Text(
+                  _stripText(_retrieveEmojis(str.substring(quote.start, quote.end))).trim() + "\n",
+                  style: defT.copyWith(
+                    color: parsingConfig.quoteColor,
                   ),
                 ),
               ),
