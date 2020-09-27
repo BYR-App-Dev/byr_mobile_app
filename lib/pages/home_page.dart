@@ -112,8 +112,10 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
   @override
   void didChangePlatformBrightness() {
     super.didChangePlatformBrightness();
-    final Brightness brightness = WidgetsBinding.instance.window.platformBrightness;
-    BYRThemeManager.instance().autoSwitchDarkMode(brightness);
+    if (BYRThemeManager.instance().getIsAutoSwitchDarkModel() == true) {
+      final Brightness brightness = WidgetsBinding.instance.window.platformBrightness;
+      BYRThemeManager.instance().autoSwitchDarkMode(brightness);
+    }
   }
 
   int selectedIndex;
