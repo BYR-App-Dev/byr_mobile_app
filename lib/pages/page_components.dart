@@ -9,6 +9,7 @@ import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/nforum/nforum_text_parser.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
+import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/controller_insert_text.dart';
 import 'package:byr_mobile_app/reusable_components/custom_cupertino_text_selection_controls.dart';
 import 'package:byr_mobile_app/reusable_components/custom_material_text_selection_controls.dart';
@@ -278,6 +279,7 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
     screenshotIndexes.clear();
     screenshotImg = null;
     screenshotStatus = ScreenshotStatus.Selecting;
+    AdaptiveComponents.showToast(context, "screenshotInstruction".tr);
     if (mounted) {
       setState(() {});
     }

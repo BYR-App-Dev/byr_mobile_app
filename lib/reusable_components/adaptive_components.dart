@@ -87,6 +87,7 @@ class AdaptiveComponents {
     Toast.show(
       msg,
       context,
+      duration: 2,
       gravity: 1,
       backgroundColor: Colors.black54,
       backgroundRadius: 10,

@@ -212,6 +212,7 @@ class Translation extends Translations {
     "titleIconColor": '标题/图片颜色:',
     "backgroundColor": '背景颜色:',
     "appBarStyleComment": '上面的"颜色"与版面的主色调保持一致',
+    "screenshotInstruction": "点击选取截图的楼层，右下角按钮完成选取",
   };
 
   static Map<String, String> zhHant = {
@@ -419,6 +420,7 @@ class Translation extends Translations {
     "titleIconColor": '標題/圖片顏色:',
     "backgroundColor": '背景顏色:',
     "appBarStyleComment": '上面的"顏色"與版面的主色調保持一致',
+    "screenshotInstruction": "點擊選擇截圖貼子，右下角按鈕完成選取",
   };
 
   static Map<String, String> en = {
@@ -626,6 +628,7 @@ class Translation extends Translations {
     "titleIconColor": 'Title/Icon Color:',
     "backgroundColor": 'Background Color:',
     "appBarStyleComment": 'The "Color" is consistent with the "Main Color" of Board.',
+    "screenshotInstruction": "click to select cells for screenshot, and tap bottom right button to process",
   };
 
   @override
