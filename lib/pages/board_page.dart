@@ -237,7 +237,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
             child: Container(
               child: Icon(
                 Icons.create,
-                color: E().threadListBackgroundColor,
+                color: Colors.white,
               ),
               decoration: BoxDecoration(
                 color: BoardInfo.getBoardIconColor(widget.arg.boardName),

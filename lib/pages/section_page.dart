@@ -166,7 +166,7 @@ class SectionPageState extends State<SectionPage> with AutomaticKeepAliveClientM
               child: Text(
                 sectionObject.description[0].toUpperCase(),
                 style: TextStyle(
-                  color: E().threadListBackgroundColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -206,7 +206,7 @@ class SectionPageState extends State<SectionPage> with AutomaticKeepAliveClientM
               child: Text(
                 boardObject.getBoardCnShort(),
                 style: TextStyle(
-                  color: E().threadListBackgroundColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
