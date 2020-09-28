@@ -48,86 +48,88 @@ class MailPageState extends State<MailPage> with AutomaticKeepAliveClientMixin {
   }
 
   Widget _buildContent(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.fromLTRB(16, 15, 16, 15),
-          child: Row(
-            children: <Widget>[
-              ClickableAvatar(
-                radius: 20,
-                imageLink: NForumService.makeGetURL(_mailObject.user?.faceUrl ?? ""),
-                isWhisper: (_mailObject.user?.id ?? "").startsWith("IWhisper"),
-                emptyUser: _mailObject.user?.faceUrl == null,
-                onTap: () {
-                  navigator.pushNamed(
-                    "profile_page",
-                    arguments: _mailObject.user,
-                  );
-                },
-              ),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(left: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        _mailObject.user.id,
-                        style: TextStyle(
-                          fontSize: 16.5,
-                          color: ConstColors.getUsernameColor(_mailObject.user?.gender),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.fromLTRB(16, 15, 16, 15),
+            child: Row(
+              children: <Widget>[
+                ClickableAvatar(
+                  radius: 20,
+                  imageLink: NForumService.makeGetURL(_mailObject.user?.faceUrl ?? ""),
+                  isWhisper: (_mailObject.user?.id ?? "").startsWith("IWhisper"),
+                  emptyUser: _mailObject.user?.faceUrl == null,
+                  onTap: () {
+                    navigator.pushNamed(
+                      "profile_page",
+                      arguments: _mailObject.user,
+                    );
+                  },
+                ),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(left: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          _mailObject.user.id,
+                          style: TextStyle(
+                            fontSize: 16.5,
+                            color: ConstColors.getUsernameColor(_mailObject.user?.gender),
+                          ),
                         ),
-                      ),
-                      Container(
-                        height: 3,
-                      ),
-                      Text(
-                        Helper.convTimestampToRelative(_mailObject.postTime),
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: E().notificationListTileOtherTextColor,
+                        Container(
+                          height: 3,
                         ),
-                      ),
-                    ],
+                        Text(
+                          Helper.convTimestampToRelative(_mailObject.postTime),
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: E().notificationListTileOtherTextColor,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Divider(
-          indent: 16,
-          color: E().otherPageDividerColor,
-        ),
-        Expanded(
-            child: Container(
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(
-                  bottom: 10,
-                ),
-                child: Text(
-                  _mailObject.title,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: E().notificationListTileTitleColor,
+          Divider(
+            indent: 16,
+            color: E().otherPageDividerColor,
+          ),
+          Expanded(
+              child: Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(
+                    bottom: 10,
+                  ),
+                  child: Text(
+                    _mailObject.title,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: E().notificationListTileTitleColor,
+                    ),
                   ),
                 ),
-              ),
-              ParsedText.uploaded(
-                text: _mailObject.content.trim().replaceAll(RegExp(r'\n+--\n*$'), '\n'),
-                uploads: _mailObject.attachment.file,
-                title: _mailObject.title,
-              ),
-            ],
-          ),
-        )),
-      ],
+                ParsedText.uploaded(
+                  text: _mailObject.content.trim().replaceAll(RegExp(r'\n+--\n*$'), '\n'),
+                  uploads: _mailObject.attachment.file,
+                  title: _mailObject.title,
+                ),
+              ],
+            ),
+          )),
+        ],
+      ),
     );
   }
 
