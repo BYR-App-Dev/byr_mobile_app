@@ -1,7 +1,9 @@
 import 'package:byr_mobile_app/configurations/configurations.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
+import 'package:byr_mobile_app/pages/web_page.dart';
 import 'package:byr_mobile_app/reusable_components/about_page_user_widget.dart';
 import 'package:byr_mobile_app/reusable_components/byr_app_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -53,6 +55,43 @@ class _AboutPageState extends State<AboutPage> {
           ),
         ),
       ],
+    );
+  }
+
+  _buildCommunityCell() {
+    return GestureDetector(
+      onTap: () {
+        navigator.push(CupertinoPageRoute(
+            builder: (_) => WebPage(WebPageRouteArg("https://github.com/BYR-App-Dev/byr_mobile_app/contributors"))));
+      },
+      child: Container(
+        padding: EdgeInsets.only(left: 20),
+        margin: EdgeInsets.only(top: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "社区贡献者致谢",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: E().otherPagePrimaryTextColor,
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16,
+                  color: E().settingItemCellSubColor,
+                ),
+              ],
+            ),
+            Divider(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -150,6 +189,7 @@ class _AboutPageState extends State<AboutPage> {
                         ],
                       ),
                     ),
+                    _buildCommunityCell(),
                     Container(
                       margin: EdgeInsets.only(
                         bottom: 10,
