@@ -411,7 +411,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                 child: Text(
                   data.articleList.getBoardCnShort(),
                   style: TextStyle(
-                    color: E().threadListBackgroundColor,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

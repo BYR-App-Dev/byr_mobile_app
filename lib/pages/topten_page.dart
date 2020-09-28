@@ -205,7 +205,7 @@ class ToptenPageState extends State<ToptenPage> with AutomaticKeepAliveClientMix
                     BoardInfo.getBoardCnShort(threadObject.boardName, threadObject.boardDescription),
                     style: TextStyle(
                       fontSize: 15.0,
-                      color: E().threadListBackgroundColor,
+                      color: Colors.white,
                     ),
                   ),
                 ),

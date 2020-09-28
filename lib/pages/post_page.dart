@@ -299,7 +299,7 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
           child: Text(
             BoardInfo.getBoardCnShort(name, desc),
             style: TextStyle(
-              color: E().editPageBackgroundColor,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -421,7 +421,7 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
                               child: Text(
                                 favBoards.board[index].getBoardCnShort(),
                                 style: TextStyle(
-                                  color: E().editPageBackgroundColor,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

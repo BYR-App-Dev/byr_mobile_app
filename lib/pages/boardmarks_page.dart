@@ -507,7 +507,7 @@ class BoardmarksPageState extends State<BoardmarksPage>
                                         child: Text(
                                           favBoards.board[index].getBoardCnShort(),
                                           style: TextStyle(
-                                            color: E().sectionPageBackgroundColor,
+                                            color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),

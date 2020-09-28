@@ -81,7 +81,7 @@ class TimelinePageState extends ArticleListBasePageState<TimelineModel, Timeline
                             maxLines: 1,
                             style: TextStyle(
                               fontSize: 14.0,
-                              color: E().threadListBackgroundColor,
+                              color: Colors.white,
                             ),
                           ),
                         ),

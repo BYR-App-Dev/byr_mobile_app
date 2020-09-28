@@ -472,7 +472,7 @@ class ThreadPageSubjectCellState extends ThreadPageListCellState {
                       BoardInfo.getBoardCnShort(name, desc),
                       style: TextStyle(
                         fontSize: 12,
-                        color: E().threadPageBackgroundColor,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
