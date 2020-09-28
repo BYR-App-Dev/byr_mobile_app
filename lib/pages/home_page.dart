@@ -18,6 +18,7 @@ import 'package:get/get.dart';
 import 'package:tinycolor/tinycolor.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:flutter_device_information/flutter_device_information.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -44,29 +45,42 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
     NForumLinkHandler.byrLinkHandler(link);
   }
 
-  @override
-  initState() {
-    super.initState();
-    selectedIndex = 0;
-    StartupTasks.initializeMessage();
-    initUniLinks();
+  void androidCheckUpdate() {
     if (UniversalPlatform.isAndroid) {
-      NForumService.getAndroidLatest().then((jsonMap) {
+      NForumService.getAndroidLatest().then((jsonMap) async {
+        String cpuAbi;
+        try {
+          cpuAbi = await FlutterDeviceInformation.cpuAbis;
+        } on PlatformException {}
         String _ignoreVersion = LocalStorage.getIgnoreVersion();
         if (jsonMap != null &&
             jsonMap["latest_version"] != null &&
             jsonMap["latest_version"] != AppConfigs.version &&
             jsonMap["latest_version"] != _ignoreVersion) {
           LocalStorage.setIgnoreVersion(null);
+          String downloadLink;
+          if (cpuAbi != null && jsonMap["download_link" + cpuAbi] != null) {
+            downloadLink = jsonMap["download_link" + cpuAbi];
+          } else {
+            downloadLink = jsonMap["download_link"];
+          }
           showDialog<void>(
               context: context,
               builder: (BuildContext context) {
-                return OTADialog(jsonMap["latest_version"], jsonMap["download_link"],
-                    updateContent: jsonMap["update_content"]);
+                return OTADialog(jsonMap["latest_version"], downloadLink, updateContent: jsonMap["update_content"]);
               });
         }
       });
     }
+  }
+
+  @override
+  initState() {
+    super.initState();
+    selectedIndex = 0;
+    StartupTasks.initializeMessage();
+    initUniLinks();
+    androidCheckUpdate();
     handleAppLifecycleState();
     WidgetsBinding.instance.addObserver(this);
     SystemChrome.setSystemUIOverlayStyle(
