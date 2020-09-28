@@ -1,0 +1,1 @@
+flutter build ios --obfuscate --split-debug-info=byr_mobile_app/debug_info

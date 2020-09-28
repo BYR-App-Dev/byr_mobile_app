@@ -36,8 +36,8 @@
 - Run application
     - Debug ```flutter run --debug```
     - Release ```flutter run --release```
-    - Build iOS ```flutter build ios```
-    - Build Android ```flutter build apk```
+    - Build iOS ```./ios_build_cmd.sh```
+    - Build Android ```./android_build_cmd.sh```
 
 ## Project Structure
 - [resources/](resources/)
