@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:byr_mobile_app/customizations/board_info.dart';
+import 'package:byr_mobile_app/customizations/shimmer_theme.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
 import 'package:byr_mobile_app/networking/http_request.dart';
@@ -20,7 +21,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
 class BoardmarksPage extends StatefulWidget {
@@ -164,10 +164,7 @@ class BoardmarksPageState extends State<BoardmarksPage>
   }
 
   Widget _buildLoadingView() {
-    return Shimmer.fromColors(
-      baseColor: !E().isThemeDarkStyle ? Colors.grey[300] : Colors.grey,
-      highlightColor: !E().isThemeDarkStyle ? Colors.grey[100] : Colors.white,
-      enabled: true,
+    return ShimmerTheme(
       child: ListView.separated(
         itemCount: 20,
         padding: const EdgeInsets.all(0),

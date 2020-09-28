@@ -1,4 +1,5 @@
 import 'package:byr_mobile_app/customizations/board_info.dart';
+import 'package:byr_mobile_app/customizations/shimmer_theme.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
 import 'package:byr_mobile_app/local_objects/local_storage.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 
 import 'pages.dart';
 
@@ -261,10 +261,7 @@ class ToptenPageState extends State<ToptenPage> with AutomaticKeepAliveClientMix
   }
 
   Widget _buildLoadingView() {
-    return Shimmer.fromColors(
-      baseColor: !E().isThemeDarkStyle ? Colors.grey[300] : Colors.grey,
-      highlightColor: !E().isThemeDarkStyle ? Colors.grey[100] : Colors.white,
-      enabled: true,
+    return ShimmerTheme(
       child: ListView.separated(
         itemCount: 6,
         padding: const EdgeInsets.all(0),

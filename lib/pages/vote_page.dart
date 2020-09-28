@@ -1,4 +1,5 @@
 import 'package:byr_mobile_app/customizations/board_info.dart';
+import 'package:byr_mobile_app/customizations/shimmer_theme.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/nforum/board_att_info.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:share/share.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 typedef VoteItemCellTapCallback = void Function(int tappedVoteItem);
@@ -704,10 +704,7 @@ class VotePageState extends ThreadPageBaseState<VotePage, VoteData> {
         ),
       );
     };
-    return Shimmer.fromColors(
-      baseColor: !E().isThemeDarkStyle ? Colors.grey[300] : Colors.grey,
-      highlightColor: !E().isThemeDarkStyle ? Colors.grey[100] : Colors.white,
-      enabled: true,
+    return ShimmerTheme(
       child: ListView.separated(
         itemCount: 10,
         padding: const EdgeInsets.all(0),

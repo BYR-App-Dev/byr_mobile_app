@@ -1,4 +1,5 @@
 import 'package:byr_mobile_app/customizations/board_info.dart';
+import 'package:byr_mobile_app/customizations/shimmer_theme.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
@@ -11,7 +12,6 @@ import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 
 class TimelinePage extends ArticleListBasePage {
   @override
@@ -189,10 +189,7 @@ class TimelinePageState extends ArticleListBasePageState<TimelineModel, Timeline
   }
 
   Widget _buildLoadingView() {
-    return Shimmer.fromColors(
-      baseColor: !E().isThemeDarkStyle ? Colors.grey[300] : Colors.grey,
-      highlightColor: !E().isThemeDarkStyle ? Colors.grey[100] : Colors.white,
-      enabled: true,
+    return ShimmerTheme(
       child: ListView.separated(
         itemCount: 6,
         padding: const EdgeInsets.all(0),

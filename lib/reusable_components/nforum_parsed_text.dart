@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/nforum/nforum_text_parser.dart';
-import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -343,17 +342,17 @@ class NForumParsedText extends StatelessWidget {
           decoration: BoxDecoration(
             color: E().isThemeDarkStyle
                 ? Color.fromARGB(
-              255,
-              E().threadPageBackgroundColor.red + 8,
-              E().threadPageBackgroundColor.green + 9,
-              E().threadPageBackgroundColor.blue + 10,
-            )
+                    255,
+                    E().threadPageBackgroundColor.red + 8,
+                    E().threadPageBackgroundColor.green + 9,
+                    E().threadPageBackgroundColor.blue + 10,
+                  )
                 : Color.fromARGB(
-              255,
-              E().threadPageBackgroundColor.red - 10,
-              E().threadPageBackgroundColor.green - 9,
-              E().threadPageBackgroundColor.blue - 8,
-            ),
+                    255,
+                    E().threadPageBackgroundColor.red - 10,
+                    E().threadPageBackgroundColor.green - 9,
+                    E().threadPageBackgroundColor.blue - 8,
+                  ),
             borderRadius: BorderRadius.circular(5),
           ),
           child: Row(

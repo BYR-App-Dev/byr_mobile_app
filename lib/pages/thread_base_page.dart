@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:byr_mobile_app/customizations/app_bar_customization.dart';
 import 'package:byr_mobile_app/customizations/board_info.dart';
+import 'package:byr_mobile_app/customizations/shimmer_theme.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
 import 'package:byr_mobile_app/networking/http_request.dart';
@@ -27,7 +28,6 @@ import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:share/share.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 import 'board_page.dart';
@@ -737,10 +737,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   }
 
   Widget buildLoadingView() {
-    return Shimmer.fromColors(
-      baseColor: !E().isThemeDarkStyle ? Colors.grey[300] : Colors.grey,
-      highlightColor: !E().isThemeDarkStyle ? Colors.grey[100] : Colors.white,
-      enabled: true,
+    return ShimmerTheme(
       child: ListView.separated(
         itemCount: 10,
         padding: const EdgeInsets.all(0),

@@ -1,3 +1,4 @@
+import 'package:byr_mobile_app/customizations/shimmer_theme.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
 import 'package:byr_mobile_app/local_objects/local_models.dart';
@@ -9,7 +10,6 @@ import 'package:byr_mobile_app/reusable_components/event_bus.dart';
 import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';
 
 class FrontTabSettingPage extends StatefulWidget {
@@ -227,10 +227,7 @@ class _FrontTabSettingPageState extends State<FrontTabSettingPage> with Initiali
         ),
       );
     };
-    return Shimmer.fromColors(
-        baseColor: !E().isThemeDarkStyle ? Colors.grey[300] : Colors.grey,
-        highlightColor: !E().isThemeDarkStyle ? Colors.grey[100] : Colors.white,
-        enabled: true,
+    return ShimmerTheme(
         child: ListView.builder(
             itemCount: 20,
             padding: const EdgeInsets.all(0),
