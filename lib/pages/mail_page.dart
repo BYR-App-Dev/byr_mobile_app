@@ -49,26 +49,26 @@ class MailPageState extends State<MailPage> with AutomaticKeepAliveClientMixin {
 
   Widget _buildContent(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.fromLTRB(16, 15, 16, 15),
-            child: Row(
-              children: <Widget>[
-                ClickableAvatar(
-                  radius: 20,
-                  imageLink: NForumService.makeGetURL(_mailObject.user?.faceUrl ?? ""),
-                  isWhisper: (_mailObject.user?.id ?? "").startsWith("IWhisper"),
-                  emptyUser: _mailObject.user?.faceUrl == null,
-                  onTap: () {
-                    navigator.pushNamed(
-                      "profile_page",
-                      arguments: _mailObject.user,
-                    );
-                  },
-                ),
-                Expanded(
-                  child: Container(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.fromLTRB(16, 15, 16, 15),
+              child: Row(
+                children: <Widget>[
+                  ClickableAvatar(
+                    radius: 20,
+                    imageLink: NForumService.makeGetURL(_mailObject.user?.faceUrl ?? ""),
+                    isWhisper: (_mailObject.user?.id ?? "").startsWith("IWhisper"),
+                    emptyUser: _mailObject.user?.faceUrl == null,
+                    onTap: () {
+                      navigator.pushNamed(
+                        "profile_page",
+                        arguments: _mailObject.user,
+                      );
+                    },
+                  ),
+                  Container(
                     margin: EdgeInsets.only(left: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,42 +93,41 @@ class MailPageState extends State<MailPage> with AutomaticKeepAliveClientMixin {
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Divider(
-            indent: 16,
-            color: E().otherPageDividerColor,
-          ),
-          Expanded(
-              child: Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(
-                    bottom: 10,
-                  ),
-                  child: Text(
-                    _mailObject.title,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: E().notificationListTileTitleColor,
+            Divider(
+              indent: 16,
+              color: E().otherPageDividerColor,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(
+                      bottom: 10,
+                    ),
+                    child: Text(
+                      _mailObject.title,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: E().notificationListTileTitleColor,
+                      ),
                     ),
                   ),
-                ),
-                ParsedText.uploaded(
-                  text: _mailObject.content.trim().replaceAll(RegExp(r'\n+--\n*$'), '\n'),
-                  uploads: _mailObject.attachment.file,
-                  title: _mailObject.title,
-                ),
-              ],
+                  ParsedText.uploaded(
+                    text: _mailObject.content.trim().replaceAll(RegExp(r'\n+--\n*$'), '\n'),
+                    uploads: _mailObject.attachment.file,
+                    title: _mailObject.title,
+                  ),
+                ],
+              ),
             ),
-          )),
-        ],
+          ],
+        ),
       ),
     );
   }
