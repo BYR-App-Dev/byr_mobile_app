@@ -51,6 +51,13 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
         String cpuAbi;
         try {
           cpuAbi = await FlutterDeviceInformation.cpuAbis;
+          if (cpuAbi.contains("arm64-v8a")) {
+            cpuAbi = "arm64-v8a";
+          } else if (cpuAbi.contains("armeabi-v7a")) {
+            cpuAbi = "armeabi-v7a";
+          } else if (cpuAbi.contains("x86_64")) {
+            cpuAbi = "x86_64";
+          }
         } on PlatformException {}
         String _ignoreVersion = LocalStorage.getIgnoreVersion();
         if (jsonMap != null &&

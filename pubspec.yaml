@@ -1,7 +1,7 @@
 name: byr_mobile_app
 description: official mobile application for bbs.byr.cn
 publish_to: 'none'
-version: 1.0.0+1
+version: 3.0.0+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
