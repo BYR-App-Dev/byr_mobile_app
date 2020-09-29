@@ -1112,6 +1112,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
               icon: Icon(Icons.more_horiz, size: 30),
               onPressed: () {
                 showPopupMenu(
+                  backgroundColor: E().threadPageBackgroundColor,
                   child: IntrinsicWidth(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
