@@ -30,5 +30,5 @@ jobs:
     - name: upload artifects
       uses: actions/upload-artifact@master
       with:
-        name: release
-        path: build/app/outputs/apk/release
+        name: release.apk
+        path: build/app/outputs/apk/release/app-release.apk
