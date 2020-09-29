@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:byr_mobile_app/NForum/nforum_service.dart';
+import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/data_structures/image_file.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
 import 'package:byr_mobile_app/local_objects/local_storage.dart';
