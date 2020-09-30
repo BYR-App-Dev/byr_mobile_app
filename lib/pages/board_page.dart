@@ -83,7 +83,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, "thread_page",
-            arguments: ThreadPageRouteArg(boardArticleObject.boardName, boardArticleObject.groupId));
+            arguments: ThreadPageRouteArg(boardArticleObject.boardName, boardArticleObject.groupId, fromBoard: true,));
       },
       child: Container(
         color: E().threadListBackgroundColor,
@@ -340,7 +340,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
           ),
           onTap: () {
             Navigator.pushNamed(context, "thread_page",
-                arguments: ThreadPageRouteArg(topArticles[i].boardName, topArticles[i].groupId));
+                arguments: ThreadPageRouteArg(topArticles[i].boardName, topArticles[i].groupId, fromBoard: true,));
           },
         ),
       );
@@ -390,7 +390,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
           ),
           onTap: () {
             Navigator.pushNamed(context, "thread_page",
-                arguments: ThreadPageRouteArg(topArticles[0].boardName, topArticles[0].groupId));
+                arguments: ThreadPageRouteArg(topArticles[0].boardName, topArticles[0].groupId, fromBoard: true,));
           },
         ),
         children: _buildTopTiles(),
@@ -524,7 +524,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, "thread_page",
-            arguments: ThreadPageRouteArg(boardArticleObject.boardName, boardArticleObject.groupId));
+            arguments: ThreadPageRouteArg(boardArticleObject.boardName, boardArticleObject.groupId, fromBoard: true,));
       },
       child: Container(
         color: E().threadListBackgroundColor,
@@ -611,7 +611,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
       child: GestureDetector(
         onTap: () {
           Navigator.pushNamed(context, "thread_page",
-              arguments: ThreadPageRouteArg(boardArticleObject.boardName, boardArticleObject.groupId));
+              arguments: ThreadPageRouteArg(boardArticleObject.boardName, boardArticleObject.groupId, fromBoard: true,));
         },
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),

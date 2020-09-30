@@ -12,16 +12,18 @@ class ThreadPageRouteArg extends ThreadBasePageRouteArg {
   final int startingPage;
   final int startingPosition;
   final bool keepAlive;
+  final bool fromBoard;
 
   ThreadPageRouteArg(this.boardName, this.groupId,
-      {this.startingPage = 1, this.startingPosition = -1, this.keepAlive = false})
+      {this.startingPage = 1, this.startingPosition = -1, this.keepAlive = false, this.fromBoard = false,})
       : super(
-          boardName,
-          groupId,
-          startingPage: startingPage,
-          startingPosition: startingPosition,
-          keepAlive: keepAlive,
-        );
+    boardName,
+    groupId,
+    startingPage: startingPage,
+    startingPosition: startingPosition,
+    keepAlive: keepAlive,
+    fromBoard: fromBoard,
+  );
 }
 
 class ThreadPage extends ThreadBasePage {
@@ -42,6 +44,7 @@ class ThreadPageState extends ThreadPageBaseState<ThreadPage, ThreadPageData> {
     data = ThreadPageData();
     data.boardName = widget.arg.boardName;
     data.groupId = widget.arg.groupId;
+    data.fromBoard = widget.arg.fromBoard;
     var startingPg = widget.arg.startingPage;
     if (startingPg == 1 && widget.arg.startingPosition != -1) {
       startingPg = 1 + widget.arg.startingPosition ~/ PageConfig.pageItemCount;

@@ -39,6 +39,7 @@ class ThreadBaseData extends PagedBaseData {
   String authorToShow;
   bool isAnonymous;
   bool isCollected;
+  bool fromBoard;
 }
 
 class ThreadBasePageRouteArg {
@@ -47,9 +48,10 @@ class ThreadBasePageRouteArg {
   final int startingPage;
   final int startingPosition;
   final bool keepAlive;
+  final bool fromBoard;
 
   ThreadBasePageRouteArg(this.boardName, this.groupId,
-      {this.startingPage = 1, this.startingPosition = -1, this.keepAlive = true});
+      {this.startingPage = 1, this.startingPosition = -1, this.keepAlive = true, this.fromBoard = false,});
 }
 
 abstract class ThreadBasePage extends StatefulWidget {
@@ -1122,11 +1124,14 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                           FontAwesomeIcons.thList,
                           "backToBoardTrans".tr,
                           onTap: () {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                              "board_page",
-                              ModalRoute.withName('home_page'),
-                              arguments: BoardPageRouteArg(data.boardName),
-                            );
+                            if (Navigator.of(context).canPop() && data.fromBoard ?? false ) {
+                              Navigator.of(context).pop();
+                            } else {
+                              Navigator.of(context).pushNamed(
+                                "board_page",
+                                arguments: BoardPageRouteArg(data.boardName),
+                              );
+                            }
                           },
                         ),
                         if (data.boardName == 'IWhisper')
