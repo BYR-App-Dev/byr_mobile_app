@@ -39,7 +39,7 @@ class ThreadPage extends ThreadBasePage {
 
 class ThreadPageState extends ThreadPageBaseState<ThreadPage, ThreadPageData> {
   @override
-  Future<void> initialDataLoader({Function afterLoad}) {
+  Future<void> initialDataLoader({Function afterLoad}) async {
     setScreenshotTitle(NForumService.makeThreadURL(widget.arg.boardName, widget.arg.groupId));
     data = ThreadPageData();
     data.boardName = widget.arg.boardName;
@@ -63,7 +63,10 @@ class ThreadPageState extends ThreadPageBaseState<ThreadPage, ThreadPageData> {
     boardName = data.boardName;
     boardDescription = BoardAttInfo.desc(boardName);
     replyTail = "";
-
+    /// 2020-09-30 malikwang
+    /// 等待页面push完毕再请求数据，防止页面在push过程中数据已经加载完毕造成视觉卡顿错觉
+    /// 400毫秒 是route的transitionDuration的时间
+    await Future.delayed(Duration(milliseconds: 400));
     return NForumService.getThread(data.boardName, data.groupId, page: startingPg).then((thread) {
       if (data.authorToShow != null && data.authorToShow != "") {
         thread.likeArticles = [];
@@ -75,9 +78,6 @@ class ThreadPageState extends ThreadPageBaseState<ThreadPage, ThreadPageData> {
       data.isCollected = data.thread?.collect;
       if (afterLoad != null) {
         afterLoad();
-      }
-      if (mounted) {
-        setState(() {});
       }
     });
   }
