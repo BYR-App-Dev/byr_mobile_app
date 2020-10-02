@@ -89,9 +89,12 @@ class NForumParsedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: _makeText(this.config),
+    return Theme(
+      data: Theme.of(context).copyWith(textTheme: TextTheme(bodyText1: bbPlain(this.config))),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: _makeText(this.config),
+      ),
     );
   }
 
