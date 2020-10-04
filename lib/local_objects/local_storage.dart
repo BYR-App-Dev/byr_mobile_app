@@ -187,4 +187,12 @@ class LocalStorage {
   static Future<void> setFeatureKeys(Map<String, bool> v) async {
     return await _enter("featureKeys", v);
   }
+
+  static List<Map> getMusicList() {
+    return _extract("musicList")?.cast<Map>() ?? List<Map>();
+  }
+
+  static Future<void> setMusicList(List<Map> v) async {
+    return await _enter("musicList", v);
+  }
 }

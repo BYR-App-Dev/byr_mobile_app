@@ -6,6 +6,7 @@ import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/pages/about_page.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
+import 'package:byr_mobile_app/reusable_components/audio_player_view.dart';
 import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
 import 'package:byr_mobile_app/reusable_components/setting_item_cell.dart';
 import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
@@ -187,6 +188,16 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                         setState(() {});
                       }
                     },
+                  );
+                },
+              ),
+              SettingItemCell(
+                leading: Icon(Icons.audiotrack, color: E().settingItemCellMainColor),
+                title: "myAudioPlaylist".tr,
+                showArrow: false,
+                onTap: () {
+                  AudioPlayerView.show(
+                    context,
                   );
                 },
               ),

@@ -1,5 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
+import 'package:byr_mobile_app/local_objects/local_storage.dart';
+import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/overlay_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,7 @@ class AudioPlayerView {
 
   static int currentState = -1; // -1: closed, 0: nothing but shown, 1: playing, 2: paused
 
-  static List<Tuple3<String, String, bool>> musicList;
+  static List<Map> musicList;
 
   static GlobalKey<MusicPlayerViewState> musicPlayerKey;
 
@@ -72,7 +74,8 @@ class AudioPlayerView {
     if (getMusicList().length > 0) {
       var audio = getMusicList().removeAt(0);
       getMusicList().insert(getMusicList().length, audio);
-      AudioPlayerView.getAudioPlayer().play(getMusicList()[0].item2, stayAwake: true, isLocal: getMusicList()[0].item3);
+      AudioPlayerView.getAudioPlayer()
+          .play(getMusicList()[0]["url"], stayAwake: true, isLocal: getMusicList()[0]["isLocal"]);
     }
     reloadMusicView();
   }
@@ -80,23 +83,28 @@ class AudioPlayerView {
   static Set<String> getMusicUrlSet() {
     if (musicUrls == null) {
       musicUrls = Set<String>();
+      getMusicList().forEach((element) {
+        musicUrls.add(element["url"]);
+      });
     }
     return musicUrls;
   }
 
-  static List<Tuple3<String, String, bool>> getMusicList() {
+  static List<Map> getMusicList() {
     if (musicList == null) {
-      musicList = List<Tuple3<String, String, bool>>();
+      musicList = LocalStorage.getMusicList();
     }
     return musicList;
   }
 
   static clearMusicList() {
-    getMusicList().clear();
     getMusicUrlSet().clear();
+    musicUrls = null;
+    getMusicList().clear();
+    musicList = null;
   }
 
-  static Tuple3<String, String, bool> getCurrentPlaying() {
+  static Map getCurrentPlaying() {
     return getMusicList().length > 0 ? getMusicList()[0] : null;
   }
 
@@ -112,7 +120,12 @@ class AudioPlayerView {
       return;
     }
     getMusicUrlSet().add(audio.item2);
-    getMusicList().insert(getMusicList().length, audio);
+    getMusicList().insert(getMusicList().length, {
+      "title": audio.item1,
+      "url": audio.item2,
+      "isLocal": audio.item3,
+    });
+    LocalStorage.setMusicList(musicList);
     reloadMusicView();
   }
 
@@ -123,8 +136,12 @@ class AudioPlayerView {
     }
     AudioPlayerView.getAudioPlayer().stop();
     getMusicUrlSet().add(audio.item2);
-    getMusicList().insert(0, audio);
-    AudioPlayerView.getAudioPlayer().play(audio.item2, stayAwake: true, isLocal: getMusicList()[0].item3);
+    getMusicList().insert(0, {
+      "title": audio.item1,
+      "url": audio.item2,
+      "isLocal": audio.item3,
+    });
+    AudioPlayerView.getAudioPlayer().play(audio.item2, stayAwake: true, isLocal: getMusicList()[0]["isLocal"]);
     setCurrentState(1);
     reloadMusicView();
   }
@@ -135,57 +152,73 @@ class AudioPlayerView {
 
   static pause() {
     AudioPlayerView.getAudioPlayer().pause();
+    return true;
   }
 
   static resume() {
     if (getCurrentState() == 0) {
-      AudioPlayerView.getAudioPlayer().play(getMusicList()[0].item2, stayAwake: true, isLocal: getMusicList()[0].item3);
+      if ((getMusicList()?.length ?? 0) > 0) {
+        AudioPlayerView.getAudioPlayer()
+            .play(getMusicList()[0]["url"], stayAwake: true, isLocal: getMusicList()[0]["isLocal"]);
+        return true;
+      } else {
+        return false;
+      }
     } else {
       AudioPlayerView.getAudioPlayer().resume();
+      return true;
     }
   }
 
   static stop() {
     AudioPlayerView.getAudioPlayer().stop();
+    return true;
   }
 
   static dismiss() async {
     await AudioPlayerView.getAudioPlayer().stop();
     AudioPlayerView.getAudioPlayer().dispose();
     audioPlayer = null;
-    clearMusicList();
+    // clearMusicList();
+    return true;
   }
 
-  static setCurrentState(int astate) {
+  static setCurrentState(int astate) async {
+    bool r = false;
     if (astate == 2) {
-      pause();
+      r = pause();
     } else if (astate == 1) {
-      resume();
+      r = resume();
     } else if (astate == 0) {
-      stop();
+      r = stop();
     } else if (astate == -1) {
-      dismiss();
+      r = await dismiss();
     }
-    currentState = astate;
+    if (r) {
+      currentState = astate;
+    }
     reloadMusicView();
   }
 
   static moveUp(int pos) {
-    if (pos < getMusicList().length && pos > 0) {
-      if (pos == 1) {
-        onComplete();
-      } else {
-        var x = getMusicList()[pos];
-        getMusicList()[pos] = getMusicList()[pos - 1];
-        getMusicList()[pos - 1] = x;
+    if ((getMusicList()?.length ?? 0) > 0) {
+      if (pos < getMusicList().length && pos > 0) {
+        if (pos == 1) {
+          onComplete();
+        } else {
+          var x = getMusicList()[pos];
+          getMusicList()[pos] = getMusicList()[pos - 1];
+          getMusicList()[pos - 1] = x;
+        }
+        reloadMusicView();
       }
-      reloadMusicView();
     }
   }
 
   static kick(int pos) {
     if (pos < getMusicList().length && pos > 0) {
       getMusicList().removeAt(pos);
+      LocalStorage.setMusicList(musicList);
       reloadMusicView();
     }
   }
@@ -220,151 +253,164 @@ class MusicPlayerViewState extends State<MusicPlayerView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: E().otherPagePrimaryColor.darken(5), borderRadius: BorderRadius.all(Radius.circular(20))),
-      padding: EdgeInsets.all(5),
-      child: IntrinsicWidth(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                GestureDetector(
-                  child: Icon(
-                    Icons.close,
-                    color: E().otherPageButtonColor,
+    return Obx(
+      () => Container(
+        decoration: BoxDecoration(
+            color: E().isThemeDarkStyle ? E().otherPagePrimaryColor.lighten(5) : E().otherPagePrimaryColor.darken(5),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            border: Border.all(
+              color:
+                  E().isThemeDarkStyle ? E().otherPagePrimaryColor.lighten(10) : E().otherPagePrimaryColor.darken(10),
+              width: 3,
+            )),
+        padding: EdgeInsets.all(5),
+        child: IntrinsicWidth(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  GestureDetector(
+                    child: Icon(
+                      Icons.close,
+                      color: E().otherPageSecondaryTextColor,
+                    ),
+                    onTap: () {
+                      AudioPlayerView.setCurrentState(-1);
+                      OverlayView.remove();
+                    },
                   ),
-                  onTap: () {
-                    AudioPlayerView.setCurrentState(-1);
-                    OverlayView.remove();
-                  },
-                ),
-                Container(),
-                Text(
-                  progress,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: E().otherPageButtonColor,
-                    decoration: TextDecoration.none,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: 180,
-                  child: Text(
-                    AudioPlayerView.getCurrentPlaying() == null ? " " : AudioPlayerView.getCurrentPlaying().item1,
-                    textAlign: TextAlign.center,
+                  Container(),
+                  Text(
+                    progress,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 16,
-                      color: E().otherPagePrimaryTextColor,
+                      color: E().otherPageSecondaryTextColor,
                       decoration: TextDecoration.none,
                     ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      side: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(20))),
-                  child: Icon(
-                    AudioPlayerView.getCurrentState() == 1 ? Icons.pause : Icons.play_arrow,
-                  ),
-                  onPressed: () {
-                    var tstate = AudioPlayerView.getCurrentState();
-                    if (tstate == 1) {
-                      AudioPlayerView.setCurrentState(2);
-                    } else {
-                      AudioPlayerView.setCurrentState(1);
-                    }
-                    if (mounted) {
-                      setState(() {});
-                    }
-                  },
-                ),
-                RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      side: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(20))),
-                  child: Icon(
-                    showPlaylist ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                  ),
-                  onPressed: () {
-                    showPlaylist = !showPlaylist;
-                    if (mounted) {
-                      setState(() {});
-                    }
-                  },
-                ),
-              ],
-            ),
-            showPlaylist
-                ? Container(
-                    child: SingleChildScrollView(
-                      child: Container(
-                        child: Column(
-                          children: AudioPlayerView.getMusicList().length > 0
-                              ? AudioPlayerView.getMusicList().asMap().entries.toList().sublist(1).map<Widget>((entry) {
-                                  return Container(
-                                    width: 220,
-                                    padding: EdgeInsets.all(5),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: <Widget>[
-                                        GestureDetector(
-                                          child: Icon(
-                                            Icons.arrow_upward,
-                                            color: E().otherPagePrimaryTextColor,
-                                          ),
-                                          onTap: () {
-                                            AudioPlayerView.moveUp(entry.key);
-                                          },
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            entry.value.item1,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: E().otherPagePrimaryTextColor,
-                                              decoration: TextDecoration.none,
-                                            ),
-                                          ),
-                                        ),
-                                        GestureDetector(
-                                          child: Icon(
-                                            Icons.remove_circle_outline,
-                                            color: E().otherPagePrimaryTextColor,
-                                          ),
-                                          onTap: () {
-                                            AudioPlayerView.kick(entry.key);
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }).toList()
-                              : [],
-                        ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: 180,
+                    child: Text(
+                      AudioPlayerView.getCurrentPlaying() == null ? " " : AudioPlayerView.getCurrentPlaying()["title"],
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: E().otherPagePrimaryTextColor,
+                        decoration: TextDecoration.none,
                       ),
                     ),
-                  )
-                : Container(),
-          ],
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  FlatButton(
+                    shape: CircleBorder(side: BorderSide.none),
+                    child: Icon(
+                      AudioPlayerView.getCurrentState() == 1 ? Icons.pause : Icons.play_arrow,
+                      color: E().otherPageSecondaryTextColor,
+                    ),
+                    onPressed: () {
+                      var tstate = AudioPlayerView.getCurrentState();
+                      if (tstate == 1) {
+                        AudioPlayerView.setCurrentState(2);
+                      } else {
+                        AudioPlayerView.setCurrentState(1);
+                      }
+                      if (mounted) {
+                        setState(() {});
+                      }
+                    },
+                  ),
+                  FlatButton(
+                    shape: CircleBorder(side: BorderSide.none),
+                    child: Icon(
+                      showPlaylist ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                      color: E().otherPageSecondaryTextColor,
+                    ),
+                    onPressed: () {
+                      showPlaylist = !showPlaylist;
+                      if (mounted) {
+                        setState(() {});
+                      }
+                    },
+                  ),
+                ],
+              ),
+              showPlaylist
+                  ? Container(
+                      child: SingleChildScrollView(
+                        child: Container(
+                          child: Column(
+                            children: AudioPlayerView.getMusicList().length > 0
+                                ? AudioPlayerView.getMusicList()
+                                    .asMap()
+                                    .entries
+                                    .toList()
+                                    .sublist(1)
+                                    .map<Widget>((entry) {
+                                    return Container(
+                                      width: 220,
+                                      padding: EdgeInsets.all(5),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: <Widget>[
+                                          GestureDetector(
+                                            child: Icon(
+                                              Icons.arrow_upward,
+                                              color: E().otherPageSecondaryTextColor,
+                                            ),
+                                            onTap: () {
+                                              AudioPlayerView.moveUp(entry.key);
+                                            },
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              entry.value["title"],
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: E().otherPagePrimaryTextColor,
+                                                decoration: TextDecoration.none,
+                                              ),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            child: Icon(
+                                              Icons.remove_circle_outline,
+                                              color: E().otherPageSecondaryTextColor,
+                                            ),
+                                            onTap: () {
+                                              AudioPlayerView.kick(entry.key);
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList()
+                                : [],
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
+            ],
+          ),
         ),
       ),
     );
