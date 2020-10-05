@@ -217,7 +217,7 @@ class AudioPlayerView {
 
   static kick(int pos) {
     if (pos < getMusicList().length && pos > 0) {
-      getMusicList().removeAt(pos);
+      getMusicUrlSet().remove(getMusicList().removeAt(pos)["url"]);
       LocalStorage.setMusicList(musicList);
       reloadMusicView();
     }
@@ -351,7 +351,8 @@ class MusicPlayerViewState extends State<MusicPlayerView> {
                 ],
               ),
               showPlaylist
-                  ? Container(
+                  ? ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: 20, maxHeight: 300),
                       child: SingleChildScrollView(
                         child: Container(
                           child: Column(
