@@ -12,6 +12,7 @@ import 'package:byr_mobile_app/reusable_components/refreshers.dart';
 import 'package:byr_mobile_app/reusable_components/screenshot_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 
@@ -242,12 +243,42 @@ class ToptenPageState extends State<ToptenPage> with AutomaticKeepAliveClientMix
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 5),
-                      child: Text(
-                        '${threadObject.idCount} ${"participantsTrans".tr}  ${threadObject.replyCount} ${"repliesTrans".tr}',
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          color: E().threadListOtherTextColor,
-                        ),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            FontAwesomeIcons.user,
+                            color: E().threadListOtherTextColor,
+                            size: 12,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: Text(
+                              threadObject.idCount,
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                color: E().threadListOtherTextColor,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Icon(
+                              FontAwesomeIcons.commentDots,
+                              color: E().threadListOtherTextColor,
+                              size: 12,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: Text(
+                              threadObject.replyCount.toString(),
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                color: E().threadListOtherTextColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
