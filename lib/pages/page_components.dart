@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:byr_mobile_app/customizations/byr_icons.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/nforum/board_att_info.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
@@ -88,9 +87,7 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
                           absorbing: true,
                           child: Container(
                             color: screenshotIndexes[(index / 2).floor()] ?? false
-                                ? E().isThemeDarkStyle
-                                    ? E().threadPageBackgroundColor.lighten(10)
-                                    : E().threadPageBackgroundColor.darken(10)
+                                ? E().isThemeDarkStyle ? E().threadPageBackgroundColor.lighten(10) : E().threadPageBackgroundColor.darken(10)
                                 : E().threadPageBackgroundColor,
                             child: buildCell(
                               context,
@@ -116,62 +113,24 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
         return old;
       });
       toCapture.sort();
-      return Container(
-        color: E().threadPageBackgroundColor,
-        child: SingleChildScrollView(
-          child: Screenshot(
-            controller: screenshotController,
-            child: Container(
-              color: E().threadPageBackgroundColor,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: List.generate(
-                  toCapture.length * 2 + 1,
-                  (index) {
-                    if (index % 2 == 0) {
-                      if (index == 0) {
-                        return Column(
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Column(
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Icon(
-                                          BYRIcons.circle_butterfly_solid,
-                                          color: E().threadPageButtonSelectedColor,
-                                          size: 16,
-                                        ),
-                                        Text(
-                                          "北邮人论坛",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(color: E().threadPageTextSelectedColor),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      "长按浏览原帖",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(color: E().threadPageTextSelectedColor),
-                                    ),
-                                  ],
-                                ),
-                                QrImage(
-                                  data: screenshotTitle,
-                                  version: QrVersions.auto,
-                                  size: 80.0,
-                                  foregroundColor: E().threadPageContentColor,
-                                ),
-                              ],
-                            ),
-                            Text(
-                              screenshotTitle,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: E().threadPageTextSelectedColor),
-                            ),
-                            Container(
+      return Column(
+        children: <Widget>[
+          Expanded(
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Container(
+                color: E().threadPageBackgroundColor,
+                child: Screenshot(
+                  controller: screenshotController,
+                  child: Container(
+                    color: E().threadPageBackgroundColor,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: List.generate(
+                        (toCapture.length + 1) * 2,
+                        (index) {
+                          if (index == 0 || index == toCapture.length * 2) {
+                            return Container(
                               height: 1.0,
                               margin: EdgeInsetsDirectional.zero,
                               decoration: BoxDecoration(
@@ -179,29 +138,153 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
                                   bottom: BorderSide(color: E().threadPageDividerColor.lighten(10), width: 0.5),
                                 ),
                               ),
-                            ),
-                          ],
-                        );
-                      }
-                      if (index == cellCount() * 2) {
-                        return buildSeparator(context, (index / 2).round(), isLast: true);
-                      }
-                      return buildSeparator(context, (index / 2).round());
-                    } else {
-                      return IgnorePointer(
-                        ignoring: true,
-                        child: buildCell(
-                          context,
-                          toCapture[(index / 2).floor()],
-                        ),
-                      );
-                    }
-                  },
+                            );
+                          }
+                          if (index % 2 != 0) {
+                            if (index == toCapture.length * 2 + 1) {
+                              return Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  QrImage(
+                                    data: screenshotTitle,
+                                    version: QrVersions.auto,
+                                    size: 80.0,
+                                    foregroundColor: E().threadPageContentColor,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Row(
+                                          children: <Widget>[
+                                            Text.rich(
+                                              TextSpan(
+                                                text: '由',
+                                                children: [
+                                                  TextSpan(
+                                                    text: ' 北邮人论坛 ',
+                                                    style: TextStyle(
+                                                      color: E().threadPageTextSelectedColor,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: '分享',
+                                                  ),
+                                                ],
+                                              ),
+                                              style: TextStyle(
+                                                color: E().threadPageContentColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          "长按识别二维码，阅读全文",
+                                          style: TextStyle(
+                                            color: E().threadPageContentColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
+                            return IgnorePointer(
+                              ignoring: true,
+                              child: buildCell(
+                                context,
+                                toCapture[(index / 2).floor()],
+                              ),
+                            );
+                          } else {
+                            return buildSeparator(context, (index / 2).round());
+                          }
+                        },
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
+          SafeArea(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: E().threadPageDividerColor.lighten(10),
+                    width: 0.5,
+                  ),
+                ),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () => capturing(
+                        save: false,
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Icon(
+                              Icons.share,
+                              color: E().threadPageContentColor,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                '分享',
+                                style: TextStyle(
+                                  color: E().threadPageContentColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () => capturing(
+                        share: false,
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Icon(
+                              Icons.save,
+                              color: E().threadPageContentColor,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                '保存',
+                                style: TextStyle(
+                                  color: E().threadPageContentColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       );
     }
     return LoadedListView.builder(
@@ -331,14 +414,14 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
     });
   }
 
-  void capturing() {
+  void capturing({
+    bool save = true,
+    bool share = true,
+  }) {
     if (screenshotStatus != ScreenshotStatus.Previewing) {
       return;
     }
-    screenshotStatus = ScreenshotStatus.Capturing;
-    if (mounted) {
-      setState(() {});
-    }
+    AdaptiveComponents.showLoading(context, content: '生成图片中...');
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       try {
         var imgPath = "";
@@ -350,27 +433,41 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
           var path = '$directory/$fileName.png';
           File image = new File(path);
           await image.writeAsBytes(pngBytes).then((onValue) {});
-          lengthPercentage = 0;
-          screenshotIndexes.clear();
-          screenshotStatus = ScreenshotStatus.Dismissed;
-          GallerySaver.saveImage(image.path, albumName: 'BYRDownload');
+          if (save) {
+            GallerySaver.saveImage(image.path, albumName: 'BYRDownload').then((flag) {
+              if (flag) {
+                AdaptiveComponents.showToast(context, '保存成功');
+              } else {
+                AdaptiveComponents.showToast(context, '保存失败');
+              }
+            });
+          }
           imgPath = path;
         } else {
           var image = await screenshotController.capture(
             delay: Duration(milliseconds: 10),
             pixelRatio: MediaQuery.of(GetXLib.Get.context).devicePixelRatio,
           );
-          lengthPercentage = 0;
-          screenshotIndexes.clear();
-          screenshotStatus = ScreenshotStatus.Dismissed;
-          GallerySaver.saveImage(image.path, albumName: 'BYRDownload');
+          if (save) {
+            GallerySaver.saveImage(image.path, albumName: 'BYRDownload').then((flag) {
+              if (flag) {
+                AdaptiveComponents.showToast(context, '保存成功');
+              } else {
+                AdaptiveComponents.showToast(context, '保存失败');
+              }
+            });
+          }
           imgPath = image.path;
         }
         if (mounted) {
           setState(() {});
         }
-        await Share.shareFiles([imgPath], text: screenshotTitle + ' 北邮人论坛');
+        if (share) {
+          await Share.shareFiles([imgPath], text: screenshotTitle + ' 北邮人论坛');
+        }
+        AdaptiveComponents.hideLoading();
       } on Exception catch (_) {
+        AdaptiveComponents.hideLoading();
         screenshotStatus = ScreenshotStatus.Dismissed;
         if (mounted) {
           setState(() {});
@@ -979,23 +1076,17 @@ class TextFormFieldWrapperState extends State<TextFormFieldWrapper> {
             hintStyle: TextStyle(
               color: Color.fromARGB(
                 255,
-                (E().threadPageReplyBarInputBackgroundColor.red +
-                                E().threadPageReplyBarInputBackgroundColor.green +
-                                E().threadPageReplyBarInputBackgroundColor.blue) /
+                (E().threadPageReplyBarInputBackgroundColor.red + E().threadPageReplyBarInputBackgroundColor.green + E().threadPageReplyBarInputBackgroundColor.blue) /
                             3 >
                         128
                     ? Color(0xFFAAAAAA).red
                     : Color(0xFF888888).red,
-                (E().threadPageReplyBarInputBackgroundColor.red +
-                                E().threadPageReplyBarInputBackgroundColor.green +
-                                E().threadPageReplyBarInputBackgroundColor.blue) /
+                (E().threadPageReplyBarInputBackgroundColor.red + E().threadPageReplyBarInputBackgroundColor.green + E().threadPageReplyBarInputBackgroundColor.blue) /
                             3 >
                         128
                     ? Color(0xFFAAAAAA).green
                     : Color(0xFF888888).green,
-                (E().threadPageReplyBarInputBackgroundColor.red +
-                                E().threadPageReplyBarInputBackgroundColor.green +
-                                E().threadPageReplyBarInputBackgroundColor.blue) /
+                (E().threadPageReplyBarInputBackgroundColor.red + E().threadPageReplyBarInputBackgroundColor.green + E().threadPageReplyBarInputBackgroundColor.blue) /
                             3 >
                         128
                     ? Color(0xFFAAAAAA).blue
@@ -1018,24 +1109,15 @@ class TextFormFieldWrapperState extends State<TextFormFieldWrapper> {
             height: 1.2,
             color: Color.fromARGB(
               255,
-              (E().threadPageReplyBarInputBackgroundColor.red +
-                              E().threadPageReplyBarInputBackgroundColor.green +
-                              E().threadPageReplyBarInputBackgroundColor.blue) /
-                          3 >
+              (E().threadPageReplyBarInputBackgroundColor.red + E().threadPageReplyBarInputBackgroundColor.green + E().threadPageReplyBarInputBackgroundColor.blue) / 3 >
                       128
                   ? Color(0xFF555555).red
                   : Color(0xFFDDDDDD).red,
-              (E().threadPageReplyBarInputBackgroundColor.red +
-                              E().threadPageReplyBarInputBackgroundColor.green +
-                              E().threadPageReplyBarInputBackgroundColor.blue) /
-                          3 >
+              (E().threadPageReplyBarInputBackgroundColor.red + E().threadPageReplyBarInputBackgroundColor.green + E().threadPageReplyBarInputBackgroundColor.blue) / 3 >
                       128
                   ? Color(0xFF555555).green
                   : Color(0xFFDDDDDD).green,
-              (E().threadPageReplyBarInputBackgroundColor.red +
-                              E().threadPageReplyBarInputBackgroundColor.green +
-                              E().threadPageReplyBarInputBackgroundColor.blue) /
-                          3 >
+              (E().threadPageReplyBarInputBackgroundColor.red + E().threadPageReplyBarInputBackgroundColor.green + E().threadPageReplyBarInputBackgroundColor.blue) / 3 >
                       128
                   ? Color(0xFF555555).blue
                   : Color(0xFFDDDDDD).blue,
