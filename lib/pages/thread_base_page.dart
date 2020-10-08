@@ -1053,6 +1053,8 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         key: scaffoldKey,
         appBar: BYRAppBar(
           boardName: widget.arg.boardName,
+
+          /// Todo: AppBar显示已选择楼层的个数
           title: Text(
             screenshotStatus != ScreenshotStatus.Dismissed ? screenshotStatus == ScreenshotStatus.Selecting ? '选择楼层' : '分享图片' : "threadTrans".tr,
           ),
