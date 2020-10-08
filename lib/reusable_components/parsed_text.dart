@@ -7,6 +7,7 @@ import 'package:byr_mobile_app/reusable_components/audio_player_view.dart';
 import 'package:byr_mobile_app/reusable_components/nforum_parsed_text.dart';
 import 'package:byr_mobile_app/reusable_components/pic_swiper.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tuple/tuple.dart';
@@ -45,6 +46,36 @@ class ParsedText extends StatelessWidget {
   })  : uploadedExtractor = PreviewUploadedExtractor(),
         super(key: key);
 
+  Widget _imagePlaceHolder() {
+    return Container(
+      width: 150,
+      height: 150,
+      color: E().isThemeDarkStyle
+          ? Color.fromARGB(
+              255,
+              E().threadPageBackgroundColor.red + 8,
+              E().threadPageBackgroundColor.green + 9,
+              E().threadPageBackgroundColor.blue + 10,
+            )
+          : Color.fromARGB(
+              255,
+              E().threadPageBackgroundColor.red - 10,
+              E().threadPageBackgroundColor.green - 9,
+              E().threadPageBackgroundColor.blue - 8,
+            ),
+      alignment: Alignment.center,
+      child: Text(
+        'BYR',
+        style: TextStyle(
+          color: E().threadPageQuoteColor,
+          fontWeight: FontWeight.w600,
+          fontSize: 50,
+          fontStyle: FontStyle.italic,
+        ),
+      ),
+    );
+  }
+
   WidgetSpanChildHandler imageAttachmentHandlerGenerator(BuildContext context) {
     WidgetSpanChildHandler ret = (int upId) {
       List<PicSwiperItem> _pics = [];
@@ -68,21 +99,12 @@ class ParsedText extends StatelessWidget {
           );
         },
         child: Center(
-            child: Container(
-          padding: EdgeInsets.all(10),
-          child: FadeInImage(
-            image: uploadedExtractor.getProvider(uploads[upId]),
-            fadeInDuration: Duration(milliseconds: 100),
-            placeholder: ((E().threadPageBackgroundColor.red +
-                            E().threadPageBackgroundColor.green +
-                            E().threadPageBackgroundColor.blue) /
-                        3 <
-                    128)
-                ? AssetImage("resources/thread/media_black.png")
-                : AssetImage("resources/thread/media_white.png"),
-            fit: BoxFit.scaleDown,
+          child: CachedNetworkImage(
+            alignment: Alignment.center,
+            imageUrl: uploadedExtractor.getShowUrl(uploads[upId]),
+            placeholder: (context, url) => _imagePlaceHolder(),
           ),
-        )),
+        ),
       );
     };
     return ret;
@@ -170,12 +192,9 @@ class ParsedText extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          AdaptiveComponents.showAlertDialog(context,
-              title: "themeAdd".tr + uploadedExtractor.getFileName(uploads[upId]), onDismiss: (value) {
+          AdaptiveComponents.showAlertDialog(context, title: "themeAdd".tr + uploadedExtractor.getFileName(uploads[upId]), onDismiss: (value) {
             if (value == AlertResult.confirm) {
-              BYRThemeManager.instance()
-                  .importOnlineTheme(uploadedExtractor.getShowUrl(uploads[upId]), null, BYRTheme.originLightTheme)
-                  .then((succeeded) {
+              BYRThemeManager.instance().importOnlineTheme(uploadedExtractor.getShowUrl(uploads[upId]), null, BYRTheme.originLightTheme).then((succeeded) {
                 if (succeeded) {
                   String currentThemeName = BYRThemeManager.instance().currentTheme.themeName;
                   BYRThemeManager.instance().turnTheme(currentThemeName);
@@ -213,12 +232,9 @@ class ParsedText extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          AdaptiveComponents.showAlertDialog(context,
-              title: "refresherAdd".tr + uploadedExtractor.getFileName(uploads[upId]), onDismiss: (value) {
+          AdaptiveComponents.showAlertDialog(context, title: "refresherAdd".tr + uploadedExtractor.getFileName(uploads[upId]), onDismiss: (value) {
             if (value == AlertResult.confirm) {
-              BYRRefresherManager.instance()
-                  .importOnlineRefresher(uploadedExtractor.getShowUrl(uploads[upId]), null)
-                  .then((succeeded) {
+              BYRRefresherManager.instance().importOnlineRefresher(uploadedExtractor.getShowUrl(uploads[upId]), null).then((succeeded) {
                 if (succeeded) {
                   AdaptiveComponents.showToast(context, "refresherAdd".tr + "succeed".tr);
                 } else {
@@ -260,17 +276,12 @@ class ParsedText extends StatelessWidget {
           );
         },
         child: Center(
-            child: Container(
-          padding: EdgeInsets.all(10),
-          child: FadeInImage(
-            image: NetworkImage(url),
-            fadeInDuration: Duration(milliseconds: 100),
-            placeholder: E().isThemeDarkStyle
-                ? AssetImage("resources/thread/media_black.png")
-                : AssetImage("resources/thread/media_white.png"),
-            fit: BoxFit.scaleDown,
+          child: CachedNetworkImage(
+            alignment: Alignment.center,
+            imageUrl: url,
+            placeholder: (context, url) => _imagePlaceHolder(),
           ),
-        )),
+        ),
       );
     };
     return ret;
