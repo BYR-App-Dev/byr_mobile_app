@@ -655,7 +655,8 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     if (data.currentMinPage == 1 &&
         index == (data.thread.likeArticles?.length ?? 0) &&
         data.thread.article != null &&
-        ((data.thread.article.length > 0 && data.thread.article[0].isSubject != true) || (data.thread.article.length > 1 && data.thread.article[0].isSubject == true))) {
+        ((data.thread.article.length > 0 && data.thread.article[0].isSubject != true) ||
+            (data.thread.article.length > 1 && data.thread.article[0].isSubject == true))) {
       return Row(
         children: <Widget>[
           if (data.authorToShow == null || data.authorToShow.isEmpty)
@@ -1053,18 +1054,24 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         appBar: BYRAppBar(
           boardName: widget.arg.boardName,
           title: Text(
-            screenshotStatus == ScreenshotStatus.Previewing ? '图片分享' : "threadTrans".tr,
+            screenshotStatus != ScreenshotStatus.Dismissed ? screenshotStatus == ScreenshotStatus.Selecting ? '选择楼层' : '分享图片' : "threadTrans".tr,
           ),
-          leading: screenshotStatus == ScreenshotStatus.Previewing
+          leading: screenshotStatus != ScreenshotStatus.Dismissed
               ? GestureDetector(
                   child: Icon(
                     Icons.close,
                     size: 28,
                   ),
-                  onTap: backToSelecting,
+                  onTap: () {
+                    if (screenshotStatus == ScreenshotStatus.Previewing) {
+                      backToSelecting();
+                    } else {
+                      cancelScreenshot();
+                    }
+                  },
                 )
               : null,
-          actions: screenshotStatus == ScreenshotStatus.Previewing
+          actions: screenshotStatus != ScreenshotStatus.Dismissed
               ? []
               : <Widget>[
                   LikeButton(
@@ -1077,13 +1084,15 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                       );
                     },
                     circleColor: CircleColor(
-                      start:
-                          AppBarCustomization.appBarIsColorfulTitle() ? BoardInfo.getBoardColor(widget.arg.boardName).withOpacity(0.5) : Colors.orange.withOpacity(0.5),
+                      start: AppBarCustomization.appBarIsColorfulTitle()
+                          ? BoardInfo.getBoardColor(widget.arg.boardName).withOpacity(0.5)
+                          : Colors.orange.withOpacity(0.5),
                       end: AppBarCustomization.appBarIsColorfulTitle() ? BoardInfo.getBoardColor(widget.arg.boardName) : Colors.orange,
                     ),
                     bubblesColor: BubblesColor(
-                      dotPrimaryColor:
-                          AppBarCustomization.appBarIsColorfulTitle() ? BoardInfo.getBoardColor(widget.arg.boardName).withOpacity(0.5) : Colors.orange.withOpacity(0.5),
+                      dotPrimaryColor: AppBarCustomization.appBarIsColorfulTitle()
+                          ? BoardInfo.getBoardColor(widget.arg.boardName).withOpacity(0.5)
+                          : Colors.orange.withOpacity(0.5),
                       dotSecondaryColor: AppBarCustomization.appBarIsColorfulTitle() ? BoardInfo.getBoardColor(widget.arg.boardName) : Colors.orange,
                     ),
                     onTap: (bool isCollected) {
@@ -1205,12 +1214,12 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                               children: [
                                 Row(
                                   children: [
-                                      IconButton(
-                                        icon: Icon(Icons.check_circle, color: E().threadPageButtonUnselectedColor),
-                                        onPressed: () {
-                                          previewing();
-                                        },
-                                      ),
+                                    IconButton(
+                                      icon: Icon(Icons.check_circle, color: E().threadPageButtonUnselectedColor),
+                                      onPressed: () {
+                                        previewing();
+                                      },
+                                    ),
                                     IconButton(
                                       icon: Icon(Icons.cancel, color: E().threadPageButtonUnselectedColor),
                                       onPressed: () {
