@@ -1,4 +1,5 @@
 import 'package:byr_mobile_app/customizations/const_colors.dart';
+import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
@@ -23,9 +24,8 @@ int calMaxLines(
   double height,
 ) {
   for (int i = maxLines; i > 0; i--) {
-    TextPainter _textPainter =
-        TextPainter(maxLines: i, text: TextSpan(text: text, style: textStyle), textDirection: TextDirection.ltr)
-          ..layout(maxWidth: width);
+    TextPainter _textPainter = TextPainter(maxLines: i, text: TextSpan(text: text, style: textStyle), textDirection: TextDirection.ltr)
+      ..layout(maxWidth: width);
     if (_textPainter.size.height > height) {
       continue;
     } else {
@@ -41,9 +41,8 @@ bool isExceed(
   double contextWidth,
   int maxLines,
 ) {
-  TextPainter _textPainter =
-      TextPainter(maxLines: maxLines, text: TextSpan(text: text, style: style), textDirection: TextDirection.ltr)
-        ..layout(maxWidth: contextWidth);
+  TextPainter _textPainter = TextPainter(maxLines: maxLines, text: TextSpan(text: text, style: style), textDirection: TextDirection.ltr)
+    ..layout(maxWidth: contextWidth);
   if (_textPainter.didExceedMaxLines) {
     return true;
   } else {
@@ -93,6 +92,32 @@ class ArticleCell extends StatelessWidget {
               : CachedNetworkImage(
                   imageUrl: NForumService.makeGetAttachmentURL(imageUrl),
                   fit: BoxFit.cover,
+                  placeholder: (context, url) => Container(
+                    color: contentStyle?.color?.withOpacity(0.3) ??
+                        (E().isThemeDarkStyle
+                            ? Color.fromARGB(
+                                255,
+                                E().threadPageBackgroundColor.red + 8,
+                                E().threadPageBackgroundColor.green + 9,
+                                E().threadPageBackgroundColor.blue + 10,
+                              )
+                            : Color.fromARGB(
+                                255,
+                                E().threadPageBackgroundColor.red - 10,
+                                E().threadPageBackgroundColor.green - 9,
+                                E().threadPageBackgroundColor.blue - 8,
+                              )),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'BYR',
+                      style: TextStyle(
+                        color: contentStyle?.color ?? E().threadPageQuoteColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 30,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
                 ),
           if (remainCount != 0)
             Positioned(
