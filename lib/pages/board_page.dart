@@ -19,8 +19,8 @@ import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:tinycolor/tinycolor.dart';
 
 class BoardPageRouteArg {
   final String boardName;
@@ -83,7 +83,11 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, "thread_page",
-            arguments: ThreadPageRouteArg(boardArticleObject.boardName, boardArticleObject.groupId, fromBoard: true,));
+            arguments: ThreadPageRouteArg(
+              boardArticleObject.boardName,
+              boardArticleObject.groupId,
+              fromBoard: true,
+            ));
       },
       child: Container(
         color: E().threadListBackgroundColor,
@@ -242,14 +246,6 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
               decoration: BoxDecoration(
                 color: BoardInfo.getBoardIconColor(widget.arg.boardName),
                 shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: BoardInfo.getBoardIconColor(widget.arg.boardName).withOpacity(0.5).darken(10),
-                    spreadRadius: 2,
-                    blurRadius: 4,
-                    offset: Offset(2, 2),
-                  ),
-                ],
               ),
             ),
           ),
@@ -312,7 +308,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
           title: Row(
             children: <Widget>[
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 2),
+                margin: const EdgeInsets.only(left: 2, right: 5),
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -340,7 +336,11 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
           ),
           onTap: () {
             Navigator.pushNamed(context, "thread_page",
-                arguments: ThreadPageRouteArg(topArticles[i].boardName, topArticles[i].groupId, fromBoard: true,));
+                arguments: ThreadPageRouteArg(
+                  topArticles[i].boardName,
+                  topArticles[i].groupId,
+                  fromBoard: true,
+                ));
           },
         ),
       );
@@ -360,7 +360,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
           child: Row(
             children: <Widget>[
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 2),
+                margin: const EdgeInsets.only(left: 2, right: 5),
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -390,7 +390,11 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
           ),
           onTap: () {
             Navigator.pushNamed(context, "thread_page",
-                arguments: ThreadPageRouteArg(topArticles[0].boardName, topArticles[0].groupId, fromBoard: true,));
+                arguments: ThreadPageRouteArg(
+                  topArticles[0].boardName,
+                  topArticles[0].groupId,
+                  fromBoard: true,
+                ));
           },
         ),
         children: _buildTopTiles(),
@@ -523,12 +527,19 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
   Widget _buildBoardRow(FrontArticleModel boardArticleObject) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, "thread_page",
-            arguments: ThreadPageRouteArg(boardArticleObject.boardName, boardArticleObject.groupId, fromBoard: true,));
+        Navigator.pushNamed(
+          context,
+          "thread_page",
+          arguments: ThreadPageRouteArg(
+            boardArticleObject.boardName,
+            boardArticleObject.groupId,
+            fromBoard: true,
+          ),
+        );
       },
       child: Container(
         color: E().threadListBackgroundColor,
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -543,7 +554,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
               overflow: TextOverflow.ellipsis,
             ),
             Container(
-              margin: EdgeInsets.only(top: 5),
+              margin: EdgeInsets.only(top: 10),
               child: Row(
                 children: <Widget>[
                   ClickableAvatar(
@@ -571,19 +582,48 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                       overflow: TextOverflow.fade,
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 5),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10, left: 3),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    FontAwesomeIcons.commentDots,
+                    color: E().threadListOtherTextColor,
+                    size: 14,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
                     child: Text(
-                      (boardArticleObject.replyCount - 1).toString() + ' ' + "repliersTrans".tr,
-                      textWidthBasis: TextWidthBasis.parent,
+                      (boardArticleObject.replyCount - 1).toString(),
                       style: TextStyle(
                         fontSize: 14.0,
                         color: E().threadListOtherTextColor,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  if (boardArticleObject.hasAttachment)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Icon(
+                        Icons.attach_file,
+                        color: E().threadListOtherTextColor,
+                        size: 14,
+                      ),
+                    ),
+                  if (boardArticleObject.hasAttachment)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 3.0),
+                      child: Text(
+                        boardArticleObject.attachment?.file?.length?.toString() ?? 0.toString(),
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: E().threadListOtherTextColor,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -610,8 +650,15 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
       color: E().threadListDividerColor,
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, "thread_page",
-              arguments: ThreadPageRouteArg(boardArticleObject.boardName, boardArticleObject.groupId, fromBoard: true,));
+          Navigator.pushNamed(
+            context,
+            "thread_page",
+            arguments: ThreadPageRouteArg(
+              boardArticleObject.boardName,
+              boardArticleObject.groupId,
+              fromBoard: true,
+            ),
+          );
         },
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -633,13 +680,10 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                               UploadedModelUploadedExtractor().getImgThumbnail(boardArticleObject.attachment.file[0]),
                             ),
                             fadeInDuration: Duration(milliseconds: 100),
-                            placeholder: ((E().threadListBackgroundColor.red +
-                                            E().threadListBackgroundColor.green +
-                                            E().threadListBackgroundColor.blue) /
-                                        3 <
-                                    128)
-                                ? AssetImage("resources/icon/media_black.png")
-                                : AssetImage("resources/icon/media_white.png"),
+                            placeholder:
+                                ((E().threadListBackgroundColor.red + E().threadListBackgroundColor.green + E().threadListBackgroundColor.blue) / 3 < 128)
+                                    ? AssetImage("resources/icon/media_black.png")
+                                    : AssetImage("resources/icon/media_white.png"),
                             fit: BoxFit.cover,
                           )
                         : Center(
@@ -876,41 +920,15 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 5),
-                            height: 15,
-                            width: 15,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 5),
-                            height: 15,
-                            width: 70,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
-                            ),
-                            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 5),
-                            height: 15,
-                            width: 100,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
-                            ),
-                            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                          ),
-                        ],
+                    Container(
+                      margin: EdgeInsets.only(left: 5),
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
                       ),
+                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                     ),
                     Container(
                       margin: EdgeInsets.only(left: 5),
@@ -922,7 +940,47 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                     ),
+                    Container(
+                      margin: EdgeInsets.only(left: 5),
+                      height: 15,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    ),
                   ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 10,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(left: 5),
+                        height: 15,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 5),
+                        height: 15,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
