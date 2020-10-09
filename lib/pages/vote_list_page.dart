@@ -7,7 +7,6 @@ import 'package:byr_mobile_app/nforum/nforum_text_parser.dart';
 import 'package:byr_mobile_app/pages/page_components.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/dropdown_menu.dart';
-import 'package:byr_mobile_app/reusable_components/no_padding_list_tile.dart';
 import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
 import 'package:byr_mobile_app/reusable_components/vote_bet_dropdown_item.dart';
@@ -19,18 +18,16 @@ class VoteListingCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
-      splashColor: E().threadListBackgroundColor.withOpacity(0.12),
-      onTap: () {},
-      child: NonPaddingListTile(
-        contentPadding: EdgeInsets.only(left: 16, right: 16, top: 0),
-        onTap: () {
-          if (int.tryParse(vote.vid) != null) {
-            Navigator.pushNamed(context, "vote_page", arguments: VotePageRouteArg(int.tryParse(vote.vid)));
-          }
-        },
-        title: Column(
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        if (int.tryParse(vote.vid) != null) {
+          Navigator.pushNamed(context, "vote_page", arguments: VotePageRouteArg(int.tryParse(vote.vid)));
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
@@ -42,24 +39,19 @@ class VoteListingCell extends StatelessWidget {
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
+            Container(
+              padding: EdgeInsets.only(
+                right: 10,
+                top: 5,
+              ),
+              child: Text(
+                DateTime.fromMillisecondsSinceEpoch(int.tryParse(vote.end) * 1000).toString().replaceAll(RegExp(r'....$'), ''),
+                style: TextStyle(fontSize: 12.0, color: E().threadListOtherTextColor),
+                overflow: TextOverflow.fade,
+              ),
+            ),
           ],
         ),
-        subtitle: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(
-              right: 10,
-              top: 5,
-              bottom: 10,
-            ),
-            child: Text(
-              DateTime.fromMillisecondsSinceEpoch(int.tryParse(vote.end) * 1000)
-                  .toString()
-                  .replaceAll(RegExp(r'....$'), ''),
-              style: TextStyle(fontSize: 12.0, color: E().threadListOtherTextColor),
-              overflow: TextOverflow.fade,
-            ),
-          ),
-        ]),
       ),
     );
   }
@@ -75,8 +67,7 @@ class VoteListPage extends PageableListBasePage {
   VoteListPageState createState() => VoteListPageState();
 }
 
-class VoteListPageState extends PageableListBasePageState<VoteListModel, VoteListPage>
-    with SingleTickerProviderStateMixin, InitializationFailureViewMixin {
+class VoteListPageState extends PageableListBasePageState<VoteListModel, VoteListPage> with SingleTickerProviderStateMixin, InitializationFailureViewMixin {
   VoteAttrType leftValue = VoteAttrType.attr_new;
 
   void onValueChangeLeft(VoteAttrType newValue) {
@@ -130,16 +121,13 @@ class VoteListPageState extends PageableListBasePageState<VoteListModel, VoteLis
               itemLength: VoteAttrType.values.length - 1,
               itemBuilder: (index, isSelected) {
                 return VoteBetDropDownItem(
-                  ("voteAttriTypesTrans" +
-                          GetUtils.capitalizeFirst(NForumTextParser.getStrippedEnumValue(VoteAttrType.values[index])))
-                      .tr,
+                  ("voteAttriTypesTrans" + GetUtils.capitalizeFirst(NForumTextParser.getStrippedEnumValue(VoteAttrType.values[index]))).tr,
                   isSelected,
                 );
               },
               headerBuilder: (isShowing) {
                 return VoteBetDropDownHeader(
-                  ("voteAttriTypesTrans" + GetUtils.capitalizeFirst(NForumTextParser.getStrippedEnumValue(leftValue)))
-                      .tr,
+                  ("voteAttriTypesTrans" + GetUtils.capitalizeFirst(NForumTextParser.getStrippedEnumValue(leftValue))).tr,
                   isShowing,
                 );
               },

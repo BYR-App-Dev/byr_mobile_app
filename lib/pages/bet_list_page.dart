@@ -20,6 +20,42 @@ class BetListingCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        if (int.tryParse(bet.bid) != null) {
+          Navigator.pushNamed(context, "bet_page", arguments: BetPageRouteArg(int.tryParse(bet.bid)));
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              bet.title,
+              style: TextStyle(
+                fontSize: 17.0,
+                color: E().threadListTileTitleColor,
+              ),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Container(
+              padding: EdgeInsets.only(
+                right: 10,
+                top: 5,
+              ),
+              child: Text(
+                bet.end,
+                style: TextStyle(fontSize: 12.0, color: E().threadListOtherTextColor),
+                overflow: TextOverflow.fade,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
     return InkWell(
       highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
       splashColor: E().threadListBackgroundColor.withOpacity(0.15),
@@ -74,8 +110,7 @@ class BetListPage extends PageableListBasePage {
   BetListPageState createState() => BetListPageState();
 }
 
-class BetListPageState extends PageableListBasePageState<BetListModel, BetListPage>
-    with SingleTickerProviderStateMixin, InitializationFailureViewMixin {
+class BetListPageState extends PageableListBasePageState<BetListModel, BetListPage> with SingleTickerProviderStateMixin, InitializationFailureViewMixin {
   BetCategoriesModel cateList;
   BetAttrType leftValue = BetAttrType.attr_new;
   BetCategoryModel rightValue;
@@ -149,18 +184,13 @@ class BetListPageState extends PageableListBasePageState<BetListModel, BetListPa
                     itemLength: BetAttrType.values.length,
                     itemBuilder: (index, isSelected) {
                       return VoteBetDropDownItem(
-                        ("betAttriTypesTrans" +
-                                GetUtils.capitalizeFirst(
-                                    NForumTextParser.getStrippedEnumValue(BetAttrType.values[index])))
-                            .tr,
+                        ("betAttriTypesTrans" + GetUtils.capitalizeFirst(NForumTextParser.getStrippedEnumValue(BetAttrType.values[index]))).tr,
                         isSelected,
                       );
                     },
                     headerBuilder: (isShowing) {
                       return VoteBetDropDownHeader(
-                        ("betAttriTypesTrans" +
-                                GetUtils.capitalizeFirst(NForumTextParser.getStrippedEnumValue(leftValue)))
-                            .tr,
+                        ("betAttriTypesTrans" + GetUtils.capitalizeFirst(NForumTextParser.getStrippedEnumValue(leftValue))).tr,
                         isShowing,
                       );
                     },
