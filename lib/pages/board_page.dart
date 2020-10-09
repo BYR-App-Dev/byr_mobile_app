@@ -51,7 +51,11 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
     topArticles = List<FrontArticleModel>();
     data = ArticleListBaseData()
       ..dataRequestHandler = (int page) {
-        return NForumService.getBoard(widget.arg.boardName, page: page).then((value) {
+        return NForumService.getBoard(
+          widget.arg.boardName,
+          page: page,
+          content: 1,
+        ).then((value) {
           for (final v in value.article) {
             if (v.isTop) {
               topArticles.add(v);
