@@ -60,13 +60,18 @@ class _AboutPageState extends State<AboutPage> {
 
   _buildCommunityCell() {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () {
-        navigator.push(CupertinoPageRoute(
-            builder: (_) => WebPage(WebPageRouteArg("https://github.com/BYR-App-Dev/byr_mobile_app/contributors"))));
+        navigator.push(
+          CupertinoPageRoute(
+            builder: (_) => WebPage(
+              WebPageRouteArg("https://github.com/BYR-App-Dev/byr_mobile_app/contributors"),
+            ),
+          ),
+        );
       },
       child: Container(
-        padding: EdgeInsets.only(left: 20),
-        margin: EdgeInsets.only(top: 20),
+        margin: EdgeInsets.only(top: 20, left: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -81,10 +86,13 @@ class _AboutPageState extends State<AboutPage> {
                     color: E().otherPagePrimaryTextColor,
                   ),
                 ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 16,
-                  color: E().settingItemCellSubColor,
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                    color: E().settingItemCellSubColor,
+                  ),
                 ),
               ],
             ),
