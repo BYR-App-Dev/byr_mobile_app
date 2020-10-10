@@ -90,3 +90,4 @@
 - [filesize](https://pub.dev/packages/filesize)
 - [screenshot](https://pub.dev/packages/screenshot)
 - [overlay_widget](https://takeroro.github.io/2019/07/28/Flutter-Overlay/)
+- [pull_to_refresh_notification](https://pub.dev/packages/pull_to_refresh_notification)

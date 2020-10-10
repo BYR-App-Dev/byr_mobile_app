@@ -484,7 +484,7 @@ packages:
       path: "."
       ref: HEAD
       resolved-ref: b1237b6dfee6fef6ddb980dd1c4668a39edfbbca
-      url: "git://github.com/w1874/like_button"
+      url: "git://github.com/malikwang/like_button"
     source: git
     version: "1.0.1"
   loaded_list_view:
@@ -706,6 +706,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.1"
+  pull_to_refresh_notification:
+    dependency: "direct main"
+    description:
+      name: pull_to_refresh_notification
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.2"
   qr:
     dependency: transitive
     description:
