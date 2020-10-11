@@ -484,7 +484,7 @@ class NForumParsedText extends StatelessWidget {
               recognizer: rec,
             ),
             WidgetSpan(
-              child: parsingConfig.externalAudioWidget(upAddr),
+              child: parsingConfig.externalAudioWidget(upAddr.split(" ")[0].replaceFirst("http://", "https://")),
             ),
             TextSpan(
               children: _bbText(parsingConfig, str.substring(m.end), defT, rec),

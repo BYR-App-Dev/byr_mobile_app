@@ -6,6 +6,7 @@ import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/biu_panel.dart';
 import 'package:byr_mobile_app/reusable_components/emoticon_panel.dart';
 import 'package:byr_mobile_app/reusable_components/post_article_provider.dart';
+import 'package:byr_mobile_app/reusable_components/qqkg_url_retrieve_dialog.dart';
 import 'package:byr_mobile_app/reusable_components/recorder_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -329,7 +330,7 @@ class BottomToolBar extends StatelessWidget {
                 provider.hideKeyBoard();
                 AdaptiveComponents.showBottomSheet(
                   context,
-                  ["audioRecordTrans".tr, "audioFileTrans".tr],
+                  ["audioRecordTrans".tr, "audioFileTrans".tr, "全民K歌"],
                   textStyle: TextStyle(fontSize: 17, color: E().dialogButtonTextColor),
                   onItemTap: (int index) async {
                     provider.hideKeyBoard();
@@ -371,6 +372,13 @@ class BottomToolBar extends StatelessWidget {
                           }
                         },
                       );
+                    }
+                    if (index == 2) {
+                      String qqkgUrl = await showDialog(context: context, child: QQKGURLRetrieveDialog());
+                      if (qqkgUrl == null) {
+                        return;
+                      }
+                      provider.insertQQKGURL(qqkgUrl);
                     }
                   },
                 );

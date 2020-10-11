@@ -209,6 +209,14 @@ class PostArticleProvider with ChangeNotifier {
     }
   }
 
+  insertQQKGURL(String qqkgURL) {
+    _textSelection = controllerInsertText(
+      controller: _controller,
+      insertText: "[mp3=$qqkgURL auto=0][/mp3]",
+      currentSelection: _textSelection,
+    );
+  }
+
   insertImage(Tuple2<String, int> imagePath) {
     hideKeyBoard();
     var index = _attachList.indexOf(imagePath);
