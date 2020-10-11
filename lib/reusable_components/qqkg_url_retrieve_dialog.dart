@@ -40,12 +40,15 @@ class _QQKGURLRetrieveDialogState extends State<QQKGURLRetrieveDialog> {
               RegExpMatch m = RegExp(r'"playurl":"(http(?:s?)://tx\.stream\.kg\.qq\.com/.+?)\?').firstMatch(value.body);
               if (m != null) {
                 if (m.group(1) != null && m.group(1).length > 0 && m.group(1).startsWith("http")) {
-                  navigator.pop(m.group(1));
+                  navigator.pop(m.group(1).replaceFirst("http://", "https://"));
+                  return;
                 }
               }
               navigator.pop();
+              return;
             }).catchError((e) {
               navigator.pop();
+              return;
             });
           },
           child: Text(
