@@ -17,7 +17,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
+import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart' hide AlwaysScrollableClampingScrollPhysics;
 
 class MePage extends StatefulWidget {
   @override
@@ -492,5 +492,26 @@ class HStyle {
 
   static bodyWhite() {
     return TextStyle(fontWeight: FontWeight.w500, fontSize: 14.0, color: E().mePageUsernameColor);
+  }
+}
+
+class AlwaysScrollableClampingScrollPhysics extends ClampingScrollPhysics {
+  const AlwaysScrollableClampingScrollPhysics({ScrollPhysics parent}) : super(parent: parent);
+
+  @override
+  AlwaysScrollableClampingScrollPhysics applyTo(ScrollPhysics ancestor) {
+    return AlwaysScrollableClampingScrollPhysics(parent: buildParent(ancestor));
+  }
+
+  @override
+  double applyBoundaryConditions(ScrollMetrics position, double value) {
+    double tmpValue = super.applyBoundaryConditions(position, value);
+    if (tmpValue > 0.0) return 0.0;
+    return tmpValue;
+  }
+
+  @override
+  bool shouldAcceptUserOffset(ScrollMetrics position) {
+    return true;
   }
 }
