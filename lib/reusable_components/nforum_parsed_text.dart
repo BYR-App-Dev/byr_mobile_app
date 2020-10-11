@@ -10,6 +10,7 @@ typedef bool BYRLinkHandler(String link);
 typedef bool WebLinkHandler(String link);
 typedef Widget WidgetSpanChildHandler(int upId);
 typedef Widget WidgetSpanExternalImageChildHandler(String link);
+typedef Widget WidgetSpanExternalAudioChildHandler(String link);
 
 class NForumTextParsingConfig {
   final String text;
@@ -23,6 +24,7 @@ class NForumTextParsingConfig {
   final Color quoteColor;
   final WidgetSpanChildHandler imageAttachmentWidget;
   final WidgetSpanExternalImageChildHandler externalImageWidget;
+  final WidgetSpanExternalImageChildHandler externalAudioWidget;
   final WidgetSpanChildHandler audioAttachmentWidget;
   final WidgetSpanChildHandler themeAttachmentWidget;
   final WidgetSpanChildHandler refresherAttachmentWidget;
@@ -40,6 +42,7 @@ class NForumTextParsingConfig {
     this.quoteColor,
     this.imageAttachmentWidget,
     this.externalImageWidget,
+    this.externalAudioWidget,
     this.audioAttachmentWidget,
     this.themeAttachmentWidget,
     this.refresherAttachmentWidget,
@@ -57,6 +60,7 @@ class NForumTextParsingConfig {
     this.quoteColor,
     this.imageAttachmentWidget,
     this.externalImageWidget,
+    this.externalAudioWidget,
     this.audioAttachmentWidget,
     this.themeAttachmentWidget,
     this.refresherAttachmentWidget,
@@ -74,6 +78,7 @@ class NForumTextParsingConfig {
     this.quoteColor,
     this.imageAttachmentWidget,
     this.externalImageWidget,
+    this.externalAudioWidget,
     this.audioAttachmentWidget,
     this.themeAttachmentWidget,
     this.refresherAttachmentWidget,
@@ -113,7 +118,7 @@ class NForumParsedText extends StatelessWidget {
     "u": 1,
     "size": 1,
     "color": 1,
-    "mp3": 1,
+    // "mp3": 1,
   };
 
   static RegExp bbPattern = RegExp(r'\[(.+?)(=.*?)?\]((?:.|[\n\r])*?)\[\/\1\]');
@@ -465,6 +470,21 @@ class NForumParsedText extends StatelessWidget {
             ),
             WidgetSpan(
               child: parsingConfig.externalImageWidget(upAddr),
+            ),
+            TextSpan(
+              children: _bbText(parsingConfig, str.substring(m.end), defT, rec),
+              recognizer: rec,
+            ),
+          ];
+        } else if (m.group(1) == 'mp3' && gar != null && gar.length >= 2) {
+          var upAddr = gar.substring(1);
+          return [
+            TextSpan(
+              children: _bbText(parsingConfig, str.substring(0, m.start) + "\n", defT, rec),
+              recognizer: rec,
+            ),
+            WidgetSpan(
+              child: parsingConfig.externalAudioWidget(upAddr),
             ),
             TextSpan(
               children: _bbText(parsingConfig, str.substring(m.end), defT, rec),

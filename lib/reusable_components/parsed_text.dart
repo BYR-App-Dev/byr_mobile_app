@@ -192,9 +192,12 @@ class ParsedText extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          AdaptiveComponents.showAlertDialog(context, title: "themeAdd".tr + uploadedExtractor.getFileName(uploads[upId]), onDismiss: (value) {
+          AdaptiveComponents.showAlertDialog(context,
+              title: "themeAdd".tr + uploadedExtractor.getFileName(uploads[upId]), onDismiss: (value) {
             if (value == AlertResult.confirm) {
-              BYRThemeManager.instance().importOnlineTheme(uploadedExtractor.getShowUrl(uploads[upId]), null, BYRTheme.originLightTheme).then((succeeded) {
+              BYRThemeManager.instance()
+                  .importOnlineTheme(uploadedExtractor.getShowUrl(uploads[upId]), null, BYRTheme.originLightTheme)
+                  .then((succeeded) {
                 if (succeeded) {
                   String currentThemeName = BYRThemeManager.instance().currentTheme.themeName;
                   BYRThemeManager.instance().turnTheme(currentThemeName);
@@ -232,9 +235,12 @@ class ParsedText extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          AdaptiveComponents.showAlertDialog(context, title: "refresherAdd".tr + uploadedExtractor.getFileName(uploads[upId]), onDismiss: (value) {
+          AdaptiveComponents.showAlertDialog(context,
+              title: "refresherAdd".tr + uploadedExtractor.getFileName(uploads[upId]), onDismiss: (value) {
             if (value == AlertResult.confirm) {
-              BYRRefresherManager.instance().importOnlineRefresher(uploadedExtractor.getShowUrl(uploads[upId]), null).then((succeeded) {
+              BYRRefresherManager.instance()
+                  .importOnlineRefresher(uploadedExtractor.getShowUrl(uploads[upId]), null)
+                  .then((succeeded) {
                 if (succeeded) {
                   AdaptiveComponents.showToast(context, "refresherAdd".tr + "succeed".tr);
                 } else {
@@ -259,7 +265,7 @@ class ParsedText extends StatelessWidget {
     return ret;
   }
 
-  WidgetSpanExternalImageChildHandler externalAttachmentHandlerGenerator(BuildContext context) {
+  WidgetSpanExternalImageChildHandler externalImageHandlerGenerator(BuildContext context) {
     WidgetSpanExternalImageChildHandler ret = (String url) {
       return GestureDetector(
         onTap: () {
@@ -287,6 +293,61 @@ class ParsedText extends StatelessWidget {
     return ret;
   }
 
+  WidgetSpanExternalAudioChildHandler externalAudioHandlerGenerator(BuildContext context) {
+    WidgetSpanExternalAudioChildHandler ret = (String url) {
+      return Container(
+        child: Row(
+          children: <Widget>[
+            FlatButton(
+              child: Icon(
+                Icons.music_note,
+                color: E().threadPageContentColor,
+              ),
+              onPressed: () {
+                AudioPlayerView.show(
+                  context,
+                );
+              },
+            ),
+            FlatButton(
+              child: Icon(
+                Icons.play_circle_filled,
+                color: E().threadPageContentColor,
+              ),
+              onPressed: () {
+                AudioPlayerView.setCurrentPlaying(
+                  Tuple3(
+                    title ?? "...",
+                    url,
+                    false,
+                  ),
+                  context,
+                );
+              },
+            ),
+            FlatButton(
+              child: Icon(
+                Icons.playlist_add,
+                color: E().threadPageContentColor,
+              ),
+              onPressed: () {
+                AudioPlayerView.addMusic(
+                  Tuple3(
+                    title ?? "...",
+                    url,
+                    false,
+                  ),
+                  context,
+                );
+              },
+            ),
+          ],
+        ),
+      );
+    };
+    return ret;
+  }
+
   @override
   Widget build(BuildContext context) {
     return NForumParsedText(
@@ -304,7 +365,8 @@ class ParsedText extends StatelessWidget {
         themeAttachmentWidget: themeAttachmentHandlerGenerator(context),
         refresherAttachmentWidget: refresherAttachmentHandlerGenerator(context),
         otherAttachmentWidget: otherAttachmentHandlerGenerator(context),
-        externalImageWidget: externalAttachmentHandlerGenerator(context),
+        externalImageWidget: externalImageHandlerGenerator(context),
+        externalAudioWidget: externalAudioHandlerGenerator(context),
         uploadedExtractor: uploadedExtractor,
       ),
     );
