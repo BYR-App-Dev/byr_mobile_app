@@ -63,16 +63,17 @@ class TabModel {
 class HistoryArticleModel extends ArticleBaseModel {
   @override
   int get hashCode => _getHistoryId(this).hashCode;
+
   @override
   bool operator ==(Object other) {
     if (other is HistoryArticleModel) {
-      return this.hashCode == other.hashCode;
+      return this.boardName == other.boardName && this.groupId == other.groupId;
     }
-    return super.hashCode == other.hashCode;
+    return false;
   }
 
   static String _getHistoryId(HistoryArticleModel a) {
-    return a.boardName ?? "" + "/" + (a.groupId ?? "").toString();
+    return (a.boardName ?? "") + "/" + (a.groupId ?? "").toString();
   }
 
   int createdTime;
