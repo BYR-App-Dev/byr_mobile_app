@@ -9,6 +9,7 @@ import 'package:byr_mobile_app/reusable_components/custom_tab_controller.dart';
 import 'package:byr_mobile_app/reusable_components/custom_tabs.dart';
 import 'package:byr_mobile_app/reusable_components/custom_underline_indicator.dart';
 import 'package:byr_mobile_app/reusable_components/event_bus.dart';
+import 'package:byr_mobile_app/reusable_components/fullscreen_back_page_route.dart';
 import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -162,9 +163,7 @@ class FrontPageState extends State<FrontPage> with AutomaticKeepAliveClientMixin
                                 unselectedFontSize: 12,
                                 text: tab.key == 'timeline'
                                     ? "timelineTrans".tr
-                                    : tab.key == 'topten'
-                                        ? "toptenTrans".tr
-                                        : tab.key == 'boardmarks' ? "boardmarksTrans".tr : tab.title,
+                                    : tab.key == 'topten' ? "toptenTrans".tr : tab.key == 'boardmarks' ? "boardmarksTrans".tr : tab.title,
                               );
                             }).toList(),
                             indicatorColor: E().tabPageTopBarSliderColor,
@@ -178,8 +177,7 @@ class FrontPageState extends State<FrontPage> with AutomaticKeepAliveClientMixin
                     builder: (context, snapshot) {
                       if (snapshot.hasData && snapshot.data.item1.id == snapshot.data.item2) {
                         return GestureDetector(
-                          onTap: () =>
-                              Navigator.of(context).push(CupertinoPageRoute(builder: (_) => FrontTabSettingPage())),
+                          onTap: () => Navigator.of(context).push(FullscreenBackPageRoute(builder: (_) => FrontTabSettingPage())),
                           child: Icon(
                             FontAwesomeIcons.slidersH,
                             color: E().tabPageTopBarButtonColor,

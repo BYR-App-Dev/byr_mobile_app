@@ -8,6 +8,7 @@ import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/audio_player_view.dart';
 import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
+import 'package:byr_mobile_app/reusable_components/fullscreen_back_page_route.dart';
 import 'package:byr_mobile_app/reusable_components/setting_item_cell.dart';
 import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,8 +18,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
-    hide AlwaysScrollableClampingScrollPhysics;
+import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart' hide AlwaysScrollableClampingScrollPhysics;
 import 'package:tuple/tuple.dart';
 
 typedef UserListRefreshCallback = Future<Tuple2<UserModel, List>> Function(int refreshType);
@@ -116,8 +116,7 @@ class UserDetailListState extends State<UserDetailList> {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 16,
-              color:
-                  users[index]['token'] == NForumService.currentToken ? E().mePageSelectedColor : E().mePageTextColor,
+              color: users[index]['token'] == NForumService.currentToken ? E().mePageSelectedColor : E().mePageTextColor,
             ),
           ),
           trailing: ButtonTheme(
@@ -218,9 +217,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
         SettingItemCell(
           leading: Icon(MaterialIcons.wb_sunny, color: E().settingItemCellMainColor),
           title: "themeStyleTrans".tr,
-          value: LocalStorage.getIsAutoTheme()
-              ? "themeAuto".tr
-              : BYRThemeManager.instance().themeMap[E().themeName].themeDisplayName,
+          value: LocalStorage.getIsAutoTheme() ? "themeAuto".tr : BYRThemeManager.instance().themeMap[E().themeName].themeDisplayName,
           showArrow: false,
           onTap: () {
             List<String> themeKeys = BYRThemeManager.instance().themeMap.keys.toList();
@@ -311,7 +308,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
           leading: Icon(FontAwesomeIcons.exclamationCircle, color: E().settingItemCellMainColor),
           title: "aboutButtonTrans".tr,
           onTap: () {
-            navigator.push(CupertinoPageRoute(builder: (_) => AboutPage()));
+            navigator.push(FullscreenBackPageRoute(builder: (_) => AboutPage()));
           },
         ),
       ],
@@ -364,8 +361,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                   padding: const EdgeInsets.only(left: 10),
                   child: FutureBuilder(
                     builder: (context, snapshot) => snapshot.hasData
-                        ? Text(snapshot.data?.id,
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0, color: E().mePageTextColor))
+                        ? Text(snapshot.data?.id, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0, color: E().mePageTextColor))
                         : Container(),
                     future: SharedObjects.me,
                   ),
@@ -410,16 +406,14 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                             Padding(
                               padding: const EdgeInsets.only(top: 10),
                               child: FutureBuilder(
-                                builder: (context, snapshot) => snapshot.hasData
-                                    ? Text(snapshot.data?.id, style: HStyle.titleNav())
-                                    : Text("", style: HStyle.titleNav()),
+                                builder: (context, snapshot) =>
+                                    snapshot.hasData ? Text(snapshot.data?.id, style: HStyle.titleNav()) : Text("", style: HStyle.titleNav()),
                                 future: SharedObjects.me,
                               ),
                             ),
                             FutureBuilder(
-                              builder: (context, snapshot) => snapshot.hasData
-                                  ? Text(snapshot.data?.userName, style: HStyle.bodyWhite())
-                                  : Text("", style: HStyle.bodyWhite()),
+                              builder: (context, snapshot) =>
+                                  snapshot.hasData ? Text(snapshot.data?.userName, style: HStyle.bodyWhite()) : Text("", style: HStyle.bodyWhite()),
                               future: SharedObjects.me,
                             ),
                           ],
@@ -428,8 +422,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                       GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: () {
-                          GallerySaver.saveImage(SharedObjects.welImageInfo.path, albumName: 'BYRDownload')
-                              .then((value) {
+                          GallerySaver.saveImage(SharedObjects.welImageInfo.path, albumName: 'BYRDownload').then((value) {
                             AdaptiveComponents.showToast(context, '保存${value ? '成功' : '失败'}');
                           });
                         },

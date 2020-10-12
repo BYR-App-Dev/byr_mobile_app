@@ -8,6 +8,7 @@ import 'package:byr_mobile_app/pages/refresher_settings_page.dart';
 import 'package:byr_mobile_app/pages/theme_settings_page.dart';
 import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/byr_app_bar.dart';
+import 'package:byr_mobile_app/reusable_components/fullscreen_back_page_route.dart';
 import 'package:byr_mobile_app/reusable_components/no_padding_list_tile.dart';
 import 'package:byr_mobile_app/reusable_components/setting_item_cell.dart';
 import 'package:flutter/cupertino.dart';
@@ -89,14 +90,14 @@ class SettingsPageState extends State<SettingsPage> {
                 SettingItemCell(
                   title: "themeSettings".tr,
                   onTap: () {
-                    Navigator.of(context).push(CupertinoPageRoute(builder: (_) => ThemeSettingsPage()));
+                    Navigator.of(context).push(FullscreenBackPageRoute(builder: (_) => ThemeSettingsPage()));
                   },
                 ),
                 Divider(),
                 SettingItemCell(
                   title: "refresherSettings".tr,
                   onTap: () {
-                    Navigator.of(context).push(CupertinoPageRoute(builder: (_) => RefresherSettingsPage()));
+                    Navigator.of(context).push(FullscreenBackPageRoute(builder: (_) => RefresherSettingsPage()));
                   },
                 ),
                 Divider(),
@@ -150,7 +151,7 @@ class SettingsPageState extends State<SettingsPage> {
                     title: "downgradeTrans".tr,
                     onTap: () {
                       Navigator.of(context).push(
-                        CupertinoPageRoute(
+                        FullscreenBackPageRoute(
                           builder: (_) => DowngradingPage(),
                         ),
                       );
