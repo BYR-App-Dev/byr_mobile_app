@@ -172,7 +172,9 @@ class HistoryModel {
     if (_history.article == null) {
       _history.article = Set();
     }
-    _history.article = ordered().sublist(0, _historyLimit).toSet();
+    var orderedList = ordered();
+    _history.article =
+        (orderedList.length > _historyLimit ? orderedList.sublist(0, _historyLimit) : orderedList).toSet();
   }
 
   static void addHistoryItem(HistoryArticleModel a) {

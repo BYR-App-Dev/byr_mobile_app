@@ -349,18 +349,24 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
   Widget _buildAppbar(PullToRefreshScrollNotificationInfo info) {
     var offset = info?.dragOffset ?? 0.0;
     return SliverAppBar(
+      brightness: !E().isThemeDarkStyle ? Brightness.light : Brightness.dark,
+      backgroundColor: E().mePageBackgroundColor,
       pinned: true,
       title: _showAppBar
           ? Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                _getAvatar(15),
+                FutureBuilder(
+                  builder: (context, snapshot) => snapshot.hasData ? _getAvatar(15) : Container(),
+                  future: SharedObjects.me,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: FutureBuilder(
                     builder: (context, snapshot) => snapshot.hasData
-                        ? Text(snapshot.data?.id, style: HStyle.titleNav())
-                        : Text("", style: HStyle.titleNav()),
+                        ? Text(snapshot.data?.id,
+                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0, color: E().mePageTextColor))
+                        : Container(),
                     future: SharedObjects.me,
                   ),
                 ),
@@ -492,7 +498,10 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
       ),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.search),
+          icon: Icon(
+            Icons.search,
+            color: !_showAppBar ? E().mePageBackgroundColor : E().mePageIconColor,
+          ),
           onPressed: () {
             AdaptiveComponents.showAlertDialog(
               context,
