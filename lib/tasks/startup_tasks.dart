@@ -3,6 +3,7 @@ import 'package:byr_mobile_app/customizations/board_info.dart';
 import 'package:byr_mobile_app/customizations/theme.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
+import 'package:byr_mobile_app/local_objects/local_models.dart';
 import 'package:byr_mobile_app/local_objects/local_storage.dart';
 import 'package:byr_mobile_app/nforum/board_att_info.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
@@ -67,5 +68,6 @@ class StartupTasks {
     await initializeRefresher();
     await BoardInfo.load();
     await BoardAttInfo.load();
+    HistoryModel.startHistory();
   }
 }

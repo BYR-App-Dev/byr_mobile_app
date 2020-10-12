@@ -44,6 +44,8 @@ void main() {
             return CupertinoPageRoute(builder: (context) => FrontPage(), settings: settings, maintainState: true);
           case "topten_page":
             return CupertinoPageRoute(builder: (context) => ToptenPage(), settings: settings, maintainState: true);
+          case "history_page":
+            return CupertinoPageRoute(builder: (context) => HistoryPage(), settings: settings, maintainState: true);
           case "section_page":
             if (settings.arguments is String || settings.arguments == null) {
               return CupertinoPageRoute(

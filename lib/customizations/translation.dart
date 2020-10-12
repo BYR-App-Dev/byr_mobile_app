@@ -214,6 +214,7 @@ class Translation extends Translations {
     "appBarStyleComment": '上面的"颜色"与版面的主色调保持一致',
     "screenshotInstruction": "点击选取截图的楼层，右下角按钮完成选取",
     "myAudioPlaylist": "音频播放列表",
+    "browsingHistory": "浏览记录",
   };
 
   static Map<String, String> zhHant = {
@@ -423,6 +424,7 @@ class Translation extends Translations {
     "appBarStyleComment": '上面的"顏色"與版面的主色調保持一致',
     "screenshotInstruction": "點擊選擇截圖貼子，右下角按鈕完成選取",
     "myAudioPlaylist": "音頻播放列表",
+    "browsingHistory": "瀏覽記錄",
   };
 
   static Map<String, String> en = {
@@ -632,6 +634,7 @@ class Translation extends Translations {
     "appBarStyleComment": 'The "Color" is consistent with the "Main Color" of Board.',
     "screenshotInstruction": "click to select cells for screenshot, and tap bottom right button to process",
     "myAudioPlaylist": "Audio Playlist",
+    "browsingHistory": "Browsing History",
   };
 
   @override

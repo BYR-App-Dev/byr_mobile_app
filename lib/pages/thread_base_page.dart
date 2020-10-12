@@ -71,8 +71,14 @@ abstract class ThreadBasePage extends StatefulWidget {
   }
 }
 
-class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData extends ThreadBaseData> extends State<BaseThreadPage>
-    with ScrollableListMixin<BaseThreadPage, BaseThreadData>, PagerMixin, AutomaticKeepAliveClientMixin, ReplyFormMixin, InitializationFailureViewMixin {
+class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData extends ThreadBaseData>
+    extends State<BaseThreadPage>
+    with
+        ScrollableListMixin<BaseThreadPage, BaseThreadData>,
+        PagerMixin,
+        AutomaticKeepAliveClientMixin,
+        ReplyFormMixin,
+        InitializationFailureViewMixin {
   GlobalKey<ScaffoldState> scaffoldKey;
   GlobalKey moreKey;
   int refreshFactor;
@@ -146,7 +152,10 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
 
   Future<void> shareArticle() async {
     if (data.thread?.id != null) {
-      await Share.share(data.thread.title + ": " + NForumService.makeThreadURL(data.thread.boardName, data.thread.groupId) + ' 北邮人论坛');
+      await Share.share(data.thread.title +
+          ": " +
+          NForumService.makeThreadURL(data.thread.boardName, data.thread.groupId) +
+          ' 北邮人论坛');
     }
   }
 
@@ -267,7 +276,9 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
           setState(() {});
         }
         SchedulerBinding.instance.addPostFrameCallback((_) {
-          int target = data.thread.pagination.itemPageCount + (currentMinPage <= 1 ? (data.thread.likeArticles?.length ?? 0) : 0) - 1;
+          int target = data.thread.pagination.itemPageCount +
+              (currentMinPage <= 1 ? (data.thread.likeArticles?.length ?? 0) : 0) -
+              1;
           scrollController
             ..jumpTo(scrollController.position.maxScrollExtent - startingMaxExtent)
             ..scrollToIndex(target, duration: Duration(milliseconds: 600), preferPosition: AutoScrollPosition.end)
@@ -278,7 +289,9 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   }
 
   Future<void> lastBottomDataLoader({Function afterLoad}) {
-    return NForumService.getThread(data.boardName, data.groupId, page: data.currentMaxPage + 1, author: data.authorToShow).then((thread) {
+    return NForumService.getThread(data.boardName, data.groupId,
+            page: data.currentMaxPage + 1, author: data.authorToShow)
+        .then((thread) {
       if (data.authorToShow != null && data.authorToShow != "") {
         thread.likeArticles = [];
       }
@@ -374,8 +387,12 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   @override
   void scrollSolver(int index1, int index2, double extentBefore, double extentAfter) {
     if (index1 != null && index2 != null) {
-      int _page = min(((index1 - (data.thread.likeArticles?.length ?? 0)) ~/ PageConfig.pageItemCount) + data.currentMinPage, maxPage);
-      int _page2 = min(((index2 - (data.thread.likeArticles?.length ?? 0)) ~/ PageConfig.pageItemCount) + data.currentMinPage, maxPage);
+      int _page = min(
+          ((index1 - (data.thread.likeArticles?.length ?? 0)) ~/ PageConfig.pageItemCount) + data.currentMinPage,
+          maxPage);
+      int _page2 = min(
+          ((index2 - (data.thread.likeArticles?.length ?? 0)) ~/ PageConfig.pageItemCount) + data.currentMinPage,
+          maxPage);
       if (!(currentPage >= _page && currentPage <= _page2)) {
         currentPage = _page;
         pagerRedraw();
@@ -390,7 +407,9 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   Future<void> autoAddBottom() {
     if (data.currentMaxPage < data.thread.pagination.pageAllCount) {
       isLoading = true;
-      return NForumService.getThread(data.boardName, data.groupId, page: data.currentMaxPage + 1, author: data.authorToShow).then((thread) {
+      return NForumService.getThread(data.boardName, data.groupId,
+              page: data.currentMaxPage + 1, author: data.authorToShow)
+          .then((thread) {
         if (data.authorToShow != null && data.authorToShow != "") {
           thread.likeArticles = [];
         }
@@ -478,18 +497,22 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   showBottomActionSheet({ArticleBaseModel articleModel, String content}) {
     content = NForumTextParser.computeEmojiStr(content);
     var actions = [
-      if (widget.arg.boardName != 'IWhisper') (data.authorToShow == articleModel.user?.id ? ("cancelTrans".tr + " ") : "") + "onlyAuthor".tr,
+      if (widget.arg.boardName != 'IWhisper')
+        (data.authorToShow == articleModel.user?.id ? ("cancelTrans".tr + " ") : "") + "onlyAuthor".tr,
     ];
     int offset = -1;
     if (widget.arg.boardName != 'IWhisper') {
       offset = 0;
     }
     actions.add("copy".tr);
-    if (articleModel != null && articleModel.runtimeType == ThreadArticleModel && (articleModel as ThreadArticleModel).isAdmin) {
+    if (articleModel != null &&
+        articleModel.runtimeType == ThreadArticleModel &&
+        (articleModel as ThreadArticleModel).isAdmin) {
       actions.add("edit".tr);
       actions.add("delete".tr);
     }
-    AdaptiveComponents.showBottomSheet(context, actions, textStyle: TextStyle(fontSize: 17, color: E().threadListTileTitleColor), onItemTap: (int index) async {
+    AdaptiveComponents.showBottomSheet(context, actions,
+        textStyle: TextStyle(fontSize: 17, color: E().threadListTileTitleColor), onItemTap: (int index) async {
       if (index == 0 + offset) {
         if (articleModel.user?.id != null && articleModel.user.id.isNotEmpty) {
           _author(articleModel.user?.id);
@@ -556,8 +579,8 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
           );
         },
         () {
-          changeReplyPointer(
-              threadArticleObject.id, threadArticleObject.position, NForumTextParser.makeReplyQuote(threadArticleObject.user.id, threadArticleObject.content));
+          changeReplyPointer(threadArticleObject.id, threadArticleObject.position,
+              NForumTextParser.makeReplyQuote(threadArticleObject.user.id, threadArticleObject.content));
           changePlaceHolder();
         },
         _author,
@@ -566,7 +589,9 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
       );
     }
 
-    if (data.currentMinPage <= 1 && (data.thread.likeArticles?.length ?? 0) > 0 && i <= (data.thread.likeArticles?.length ?? 0)) {
+    if (data.currentMinPage <= 1 &&
+        (data.thread.likeArticles?.length ?? 0) > 0 &&
+        i <= (data.thread.likeArticles?.length ?? 0)) {
       var threadArticleObject = data.thread.likeArticles[i - 1];
       return ThreadPageListCell<LikeArticleModel>(
         threadArticleObject,
@@ -580,8 +605,8 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
           );
         },
         () {
-          changeReplyPointer(
-              threadArticleObject.id, threadArticleObject.position, NForumTextParser.makeReplyQuote(threadArticleObject.user.id, threadArticleObject.content));
+          changeReplyPointer(threadArticleObject.id, threadArticleObject.position,
+              NForumTextParser.makeReplyQuote(threadArticleObject.user.id, threadArticleObject.content));
           changePlaceHolder();
         },
         _author,
@@ -602,8 +627,8 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         );
       },
       () {
-        changeReplyPointer(
-            threadArticleObject.id, threadArticleObject.position, NForumTextParser.makeReplyQuote(threadArticleObject.user.id, threadArticleObject.content));
+        changeReplyPointer(threadArticleObject.id, threadArticleObject.position,
+            NForumTextParser.makeReplyQuote(threadArticleObject.user.id, threadArticleObject.content));
         changePlaceHolder();
       },
       _author,
@@ -641,7 +666,8 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
               width: 30,
               height: 30,
             ),
-          if (data.authorToShow == null || data.authorToShow.isEmpty) Text("hotRepliesTrans".tr, style: TextStyle(color: E().threadPageOtherTextColor)),
+          if (data.authorToShow == null || data.authorToShow.isEmpty)
+            Text("hotRepliesTrans".tr, style: TextStyle(color: E().threadPageOtherTextColor)),
           Expanded(
             child: Divider(
               indent: 20,
@@ -695,7 +721,9 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     }
     return data.thread == null || data.thread.id == null
         ? 1
-        : (data.thread.article.length + (data.currentMinPage <= 1 ? (data.thread.likeArticles?.length ?? 0) : 0) + (delSubjectLength));
+        : (data.thread.article.length +
+            (data.currentMinPage <= 1 ? (data.thread.likeArticles?.length ?? 0) : 0) +
+            (delSubjectLength));
   }
 
   Future<bool> onCollectButtonTapped(
@@ -1056,7 +1084,9 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
 
           /// Todo: AppBar显示已选择楼层的个数
           title: Text(
-            screenshotStatus != ScreenshotStatus.Dismissed ? screenshotStatus == ScreenshotStatus.Selecting ? '选择楼层' : '分享图片' : "threadTrans".tr,
+            screenshotStatus != ScreenshotStatus.Dismissed
+                ? screenshotStatus == ScreenshotStatus.Selecting ? '选择楼层' : '分享图片'
+                : "threadTrans".tr,
           ),
           leading: screenshotStatus != ScreenshotStatus.Dismissed
               ? GestureDetector(
@@ -1089,13 +1119,17 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                       start: AppBarCustomization.appBarIsColorfulTitle()
                           ? BoardInfo.getBoardColor(widget.arg.boardName).withOpacity(0.5)
                           : Colors.orange.withOpacity(0.5),
-                      end: AppBarCustomization.appBarIsColorfulTitle() ? BoardInfo.getBoardColor(widget.arg.boardName) : Colors.orange,
+                      end: AppBarCustomization.appBarIsColorfulTitle()
+                          ? BoardInfo.getBoardColor(widget.arg.boardName)
+                          : Colors.orange,
                     ),
                     bubblesColor: BubblesColor(
                       dotPrimaryColor: AppBarCustomization.appBarIsColorfulTitle()
                           ? BoardInfo.getBoardColor(widget.arg.boardName).withOpacity(0.5)
                           : Colors.orange.withOpacity(0.5),
-                      dotSecondaryColor: AppBarCustomization.appBarIsColorfulTitle() ? BoardInfo.getBoardColor(widget.arg.boardName) : Colors.orange,
+                      dotSecondaryColor: AppBarCustomization.appBarIsColorfulTitle()
+                          ? BoardInfo.getBoardColor(widget.arg.boardName)
+                          : Colors.orange,
                     ),
                     onTap: (bool isCollected) {
                       HapticFeedback.heavyImpact();

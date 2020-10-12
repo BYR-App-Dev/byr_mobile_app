@@ -7,6 +7,7 @@ export 'package:byr_mobile_app/pages/discover_page.dart';
 export 'package:byr_mobile_app/pages/downgrading_page.dart';
 export 'package:byr_mobile_app/pages/front_page.dart';
 export 'package:byr_mobile_app/pages/front_tab_settings_page.dart';
+export 'package:byr_mobile_app/pages/history_page.dart';
 export 'package:byr_mobile_app/pages/home_page.dart';
 export 'package:byr_mobile_app/pages/login_page.dart';
 export 'package:byr_mobile_app/pages/mail_page.dart';

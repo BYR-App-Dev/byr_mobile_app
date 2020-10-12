@@ -26,6 +26,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 ///
 /// Map<String, List<Map<String, dynamic>>> `frontPageTabs`: map of list of tabs to be shown on front page for each id
 ///
+/// Map<String, dynamic> `browsingHistory`: browsing history
+///
 /// List<Map<String, String>> `refreshers`: map of refreshers
 ///
 /// bool `isAnonymous`: whether is anonymous to post for IWhisper board
@@ -146,6 +148,14 @@ class LocalStorage {
 
   static Future<void> setFrontPageTabs(Map<String, List> v) async {
     return await _enter("frontPageTabs", v);
+  }
+
+  static Map<String, dynamic> getHistory() {
+    return _extract("browsingHistory")?.cast<String, dynamic>() ?? Map<String, dynamic>();
+  }
+
+  static Future<void> setHistory(Map<String, dynamic> v) async {
+    return await _enter("browsingHistory", v);
   }
 
   static List<Map> getRefreshers() {

@@ -1,3 +1,4 @@
+import 'package:byr_mobile_app/local_objects/local_models.dart';
 import 'package:byr_mobile_app/nforum/board_att_info.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
@@ -14,16 +15,21 @@ class ThreadPageRouteArg extends ThreadBasePageRouteArg {
   final bool keepAlive;
   final bool fromBoard;
 
-  ThreadPageRouteArg(this.boardName, this.groupId,
-      {this.startingPage = 1, this.startingPosition = -1, this.keepAlive = false, this.fromBoard = false,})
-      : super(
-    boardName,
-    groupId,
-    startingPage: startingPage,
-    startingPosition: startingPosition,
-    keepAlive: keepAlive,
-    fromBoard: fromBoard,
-  );
+  ThreadPageRouteArg(
+    this.boardName,
+    this.groupId, {
+    this.startingPage = 1,
+    this.startingPosition = -1,
+    this.keepAlive = false,
+    this.fromBoard = false,
+  }) : super(
+          boardName,
+          groupId,
+          startingPage: startingPage,
+          startingPosition: startingPosition,
+          keepAlive: keepAlive,
+          fromBoard: fromBoard,
+        );
 }
 
 class ThreadPage extends ThreadBasePage {
@@ -63,6 +69,7 @@ class ThreadPageState extends ThreadPageBaseState<ThreadPage, ThreadPageData> {
     boardName = data.boardName;
     boardDescription = BoardAttInfo.desc(boardName);
     replyTail = "";
+
     /// 2020-09-30 malikwang
     /// 等待页面push完毕再请求数据，防止页面在push过程中数据已经加载完毕造成视觉卡顿错觉
     /// 400毫秒 是route的transitionDuration的时间
@@ -72,6 +79,11 @@ class ThreadPageState extends ThreadPageBaseState<ThreadPage, ThreadPageData> {
         thread.likeArticles = [];
       }
       data.thread = thread;
+      HistoryModel.addHistoryItem(HistoryArticleModel(
+          boardName: thread.boardName,
+          title: thread.title,
+          groupId: thread.groupId,
+          createdTime: DateTime.now().millisecondsSinceEpoch ~/ 1000));
       firstPageJump = data.thread.likeArticles?.length ?? 0;
       currentPage = thread.pagination?.pageCurrentCount ?? 1;
       maxPage = thread.pagination?.pageAllCount ?? maxPage;

@@ -267,6 +267,13 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
           },
         ),
         SettingItemCell(
+          leading: Icon(Icons.history, color: E().settingItemCellMainColor),
+          title: "browsingHistory".tr,
+          onTap: () {
+            Navigator.pushNamed(context, "history_page");
+          },
+        ),
+        SettingItemCell(
           leading: Icon(Icons.view_list, color: E().settingItemCellMainColor),
           title: "sectionButtonTrans".tr,
           onTap: () {
