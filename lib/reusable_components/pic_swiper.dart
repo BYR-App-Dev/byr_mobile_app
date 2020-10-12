@@ -3,13 +3,14 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
-import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+
+import 'adaptive_components.dart';
 
 double initScale({Size imageSize, Size size, double initialScale}) {
   var n1 = imageSize.height / imageSize.width;
@@ -97,14 +98,9 @@ class _PicSwiperState extends State<PicSwiper> with SingleTickerProviderStateMix
                       return Hero(
                         tag: item,
                         child: result,
-                        flightShuttleBuilder: (BuildContext flightContext,
-                            Animation<double> animation,
-                            HeroFlightDirection flightDirection,
-                            BuildContext fromHeroContext,
-                            BuildContext toHeroContext) {
-                          final Hero hero = flightDirection == HeroFlightDirection.pop
-                              ? fromHeroContext.widget
-                              : toHeroContext.widget;
+                        flightShuttleBuilder: (BuildContext flightContext, Animation<double> animation, HeroFlightDirection flightDirection,
+                            BuildContext fromHeroContext, BuildContext toHeroContext) {
+                          final Hero hero = flightDirection == HeroFlightDirection.pop ? fromHeroContext.widget : toHeroContext.widget;
                           return hero.child;
                         },
                       );
@@ -118,8 +114,7 @@ class _PicSwiperState extends State<PicSwiper> with SingleTickerProviderStateMix
                       initialScale = initScale(
                           size: size,
                           initialScale: initialScale,
-                          imageSize: Size(state.extendedImageInfo.image.width.toDouble(),
-                              state.extendedImageInfo.image.height.toDouble()));
+                          imageSize: Size(state.extendedImageInfo.image.width.toDouble(), state.extendedImageInfo.image.height.toDouble()));
                     }
                     return GestureConfig(
                         inPageView: true,
@@ -175,6 +170,7 @@ class _PicSwiperState extends State<PicSwiper> with SingleTickerProviderStateMix
                 if (d.data == null || !d.data) return Container();
                 return Positioned(
                   bottom: 0.0,
+                  top: 0.0,
                   left: 0.0,
                   right: 0.0,
                   child: MySwiperPlugin(widget.pics, currentIndex, rebuildIndex),
@@ -211,58 +207,58 @@ class MySwiperPlugin extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<int>(
       builder: (BuildContext context, data) {
-        return DefaultTextStyle(
-          style: TextStyle(color: Colors.blue),
-          child: Container(
-            height: 50.0,
-            width: double.infinity,
-            color: Colors.grey.withOpacity(0.2),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 10.0,
+        return Stack(
+          children: <Widget>[
+            Positioned(
+              top: 25,
+              left: 0.0,
+              right: 0.0,
+              child: SafeArea(
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "${data.data + 1}/${pics.length}",
+                    style: TextStyle(color: Colors.white, fontSize: 18.0),
+                  ),
                 ),
-                Text(
-                  "${data.data + 1}",
-                ),
-                Text(
-                  " / ${pics.length}",
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Expanded(
-                    child: Text(pics[data.data].des ?? "",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 16.0, color: Colors.blue))),
-                SizedBox(
-                  width: 10.0,
-                ),
-                !kIsWeb
-                    ? GestureDetector(
-                        child: Container(
-                          padding: EdgeInsets.only(right: 10.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            "saveTrans".tr,
-                            style: TextStyle(fontSize: 16.0, color: Colors.blue),
-                          ),
-                        ),
-                        onTap: () async {
-                          var toDownload = index;
-                          if (data.hasData) {
-                            toDownload = data.data;
-                          }
-                          bool success = await saveNetworkImageToPhoto(pics[toDownload].picUrl);
-                          String result = success ? "succeed".tr : "fail".tr;
-                          AdaptiveComponents.showToast(context, "saveTrans".tr + result);
-                        },
-                      )
-                    : Container(),
-              ],
+              ),
             ),
-          ),
+            if (!kIsWeb)
+              Positioned(
+                bottom: 25,
+                left: 0.0,
+                right: 10.0,
+                child: SafeArea(
+                  child: GestureDetector(
+                    onTap: () async {
+                      var toDownload = index;
+                      if (data.hasData) {
+                        toDownload = data.data;
+                      }
+                      bool success = await saveNetworkImageToPhoto(pics[toDownload].picUrl);
+                      String result = success ? "succeed".tr : "fail".tr;
+                      AdaptiveComponents.showToast(context, "saveTrans".tr + result);
+                    },
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Icon(
+                          Icons.save_alt,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
         );
       },
       initialData: index,
