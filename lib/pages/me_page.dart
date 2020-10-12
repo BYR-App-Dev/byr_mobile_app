@@ -19,8 +19,9 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
     hide AlwaysScrollableClampingScrollPhysics;
+import 'package:tuple/tuple.dart';
 
-typedef UserListRefreshCallback = Future Function(int refreshType);
+typedef UserListRefreshCallback = Future<Tuple2<UserModel, List>> Function(int refreshType);
 
 class UserDetailList extends StatefulWidget {
   final List users;
@@ -36,17 +37,37 @@ class UserDetailList extends StatefulWidget {
 }
 
 class UserDetailListState extends State<UserDetailList> {
+  List users;
+  UserModel user;
+  UserListRefreshCallback refresh;
+
+  @override
+  initState() {
+    users = widget.users;
+    user = widget.user;
+    refresh = widget.refresh;
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(UserDetailList oldWidget) {
+    users = widget.users;
+    user = widget.user;
+    refresh = widget.refresh;
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
-    widget.users.sort((a, b) {
+    users.sort((a, b) {
       return a['id'].toLowerCase().compareTo(b['id'].toLowerCase());
     });
     return ListView.builder(
       padding: EdgeInsets.zero,
-      itemCount: widget.users.length + 1,
+      itemCount: users.length + 1,
       shrinkWrap: true,
       itemBuilder: (context, int index) {
-        if (index >= widget.users.length) {
+        if (index >= users.length) {
           return ListTile(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +84,9 @@ class UserDetailListState extends State<UserDetailList> {
                 arguments: LoginPageRouteArg(isAddingMoreAccount: true),
               );
               if (t != null) {
-                await widget.refresh(0);
+                Tuple2 tp = await refresh(0);
+                user = tp.item1;
+                users = tp.item2;
                 if (mounted) {
                   setState(() {});
                 }
@@ -73,9 +96,11 @@ class UserDetailListState extends State<UserDetailList> {
         }
         return ListTile(
           onTap: () async {
-            if (widget.users[index]['token'] != NForumService.currentToken) {
-              await NForumService.loginUser(widget.users[index]['token']);
-              await widget.refresh(1);
+            if (users[index]['token'] != NForumService.currentToken) {
+              await NForumService.loginUser(users[index]['token']);
+              Tuple2 tp = await refresh(1);
+              user = tp.item1;
+              users = tp.item2;
               if (mounted) {
                 setState(() {});
               }
@@ -83,19 +108,16 @@ class UserDetailListState extends State<UserDetailList> {
           },
           leading: Icon(
             Icons.stars,
-            color: widget.users[index]['token'] == NForumService.currentToken
-                ? E().mePageSelectedColor
-                : E().mePageTextColor,
+            color: users[index]['token'] == NForumService.currentToken ? E().mePageSelectedColor : E().mePageTextColor,
           ),
           title: Text(
-            widget.users[index]['id'],
+            users[index]['id'],
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 16,
-              color: widget.users[index]['token'] == NForumService.currentToken
-                  ? E().mePageSelectedColor
-                  : E().mePageTextColor,
+              color:
+                  users[index]['token'] == NForumService.currentToken ? E().mePageSelectedColor : E().mePageTextColor,
             ),
           ),
           trailing: ButtonTheme(
@@ -105,9 +127,11 @@ class UserDetailListState extends State<UserDetailList> {
             child: FlatButton(
               shape: RoundedRectangleBorder(side: BorderSide(color: E().mePageTextColor)),
               onPressed: () async {
-                NForumService.logoutUser(widget.users[index]['token']);
-                if (widget.users[index]['token'] != NForumService.currentToken) {
-                  await widget.refresh(2);
+                NForumService.logoutUser(users[index]['token']);
+                if (users[index]['token'] != NForumService.currentToken) {
+                  Tuple2 tp = await refresh(2);
+                  user = tp.item1;
+                  users = tp.item2;
                   if (mounted) {
                     setState(() {});
                   }
@@ -116,7 +140,9 @@ class UserDetailListState extends State<UserDetailList> {
                 List _users = NForumService.getAllUser();
                 if (_users.length > 0) {
                   await NForumService.loginUser(_users[0]['token']);
-                  await widget.refresh(0);
+                  Tuple2 tp = await refresh(0);
+                  user = tp.item1;
+                  users = tp.item2;
                   if (mounted) {
                     setState(() {});
                   }
@@ -426,6 +452,10 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                                     user = await SharedObjects.me;
                                     users = NForumService.getAllUser();
                                   }
+                                  if (mounted) {
+                                    setState(() {});
+                                  }
+                                  return Tuple2(user, users);
                                 },
                               ));
                         },
