@@ -564,7 +564,7 @@ class _CupertinoBackGestureDetectorState<T> extends State<_CupertinoBackGestureD
     // For devices with notches, the drag area needs to be larger on the side
     // that has the notch.
     double dragAreaWidth = Directionality.of(context) == TextDirection.ltr ? MediaQuery.of(context).padding.left : MediaQuery.of(context).padding.right;
-    dragAreaWidth = max(dragAreaWidth, 414);
+    dragAreaWidth = max(dragAreaWidth, MediaQuery.of(context).size.width);
     return Stack(
       fit: StackFit.passthrough,
       children: <Widget>[
