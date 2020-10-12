@@ -17,7 +17,8 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
+import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
+    hide AlwaysScrollableClampingScrollPhysics;
 import 'package:tuple/tuple.dart';
 
 typedef UserListRefreshCallback = Future<Tuple2<UserModel, List>> Function(int refreshType);
@@ -561,5 +562,36 @@ class HStyle {
 
   static bodyWhite() {
     return TextStyle(fontWeight: FontWeight.w500, fontSize: 14.0, color: E().mePageUsernameColor);
+  }
+}
+
+class AlwaysScrollableClampingScrollPhysics extends ClampingScrollPhysics {
+  const AlwaysScrollableClampingScrollPhysics({ScrollPhysics parent}) : super(parent: parent);
+
+  @override
+  AlwaysScrollableClampingScrollPhysics applyTo(ScrollPhysics ancestor) {
+    return AlwaysScrollableClampingScrollPhysics(parent: buildParent(ancestor));
+  }
+
+  static bool _quickSwipe = false;
+
+  @override
+  double applyBoundaryConditions(ScrollMetrics position, double value) {
+    double tmpValue = super.applyBoundaryConditions(position, value);
+    if (_quickSwipe) return tmpValue;
+    if (tmpValue > 0.0) return 0.0;
+    return tmpValue;
+  }
+
+  @override
+  Simulation createBallisticSimulation(ScrollMetrics position, double velocity) {
+    Simulation simulation = super.createBallisticSimulation(position, velocity);
+    _quickSwipe = simulation is ClampingScrollSimulation;
+    return simulation;
+  }
+
+  @override
+  bool shouldAcceptUserOffset(ScrollMetrics position) {
+    return true;
   }
 }
