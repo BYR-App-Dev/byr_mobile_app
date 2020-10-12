@@ -51,43 +51,39 @@ class HistoryPageState extends ArticleListBasePageState<HistoryListModel, Histor
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(right: 10),
-                  width: 25,
-                  height: 25,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: BoardInfo.getBoardIconColor(data.articleList.article[index].boardName),
-                  ),
-                  child: Center(
-                    child: Text(
-                      BoardInfo.getBoardCnShort(
-                          data.articleList.article[index].boardName, data.articleList.article[index].boardName),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Text(
-                  historyArticleObject.title,
-                  style: TextStyle(
-                    fontSize: 17.0,
-                    color: E().threadListTileTitleColor,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+            Text(
+              historyArticleObject.title,
+              style: TextStyle(
+                fontSize: 17.0,
+                color: E().threadListTileTitleColor,
+                fontWeight: FontWeight.w500,
+              ),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
             ),
             Container(
               margin: EdgeInsets.only(top: 5),
               child: Row(
                 children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    width: 25,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: BoardInfo.getBoardIconColor(data.articleList.article[index].boardName),
+                    ),
+                    child: Center(
+                      child: Text(
+                        BoardInfo.getBoardCnShort(
+                            data.articleList.article[index].boardName, data.articleList.article[index].boardName),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
