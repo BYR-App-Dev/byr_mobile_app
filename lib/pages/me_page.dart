@@ -580,11 +580,21 @@ class AlwaysScrollableClampingScrollPhysics extends ClampingScrollPhysics {
     return AlwaysScrollableClampingScrollPhysics(parent: buildParent(ancestor));
   }
 
+  static bool _quickSwipe = false;
+
   @override
   double applyBoundaryConditions(ScrollMetrics position, double value) {
     double tmpValue = super.applyBoundaryConditions(position, value);
+    if (_quickSwipe) return tmpValue;
     if (tmpValue > 0.0) return 0.0;
     return tmpValue;
+  }
+
+  @override
+  Simulation createBallisticSimulation(ScrollMetrics position, double velocity) {
+    Simulation simulation = super.createBallisticSimulation(position, velocity);
+    _quickSwipe = simulation is ClampingScrollSimulation;
+    return simulation;
   }
 
   @override
