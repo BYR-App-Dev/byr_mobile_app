@@ -17,7 +17,126 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart' hide AlwaysScrollableClampingScrollPhysics;
+import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
+    hide AlwaysScrollableClampingScrollPhysics;
+
+typedef UserListRefreshCallback = Future Function(int refreshType);
+
+class UserDetailList extends StatefulWidget {
+  final List users;
+  final UserModel user;
+  final UserListRefreshCallback refresh;
+
+  const UserDetailList({Key key, this.users, this.user, this.refresh}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return UserDetailListState();
+  }
+}
+
+class UserDetailListState extends State<UserDetailList> {
+  @override
+  Widget build(BuildContext context) {
+    widget.users.sort((a, b) {
+      return a['id'].toLowerCase().compareTo(b['id'].toLowerCase());
+    });
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      itemCount: widget.users.length + 1,
+      shrinkWrap: true,
+      itemBuilder: (context, int index) {
+        if (index >= widget.users.length) {
+          return ListTile(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  '+ ' + "addAccount".tr,
+                  style: TextStyle(color: E().mePageTextColor),
+                ),
+              ],
+            ),
+            onTap: () async {
+              var t = await Navigator.of(context).pushNamed(
+                'login_page',
+                arguments: LoginPageRouteArg(isAddingMoreAccount: true),
+              );
+              if (t != null) {
+                await widget.refresh(0);
+                if (mounted) {
+                  setState(() {});
+                }
+              }
+            },
+          );
+        }
+        return ListTile(
+          onTap: () async {
+            if (widget.users[index]['token'] != NForumService.currentToken) {
+              await NForumService.loginUser(widget.users[index]['token']);
+              await widget.refresh(1);
+              if (mounted) {
+                setState(() {});
+              }
+            }
+          },
+          leading: Icon(
+            Icons.stars,
+            color: widget.users[index]['token'] == NForumService.currentToken
+                ? E().mePageSelectedColor
+                : E().mePageTextColor,
+          ),
+          title: Text(
+            widget.users[index]['id'],
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 16,
+              color: widget.users[index]['token'] == NForumService.currentToken
+                  ? E().mePageSelectedColor
+                  : E().mePageTextColor,
+            ),
+          ),
+          trailing: ButtonTheme(
+            padding: EdgeInsets.all(0),
+            minWidth: 40,
+            height: 25,
+            child: FlatButton(
+              shape: RoundedRectangleBorder(side: BorderSide(color: E().mePageTextColor)),
+              onPressed: () async {
+                NForumService.logoutUser(widget.users[index]['token']);
+                if (widget.users[index]['token'] != NForumService.currentToken) {
+                  await widget.refresh(2);
+                  if (mounted) {
+                    setState(() {});
+                  }
+                  return;
+                }
+                List _users = NForumService.getAllUser();
+                if (_users.length > 0) {
+                  await NForumService.loginUser(_users[0]['token']);
+                  await widget.refresh(0);
+                  if (mounted) {
+                    setState(() {});
+                  }
+                } else {
+                  Navigator.of(context).pushReplacementNamed('login_page', arguments: LoginPageRouteArg());
+                }
+              },
+              child: Text(
+                "logoutTrans".tr,
+                style: TextStyle(
+                  color: E().mePageTextColor,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
 
 class MePage extends StatefulWidget {
   @override
@@ -67,111 +186,15 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
     });
   }
 
-  Widget _buildUserDetailList(BuildContext context) {
-    users.sort((a, b) {
-      return a['id'].toLowerCase().compareTo(b['id'].toLowerCase());
-    });
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      itemCount: users.length + 1,
-      shrinkWrap: true,
-      itemBuilder: (context, int index) {
-        if (index >= users.length) {
-          return ListTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  '+ ' + "addAccount".tr,
-                  style: TextStyle(color: E().mePageTextColor),
-                ),
-              ],
-            ),
-            onTap: () async {
-              var t = await Navigator.of(context).pushNamed(
-                'login_page',
-                arguments: LoginPageRouteArg(isAddingMoreAccount: true),
-              );
-              if (t != null) {
-                user = await SharedObjects.me;
-                users = NForumService.getAllUser();
-                if (mounted) {
-                  setState(() {});
-                }
-              }
-            },
-          );
-        }
-        return ListTile(
-          onTap: () async {
-            if (users[index]['token'] != NForumService.currentToken) {
-              await NForumService.loginUser(users[index]['token']);
-              user = await SharedObjects.me;
-              if (mounted) {
-                setState(() {});
-              }
-            }
-          },
-          leading: Icon(
-            Icons.stars,
-            color: users[index]['token'] == NForumService.currentToken ? E().mePageSelectedColor : E().mePageTextColor,
-          ),
-          title: Text(
-            users[index]['id'],
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 16,
-              color: users[index]['token'] == NForumService.currentToken ? E().mePageSelectedColor : E().mePageTextColor,
-            ),
-          ),
-          trailing: ButtonTheme(
-            padding: EdgeInsets.all(0),
-            minWidth: 40,
-            height: 25,
-            child: FlatButton(
-              shape: RoundedRectangleBorder(side: BorderSide(color: E().mePageTextColor)),
-              onPressed: () async {
-                NForumService.logoutUser(users[index]['token']);
-                if (users[index]['token'] != NForumService.currentToken) {
-                  users = NForumService.getAllUser();
-                  if (mounted) {
-                    setState(() {});
-                  }
-                  return;
-                }
-                List _users = NForumService.getAllUser();
-                if (_users.length > 0) {
-                  await NForumService.loginUser(_users[0]['token']);
-                  user = await SharedObjects.me;
-                  users = NForumService.getAllUser();
-                  if (mounted) {
-                    setState(() {});
-                  }
-                } else {
-                  Navigator.of(context).pushReplacementNamed('login_page', arguments: LoginPageRouteArg());
-                }
-              },
-              child: Text(
-                "logoutTrans".tr,
-                style: TextStyle(
-                  color: E().mePageTextColor,
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   Widget _buildMenu(BuildContext context) {
     return Column(
       children: <Widget>[
         SettingItemCell(
           leading: Icon(MaterialIcons.wb_sunny, color: E().settingItemCellMainColor),
           title: "themeStyleTrans".tr,
-          value: LocalStorage.getIsAutoTheme() ? "themeAuto".tr : BYRThemeManager.instance().themeMap[E().themeName].themeDisplayName,
+          value: LocalStorage.getIsAutoTheme()
+              ? "themeAuto".tr
+              : BYRThemeManager.instance().themeMap[E().themeName].themeDisplayName,
           showArrow: false,
           onTap: () {
             List<String> themeKeys = BYRThemeManager.instance().themeMap.keys.toList();
@@ -302,7 +325,9 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: FutureBuilder(
-                    builder: (context, snapshot) => snapshot.hasData ? Text(snapshot.data?.id, style: HStyle.titleNav()) : Text("", style: HStyle.titleNav()),
+                    builder: (context, snapshot) => snapshot.hasData
+                        ? Text(snapshot.data?.id, style: HStyle.titleNav())
+                        : Text("", style: HStyle.titleNav()),
                     future: SharedObjects.me,
                   ),
                 ),
@@ -346,14 +371,16 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                             Padding(
                               padding: const EdgeInsets.only(top: 10),
                               child: FutureBuilder(
-                                builder: (context, snapshot) =>
-                                    snapshot.hasData ? Text(snapshot.data?.id, style: HStyle.titleNav()) : Text("", style: HStyle.titleNav()),
+                                builder: (context, snapshot) => snapshot.hasData
+                                    ? Text(snapshot.data?.id, style: HStyle.titleNav())
+                                    : Text("", style: HStyle.titleNav()),
                                 future: SharedObjects.me,
                               ),
                             ),
                             FutureBuilder(
-                              builder: (context, snapshot) =>
-                                  snapshot.hasData ? Text(snapshot.data?.userName, style: HStyle.bodyWhite()) : Text("", style: HStyle.bodyWhite()),
+                              builder: (context, snapshot) => snapshot.hasData
+                                  ? Text(snapshot.data?.userName, style: HStyle.bodyWhite())
+                                  : Text("", style: HStyle.bodyWhite()),
                               future: SharedObjects.me,
                             ),
                           ],
@@ -362,7 +389,8 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                       GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: () {
-                          GallerySaver.saveImage(SharedObjects.welImageInfo.path, albumName: 'BYRDownload').then((value) {
+                          GallerySaver.saveImage(SharedObjects.welImageInfo.path, albumName: 'BYRDownload')
+                              .then((value) {
                             AdaptiveComponents.showToast(context, '保存${value ? '成功' : '失败'}');
                           });
                         },
@@ -385,9 +413,21 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                         behavior: HitTestBehavior.translucent,
                         onTap: () {
                           AdaptiveComponents.showBottomWidget(
-                            context,
-                            _buildUserDetailList(context),
-                          );
+                              context,
+                              UserDetailList(
+                                users: users,
+                                user: user,
+                                refresh: (int type) async {
+                                  if (type == 1) {
+                                    user = await SharedObjects.me;
+                                  } else if (type == 2) {
+                                    users = NForumService.getAllUser();
+                                  } else {
+                                    user = await SharedObjects.me;
+                                    users = NForumService.getAllUser();
+                                  }
+                                },
+                              ));
                         },
                         child: Container(
                           decoration: BoxDecoration(
