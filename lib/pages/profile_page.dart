@@ -5,6 +5,7 @@ import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/byr_app_bar.dart';
 import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
+import 'package:byr_mobile_app/reusable_components/pic_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -107,7 +108,19 @@ class ProfilePage extends StatelessWidget {
                                         alignment: Alignment(0, 0),
                                         child: ClickableAvatar(
                                           radius: 45,
-                                          onTap: null,
+                                          onTap: () {
+                                            showGeneralDialog(
+                                              barrierColor: Colors.black,
+                                              barrierDismissible: false,
+                                              transitionDuration: Duration(milliseconds: 200),
+                                              barrierLabel: "PicDialog",
+                                              pageBuilder: (c, _, __) => PicSwiper(
+                                                index: 0,
+                                                pics: [PicSwiperItem(picUrl: NForumService.makeGetURL(user.faceUrl))],
+                                              ),
+                                              context: context,
+                                            );
+                                          },
                                           isWhisper: (user?.id ?? "").startsWith("IWhisper"),
                                           imageLink: NForumService.makeGetURL(user.faceUrl),
                                           emptyUser: !GetUtils.isURL(user?.faceUrl),
@@ -146,9 +159,7 @@ class ProfilePage extends StatelessWidget {
                                           child: Icon(
                                             user.gender == 'm'
                                                 ? FontAwesomeIcons.mars
-                                                : user.gender == 'f'
-                                                    ? FontAwesomeIcons.venus
-                                                    : FontAwesomeIcons.genderless,
+                                                : user.gender == 'f' ? FontAwesomeIcons.venus : FontAwesomeIcons.genderless,
                                             color: ConstColors.getUsernameColor(user?.gender),
                                             size: 15,
                                           ),
