@@ -25,7 +25,7 @@ dependencies:
   transparent_image: ^1.0.0
   cached_network_image: ^2.2.0+1
   font_awesome_flutter: ^8.8.1
-  pull_to_refresh: ^1.6.1
+  pull_to_refresh: ^1.6.2
   flutter_gifimage: ^1.0.0
   shimmer: ^1.1.1
   qr_flutter: ^3.1.0
@@ -34,8 +34,8 @@ dependencies:
   fast_gbk: ^0.1.2+1
   image_picker: ^0.6.7+6
   url_launcher: ^5.5.2
-  extended_text_field: ^4.0.0
-  extended_image: ^1.0.0
+  extended_text_field: ^5.0.0
+  extended_image: ^1.2.0
   characters: ^1.0.0
   share: ^0.6.5
   audioplayers: ^0.15.1
