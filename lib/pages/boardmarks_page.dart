@@ -10,35 +10,28 @@ import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/pages/page_components.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
-import 'package:byr_mobile_app/pages/web_page.dart';
 import 'package:byr_mobile_app/reusable_components/circle_icon_button.dart';
-import 'package:byr_mobile_app/reusable_components/fullscreen_back_page_route.dart';
 import 'package:byr_mobile_app/reusable_components/no_padding_list_tile.dart';
 import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
-import 'package:speech_recognition/speech_recognition.dart';
 
 class BoardmarksPage extends StatefulWidget {
   @override
   BoardmarksPageState createState() => BoardmarksPageState();
 }
 
-class BoardmarksPageState extends State<BoardmarksPage> with AutomaticKeepAliveClientMixin, InitializationFailureViewMixin {
+class BoardmarksPageState extends State<BoardmarksPage>
+    with AutomaticKeepAliveClientMixin, InitializationFailureViewMixin {
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   BannerModel banner;
   Map<int, Widget> bannerWidgets;
   FavBoardsModel favBoards;
   PageController controller;
   String _search = "";
-  bool isSpeeching = false;
-
-  SpeechRecognition _speech = SpeechRecognition();
 
   TextEditingController _controller = TextEditingController();
   Timer _timer;
@@ -374,48 +367,9 @@ class BoardmarksPageState extends State<BoardmarksPage> with AutomaticKeepAliveC
                                             color: Colors.grey,
                                           ),
                                         ),
-                                        border: UnderlineInputBorder(borderSide: BorderSide(width: 0, color: E().sectionPageBackgroundColor))),
+                                        border: UnderlineInputBorder(
+                                            borderSide: BorderSide(width: 0, color: E().sectionPageBackgroundColor))),
                                   )),
-                                  Container(
-                                    color: E().sectionPageBackgroundColor,
-                                    child: IconButton(
-                                      icon: Icon(!isSpeeching ? FlutterIcons.microphone_mco : FlutterIcons.text_to_speech_mco, color: E().otherPageButtonColor),
-                                      onPressed: () {
-                                        if (!isSpeeching) {
-                                          FlutterAudioRecorder.hasPermissions.then((v) {
-                                            _speech.activate().then((res) {
-                                              _speech.setRecognitionCompleteHandler((String text) {
-                                                if (isSpeeching) {
-                                                  isSpeeching = false;
-                                                  if (mounted) {
-                                                    setState(() {});
-                                                  }
-                                                  if (text.toString().contains("芝麻开门")) {
-                                                    navigator.push(FullscreenBackPageRoute(
-                                                        builder: (_) => WebPage(WebPageRouteArg("https://bbs.byr.cn/n/board/IWhisper"))));
-                                                  } else {
-                                                    _controller.text += text;
-                                                  }
-                                                }
-                                              });
-                                              _speech.listen(locale: Locale("zh", "CN").toString()).then((result) {
-                                                isSpeeching = true;
-                                                if (mounted) {
-                                                  setState(() {});
-                                                }
-                                              });
-                                            });
-                                          });
-                                        } else {
-                                          isSpeeching = false;
-                                          if (mounted) {
-                                            setState(() {});
-                                          }
-                                          _speech.stop().then((value) {});
-                                        }
-                                      },
-                                    ),
-                                  ),
                                   Container(
                                     color: E().sectionPageBackgroundColor,
                                     child: IconButton(
@@ -443,11 +397,13 @@ class BoardmarksPageState extends State<BoardmarksPage> with AutomaticKeepAliveC
                                       if (bannerWidgets[index % banner.count] == null) {
                                         bannerWidgets[index % banner.count] = GestureDetector(
                                           onTap: () {
-                                            if (!NForumLinkHandler.byrLinkHandler(banner.banners[index % banner.count].url)) {
+                                            if (!NForumLinkHandler.byrLinkHandler(
+                                                banner.banners[index % banner.count].url)) {
                                               if (banner.banners[index % banner.count].url != null &&
                                                   banner.banners[index % banner.count].url.length > 0 &&
                                                   banner.banners[index % banner.count].url != 'about:blank') {
-                                                NForumLinkHandler.webLinkHandler(banner.banners[index % banner.count].url);
+                                                NForumLinkHandler.webLinkHandler(
+                                                    banner.banners[index % banner.count].url);
                                               }
                                             }
                                           },
@@ -472,7 +428,11 @@ class BoardmarksPageState extends State<BoardmarksPage> with AutomaticKeepAliveC
                     ),
                     SliverGrid(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: (favBoards?.board?.length ?? 0) == 0 ? 1 : MediaQuery.of(context).size.shortestSide > 600 ? 4 : 2,
+                        crossAxisCount: (favBoards?.board?.length ?? 0) == 0
+                            ? 1
+                            : MediaQuery.of(context).size.shortestSide > 600
+                                ? 4
+                                : 2,
                         mainAxisSpacing: 0.0,
                         crossAxisSpacing: 0.0,
                         childAspectRatio: 3.0,
@@ -489,7 +449,8 @@ class BoardmarksPageState extends State<BoardmarksPage> with AutomaticKeepAliveC
                                   ))
                               : NonPaddingListTile(
                                   onTap: () {
-                                    Navigator.pushNamed(context0, "board_page", arguments: BoardPageRouteArg(favBoards.board[index].name));
+                                    Navigator.pushNamed(context0, "board_page",
+                                        arguments: BoardPageRouteArg(favBoards.board[index].name));
                                   },
                                   title: Row(
                                     children: <Widget>[
@@ -521,8 +482,10 @@ class BoardmarksPageState extends State<BoardmarksPage> with AutomaticKeepAliveC
                                                 favBoards.board[index].threadsTodayCount == 0
                                                     ? "noThreadTodayTrans".tr
                                                     : (favBoards.board[index].threadsTodayCount == 1
-                                                        ? "newThreadTodayTrans".trArgs([favBoards.board[index].threadsTodayCount.toString()])
-                                                        : "newThreadsTodayTrans".trArgs([favBoards.board[index].threadsTodayCount.toString()])),
+                                                        ? "newThreadTodayTrans".trArgs(
+                                                            [favBoards.board[index].threadsTodayCount.toString()])
+                                                        : "newThreadsTodayTrans".trArgs(
+                                                            [favBoards.board[index].threadsTodayCount.toString()])),
                                                 style: TextStyle(color: E().sectionPageContentColor, fontSize: 13),
                                                 overflow: TextOverflow.ellipsis,
                                               ),

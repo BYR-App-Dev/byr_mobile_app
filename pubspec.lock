@@ -300,6 +300,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  flutter_liquidcore:
+    dependency: "direct main"
+    description:
+      name: flutter_liquidcore
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -740,8 +747,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "33074569956dbbdad2af3b49ecd5e6256fac2738"
+      ref: master
+      resolved-ref: "02c899160977272ab543f8527240dab79c49b759"
       url: "ssh://git@github.com/BYR-App-Dev/secrets.git"
     source: git
     version: "1.0.0+1"

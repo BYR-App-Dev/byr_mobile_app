@@ -3,6 +3,7 @@ import 'package:byr_mobile_app/nforum/board_att_info.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/pages/thread_base_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ThreadPageData extends ThreadBaseData {}
@@ -92,5 +93,14 @@ class ThreadPageState extends ThreadPageBaseState<ThreadPage, ThreadPageData> {
         afterLoad();
       }
     });
+  }
+
+  @override
+  void setFailureInfo(e) {
+    if (e is APIException && e.code == "0202") {
+      navigator.push(CupertinoPageRoute(
+          builder: (_) => WebPage(WebPageRouteArg(
+              "https://bbs.byr.cn/n/article/" + widget.arg.boardName + "/" + widget.arg.groupId.toString()))));
+    }
   }
 }

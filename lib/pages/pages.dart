@@ -14,6 +14,8 @@ export 'package:byr_mobile_app/pages/mail_page.dart';
 export 'package:byr_mobile_app/pages/mailbox_page.dart';
 export 'package:byr_mobile_app/pages/me_page.dart';
 export 'package:byr_mobile_app/pages/message_page.dart';
+export 'package:byr_mobile_app/pages/micro_plugin_list_page.dart';
+export 'package:byr_mobile_app/pages/micro_plugin_page.dart';
 export 'package:byr_mobile_app/pages/pageable_list_base_page.dart';
 export 'package:byr_mobile_app/pages/post_page.dart';
 export 'package:byr_mobile_app/pages/referbox_page.dart';
@@ -26,7 +28,9 @@ export 'package:byr_mobile_app/pages/timeline_page.dart';
 export 'package:byr_mobile_app/pages/topten_page.dart';
 export 'package:byr_mobile_app/pages/vote_list_page.dart';
 export 'package:byr_mobile_app/pages/vote_page.dart';
+export 'package:byr_mobile_app/pages/web_page.dart';
 export 'package:byr_mobile_app/pages/welcome_page.dart';
+export 'package:byr_mobile_app/reusable_components/fullscreen_back_page_route.dart';
 export 'package:get/get.dart';
 
 class PageConfig {

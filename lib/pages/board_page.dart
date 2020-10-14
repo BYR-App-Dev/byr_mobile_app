@@ -17,6 +17,7 @@ import 'package:byr_mobile_app/reusable_components/custom_expansion_tile.dart';
 import 'package:byr_mobile_app/reusable_components/no_padding_list_tile.dart';
 import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -65,6 +66,15 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
         });
       };
     super.initialization();
+  }
+
+  @override
+  void setFailureInfo(e) {
+    if (e is APIException && e.code == "0202") {
+      navigator.push(CupertinoPageRoute(
+          builder: (_) => WebPage(WebPageRouteArg("https://bbs.byr.cn/n/board/" + widget.arg.boardName))));
+    }
+    super.setFailureInfo(e);
   }
 
   @override
@@ -684,10 +694,13 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                               UploadedModelUploadedExtractor().getImgThumbnail(boardArticleObject.attachment.file[0]),
                             ),
                             fadeInDuration: Duration(milliseconds: 100),
-                            placeholder:
-                                ((E().threadListBackgroundColor.red + E().threadListBackgroundColor.green + E().threadListBackgroundColor.blue) / 3 < 128)
-                                    ? AssetImage("resources/icon/media_black.png")
-                                    : AssetImage("resources/icon/media_white.png"),
+                            placeholder: ((E().threadListBackgroundColor.red +
+                                            E().threadListBackgroundColor.green +
+                                            E().threadListBackgroundColor.blue) /
+                                        3 <
+                                    128)
+                                ? AssetImage("resources/icon/media_black.png")
+                                : AssetImage("resources/icon/media_white.png"),
                             fit: BoxFit.cover,
                           )
                         : Center(

@@ -17,8 +17,9 @@ import 'package:tuple/tuple.dart';
 
 class APIException implements Exception {
   final message;
+  final code;
 
-  APIException([this.message]);
+  APIException(this.message, {this.code});
 
   String toString() {
     if (message == null) return "API Exception";
@@ -50,6 +51,8 @@ class NForumSpecs {
   static String get androidUpdateLink =>
       LocalStorage.getIsDevChannelEnabled() == true ? Secrets.androidDevUpdateLink : Secrets.androidStableUpdateLink;
   static String get androidVersionsLink => Secrets.androidVersionsLink;
+
+  static String get microPluginListLink => Secrets.microPluginListLink;
 
   static initializeNForumSpecs() {
     _isAnonymous = LocalStorage.getIsAnonymous();
@@ -214,9 +217,29 @@ class NForumService {
       ascii.decode(response.bodyBytes),
     );
     if (resultMap["code"] != null) {
-      throw APIException(resultMap['msg']);
+      throw APIException(resultMap['msg'], code: resultMap["code"]);
     }
     var result = resultMap["recommended_boards"].cast<String>();
+    if (result == null) {
+      throw DataException();
+    }
+    return result;
+  }
+
+  static Future<List<Map>> getMicroPlugins() async {
+    var response;
+    try {
+      response = await Request.httpGet(NForumSpecs.microPluginListLink, null);
+    } catch (e) {
+      throw e;
+    }
+    Map resultMap = jsonDecode(
+      ascii.decode(response.bodyBytes),
+    );
+    if (resultMap["code"] != null) {
+      throw APIException(resultMap['msg'], code: resultMap["code"]);
+    }
+    var result = resultMap["micro_plugins"].cast<Map>();
     if (result == null) {
       throw DataException();
     }
@@ -229,7 +252,7 @@ class NForumService {
         ascii.decode(response.bodyBytes),
       );
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = WelcomeInfo.fromJson(resultMap);
       if (result == null) {
@@ -288,7 +311,7 @@ class NForumService {
     return Request.httpGet(NForumSpecs.baseURL + 'widget/topten.json', {'oauth_token': currentToken}).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = ToptenModel.fromJson(resultMap);
       if (result == null) {
@@ -310,7 +333,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = TimelineModel.fromJson(resultMap);
       if (result == null) {
@@ -333,7 +356,7 @@ class NForumService {
     }).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = ThreadModel.fromJson(resultMap);
       if (result == null) {
@@ -351,7 +374,7 @@ class NForumService {
     }).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = BetModel.fromJson(resultMap);
       if (result == null) {
@@ -379,7 +402,7 @@ class NForumService {
     }
     Map resultMap = jsonDecode(response.body);
     if (resultMap["code"] != null) {
-      throw APIException(resultMap['msg']);
+      throw APIException(resultMap['msg'], code: resultMap["code"]);
     }
     var result = resultMap;
     if (result == null) {
@@ -394,7 +417,7 @@ class NForumService {
     }).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = BetCategoriesModel.fromJson(resultMap);
       if (result == null) {
@@ -416,7 +439,7 @@ class NForumService {
     }).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       resultMap['pagination'].forEach((k, v) {
         if (v is String) {
@@ -439,7 +462,7 @@ class NForumService {
     }).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = VoteModel.fromJson(resultMap);
       if (result == null) {
@@ -473,7 +496,7 @@ class NForumService {
     }
     Map resultMap = jsonDecode(response.body);
     if (resultMap["code"] != null) {
-      throw APIException(resultMap['msg']);
+      throw APIException(resultMap['msg'], code: resultMap["code"]);
     }
     var result = resultMap;
     if (result == null) {
@@ -492,7 +515,7 @@ class NForumService {
     }).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       resultMap['pagination'].forEach((k, v) {
         if (v is String) {
@@ -529,7 +552,7 @@ class NForumService {
     }
     Map resultMap = jsonDecode(response.body);
     if (resultMap["code"] != null) {
-      throw APIException(resultMap['msg']);
+      throw APIException(resultMap['msg'], code: resultMap["code"]);
     }
     var result = resultMap;
     if (result == null) {
@@ -559,7 +582,7 @@ class NForumService {
     }
     Map resultMap = jsonDecode(response.body);
     if (resultMap["code"] != null) {
-      throw APIException(resultMap['msg']);
+      throw APIException(resultMap['msg'], code: resultMap["code"]);
     }
     var result = resultMap;
     if (result == null) {
@@ -613,7 +636,7 @@ class NForumService {
     return Request.httpGet(NForumSpecs.baseURL + 'banner.json', {'oauth_token': currentToken}).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = BannerModel.fromJson(resultMap);
       if (result == null) {
@@ -629,7 +652,7 @@ class NForumService {
     return Request.httpGet(NForumSpecs.baseURL + 'favorite/0.json', {'oauth_token': currentToken}).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       FavBoardsModel f = FavBoardsModel.fromJson(resultMap);
       if (f == null) {
@@ -653,7 +676,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = FavBoardsModel.fromJson(resultMap);
       if (result == null) {
@@ -676,7 +699,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = FavBoardsModel.fromJson(resultMap);
       if (result == null) {
@@ -697,7 +720,7 @@ class NForumService {
     }).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = BoardModel.fromJson(resultMap);
       if (result == null) {
@@ -715,7 +738,7 @@ class NForumService {
     }).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = SectionListModel.fromJson(resultMap);
       if (result == null) {
@@ -733,7 +756,7 @@ class NForumService {
     }).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = SectionModel.fromJson(resultMap);
       if (result == null) {
@@ -753,7 +776,7 @@ class NForumService {
     }).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = CollectionModel.fromJson(resultMap);
       if (result == null) {
@@ -776,7 +799,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = ThreadArticleModel.fromJson(resultMap);
       if (result == null) {
@@ -799,7 +822,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = ThreadArticleModel.fromJson(resultMap);
       if (result == null) {
@@ -822,7 +845,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = ReferBoxModel.fromJson(resultMap);
       if (result == null) {
@@ -845,7 +868,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = ReferBoxModel.fromJson(resultMap);
       if (result == null) {
@@ -867,7 +890,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = ReferModel.fromJson(resultMap);
       if (result == null) {
@@ -902,7 +925,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = MailBoxModel.fromJson(resultMap);
       if (result == null) {
@@ -923,7 +946,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = MailModel.fromJson(resultMap);
       if (result == null) {
@@ -942,7 +965,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = MailModel.fromJson(resultMap);
       if (result == null) {
@@ -1011,7 +1034,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = BoardSearchModel.fromJson(resultMap);
       if (result == null) {
@@ -1049,7 +1072,7 @@ class NForumService {
     return Request.httpGet(NForumSpecs.baseURL + 'search/threads.json', params).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = ThreadSearchModel.fromJson(resultMap);
       if (result == null) {
@@ -1070,7 +1093,7 @@ class NForumService {
     ).then((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
-        throw APIException(resultMap['msg']);
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
       var result = UserModel.fromJson(resultMap);
       if (result == null) {
