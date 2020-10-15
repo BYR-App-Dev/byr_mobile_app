@@ -306,7 +306,7 @@ abstract class ArticleListBaseModel<T extends ArticleBaseModel> extends Pageable
 class ThreadArticleModel extends ArticleBaseModel {
   ThreadArticleModel({
     this.id,
-    groupId,
+    this.groupId,
     this.replyId,
     this.flag,
     this.position,

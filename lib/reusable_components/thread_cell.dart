@@ -52,7 +52,7 @@ class ThreadPageListCellArticleLayouter extends ThreadPageListCellDataLayouter<T
 
   @override
   String getTimeText(ThreadArticleModel d) {
-    if (d.boardName == 'Constellations' && d.groupId == 326533) {
+    if (d.boardName == 'Constellations' && (d.groupId == 326533 || d.groupId == 408580)) {
       return Helper.convTimestampToRelativeIncludingSeconds(d.postTime);
     } else {
       return Helper.convTimestampToRelative(d.postTime);
