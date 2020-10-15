@@ -34,7 +34,8 @@ class CustomGifHeaderState extends RefreshIndicatorState<CustomGifHeader> with S
 
   @override
   void onModeChange(RefreshStatus mode) {
-    if (mode == RefreshStatus.canRefresh) {
+    if ((mode == RefreshStatus.canRefresh) ||
+        (mode == RefreshStatus.refreshing && _gifController.isAnimating == false)) {
       _gifController.repeat(
         min: 0,
         max: widget.topFrameCount * 1.0,

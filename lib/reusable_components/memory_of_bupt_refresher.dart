@@ -40,6 +40,9 @@ class MemoryOfBUPTHeaderState extends RefreshIndicatorState<MemoryOfBUPTHeader> 
 
   @override
   void onModeChange(RefreshStatus mode) {
+    if (mode == RefreshStatus.refreshing && animationController.isAnimating == false) {
+      animationController.repeat();
+    }
     super.onModeChange(mode);
   }
 

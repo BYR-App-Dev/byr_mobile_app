@@ -29,7 +29,7 @@ class AirconSummerHeaderState extends RefreshIndicatorState with SingleTickerPro
 
   @override
   void onModeChange(RefreshStatus mode) {
-    if (mode == RefreshStatus.canRefresh) {
+    if (mode == RefreshStatus.canRefresh || (mode == RefreshStatus.refreshing && _gifController.isAnimating == false)) {
       _gifController.repeat(
         min: 0,
         max: 3.0,
