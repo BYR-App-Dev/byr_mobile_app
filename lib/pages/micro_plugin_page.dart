@@ -63,14 +63,14 @@ class MicroPluginPageState extends State<MicroPluginPage> {
           if (!mounted) {
             return;
           }
-          _emit('getLayout', content: "");
+          _emit('getLayout', content: "").catchError((e) {});
         });
 
         await _microService.addEventListener('coreVersion', (service, event, eventPayload) {
           if (!mounted) {
             return;
           }
-          _emit('getCoreVersion', content: coreVersion);
+          _emit('getCoreVersion', content: coreVersion).catchError((e) {});
         });
 
         await _microService.addEventListener('getUserId', (service, event, eventPayload) async {
@@ -81,7 +81,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
           if (me != null) {
             _emit("callbackUserId", content: {
               "id": me.id,
-            });
+            }).catchError((e) {});
           }
         });
 
@@ -122,14 +122,12 @@ class MicroPluginPageState extends State<MicroPluginPage> {
 
   void startPlugin() {
     if (_microService.isStarted) {
-      _emit('getLayout', content: "");
+      _emit('getLayout', content: "").catchError((e) {});
     }
   }
 
-  void _emit(String head, {dynamic content}) async {
-    try {
-      await _microService.emit(head, content);
-    } catch (e) {}
+  Future<void> _emit(String head, {dynamic content}) async {
+    await _microService.emit(head, content).catchError((e) {});
   }
 
   void _setMicroServiceLayoutResponse(Map layoutMap) {
@@ -252,7 +250,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
                 "triggerer": "onPressed",
                 "id": m["onPressed"]["id"],
                 "fetchedValues": fetchedValues,
-              });
+              }).catchError((e) {});
             }
           },
         );
@@ -298,7 +296,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
                 "triggerer": "onTap",
                 "id": m["onTap"]["id"],
                 "fetchedValues": fetchedValues,
-              });
+              }).catchError((e) {});
             }
           },
           onDoubleTap: () {
@@ -315,7 +313,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
                 "triggerer": "onDoubleTap",
                 "id": m["onDoubleTap"]["id"],
                 "fetchedValues": fetchedValues,
-              });
+              }).catchError((e) {});
             }
           },
           onLongPress: () {
@@ -332,7 +330,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
                 "triggerer": "onLongPress",
                 "id": m["onLongPress"]["id"],
                 "fetchedValues": fetchedValues,
-              });
+              }).catchError((e) {});
             }
           },
           // TODO

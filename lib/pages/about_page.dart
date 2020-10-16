@@ -121,10 +121,16 @@ class _AboutPageState extends State<AboutPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      width: double.infinity,
-                      height: 90,
-                      child: Image.asset('resources/logo.png'),
+                    GestureDetector(
+                      onDoubleTap: () {
+                        navigator.push(CupertinoPageRoute(
+                            builder: (_) => WebPage(WebPageRouteArg("https://bbs.byr.cn/n/board/IWhisper"))));
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 90,
+                        child: Image.asset('resources/logo.png'),
+                      ),
                     ),
                     Container(
                       width: double.infinity,

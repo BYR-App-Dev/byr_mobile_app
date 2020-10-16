@@ -8,7 +8,7 @@ import 'package:byr_mobile_app/reusable_components/custom_tabs.dart';
 import 'package:byr_mobile_app/reusable_components/custom_underline_indicator.dart';
 import 'package:flutter/material.dart';
 
-const int additionalTabs = 2;
+const int additionalTabs = 3;
 
 class DiscoverPage extends StatefulWidget {
   @override
@@ -147,6 +147,12 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
                               unselectedFontSize: 12,
                               text: "投票",
                             ),
+                          )
+                          ..add(
+                            CustomTab(
+                              unselectedFontSize: 12,
+                              text: "小程序",
+                            ),
                           ),
                     indicatorColor: E().tabPageTopBarSliderColor,
                     controller: controller,
@@ -181,6 +187,9 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
               ..insert(
                 0,
                 VoteListPage(),
+              )
+              ..add(
+                MicroPluginListPage(),
               ),
         controller: controller,
       ),

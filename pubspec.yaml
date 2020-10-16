@@ -75,7 +75,7 @@ dependencies:
   secrets:
     git:
       url: ssh://git@github.com/BYR-App-Dev/secrets.git
-      ref: master
+      ref: 8d5488569b335639d8d1df4c79b79f4622f8b294
 dev_dependencies:
   flutter_test:
     sdk: flutter
