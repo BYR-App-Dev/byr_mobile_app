@@ -143,7 +143,10 @@ class MicroPluginListPageState extends State<MicroPluginListPage> with Automatic
         itemCount: microPlugins?.length ?? 0,
         itemBuilder: (buildContext, index) {
           return ListTile(
-            title: Text(microPlugins[index]["name"]),
+            title: Text(
+              microPlugins[index]["name"],
+              style: TextStyle(color: E().otherPagePrimaryTextColor),
+            ),
             onTap: () {
               navigator.push(CupertinoPageRoute(
                   builder: (_) => MicroPluginPage(
