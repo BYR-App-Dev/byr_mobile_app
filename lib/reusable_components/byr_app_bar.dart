@@ -1,6 +1,7 @@
 import 'package:byr_mobile_app/customizations/board_info.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/local_objects/local_storage.dart';
+import 'package:byr_mobile_app/reusable_components/refreshers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -39,6 +40,36 @@ class BYRAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _BYRAppBarState extends State<BYRAppBar> {
+  void refreshCurrentPage() {
+    Element scaffoldElement;
+    SmartRefresher refresher;
+
+    bool findScaffold(Element element) {
+      if (element.widget is Scaffold) {
+        scaffoldElement = element;
+        return false;
+      }
+      return true;
+    }
+
+    void findSmartRefresher(Element element) {
+      if (element.widget is SmartRefresher) {
+        refresher = element.widget;
+        return;
+      }
+      element.visitChildren(findSmartRefresher);
+    }
+
+    (context as Element).visitAncestorElements(findScaffold);
+    scaffoldElement.visitChildren(findSmartRefresher);
+    if (refresher != null) {
+      refresher.controller.requestRefresh(
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     String style = LocalStorage.getAppBarStyle();
@@ -47,15 +78,20 @@ class _BYRAppBarState extends State<BYRAppBar> {
     bool colorfulBg = style[2] == '1';
     return AppBar(
       leading: widget.leading,
-      title: DefaultTextStyle(
-        style: TextStyle(
-          color: colorfulTitle && widget.boardName != null
-              ? BoardInfo.getBoardColor(widget.boardName)
-              : (colorfulBg && widget.boardName != null ? Colors.white : E().topBarTitleNormalColor.lighten(10)),
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
+      title: GestureDetector(
+        onDoubleTap: () {
+          refreshCurrentPage();
+        },
+        child: DefaultTextStyle(
+          style: TextStyle(
+            color: colorfulTitle && widget.boardName != null
+                ? BoardInfo.getBoardColor(widget.boardName)
+                : (colorfulBg && widget.boardName != null ? Colors.white : E().topBarTitleNormalColor.lighten(10)),
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+          child: widget.title ?? Container(),
         ),
-        child: widget.title ?? Container(),
       ),
       actions: widget.actions,
       flexibleSpace: widget.flexibleSpace,
