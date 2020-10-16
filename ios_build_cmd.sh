@@ -1,1 +1,1 @@
-flutter build ios --obfuscate --split-debug-info=byr_mobile_app/debug_info
+flutter build ios --obfuscate --split-debug-info=byr_mobile_app/debug_info --no-tree-shake-icons

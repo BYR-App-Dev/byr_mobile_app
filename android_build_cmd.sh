@@ -1,1 +1,1 @@
-flutter build apk --no-shrink --obfuscate --split-debug-info=byr_mobile_app/debug_info --split-per-abi
+flutter build apk --no-shrink --obfuscate --split-debug-info=byr_mobile_app/debug_info --split-per-abi --no-tree-shake-icons
