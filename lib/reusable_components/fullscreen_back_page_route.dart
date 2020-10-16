@@ -13,6 +13,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import 'fullscreen_back_gesture.dart';
+
 const double _kBackGestureWidth = 20.0;
 const double _kMinFlingVelocity = 1.0; // Screen widths per second.
 
@@ -464,19 +466,6 @@ class CupertinoFullscreenDialogTransition extends StatelessWidget {
   }
 }
 
-class _HorizontalDragGestureRecognizer extends HorizontalDragGestureRecognizer {
-  _HorizontalDragGestureRecognizer({
-    Object debugOwner,
-    PointerDeviceKind kind,
-  }) : super(debugOwner: debugOwner, kind: kind);
-
-  @override
-  void handleEvent(PointerEvent event) {
-    if (event.localDelta.dy.abs() > 2.0) return;
-    super.handleEvent(event);
-  }
-}
-
 /// This is the widget side of [_CupertinoBackGestureController].
 ///
 /// This widget provides a gesture recognizer which, when it determines the
@@ -512,12 +501,12 @@ class _CupertinoBackGestureDetector<T> extends StatefulWidget {
 class _CupertinoBackGestureDetectorState<T> extends State<_CupertinoBackGestureDetector<T>> {
   _CupertinoBackGestureController<T> _backGestureController;
 
-  _HorizontalDragGestureRecognizer _recognizer;
+  FullscreenBackGestureRecognizer _recognizer;
 
   @override
   void initState() {
     super.initState();
-    _recognizer = _HorizontalDragGestureRecognizer(debugOwner: this)
+    _recognizer = FullscreenBackGestureRecognizer(debugOwner: this)
       ..onStart = _handleDragStart
       ..onUpdate = _handleDragUpdate
       ..onEnd = _handleDragEnd
