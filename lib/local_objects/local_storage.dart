@@ -78,6 +78,19 @@ class LocalStorage {
     return await _enter("isToptenScreenshotEnabled", v);
   }
 
+  // 是否第一次打开该功能
+  static bool firstEnableFullscreenBack() {
+    return !_box.containsKey("isFullscreenBackEnabled");
+  }
+
+  static bool getIsFullscreenBackEnabled() {
+    return _extract("isFullscreenBackEnabled") ?? false;
+  }
+
+  static Future<void> setIsFullscreenBackEnabled(bool v) async {
+    return await _enter("isFullscreenBackEnabled", v);
+  }
+
   static String getLocale() {
     return _extract("locale") ?? Get.locale.toString();
   }

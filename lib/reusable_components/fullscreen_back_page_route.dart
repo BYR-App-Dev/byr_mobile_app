@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui' show lerpDouble, ImageFilter;
 
+import 'package:byr_mobile_app/local_objects/local_storage.dart';
 import 'package:flutter/animation.dart' show Curves;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -501,16 +502,24 @@ class _CupertinoBackGestureDetector<T> extends StatefulWidget {
 class _CupertinoBackGestureDetectorState<T> extends State<_CupertinoBackGestureDetector<T>> {
   _CupertinoBackGestureController<T> _backGestureController;
 
-  FullscreenBackGestureRecognizer _recognizer;
+  var _recognizer;
 
   @override
   void initState() {
     super.initState();
-    _recognizer = FullscreenBackGestureRecognizer(debugOwner: this)
-      ..onStart = _handleDragStart
-      ..onUpdate = _handleDragUpdate
-      ..onEnd = _handleDragEnd
-      ..onCancel = _handleDragCancel;
+    if (LocalStorage.getIsFullscreenBackEnabled()) {
+      _recognizer = FullscreenBackGestureRecognizer(debugOwner: this)
+        ..onStart = _handleDragStart
+        ..onUpdate = _handleDragUpdate
+        ..onEnd = _handleDragEnd
+        ..onCancel = _handleDragCancel;
+    } else {
+      _recognizer = HorizontalDragGestureRecognizer(debugOwner: this)
+        ..onStart = _handleDragStart
+        ..onUpdate = _handleDragUpdate
+        ..onEnd = _handleDragEnd
+        ..onCancel = _handleDragCancel;
+    }
   }
 
   @override
@@ -566,7 +575,7 @@ class _CupertinoBackGestureDetectorState<T> extends State<_CupertinoBackGestureD
     // For devices with notches, the drag area needs to be larger on the side
     // that has the notch.
     double dragAreaWidth = Directionality.of(context) == TextDirection.ltr ? MediaQuery.of(context).padding.left : MediaQuery.of(context).padding.right;
-    dragAreaWidth = max(dragAreaWidth, MediaQuery.of(context).size.width);
+    dragAreaWidth = max(dragAreaWidth, LocalStorage.getIsFullscreenBackEnabled() ? MediaQuery.of(context).size.width : _kBackGestureWidth);
     return Stack(
       fit: StackFit.passthrough,
       children: <Widget>[

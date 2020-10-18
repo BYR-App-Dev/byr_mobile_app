@@ -126,6 +126,42 @@ class SettingsPageState extends State<SettingsPage> {
                       }),
                   onTap: null,
                 ),
+                Divider(),
+                NonPaddingListTile(
+                  contentPadding: EdgeInsets.only(left: 15, right: 5),
+                  title: Text(
+                    "fullscreenBackGesture".tr,
+                    style: TextStyle(
+                      color: E().otherPagePrimaryTextColor,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  trailing: Switch(
+                      value: LocalStorage.getIsFullscreenBackEnabled(),
+                      onChanged: (newValue) async {
+                        if (newValue && LocalStorage.firstEnableFullscreenBack()) {
+                          await LocalStorage.setIsFullscreenBackEnabled(newValue);
+                          AdaptiveComponents.showAlertDialog(
+                            context,
+                            title: "点击查看说明文档",
+                            confirm: "查看文档",
+                            hideCancel: true,
+                            onDismiss: (value) async {
+                              if (value == AlertResult.confirm) {
+                                await Navigator.of(context).pushNamed("thread_page", arguments: ThreadPageRouteArg("BBShelp", 22557));
+                                if (mounted) {
+                                  setState(() {});
+                                }
+                              }
+                            },
+                          );
+                        } else {
+                          await LocalStorage.setIsFullscreenBackEnabled(newValue);
+                          setState(() {});
+                        }
+                      }),
+                  onTap: null,
+                ),
                 if (UniversalPlatform.isAndroid) Divider(),
                 if (UniversalPlatform.isAndroid)
                   NonPaddingListTile(
