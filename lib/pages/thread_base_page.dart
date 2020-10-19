@@ -311,16 +311,16 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   }
 
   Future<void> bottomDataLoader({Function afterLoad}) {
-    var oldCount = data.thread.article.length % PageConfig.pageItemCount;
-    oldCount = oldCount == 0 ? PageConfig.pageItemCount : oldCount;
-    var oldLength = data.thread.article.length;
-    var lastPageStartIndex = oldLength - oldCount;
     return NForumService.getThread(
       data.boardName,
       data.groupId,
       page: data.currentMaxPage,
       author: data.authorToShow,
     ).then((thread) {
+      var oldCount = data.thread.article.length % PageConfig.pageItemCount;
+      oldCount = oldCount == 0 ? PageConfig.pageItemCount : oldCount;
+      var oldLength = data.thread.article.length;
+      var lastPageStartIndex = oldLength - oldCount;
       if (data.authorToShow != null && data.authorToShow != "") {
         thread.likeArticles = [];
       }
@@ -1085,7 +1085,9 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
           /// Todo: AppBar显示已选择楼层的个数
           title: Text(
             screenshotStatus != ScreenshotStatus.Dismissed
-                ? screenshotStatus == ScreenshotStatus.Selecting ? '选择楼层' : '分享图片'
+                ? screenshotStatus == ScreenshotStatus.Selecting
+                    ? '选择楼层'
+                    : '分享图片'
                 : "threadTrans".tr,
           ),
           leading: screenshotStatus != ScreenshotStatus.Dismissed

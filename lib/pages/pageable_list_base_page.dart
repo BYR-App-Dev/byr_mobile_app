@@ -138,11 +138,11 @@ abstract class PageableListBasePageState<Y extends PageableListBaseModel, Z exte
   }
 
   Future<void> bottomDataLoader({Function afterLoad}) {
-    var oldCount = data.articleList.article.length % PageConfig.pageItemCount;
-    oldCount = oldCount == 0 ? PageConfig.pageItemCount : oldCount;
-    var oldLength = data.articleList.article.length;
-    var lastPageStartIndex = oldLength - oldCount;
     return data.dataRequestHandler(data.currentMaxPage).then((timelime) {
+      var oldCount = data.articleList.article.length % PageConfig.pageItemCount;
+      oldCount = oldCount == 0 ? PageConfig.pageItemCount : oldCount;
+      var oldLength = data.articleList.article.length;
+      var lastPageStartIndex = oldLength - oldCount;
       if (data.articleList.pagination.pageCurrentCount == data.currentMaxPage) {
         data.articleList.article.removeRange(lastPageStartIndex, oldLength);
         data.articleList.article.addAll(timelime.article);
