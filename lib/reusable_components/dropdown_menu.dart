@@ -77,20 +77,31 @@ class _DropdownMenuState extends State<DropdownMenu> {
   }
 
   _hideMenu() {
-    _overlayEntry?.remove();
+    if (_overlayEntry != null) {
+      _overlayEntry.remove();
+      _overlayEntry = null;
+    }
   }
 
   /// 这里是DropdownMenu的实现原理：
   /// 首先最基本的，使用overlay的方式插入到context的整个Overlay，这就实现了显示
   /// 其次，坐标定位借助于RenderBox与Offset找到位置与大小
-  /// 需要注意的时，像这类DropdownMenu，只要它被触发展示出来，这时用户点击除menu其他位置都将触发【消失】事件
-  /// 因此在下面代码的_overlayEntry布局中，menu上下都需要两个GestureDetector消费点击事件。
+  /// 需要注意的是：
+  /// 1. 点击menu上部分将隐藏menu，并将点击事件透传
+  /// 2. 点击menu消费点击事件
+  /// 3. 点击menu下部分（黑色蒙层）将隐藏menu，不继续传递事件
   _buildOverlay() {
     if (_headerKey == null) return;
     RenderBox renderBox = _headerKey.currentContext.findRenderObject();
     Offset offset = renderBox.localToGlobal(Offset.zero);
     double top = renderBox.size.height + offset.dy;
     double itemHeight = 50.0;
+    Rect boxRect = Rect.fromLTWH(
+      offset.dx,
+      offset.dy,
+      renderBox.size.width,
+      renderBox.size.height,
+    );
     _overlayEntry = OverlayEntry(
       builder: (context) {
         return Container(
@@ -98,9 +109,14 @@ class _DropdownMenuState extends State<DropdownMenu> {
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: <Widget>[
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: _controller.hideMenu,
+              Listener(
+                behavior: HitTestBehavior.translucent,
+                onPointerDown: (event) {
+                  // if point in header box, let menu header hide menu
+                  if (!boxRect.contains(event.localPosition)) {
+                    _controller.hideMenu();
+                  }
+                },
                 child: Container(
                   height: top,
                 ),
@@ -159,9 +175,7 @@ class _DropdownMenuState extends State<DropdownMenu> {
                                                 item,
                                                 style: TextStyle(
                                                   fontSize: 16,
-                                                  color: index == _controller.curSelectedIndex
-                                                      ? Colors.black
-                                                      : Colors.grey,
+                                                  color: index == _controller.curSelectedIndex ? Colors.black : Colors.grey,
                                                 ),
                                               ),
                                               color: Colors.transparent,
