@@ -84,10 +84,10 @@ void main() {
           case "settings_page":
             return FullscreenBackPageRoute(builder: (context) => SettingsPage(), settings: settings, maintainState: true);
           case "post_page":
-            return FullscreenBackPageRoute(builder: (context) => PostPage(settings.arguments), settings: settings, maintainState: true);
+            return CupertinoPageRoute(builder: (context) => PostPage(settings.arguments), settings: settings, maintainState: true);
           case "send_mail_page":
             if (settings.arguments is SendMailPageRouteArg) {
-              return FullscreenBackPageRoute(builder: (context) => SendMailPage(settings.arguments), settings: settings, maintainState: true);
+              return CupertinoPageRoute(builder: (context) => SendMailPage(settings.arguments), settings: settings, maintainState: true);
             }
             return null;
           case "mail_page":
