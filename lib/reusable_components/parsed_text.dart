@@ -348,6 +348,27 @@ class ParsedText extends StatelessWidget {
     return ret;
   }
 
+  WidgetSpanExternalAudioChildHandler externalVideoHandlerGenerator(BuildContext context) {
+    WidgetSpanExternalAudioChildHandler ret = (String url) {
+      return Container(
+        child: Row(
+          children: <Widget>[
+            FlatButton(
+              child: Icon(
+                Icons.video_library,
+                color: E().threadPageContentColor,
+              ),
+              onPressed: () {
+                navigator.pushNamed("video_page", arguments: url);
+              },
+            ),
+          ],
+        ),
+      );
+    };
+    return ret;
+  }
+
   @override
   Widget build(BuildContext context) {
     return NForumParsedText(
@@ -367,6 +388,7 @@ class ParsedText extends StatelessWidget {
         otherAttachmentWidget: otherAttachmentHandlerGenerator(context),
         externalImageWidget: externalImageHandlerGenerator(context),
         externalAudioWidget: externalAudioHandlerGenerator(context),
+        externalVideoWidget: externalVideoHandlerGenerator(context),
         uploadedExtractor: uploadedExtractor,
       ),
     );

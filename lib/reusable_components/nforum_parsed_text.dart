@@ -11,6 +11,7 @@ typedef bool WebLinkHandler(String link);
 typedef Widget WidgetSpanChildHandler(int upId);
 typedef Widget WidgetSpanExternalImageChildHandler(String link);
 typedef Widget WidgetSpanExternalAudioChildHandler(String link);
+typedef Widget WidgetSpanExternalVideoChildHandler(String link);
 
 class NForumTextParsingConfig {
   final String text;
@@ -25,6 +26,7 @@ class NForumTextParsingConfig {
   final WidgetSpanChildHandler imageAttachmentWidget;
   final WidgetSpanExternalImageChildHandler externalImageWidget;
   final WidgetSpanExternalImageChildHandler externalAudioWidget;
+  final WidgetSpanExternalVideoChildHandler externalVideoWidget;
   final WidgetSpanChildHandler audioAttachmentWidget;
   final WidgetSpanChildHandler themeAttachmentWidget;
   final WidgetSpanChildHandler refresherAttachmentWidget;
@@ -43,6 +45,7 @@ class NForumTextParsingConfig {
     this.imageAttachmentWidget,
     this.externalImageWidget,
     this.externalAudioWidget,
+    this.externalVideoWidget,
     this.audioAttachmentWidget,
     this.themeAttachmentWidget,
     this.refresherAttachmentWidget,
@@ -61,6 +64,7 @@ class NForumTextParsingConfig {
     this.imageAttachmentWidget,
     this.externalImageWidget,
     this.externalAudioWidget,
+    this.externalVideoWidget,
     this.audioAttachmentWidget,
     this.themeAttachmentWidget,
     this.refresherAttachmentWidget,
@@ -79,6 +83,7 @@ class NForumTextParsingConfig {
     this.imageAttachmentWidget,
     this.externalImageWidget,
     this.externalAudioWidget,
+    this.externalVideoWidget,
     this.audioAttachmentWidget,
     this.themeAttachmentWidget,
     this.refresherAttachmentWidget,
@@ -485,6 +490,21 @@ class NForumParsedText extends StatelessWidget {
             ),
             WidgetSpan(
               child: parsingConfig.externalAudioWidget(upAddr.split(" ")[0].replaceFirst("http://", "https://")),
+            ),
+            TextSpan(
+              children: _bbText(parsingConfig, str.substring(m.end), defT, rec),
+              recognizer: rec,
+            ),
+          ];
+        } else if (m.group(1) == 'vid' && gar != null && gar.length >= 2) {
+          var upAddr = gar.substring(1);
+          return [
+            TextSpan(
+              children: _bbText(parsingConfig, str.substring(0, m.start) + "\n", defT, rec),
+              recognizer: rec,
+            ),
+            WidgetSpan(
+              child: parsingConfig.externalVideoWidget(upAddr),
             ),
             TextSpan(
               children: _bbText(parsingConfig, str.substring(m.end), defT, rec),
