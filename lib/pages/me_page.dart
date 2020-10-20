@@ -14,6 +14,7 @@ import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
@@ -318,20 +319,30 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
   Widget _getAvatar(double size) {
     return FutureBuilder(
       builder: (context, snapshot) => snapshot.hasData
-          ? ClickableAvatar(
-              radius: size,
-              emptyUser: snapshot.data?.faceUrl == null,
-              isWhisper: (snapshot.data?.id ?? "").startsWith("IWhisper"),
-              imageLink: NForumService.makeGetURL(snapshot.data?.faceUrl ?? ""),
-              onTap: () {
-                if (snapshot.data?.faceUrl == null) {
-                  return;
-                }
-                navigator.pushNamed(
-                  "profile_page",
-                  arguments: snapshot.data,
-                );
-              },
+          ? Draggable(
+              child: ClickableAvatar(
+                radius: size,
+                emptyUser: snapshot.data?.faceUrl == null,
+                isWhisper: (snapshot.data?.id ?? "").startsWith("IWhisper"),
+                imageLink: NForumService.makeGetURL(snapshot.data?.faceUrl ?? ""),
+                onTap: () {
+                  if (snapshot.data?.faceUrl == null) {
+                    return;
+                  }
+                  navigator.pushNamed(
+                    "profile_page",
+                    arguments: snapshot.data,
+                  );
+                },
+              ),
+              childWhenDragging: Container(),
+              feedback: ClickableAvatar(
+                radius: size,
+                emptyUser: snapshot.data?.faceUrl == null,
+                isWhisper: (snapshot.data?.id ?? "").startsWith("IWhisper"),
+                imageLink: NForumService.makeGetURL(snapshot.data?.faceUrl ?? ""),
+                onTap: () {},
+              ),
             )
           : ClickableAvatar(
               radius: size,
