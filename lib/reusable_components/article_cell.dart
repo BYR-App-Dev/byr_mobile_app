@@ -376,7 +376,7 @@ class ArticleCell extends StatelessWidget {
             cellStyle = CellStyle.image;
           }
 
-          if (cellStyle == CellStyle.half) {
+          if (cellStyle == CellStyle.half || cellStyle == CellStyle.allAtt) {
             _imageWidth = (constraints.maxWidth - (_itemCount - 1) * _mainSpacing) / _itemCount;
             _imageHeight = _imageWidth / _imageWHRadio;
             double contentWidth = constraints.maxWidth - _mainSpacing - _imageWidth;
