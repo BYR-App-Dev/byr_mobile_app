@@ -55,8 +55,6 @@ abstract class _DragGestureRecognizer extends OneSequenceGestureRecognizer {
 
   final Map<int, VelocityTracker> _velocityTrackers = <int, VelocityTracker>{};
 
-  bool get isDragReady => _state == _DragState.ready;
-
   @override
   bool isPointerAllowed(PointerEvent event) {
     if (_initialButtons == null) {
@@ -342,7 +340,7 @@ class FullscreenBackGestureRecognizer extends _HorizontalDragGestureRecognizer {
 
   @override
   void handleEvent(PointerEvent event) {
-    if (event.localDelta.dy.abs() > 2.0 && isDragReady) return;
+    if (event.localDelta.direction != 0.0 && _state != _DragState.accepted) return;
     super.handleEvent(event);
   }
 }
