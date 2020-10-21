@@ -213,6 +213,24 @@ class MicroPluginPageState extends State<MicroPluginPage> {
             return retrieveWidget(e);
           }).toList(),
         );
+      case "Stack":
+        return Stack(
+          alignment: AlignmentDirectional(
+              double.tryParse(m["alignmentX"] ?? '') ?? -1.0, double.tryParse(m["alignmentY"] ?? '') ?? -1.0),
+          children: (m["children"] as List).map<Widget>((e) {
+            return retrieveWidget(e);
+          }).toList(),
+        );
+      case "Positioned":
+        return Positioned(
+          child: retrieveWidget(m["child"]),
+          left: double.tryParse(m["left"] ?? '') ?? null,
+          right: double.tryParse(m["right"] ?? '') ?? null,
+          top: double.tryParse(m["top"] ?? '') ?? null,
+          bottom: double.tryParse(m["bottom"] ?? '') ?? null,
+          width: double.tryParse(m["width"] ?? '') ?? null,
+          height: double.tryParse(m["height"] ?? '') ?? null,
+        );
       case "Container":
         return Container(
           alignment: Helper.alignmentGeometryFromString(m["alignment"]),
