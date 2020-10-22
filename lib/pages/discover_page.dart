@@ -8,14 +8,15 @@ import 'package:byr_mobile_app/reusable_components/custom_tabs.dart';
 import 'package:byr_mobile_app/reusable_components/custom_underline_indicator.dart';
 import 'package:flutter/material.dart';
 
-const int additionalTabs = 2;
+const int additionalTabs = 3;
 
 class DiscoverPage extends StatefulWidget {
   @override
   DiscoverPageState createState() => DiscoverPageState();
 }
 
-class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class DiscoverPageState extends State<DiscoverPage>
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   List<String> boardsToLoad = [];
 
   Map<String, bool> boardsAvailable;
@@ -27,7 +28,10 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
 
     boardsAvailable = Map<String, bool>();
 
-    controller = CustomTabController(initialIndex: 0, length: additionalTabs + boardsAvailable.length, vsync: this);
+    controller = CustomTabController(
+        initialIndex: 0,
+        length: additionalTabs + boardsAvailable.length,
+        vsync: this);
 
     NForumService.getRecommendedBoards().then((List<String> recommendedBoards) {
       recommendedBoards.forEach((b) {
@@ -104,7 +108,8 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
                       begin: Alignment(0.9, 0.0),
                       end: Alignment(1.0, 0.0),
                       colors: [Colors.black, Colors.transparent],
-                    ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
+                    ).createShader(
+                        Rect.fromLTRB(0, 0, rect.width, rect.height));
                   },
                   blendMode: BlendMode.dstIn,
                   child: CustomTabBar(
@@ -116,22 +121,24 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
                       ),
                     ),
                     indicatorWeight: 3,
-                    labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    labelStyle:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     labelColor: E().topBarTitleNormalColor,
                     unselectedLabelStyle: TextStyle(fontSize: 12),
                     unselectedLabelColor: E().topBarTitleUnSelectedColor,
                     tabs: boardsToLoad
                         .fold<List<Widget>>(
                           List<Widget>(),
-                          (previousValue, element) => boardsAvailable[element] == true
-                              ? (previousValue
-                                ..add(
-                                  CustomTab(
-                                    unselectedFontSize: 12,
-                                    text: BoardAttInfo.desc(element),
-                                  ),
-                                ))
-                              : previousValue,
+                          (previousValue, element) =>
+                              boardsAvailable[element] == true
+                                  ? (previousValue
+                                    ..add(
+                                      CustomTab(
+                                        unselectedFontSize: 12,
+                                        text: BoardAttInfo.desc(element),
+                                      ),
+                                    ))
+                                  : previousValue,
                         )
                         .toList()
                           ..insert(
@@ -148,13 +155,12 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
                               text: "投票",
                             ),
                           )
-                    // ..add(
-                    //   CustomTab(
-                    //     unselectedFontSize: 12,
-                    //     text: "小程序",
-                    //   ),
-                    // )
-                    ,
+                          ..add(
+                            CustomTab(
+                              unselectedFontSize: 12,
+                              text: "小程序",
+                            ),
+                          ),
                     indicatorColor: E().tabPageTopBarSliderColor,
                     controller: controller,
                   ),
@@ -189,10 +195,9 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
                 0,
                 VoteListPage(),
               )
-        // ..add(
-        // MicroPluginListPage(),
-        // )
-        ,
+              ..add(
+                MicroPluginListPage(),
+              ),
         controller: controller,
       ),
     );
