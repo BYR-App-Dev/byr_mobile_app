@@ -9,6 +9,7 @@ import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class MicroPluginListPage extends StatefulWidget {
   @override
@@ -151,7 +152,9 @@ class MicroPluginListPageState extends State<MicroPluginListPage> with Automatic
               navigator.push(CupertinoPageRoute(
                   builder: (_) => MicroPluginPage(
                         pluginName: microPlugins[index]["name"],
-                        pluginURI: microPlugins[index]["uri"],
+                        pluginURI: UniversalPlatform.isAndroid
+                            ? (microPlugins[index]["uri_android"] ?? microPlugins[index]["uri"])
+                            : (microPlugins[index]["uri_ios"] ?? microPlugins[index]["uri"]),
                       )));
             },
           );
