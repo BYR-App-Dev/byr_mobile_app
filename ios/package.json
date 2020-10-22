@@ -1,0 +1,32 @@
+{
+  "name": "ios",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "liquidcore": "^0.7.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "server": "liquidcore server",
+    "bundler": "liquidcore bundle",
+    "init": "liquidcore init",
+    "gradle-config": "liquidcore gradle",
+    "pod-config": "liquidcore pod",
+    "postinstall": "liquidcore postinstall"
+  },
+  "author": "",
+  "license": "ISC",
+  "liquidcore": {
+    "entry": [
+      "example.js"
+    ],
+    "pod_options": {
+      "target": "Runner",
+      "podfile": "Podfile"
+    },
+    "bundler_output": {
+      "ios": ".liquidcore/ios_bundle"
+    }
+  }
+}
