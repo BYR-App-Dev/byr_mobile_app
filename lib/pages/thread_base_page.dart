@@ -97,6 +97,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
 
   @override
   void dispose() {
+    removePopupMenu();
     refreshController.dispose();
     super.dispose();
   }
@@ -973,7 +974,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        _popUpMenuOverlay?.remove();
+        removePopupMenu();
         if (onTap != null) onTap();
       },
       child: Container(
@@ -1009,6 +1010,13 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     );
   }
 
+  removePopupMenu() {
+    if (_popUpMenuOverlay != null) {
+      _popUpMenuOverlay.remove();
+      _popUpMenuOverlay = null;
+    }
+  }
+
   showPopupMenu({
     double radius = 5.0,
     double arrowSize = 10,
@@ -1033,7 +1041,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         return Stack(
           children: <Widget>[
             GestureDetector(
-              onTap: () => _popUpMenuOverlay?.remove(),
+              onTap: removePopupMenu,
               child: Container(
                 width: deviceSize.width,
                 height: deviceSize.height,
@@ -1077,217 +1085,223 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   Widget build(BuildContext context) {
     super.build(context);
     return Obx(
-      () => Scaffold(
-        key: scaffoldKey,
-        appBar: BYRAppBar(
-          boardName: widget.arg.boardName,
+      () => WillPopScope(
+        onWillPop: () {
+          removePopupMenu();
+          return Future.value(true);
+        },
+        child: Scaffold(
+          key: scaffoldKey,
+          appBar: BYRAppBar(
+            boardName: widget.arg.boardName,
 
-          /// Todo: AppBar显示已选择楼层的个数
-          title: Text(
-            screenshotStatus != ScreenshotStatus.Dismissed
-                ? screenshotStatus == ScreenshotStatus.Selecting
-                    ? '选择楼层'
-                    : '分享图片'
-                : "threadTrans".tr,
-          ),
-          leading: screenshotStatus != ScreenshotStatus.Dismissed
-              ? GestureDetector(
-                  child: Icon(
-                    Icons.close,
-                    size: 28,
-                  ),
-                  onTap: () {
-                    if (screenshotStatus == ScreenshotStatus.Previewing) {
-                      backToSelecting();
-                    } else {
-                      cancelScreenshot();
-                    }
-                  },
-                )
-              : null,
-          actions: screenshotStatus != ScreenshotStatus.Dismissed
-              ? []
-              : <Widget>[
-                  LikeButton(
-                    isLiked: data.isCollected ?? false,
-                    likeBuilder: (bool isLiked) {
-                      return Icon(
-                        isLiked ? FontAwesomeIcons.solidStar : FontAwesomeIcons.star,
-                        color: isLiked ? (AppBarCustomization.appBarIsColorfulTitle() ? null : Colors.orange) : null,
-                        size: 22,
-                      );
-                    },
-                    circleColor: CircleColor(
-                      start: AppBarCustomization.appBarIsColorfulTitle()
-                          ? BoardInfo.getBoardColor(widget.arg.boardName).withOpacity(0.5)
-                          : Colors.orange.withOpacity(0.5),
-                      end: AppBarCustomization.appBarIsColorfulTitle()
-                          ? BoardInfo.getBoardColor(widget.arg.boardName)
-                          : Colors.orange,
+            /// Todo: AppBar显示已选择楼层的个数
+            title: Text(
+              screenshotStatus != ScreenshotStatus.Dismissed
+                  ? screenshotStatus == ScreenshotStatus.Selecting
+                      ? '选择楼层'
+                      : '分享图片'
+                  : "threadTrans".tr,
+            ),
+            leading: screenshotStatus != ScreenshotStatus.Dismissed
+                ? GestureDetector(
+                    child: Icon(
+                      Icons.close,
+                      size: 28,
                     ),
-                    bubblesColor: BubblesColor(
-                      dotPrimaryColor: AppBarCustomization.appBarIsColorfulTitle()
-                          ? BoardInfo.getBoardColor(widget.arg.boardName).withOpacity(0.5)
-                          : Colors.orange.withOpacity(0.5),
-                      dotSecondaryColor: AppBarCustomization.appBarIsColorfulTitle()
-                          ? BoardInfo.getBoardColor(widget.arg.boardName)
-                          : Colors.orange,
-                    ),
-                    onTap: (bool isCollected) {
-                      HapticFeedback.heavyImpact();
-                      return onCollectButtonTapped(isCollected);
+                    onTap: () {
+                      if (screenshotStatus == ScreenshotStatus.Previewing) {
+                        backToSelecting();
+                      } else {
+                        cancelScreenshot();
+                      }
                     },
-                  ),
-                  IconButton(
-                    key: moreKey,
-                    icon: Icon(Icons.more_horiz, size: 30),
-                    onPressed: () {
-                      showPopupMenu(
-                        backgroundColor: E().threadPageBackgroundColor,
-                        child: IntrinsicWidth(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              _itemWidget(
-                                FontAwesomeIcons.thList,
-                                "backToBoardTrans".tr,
-                                onTap: () {
-                                  if (Navigator.of(context).canPop() && data.fromBoard ?? false) {
-                                    Navigator.of(context).pop();
-                                  } else {
-                                    Navigator.of(context).pushNamed(
-                                      "board_page",
-                                      arguments: BoardPageRouteArg(data.boardName),
-                                    );
-                                  }
-                                },
-                              ),
-                              if (data.boardName == 'IWhisper')
+                  )
+                : null,
+            actions: screenshotStatus != ScreenshotStatus.Dismissed
+                ? []
+                : <Widget>[
+                    LikeButton(
+                      isLiked: data.isCollected ?? false,
+                      likeBuilder: (bool isLiked) {
+                        return Icon(
+                          isLiked ? FontAwesomeIcons.solidStar : FontAwesomeIcons.star,
+                          color: isLiked ? (AppBarCustomization.appBarIsColorfulTitle() ? null : Colors.orange) : null,
+                          size: 22,
+                        );
+                      },
+                      circleColor: CircleColor(
+                        start: AppBarCustomization.appBarIsColorfulTitle()
+                            ? BoardInfo.getBoardColor(widget.arg.boardName).withOpacity(0.5)
+                            : Colors.orange.withOpacity(0.5),
+                        end: AppBarCustomization.appBarIsColorfulTitle()
+                            ? BoardInfo.getBoardColor(widget.arg.boardName)
+                            : Colors.orange,
+                      ),
+                      bubblesColor: BubblesColor(
+                        dotPrimaryColor: AppBarCustomization.appBarIsColorfulTitle()
+                            ? BoardInfo.getBoardColor(widget.arg.boardName).withOpacity(0.5)
+                            : Colors.orange.withOpacity(0.5),
+                        dotSecondaryColor: AppBarCustomization.appBarIsColorfulTitle()
+                            ? BoardInfo.getBoardColor(widget.arg.boardName)
+                            : Colors.orange,
+                      ),
+                      onTap: (bool isCollected) {
+                        HapticFeedback.heavyImpact();
+                        return onCollectButtonTapped(isCollected);
+                      },
+                    ),
+                    IconButton(
+                      key: moreKey,
+                      icon: Icon(Icons.more_horiz, size: 30),
+                      onPressed: () {
+                        showPopupMenu(
+                          backgroundColor: E().threadPageBackgroundColor,
+                          child: IntrinsicWidth(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
                                 _itemWidget(
-                                  data.isAnonymous ? FontAwesomeIcons.solidEyeSlash : FontAwesomeIcons.solidEye,
-                                  data.isAnonymous ? "unAnonymous".tr : "anonymous".tr,
+                                  FontAwesomeIcons.thList,
+                                  "backToBoardTrans".tr,
                                   onTap: () {
-                                    NForumSpecs.setAnonymous(value: !data.isAnonymous);
-                                    data.isAnonymous = !data.isAnonymous;
-                                    if (mounted) {
-                                      setState(() {});
+                                    if (Navigator.of(context).canPop() && data.fromBoard ?? false) {
+                                      Navigator.of(context).pop();
+                                    } else {
+                                      Navigator.of(context).pushNamed(
+                                        "board_page",
+                                        arguments: BoardPageRouteArg(data.boardName),
+                                      );
                                     }
                                   },
                                 ),
-                              if (screenshotStatus == ScreenshotStatus.Dismissed)
-                                _itemWidget(
-                                  FontAwesomeIcons.camera,
-                                  "screenshotPage".tr,
-                                  onTap: captureScreenshot,
-                                ),
-                              _itemWidget(
-                                FontAwesomeIcons.shareAlt,
-                                "share".tr,
-                                onTap: shareArticle,
-                              ),
-                              _itemWidget(
-                                FontAwesomeIcons.exclamationCircle,
-                                "reportTrans".tr,
-                                onTap: () {
-                                  AdaptiveComponents.showAlertDialog(
-                                    context,
-                                    title: "reportConfirmTrans".tr,
-                                    onDismiss: (result) {
-                                      print(result);
+                                if (data.boardName == 'IWhisper')
+                                  _itemWidget(
+                                    data.isAnonymous ? FontAwesomeIcons.solidEyeSlash : FontAwesomeIcons.solidEye,
+                                    data.isAnonymous ? "unAnonymous".tr : "anonymous".tr,
+                                    onTap: () {
+                                      NForumSpecs.setAnonymous(value: !data.isAnonymous);
+                                      data.isAnonymous = !data.isAnonymous;
+                                      if (mounted) {
+                                        setState(() {});
+                                      }
                                     },
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-        ),
-        backgroundColor: E().threadPageBackgroundColor,
-        body: widgetCase(
-          initializationStatus,
-          {
-            InitializationStatus.Initializing: buildLoadingView(),
-            InitializationStatus.Failed: InitializationFailureView(
-              failureInfo: failureInfo,
-              textColor: E().threadPageOtherTextColor,
-              buttonColor: E().threadPageOtherTextColor,
-              refresh: initialization,
-            ),
-            InitializationStatus.Initialized: Column(
-              children: <Widget>[
-                Expanded(
-                  child: Stack(
-                    children: <Widget>[
-                      if (screenshotStatus == ScreenshotStatus.Dismissed)
-                        RefresherFactory(
-                          refreshFactor,
-                          refreshController,
-                          screenshotStatus == ScreenshotStatus.Dismissed ? true : false,
-                          screenshotStatus == ScreenshotStatus.Dismissed ? true : false,
-                          onTopRefresh,
-                          onBottomRefresh,
-                          buildList(),
-                        )
-                      else
-                        buildList(),
-                      if (screenshotStatus == ScreenshotStatus.Dismissed)
-                        buildPager()
-                      else if (screenshotStatus != ScreenshotStatus.Previewing)
-                        Positioned(
-                          right: 15,
-                          bottom: 15,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: E().threadPageButtonUnselectedColor.lighten(30),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(40.0),
-                              ),
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(Icons.check_circle, color: E().threadPageButtonUnselectedColor),
-                                      onPressed: () {
-                                        previewing();
+                                  ),
+                                if (screenshotStatus == ScreenshotStatus.Dismissed)
+                                  _itemWidget(
+                                    FontAwesomeIcons.camera,
+                                    "screenshotPage".tr,
+                                    onTap: captureScreenshot,
+                                  ),
+                                _itemWidget(
+                                  FontAwesomeIcons.shareAlt,
+                                  "share".tr,
+                                  onTap: shareArticle,
+                                ),
+                                _itemWidget(
+                                  FontAwesomeIcons.exclamationCircle,
+                                  "reportTrans".tr,
+                                  onTap: () {
+                                    AdaptiveComponents.showAlertDialog(
+                                      context,
+                                      title: "reportConfirmTrans".tr,
+                                      onDismiss: (result) {
+                                        print(result);
                                       },
-                                    ),
-                                    IconButton(
-                                      icon: Icon(Icons.cancel, color: E().threadPageButtonUnselectedColor),
-                                      onPressed: () {
-                                        cancelScreenshot();
-                                      },
-                                    )
-                                  ],
+                                    );
+                                  },
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                    ],
-                  ),
-                ),
-                if (screenshotStatus == ScreenshotStatus.Dismissed)
-                  data.thread != null && data.thread.id != null
-                      ? MultiProvider(
-                          providers: [
-                            ChangeNotifierProvider<EmoticonPanelProvider>(
-                              create: (_) => EmoticonPanelProvider(),
+                        );
+                      },
+                    ),
+                  ],
+          ),
+          backgroundColor: E().threadPageBackgroundColor,
+          body: widgetCase(
+            initializationStatus,
+            {
+              InitializationStatus.Initializing: buildLoadingView(),
+              InitializationStatus.Failed: InitializationFailureView(
+                failureInfo: failureInfo,
+                textColor: E().threadPageOtherTextColor,
+                buttonColor: E().threadPageOtherTextColor,
+                refresh: initialization,
+              ),
+              InitializationStatus.Initialized: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Stack(
+                      children: <Widget>[
+                        if (screenshotStatus == ScreenshotStatus.Dismissed)
+                          RefresherFactory(
+                            refreshFactor,
+                            refreshController,
+                            screenshotStatus == ScreenshotStatus.Dismissed ? true : false,
+                            screenshotStatus == ScreenshotStatus.Dismissed ? true : false,
+                            onTopRefresh,
+                            onBottomRefresh,
+                            buildList(),
+                          )
+                        else
+                          buildList(),
+                        if (screenshotStatus == ScreenshotStatus.Dismissed)
+                          buildPager()
+                        else if (screenshotStatus != ScreenshotStatus.Previewing)
+                          Positioned(
+                            right: 15,
+                            bottom: 15,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: E().threadPageButtonUnselectedColor.lighten(30),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(40.0),
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.check_circle, color: E().threadPageButtonUnselectedColor),
+                                        onPressed: () {
+                                          previewing();
+                                        },
+                                      ),
+                                      IconButton(
+                                        icon: Icon(Icons.cancel, color: E().threadPageButtonUnselectedColor),
+                                        onPressed: () {
+                                          cancelScreenshot();
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                          child: buildReplyForm(),
-                        )
-                      : Container(),
-              ],
-            ),
-          },
-          buildLoadingView(),
+                          ),
+                      ],
+                    ),
+                  ),
+                  if (screenshotStatus == ScreenshotStatus.Dismissed)
+                    data.thread != null && data.thread.id != null
+                        ? MultiProvider(
+                            providers: [
+                              ChangeNotifierProvider<EmoticonPanelProvider>(
+                                create: (_) => EmoticonPanelProvider(),
+                              ),
+                            ],
+                            child: buildReplyForm(),
+                          )
+                        : Container(),
+                ],
+              ),
+            },
+            buildLoadingView(),
+          ),
         ),
       ),
     );

@@ -228,40 +228,46 @@ class _DropdownMenuState extends State<DropdownMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: _controller.toggleMenu,
-      child: widget.headerBuilder == null
-          ? Container(
-              key: _headerKey,
-              width: widget.headerWidth,
-              height: widget.headerHeight,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(right: 10),
-                    child: Text(
-                      widget.itemTextList[_controller.curSelectedIndex],
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: _controller.menuIsShowing ? Colors.black : Colors.grey,
+    return WillPopScope(
+      onWillPop: () {
+        _hideMenu();
+        return Future.value(true);
+      },
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: _controller.toggleMenu,
+        child: widget.headerBuilder == null
+            ? Container(
+                key: _headerKey,
+                width: widget.headerWidth,
+                height: widget.headerHeight,
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: Text(
+                        widget.itemTextList[_controller.curSelectedIndex],
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: _controller.menuIsShowing ? Colors.black : Colors.grey,
+                        ),
                       ),
                     ),
-                  ),
-                  Icon(
-                    _controller.menuIsShowing ? Icons.expand_less : Icons.expand_more,
-                    color: _controller.menuIsShowing ? Colors.black : Colors.grey,
-                    size: 20,
-                  ),
-                ],
+                    Icon(
+                      _controller.menuIsShowing ? Icons.expand_less : Icons.expand_more,
+                      color: _controller.menuIsShowing ? Colors.black : Colors.grey,
+                      size: 20,
+                    ),
+                  ],
+                ),
+              )
+            : Container(
+                key: _headerKey,
+                child: widget.headerBuilder(_controller.menuIsShowing),
               ),
-            )
-          : Container(
-              key: _headerKey,
-              child: widget.headerBuilder(_controller.menuIsShowing),
-            ),
+      ),
     );
   }
 }
