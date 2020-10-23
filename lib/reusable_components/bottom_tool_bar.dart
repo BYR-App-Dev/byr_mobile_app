@@ -330,7 +330,7 @@ class BottomToolBar extends StatelessWidget {
                 provider.hideKeyBoard();
                 AdaptiveComponents.showBottomSheet(
                   context,
-                  ["audioRecordTrans".tr, "audioFileTrans".tr, "全民K歌"],
+                  ["audioRecordTrans".tr, "audioFileTrans".tr, "外部音频"],
                   textStyle: TextStyle(fontSize: 17, color: E().dialogButtonTextColor),
                   onItemTap: (int index) async {
                     provider.hideKeyBoard();
