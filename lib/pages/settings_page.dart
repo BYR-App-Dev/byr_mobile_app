@@ -148,7 +148,8 @@ class SettingsPageState extends State<SettingsPage> {
                             hideCancel: true,
                             onDismiss: (value) async {
                               if (value == AlertResult.confirm) {
-                                await Navigator.of(context).pushNamed("thread_page", arguments: ThreadPageRouteArg("BBShelp", 22557));
+                                await Navigator.of(context)
+                                    .pushNamed("thread_page", arguments: ThreadPageRouteArg("BBShelp", 22557));
                                 if (mounted) {
                                   setState(() {});
                                 }
@@ -162,6 +163,25 @@ class SettingsPageState extends State<SettingsPage> {
                       }),
                   onTap: null,
                 ),
+                if (UniversalPlatform.isAndroid) Divider(),
+                if (UniversalPlatform.isAndroid)
+                  NonPaddingListTile(
+                    contentPadding: EdgeInsets.only(left: 15, right: 5),
+                    title: Text(
+                      "ABI",
+                      style: TextStyle(
+                        color: E().otherPagePrimaryTextColor,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    trailing: Switch(
+                        value: LocalStorage.getIsABIEnabled(),
+                        onChanged: (newValue) async {
+                          await LocalStorage.setIsABIEnabled(newValue);
+                          setState(() {});
+                        }),
+                    onTap: null,
+                  ),
                 if (UniversalPlatform.isAndroid) Divider(),
                 if (UniversalPlatform.isAndroid)
                   NonPaddingListTile(

@@ -68,7 +68,7 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
             jsonMap["latest_version"] != _ignoreVersion) {
           LocalStorage.setIgnoreVersion(null);
           String downloadLink;
-          if (cpuAbi != null && jsonMap["download_link" + cpuAbi] != null) {
+          if (LocalStorage.getIsABIEnabled() && cpuAbi != null && jsonMap["download_link" + cpuAbi] != null) {
             downloadLink = jsonMap["download_link" + cpuAbi];
           } else {
             downloadLink = jsonMap["download_link"];

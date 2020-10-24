@@ -6,6 +6,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 /// list of locally stored key value pairs
 ///
+/// bool `isABIEnabled`: whether use abi split to download
+///
 /// bool `isDevChannelEnabled`: whether the app is on dev channel, only for Android
 ///
 /// bool `isToptenScreenshotEnabled`: whether to take screenshot after bottom pull up in topten page
@@ -68,6 +70,14 @@ class LocalStorage {
 
   static Future<void> setIsDevChannelEnabled(bool v) async {
     return await _enter("isDevChannelEnabled", v);
+  }
+
+  static bool getIsABIEnabled() {
+    return _extract("isABIEnabled") ?? true;
+  }
+
+  static Future<void> setIsABIEnabled(bool v) async {
+    return await _enter("isABIEnabled", v);
   }
 
   static bool getIsToptenScreenshotEnabled() {
