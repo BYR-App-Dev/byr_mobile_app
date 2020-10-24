@@ -134,19 +134,30 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
 
   void refreshCurrentPage(int index) {
     int pageIndex = -1;
-    List<SmartRefresher> widgets = [];
+    SmartRefresher refresher;
+    Widget containerPage;
+
     void findSmartRefresher(Element element) {
       if (element.widget is SmartRefresher) {
-        widgets.add(element.widget);
+        refresher = element.widget;
         return;
       }
       element.visitChildren(findSmartRefresher);
     }
 
+    void findContainerPage(Element element) {
+      if (element.widget == containerPage) {
+        element.visitChildren(findSmartRefresher);
+        return;
+      }
+      element.visitChildren(findContainerPage);
+    }
+
     void findCustomTabBarView(Element element) {
       if (element.widget is CustomTabBarView) {
         pageIndex = (element.widget as CustomTabBarView).controller.index;
-        element.visitChildren(findSmartRefresher);
+        containerPage = (element.widget as CustomTabBarView).children[pageIndex];
+        element.visitChildren(findContainerPage);
         return;
       }
       element.visitChildren(findCustomTabBarView);
@@ -169,19 +180,10 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
     }
 
     (context as Element).visitChildren(findCurrentPage);
-    // 初次启动会自动定位为【首页-今日十大】
-    if (index == 0 && pageIndex == 1 && widgets.length == 1) {
-      widgets.first.controller.requestRefresh(
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    } else if (pageIndex != -1 && pageIndex <= widgets.length - 1) {
-      print('requestRefresh');
-      widgets[pageIndex].controller.requestRefresh(
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
-    }
+    refresher.controller.requestRefresh(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
