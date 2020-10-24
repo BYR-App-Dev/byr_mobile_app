@@ -233,9 +233,7 @@ class NForumService {
     } catch (e) {
       throw e;
     }
-    Map resultMap = jsonDecode(
-      ascii.decode(response.bodyBytes),
-    );
+    Map resultMap = jsonDecode(response.body);
     if (resultMap["code"] != null) {
       throw APIException(resultMap['msg'], code: resultMap["code"]);
     }
