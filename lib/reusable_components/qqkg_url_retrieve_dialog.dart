@@ -37,10 +37,11 @@ class _QQKGURLRetrieveDialogState extends State<QQKGURLRetrieveDialog> {
         SimpleDialogOption(
           onPressed: () {
             Request.httpGet(urlController.text, {}).then((value) {
-              RegExpMatch m = RegExp(r'"playurl":"(http(?:s?)://tx\.stream\.kg\.qq\.com/.+?)\?').firstMatch(value.body);
+              RegExpMatch m =
+                  RegExp(r'"playurl":"(http(?:s?)://.+?\.stream\.kg\.qq\.com/.+?)\?').firstMatch(value.body);
               if (m != null) {
                 if (m.group(1) != null && m.group(1).length > 0 && m.group(1).startsWith("http")) {
-                  navigator.pop(m.group(1).replaceFirst("http://", "https://"));
+                  navigator.pop(m.group(1).replaceFirst(RegExp(r'http(?:s?)://.+?\.stream'), "https://tx.stream"));
                   return;
                 }
               }
