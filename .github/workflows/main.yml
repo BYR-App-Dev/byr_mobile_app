@@ -27,7 +27,7 @@ jobs:
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
     - run: flutter pub get
     - run: flutter build apk
-    - name: upload artifects
+    - name: upload artifacts
       uses: actions/upload-artifact@master
       with:
         name: release.apk
