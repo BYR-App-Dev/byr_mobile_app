@@ -305,7 +305,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: aac1da56c9ab8e41e02050f025380b4e5035b81b
+      resolved-ref: "7ee7d2009adee9bb538a916cbc08bd184f5b3d18"
       url: "https://github.com/BYR-App-Dev/flutter_liquidcore.git"
     source: git
     version: "1.1.1"
