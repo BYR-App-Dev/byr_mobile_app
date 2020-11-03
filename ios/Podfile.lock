@@ -42,7 +42,7 @@ PODS:
     - Flutter
   - flutter_liquidcore (1.1.0):
     - Flutter
-    - LiquidCore (~> 0.6)
+    - LiquidCore (~> 0.7.10)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -172,7 +172,7 @@ SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_audio_recorder: eb998d4e75e59b39d9e3ca1818a5e0f3a82f5836
   flutter_device_information: 4a0c6d598a3fcc4e66226f5562637f8b8efa7cde
-  flutter_liquidcore: 532c2e9048572bcea66e080b100119cdfcf9dcb4
+  flutter_liquidcore: 28b94701c5a9c6af686a99ff4a2db445bc43a4b4
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   gallery_saver: 9fc173c9f4fcc48af53b2a9ebea1b643255be542
   image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09

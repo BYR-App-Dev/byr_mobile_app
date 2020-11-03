@@ -303,9 +303,11 @@ packages:
   flutter_liquidcore:
     dependency: "direct main"
     description:
-      name: flutter_liquidcore
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: master
+      resolved-ref: aac1da56c9ab8e41e02050f025380b4e5035b81b
+      url: "https://github.com/BYR-App-Dev/flutter_liquidcore.git"
+    source: git
     version: "1.1.1"
   flutter_localizations:
     dependency: "direct main"
