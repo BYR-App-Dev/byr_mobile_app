@@ -226,7 +226,7 @@ class NForumService {
     return result;
   }
 
-  static Future<List<Map>> getMicroPlugins() async {
+  static Future<MicroPluginListModel> getMicroPlugins() async {
     var response;
     try {
       response = await Request.httpGet(NForumSpecs.microPluginListLink, null);
@@ -237,7 +237,9 @@ class NForumService {
     if (resultMap["code"] != null) {
       throw APIException(resultMap['msg'], code: resultMap["code"]);
     }
-    var result = resultMap["micro_plugins"].cast<Map>();
+
+    var result = MicroPluginListModel.fromJson(resultMap);
+    result.pagination = PaginationModel(1, 1, result.article.length, result.article.length);
     if (result == null) {
       throw DataException();
     }

@@ -935,3 +935,33 @@ Map<String, dynamic> _$ThreadSearchModelToJson(ThreadSearchModel instance) => <S
       'pagination': instance.pagination,
       'threads': instance.articles,
     };
+
+MicroPluginItemModel _$MicroPluginItemModelFromJson(Map<String, dynamic> json) {
+  return MicroPluginItemModel(
+    uriAndroid: json['uri_android'] as String,
+    uriiOS: json['uri_ios'] as String,
+    uri: json['uri'] as String,
+    name: json['name'] as String,
+  );
+}
+
+Map<String, dynamic> _$MicroPluginItemModelToJson(MicroPluginItemModel instance) => <String, dynamic>{
+      'uri_android': instance.uriAndroid,
+      'uri_ios': instance.uriiOS,
+      'uri': instance.uri,
+      'name': instance.name,
+    };
+
+MicroPluginListModel _$MicroPluginListModelFromJson(Map<String, dynamic> json) {
+  return MicroPluginListModel(
+    json['pagination'] == null ? null : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+    (json['micro_plugins'] as List)
+        ?.map((e) => e == null ? null : MicroPluginItemModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
+}
+
+Map<String, dynamic> _$MicroPluginListModelToJson(MicroPluginListModel instance) => <String, dynamic>{
+      'pagination': instance.pagination,
+      'micro_plugins': instance.article,
+    };

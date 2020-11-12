@@ -10,8 +10,7 @@ class MicroPluginPage extends StatefulWidget {
   final String pluginName;
   final String pluginURI;
 
-  const MicroPluginPage({Key key, this.pluginName, this.pluginURI})
-      : super(key: key);
+  const MicroPluginPage({Key key, this.pluginName, this.pluginURI}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return MicroPluginPageState();
@@ -38,13 +37,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
         title: Text(widget.pluginName),
       ),
       body: Center(
-        child: layout(this.layoutMap) ??
-            (started
-                ? RaisedButton(
-                    child: Text('启动小程序'),
-                    onPressed: startPlugin,
-                  )
-                : Text("loading")),
+        child: layout(this.layoutMap) ?? Text("loading"),
       ),
     );
   }
@@ -60,24 +53,21 @@ class MicroPluginPageState extends State<MicroPluginPage> {
           (MicroService service, error) {},
           (MicroService service, int exitCode) {},
         );
-        await _microService.addEventListener('ready',
-            (service, event, eventPayload) {
+        await _microService.addEventListener('ready', (service, event, eventPayload) {
           if (!mounted) {
             return;
           }
           _emit('getLayout', content: "").catchError((e) {});
         });
 
-        await _microService.addEventListener('coreVersion',
-            (service, event, eventPayload) {
+        await _microService.addEventListener('coreVersion', (service, event, eventPayload) {
           if (!mounted) {
             return;
           }
           _emit('getCoreVersion', content: coreVersion).catchError((e) {});
         });
 
-        await _microService.addEventListener('getUserId',
-            (service, event, eventPayload) async {
+        await _microService.addEventListener('getUserId', (service, event, eventPayload) async {
           UserModel me;
           if (SharedObjects.me != null) {
             me = await SharedObjects.me;
@@ -89,8 +79,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
           }
         });
 
-        await _microService.addEventListener('layout',
-            (service, event, eventPayload) {
+        await _microService.addEventListener('layout', (service, event, eventPayload) {
           if (!mounted) {
             return;
           }
@@ -98,8 +87,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
           _setMicroServiceLayoutResponse(eventPayload['message'] as Map);
         });
 
-        await _microService.addEventListener('dialog',
-            (service, event, eventPayload) {
+        await _microService.addEventListener('dialog', (service, event, eventPayload) {
           if (!mounted) {
             return;
           }
@@ -107,14 +95,12 @@ class MicroPluginPageState extends State<MicroPluginPage> {
           _setMicroServiceDialogResponse(eventPayload['message'] as Map);
         });
 
-        await _microService.addEventListener('controllerModification',
-            (service, event, eventPayload) {
+        await _microService.addEventListener('controllerModification', (service, event, eventPayload) {
           if (!mounted) {
             return;
           }
 
-          _setMicroServiceControllerModificationResponse(
-              eventPayload['message'] as Map);
+          _setMicroServiceControllerModificationResponse(eventPayload['message'] as Map);
         });
 
         await _microService.start();
@@ -153,8 +139,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
 
     if (controllerMap != null && controllerMap.entries.length > 0) {
       controllerMap.entries.forEach((element) {
-        if (controllers[element.key] != null &&
-            controllers[element.key]["valueModifier"] != null) {
+        if (controllers[element.key] != null && controllers[element.key]["valueModifier"] != null) {
           controllers[element.key]["valueModifier"](element.value);
         }
       });
@@ -183,19 +168,13 @@ class MicroPluginPageState extends State<MicroPluginPage> {
             controllers[m["controllerId"]] = {
               "controller": TextEditingController(),
               "valueFetcher": () {
-                return (controllers[m["controllerId"]]["controller"]
-                        as TextEditingController)
-                    .text;
+                return (controllers[m["controllerId"]]["controller"] as TextEditingController).text;
               },
               "valueModifier": (dynamic v) {
-                return ((controllers[m["controllerId"]]["controller"]
-                        as TextEditingController)
-                    .text = v);
+                return ((controllers[m["controllerId"]]["controller"] as TextEditingController).text = v);
               },
               "disposer": () {
-                (controllers[m["controllerId"]]["controller"]
-                        as TextEditingController)
-                    .dispose();
+                (controllers[m["controllerId"]]["controller"] as TextEditingController).dispose();
               },
             };
           }
@@ -212,10 +191,8 @@ class MicroPluginPageState extends State<MicroPluginPage> {
         );
       case "Column":
         return Column(
-          mainAxisAlignment:
-              Helper.mainAxisAlignmentFromString(m["mainAxisAlignment"]),
-          crossAxisAlignment:
-              Helper.crossAxisAlignmentFromString(m["crossAxisAlignment"]),
+          mainAxisAlignment: Helper.mainAxisAlignmentFromString(m["mainAxisAlignment"]),
+          crossAxisAlignment: Helper.crossAxisAlignmentFromString(m["crossAxisAlignment"]),
           mainAxisSize: Helper.mainAxisSizeFromString(m["mainAxisSize"]),
           children: (m["children"] as List).map<Widget>((e) {
             return retrieveWidget(e);
@@ -223,10 +200,8 @@ class MicroPluginPageState extends State<MicroPluginPage> {
         );
       case "Row":
         return Row(
-          mainAxisAlignment:
-              Helper.mainAxisAlignmentFromString(m["mainAxisAlignment"]),
-          crossAxisAlignment:
-              Helper.crossAxisAlignmentFromString(m["crossAxisAlignment"]),
+          mainAxisAlignment: Helper.mainAxisAlignmentFromString(m["mainAxisAlignment"]),
+          crossAxisAlignment: Helper.crossAxisAlignmentFromString(m["crossAxisAlignment"]),
           mainAxisSize: Helper.mainAxisSizeFromString(m["mainAxisSize"]),
           children: (m["children"] as List).map<Widget>((e) {
             return retrieveWidget(e);
@@ -235,8 +210,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
       case "Stack":
         return Stack(
           alignment: AlignmentDirectional(
-              double.tryParse(m["alignmentX"] ?? '') ?? -1.0,
-              double.tryParse(m["alignmentY"] ?? '') ?? -1.0),
+              double.tryParse(m["alignmentX"] ?? '') ?? -1.0, double.tryParse(m["alignmentY"] ?? '') ?? -1.0),
           children: (m["children"] as List).map<Widget>((e) {
             return retrieveWidget(e);
           }).toList(),
@@ -280,8 +254,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
               if (m["onPressed"]["fetchValues"] != null) {
                 (m["onPressed"]["fetchValues"] as List).forEach((element) {
                   if (controllers[element] != null) {
-                    fetchedValues[element] =
-                        controllers[element]["valueFetcher"]();
+                    fetchedValues[element] = controllers[element]["valueFetcher"]();
                   }
                 });
               }
@@ -308,10 +281,8 @@ class MicroPluginPageState extends State<MicroPluginPage> {
           flex: int.tryParse(m["flex"] ?? "") ?? 1,
         );
       case "Icon":
-        if (m["codePoint"] != null &&
-            int.tryParse(m["codePoint"] ?? "") != null) {
-          return Icon(IconData(int.tryParse(m["codePoint"] ?? "") ?? 0,
-              fontFamily: 'MaterialIcons'));
+        if (m["codePoint"] != null && int.tryParse(m["codePoint"] ?? "") != null) {
+          return Icon(IconData(int.tryParse(m["codePoint"] ?? "") ?? 0, fontFamily: 'MaterialIcons'));
         }
         return null;
       case "ListView":
@@ -329,8 +300,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
               if (m["onTap"]["fetchValues"] != null) {
                 (m["onTap"]["fetchValues"] as List).forEach((element) {
                   if (controllers[element] != null) {
-                    fetchedValues[element] =
-                        controllers[element]["valueFetcher"]();
+                    fetchedValues[element] = controllers[element]["valueFetcher"]();
                   }
                 });
               }
@@ -347,8 +317,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
               if (m["onDoubleTap"]["fetchValues"] != null) {
                 (m["onDoubleTap"]["fetchValues"] as List).forEach((element) {
                   if (controllers[element] != null) {
-                    fetchedValues[element] =
-                        controllers[element]["valueFetcher"]();
+                    fetchedValues[element] = controllers[element]["valueFetcher"]();
                   }
                 });
               }
@@ -365,8 +334,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
               if (m["onLongPress"]["fetchValues"] != null) {
                 (m["onLongPress"]["fetchValues"] as List).forEach((element) {
                   if (controllers[element] != null) {
-                    fetchedValues[element] =
-                        controllers[element]["valueFetcher"]();
+                    fetchedValues[element] = controllers[element]["valueFetcher"]();
                   }
                 });
               }

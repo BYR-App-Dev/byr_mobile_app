@@ -3,6 +3,8 @@ import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
 import 'package:byr_mobile_app/networking/http_request.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
+import 'package:byr_mobile_app/nforum/nforum_structures.dart';
+import 'package:byr_mobile_app/pages/page_components.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
@@ -10,15 +12,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_platform/universal_platform.dart';
 
-class MicroPluginListPage extends StatefulWidget {
+class MicroPluginListBaseData<X extends MicroPluginListModel> extends PageableListBaseData<X> {
+  X articleList;
+  PageableListDataRequestHandler<X> dataRequestHandler;
+}
+
+class MicroPluginListPage extends PageableListBasePage {
   @override
   State<StatefulWidget> createState() {
     return MicroPluginListPageState();
   }
 }
 
-class MicroPluginListPageState extends State<MicroPluginListPage>
-    with AutomaticKeepAliveClientMixin {
+class MicroPluginListPageState extends PageableListBasePageState<MicroPluginListModel, MicroPluginListPage>
+    with InitializationFailureViewMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -28,10 +35,8 @@ class MicroPluginListPageState extends State<MicroPluginListPage>
 
   int factor = RefresherFactory.getFactor();
 
-  RefreshController refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController refreshController = RefreshController(initialRefresh: false);
 
-  List<Map> microPlugins;
   @override
   void initState() {
     super.initState();
@@ -40,24 +45,29 @@ class MicroPluginListPageState extends State<MicroPluginListPage>
   }
 
   void initialization() {
-    NForumService.getMicroPlugins().then((value) {
-      microPlugins = value;
-      initializationStatus = InitializationStatus.Initialized;
-      if (mounted) {
-        setState(() {});
-      }
-    }).catchError(initializationErrorHandling);
+    data = MicroPluginListBaseData()
+      ..dataRequestHandler = (int page) {
+        return NForumService.getMicroPlugins();
+      };
+    // NForumService.getMicroPlugins().then((value) {
+    //   microPlugins = value;
+    //   initializationStatus = InitializationStatus.Initialized;
+    //   if (mounted) {
+    //     setState(() {});
+    //   }
+    // }).catchError(initializationErrorHandling);
+    super.initialization();
   }
 
-  Future<void> onTopRefresh() {
-    return NForumService.getMicroPlugins().then((value) {
-      microPlugins = value;
-      refreshController.refreshCompleted();
-      if (mounted) {
-        setState(() {});
-      }
-    }).catchError(refreshErrorHandling);
-  }
+  // Future<void> onTopRefresh() {
+  //   return NForumService.getMicroPlugins().then((value) {
+  //     data.articleList = value;
+  //     refreshController.refreshCompleted();
+  //     if (mounted) {
+  //       setState(() {});
+  //     }
+  //   }).catchError(refreshErrorHandling);
+  // }
 
   void initializationErrorHandling(e) {
     setFailureInfo(e);
@@ -140,28 +150,58 @@ class MicroPluginListPageState extends State<MicroPluginListPage>
     );
   }
 
-  Widget _buildPluginList() {
-    return ListView.builder(
-        itemCount: microPlugins?.length ?? 0,
-        itemBuilder: (buildContext, index) {
-          return ListTile(
-            title: Text(
-              microPlugins[index]["name"],
-              style: TextStyle(color: E().otherPagePrimaryTextColor),
-            ),
-            onTap: () {
-              navigator.push(CupertinoPageRoute(
-                  builder: (_) => MicroPluginPage(
-                        pluginName: microPlugins[index]["name"],
-                        pluginURI: UniversalPlatform.isAndroid
-                            ? (microPlugins[index]["uri_android"] ??
-                                microPlugins[index]["uri"])
-                            : (microPlugins[index]["uri_ios"] ??
-                                microPlugins[index]["uri"]),
-                      )));
-            },
-          );
-        });
+  // Widget _buildPluginList() {
+  //   return ListView.builder(
+  //       itemCount: microPlugins?.length ?? 0,
+  //       itemBuilder: (buildContext, index) {
+  //         return ListTile(
+  //           title: Text(
+  //             microPlugins[index]["name"],
+  //             style: TextStyle(color: E().otherPagePrimaryTextColor),
+  //           ),
+  //           onTap: () {
+  //             navigator.push(CupertinoPageRoute(
+  //                 builder: (_) => MicroPluginPage(
+  //                       pluginName: microPlugins[index]["name"],
+  //                       pluginURI: UniversalPlatform.isAndroid
+  //                           ? (microPlugins[index]["uri_android"] ?? microPlugins[index]["uri"])
+  //                           : (microPlugins[index]["uri_ios"] ?? microPlugins[index]["uri"]),
+  //                     )));
+  //           },
+  //         );
+  //       });
+  // }
+
+  @override
+  Widget buildCell(BuildContext context, int index) {
+    return ListTile(
+      title: Text(
+        data.articleList.article[index].name,
+        style: TextStyle(color: E().otherPagePrimaryTextColor),
+      ),
+      onTap: () {
+        navigator.push(CupertinoPageRoute(
+            builder: (_) => MicroPluginPage(
+                  pluginName: data.articleList.article[index].name,
+                  pluginURI: UniversalPlatform.isAndroid
+                      ? (data.articleList.article[index].uriAndroid ?? data.articleList.article[index].uri)
+                      : (data.articleList.article[index].uriiOS ?? data.articleList.article[index].uri),
+                )));
+      },
+    );
+  }
+
+  @override
+  Widget buildSeparator(BuildContext context, int index, {bool isLast = false}) {
+    return Container(
+      height: 4.0,
+      margin: EdgeInsetsDirectional.zero,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: E().threadListDividerColor, width: 4),
+        ),
+      ),
+    );
   }
 
   @override
@@ -176,7 +216,7 @@ class MicroPluginListPageState extends State<MicroPluginListPage>
               initializationStatus,
               {
                 InitializationStatus.Initializing: _buildLoadingView(),
-                InitializationStatus.Initialized: microPlugins == null
+                InitializationStatus.Initialized: data.articleList == null
                     ? _buildLoadingView()
                     : RefresherFactory(
                         factor,
@@ -185,7 +225,7 @@ class MicroPluginListPageState extends State<MicroPluginListPage>
                         false,
                         onTopRefresh,
                         null,
-                        _buildPluginList(),
+                        buildList(),
                       ),
                 InitializationStatus.Failed: InitializationFailureView(
                   failureInfo: failureInfo,
@@ -194,7 +234,7 @@ class MicroPluginListPageState extends State<MicroPluginListPage>
                   refresh: initialization,
                 ),
               },
-              _buildPluginList(),
+              _buildLoadingView(),
             ),
           ),
         ),

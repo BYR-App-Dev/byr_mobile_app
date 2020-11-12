@@ -1213,3 +1213,40 @@ class ThreadSearchModel {
 
   Map<String, dynamic> toJson() => _$ThreadSearchModelToJson(this);
 }
+
+@JsonSerializable()
+class MicroPluginItemModel extends PageableBaseModel {
+  MicroPluginItemModel({
+    this.uriAndroid,
+    this.uriiOS,
+    this.uri,
+    this.name,
+  }) : super();
+
+  @JsonKey(name: 'uri_android')
+  String uriAndroid;
+  @JsonKey(name: 'uri_ios')
+  String uriiOS;
+  String uri;
+  String name;
+
+  factory MicroPluginItemModel.fromJson(Map<String, dynamic> json) => _$MicroPluginItemModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MicroPluginItemModelToJson(this);
+}
+
+@JsonSerializable()
+class MicroPluginListModel extends PageableListBaseModel<MicroPluginItemModel> {
+  PaginationModel pagination;
+  @JsonKey(name: 'micro_plugins')
+  List<MicroPluginItemModel> article;
+
+  MicroPluginListModel(
+    this.pagination,
+    this.article,
+  ) : super(pagination: pagination, article: article);
+
+  factory MicroPluginListModel.fromJson(Map<String, dynamic> json) => _$MicroPluginListModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MicroPluginListModelToJson(this);
+}
