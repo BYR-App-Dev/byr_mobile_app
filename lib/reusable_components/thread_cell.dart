@@ -751,6 +751,7 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
                 }
                 l.setIsLiked(d, true);
                 l.setIsVotedown(d, false);
+                l.setLikes(d, l.getLikes(d) + 1);
                 _voteUp(l, d);
               }
               return Future.value(true);
@@ -799,6 +800,7 @@ class ThreadPageListCellState extends State<ThreadPageListCell> {
                     }
                     l.setIsVotedown(d, true);
                     l.setIsLiked(d, false);
+                    l.setVotedowns(d, l.getVotedowns(d) + 1);
                     _voteDown(l, d);
                   }
                   return Future.value(true);
