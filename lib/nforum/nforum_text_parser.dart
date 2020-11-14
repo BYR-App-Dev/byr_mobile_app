@@ -109,17 +109,47 @@ class NForumTextParser {
   }
 
   static String makeReplyQuote(String username, String s) {
-    String t = removeBBSQuote(s).replaceAll("--\n\n", "\n");
-    String ttt = (t.length > 180 ? t.substring(0, t.indexOf('\n', 180)) : t);
-    String tttt = ttt.length < 250 ? ttt : ttt.substring(0, ttt.lastIndexOf('\n'));
-    tttt = tttt.length > 250 ? tttt.substring(0, 250) : tttt;
-    return "\n【 在 " +
-        username +
-        " 的大作中提到: 】\n: " +
-        (tttt + '\n............')
-            .replaceAll(RegExp(r'\n+'), '\n')
-            .replaceAll(RegExp(r'\n$'), '')
-            .replaceAll('\n', '\n: ');
+    try {
+      String t = removeBBSQuote(s).replaceAll("--\n\n", "\n");
+      bool addDot = false;
+      if (t.length > 250) {
+        t = t.substring(0, 250);
+        addDot = true;
+      }
+      String tt = '';
+      int t1 = t.indexOf('\n');
+      if (t1 >= 0) {
+        tt = t.substring(0, t1);
+        t = t.substring(t1 + 1);
+        t1 = t.indexOf('\n');
+        if (t1 >= 0) {
+          tt = tt + '\n' + t.substring(0, t1);
+          t = t.substring(t1 + 1);
+          t1 = t.indexOf('\n');
+          if (t1 >= 0) {
+            tt = tt + '\n' + t.substring(0, t1);
+            t = t.substring(t1 + 1);
+            t1 = t.indexOf('\n');
+            if (t1 >= 0) {
+              addDot = true;
+            }
+          }
+        }
+      } else {
+        tt = t;
+      }
+
+      return "\n【 在 " +
+          username +
+          " 的大作中提到: 】\n: " +
+          (tt + (addDot ? '\n............' : ''))
+              .replaceAll(RegExp(r'\n+'), '\n')
+              .replaceAll(RegExp(r'\n$'), '')
+              .replaceAll('\n', '\n: ') +
+          '\n';
+    } catch (e) {
+      return "\n【 在 " + username + " 的大作中提到: 】\n: ............\n";
+    }
   }
 
   static String removeBBSQuote(String s) {
