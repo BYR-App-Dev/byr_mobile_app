@@ -587,6 +587,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         _author,
         authorShown: data.authorToShow,
         threadAuthor: data.thread?.user?.id,
+        onBackToBoard: backtoBoard,
       );
     }
 
@@ -1081,6 +1082,17 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
     Overlay.of(context).insert(_popUpMenuOverlay);
   }
 
+  void backtoBoard() {
+    if (Navigator.of(context).canPop() && data.fromBoard ?? false) {
+      Navigator.of(context).pop();
+    } else {
+      Navigator.of(context).pushNamed(
+        "board_page",
+        arguments: BoardPageRouteArg(data.boardName),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -1161,14 +1173,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                                 FontAwesomeIcons.thList,
                                 "backToBoardTrans".tr,
                                 onTap: () {
-                                  if (Navigator.of(context).canPop() && data.fromBoard ?? false) {
-                                    Navigator.of(context).pop();
-                                  } else {
-                                    Navigator.of(context).pushNamed(
-                                      "board_page",
-                                      arguments: BoardPageRouteArg(data.boardName),
-                                    );
-                                  }
+                                  backtoBoard();
                                 },
                               ),
                               if (data.boardName == 'IWhisper')

@@ -426,6 +426,7 @@ class ThreadPageListSubjectCell<T> extends ThreadPageListCell<T> {
     isSubject = false,
     authorShown = '',
     String threadAuthor = "",
+    this.onBackToBoard,
   }) : super(
           data,
           dataLayouter,
@@ -438,22 +439,21 @@ class ThreadPageListSubjectCell<T> extends ThreadPageListCell<T> {
           authorShown: authorShown,
           threadAuthor: threadAuthor,
         );
+  final Function onBackToBoard;
   @override
   ThreadPageSubjectCellState createState() {
     return ThreadPageSubjectCellState();
   }
 }
 
-class ThreadPageSubjectCellState extends ThreadPageListCellState {
+class ThreadPageSubjectCellState extends ThreadPageListCellState<ThreadPageListSubjectCell> {
   Widget _buildBoardName(String name, String desc) {
     return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, 'board_page', arguments: BoardPageRouteArg(name));
-            },
+            onTap: widget.onBackToBoard,
             child: Container(
               padding: EdgeInsets.only(left: 2, top: 2, bottom: 2),
               decoration: BoxDecoration(
@@ -497,16 +497,50 @@ class ThreadPageSubjectCellState extends ThreadPageListCellState {
     );
   }
 
+  // @override
+  // Widget buildTopRightCorner(ThreadPageListCellDataLayouter l, dynamic d) {
+  //   return _buildBoardName(
+  //     l.getBoardName(d),
+  //     l.getBoardDescription(d),
+  //   );
+  // }
+
   @override
-  Widget buildTopRightCorner(ThreadPageListCellDataLayouter l, dynamic d) {
-    return _buildBoardName(
-      l.getBoardName(d),
-      l.getBoardDescription(d),
+  Widget buildTitle(ThreadPageListCellDataLayouter l, dynamic d) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            buildNamePosTime(l, d),
+            _buildBoardName(
+              l.getBoardName(d),
+              l.getBoardDescription(d),
+            ),
+          ],
+        ),
+        (this.widget.title == null || this.widget.title == "")
+            ? Container()
+            : Container(
+                padding: EdgeInsets.only(
+                  top: 15,
+                  bottom: 10,
+                ),
+                child: Text(
+                  this.widget.title,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: E().threadPageTitleColor,
+                  ),
+                ),
+              ),
+      ],
     );
   }
 }
 
-class ThreadPageListCellState extends State<ThreadPageListCell> {
+class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
   final GlobalKey<LikeButtonState> _voteUpKey = GlobalKey<LikeButtonState>();
   final GlobalKey<LikeButtonState> _voteDownKey = GlobalKey<LikeButtonState>();
 
