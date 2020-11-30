@@ -163,6 +163,24 @@ class SettingsPageState extends State<SettingsPage> {
                       }),
                   onTap: null,
                 ),
+                Divider(),
+                NonPaddingListTile(
+                  contentPadding: EdgeInsets.only(left: 15, right: 5),
+                  title: Text(
+                    "oversea".tr,
+                    style: TextStyle(
+                      color: E().otherPagePrimaryTextColor,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  trailing: Switch(
+                      value: LocalStorage.getIsOverseaEnabled(),
+                      onChanged: (newValue) async {
+                        await LocalStorage.setIsOverseaEnabled(newValue);
+                        setState(() {});
+                      }),
+                  onTap: null,
+                ),
                 if (UniversalPlatform.isAndroid) Divider(),
                 if (UniversalPlatform.isAndroid)
                   NonPaddingListTile(

@@ -216,6 +216,7 @@ class Translation extends Translations {
     "myAudioPlaylist": "音频播放列表",
     "browsingHistory": "浏览记录",
     "fullscreenBackGesture": '全局返回手势',
+    "oversea": "海外用户",
   };
 
   static Map<String, String> zhHant = {
@@ -427,6 +428,7 @@ class Translation extends Translations {
     "myAudioPlaylist": "音頻播放列表",
     "browsingHistory": "瀏覽記錄",
     "fullscreenBackGesture": '全局返回手勢',
+    "oversea": "海外用戶",
   };
 
   static Map<String, String> en = {
@@ -638,6 +640,7 @@ class Translation extends Translations {
     "myAudioPlaylist": "Audio Playlist",
     "browsingHistory": "Browsing History",
     "fullscreenBackGesture": 'Fullscreen Back Gesture',
+    "oversea": "Oversea Mode",
   };
 
   @override

@@ -940,7 +940,10 @@ MicroPluginItemModel _$MicroPluginItemModelFromJson(Map<String, dynamic> json) {
   return MicroPluginItemModel(
     uriAndroid: json['uri_android'] as String,
     uriiOS: json['uri_ios'] as String,
+    uriAndroidOversea: json['uri_android_oversea'] as String,
+    uriiOSOversea: json['uri_ios_oversea'] as String,
     uri: json['uri'] as String,
+    uriOversea: json['uri_oversea'] as String,
     name: json['name'] as String,
   );
 }
@@ -948,7 +951,10 @@ MicroPluginItemModel _$MicroPluginItemModelFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$MicroPluginItemModelToJson(MicroPluginItemModel instance) => <String, dynamic>{
       'uri_android': instance.uriAndroid,
       'uri_ios': instance.uriiOS,
+      'uri_android_oversea': instance.uriAndroidOversea,
+      'uri_ios_oversea': instance.uriiOSOversea,
       'uri': instance.uri,
+      'uri_oversea': instance.uriOversea,
       'name': instance.name,
     };
 

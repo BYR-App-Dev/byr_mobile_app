@@ -8,6 +8,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 ///
 /// bool `isABIEnabled`: whether use abi split to download
 ///
+/// bool `isOverseaEnabled`: whether use oversea node for download
+///
 /// bool `isDevChannelEnabled`: whether the app is on dev channel, only for Android
 ///
 /// bool `isToptenScreenshotEnabled`: whether to take screenshot after bottom pull up in topten page
@@ -78,6 +80,14 @@ class LocalStorage {
 
   static Future<void> setIsABIEnabled(bool v) async {
     return await _enter("isABIEnabled", v);
+  }
+
+  static bool getIsOverseaEnabled() {
+    return _extract("isOverseaEnabled") ?? false;
+  }
+
+  static Future<void> setIsOverseaEnabled(bool v) async {
+    return await _enter("isOverseaEnabled", v);
   }
 
   static bool getIsToptenScreenshotEnabled() {

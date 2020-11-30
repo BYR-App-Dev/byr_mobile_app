@@ -1,6 +1,7 @@
 import 'package:byr_mobile_app/customizations/shimmer_theme.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
+import 'package:byr_mobile_app/local_objects/local_storage.dart';
 import 'package:byr_mobile_app/networking/http_request.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
@@ -183,9 +184,15 @@ class MicroPluginListPageState extends PageableListBasePageState<MicroPluginList
         navigator.push(CupertinoPageRoute(
             builder: (_) => MicroPluginPage(
                   pluginName: data.articleList.article[index].name,
-                  pluginURI: UniversalPlatform.isAndroid
-                      ? (data.articleList.article[index].uriAndroid ?? data.articleList.article[index].uri)
-                      : (data.articleList.article[index].uriiOS ?? data.articleList.article[index].uri),
+                  pluginURI: LocalStorage.getIsOverseaEnabled()
+                      ? (UniversalPlatform.isAndroid
+                          ? (data.articleList.article[index].uriAndroidOversea ??
+                              data.articleList.article[index].uriOversea)
+                          : (data.articleList.article[index].uriiOSOversea ??
+                              data.articleList.article[index].uriOversea))
+                      : (UniversalPlatform.isAndroid
+                          ? (data.articleList.article[index].uriAndroid ?? data.articleList.article[index].uri)
+                          : (data.articleList.article[index].uriiOS ?? data.articleList.article[index].uri)),
                 )));
       },
     );
@@ -193,6 +200,17 @@ class MicroPluginListPageState extends PageableListBasePageState<MicroPluginList
 
   @override
   Widget buildSeparator(BuildContext context, int index, {bool isLast = false}) {
+    if (index == 0) {
+      return Container(
+        height: 4.0,
+        margin: EdgeInsetsDirectional.zero,
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: Colors.transparent, width: 4),
+          ),
+        ),
+      );
+    }
     return Container(
       height: 4.0,
       margin: EdgeInsetsDirectional.zero,

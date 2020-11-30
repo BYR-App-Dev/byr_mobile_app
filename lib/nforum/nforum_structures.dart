@@ -1219,7 +1219,10 @@ class MicroPluginItemModel extends PageableBaseModel {
   MicroPluginItemModel({
     this.uriAndroid,
     this.uriiOS,
+    this.uriAndroidOversea,
+    this.uriiOSOversea,
     this.uri,
+    this.uriOversea,
     this.name,
   }) : super();
 
@@ -1227,7 +1230,13 @@ class MicroPluginItemModel extends PageableBaseModel {
   String uriAndroid;
   @JsonKey(name: 'uri_ios')
   String uriiOS;
+  @JsonKey(name: 'uri_android_oversea')
+  String uriAndroidOversea;
+  @JsonKey(name: 'uri_ios_oversea')
+  String uriiOSOversea;
   String uri;
+  @JsonKey(name: 'uri_oversea')
+  String uriOversea;
   String name;
 
   factory MicroPluginItemModel.fromJson(Map<String, dynamic> json) => _$MicroPluginItemModelFromJson(json);
