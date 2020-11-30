@@ -90,7 +90,7 @@ class _FrontTabSettingPageState extends State<FrontTabSettingPage> with Initiali
   }
 
   void _onReorder(int oldIndex, int newIndex) {
-    if (oldIndex < 3 || newIndex < 3) return;
+    // if (oldIndex < 3 || newIndex < 3) return;
     if (newIndex > oldIndex) {
       newIndex -= 1;
     }
@@ -163,7 +163,9 @@ class _FrontTabSettingPageState extends State<FrontTabSettingPage> with Initiali
                                         ? "timelineTrans".tr
                                         : item.key == 'topten'
                                             ? "toptenTrans".tr
-                                            : item.key == 'boardmarks' ? "boardmarksTrans".tr : item.title,
+                                            : item.key == 'boardmarks'
+                                                ? "boardmarksTrans".tr
+                                                : item.title,
                                     style: TextStyle(
                                       color: E().otherPagePrimaryTextColor,
                                     ),
