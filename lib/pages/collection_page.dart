@@ -38,8 +38,8 @@ class CollectionPageState extends ArticleListBasePageState<CollectionModel, Coll
   Widget buildCell(BuildContext context, int index) {
     CollectionArticleModel collectionArticleObject = data.articleList.article[index];
     return InkWell(
-      highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
-      splashColor: E().threadListBackgroundColor.withOpacity(0.15),
+      // highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
+      // splashColor: E().threadListBackgroundColor.withOpacity(0.15),
       onTap: () {
         Navigator.pushNamed(context, "thread_page",
             arguments: ThreadPageRouteArg(

@@ -36,6 +36,22 @@ class Helper {
     return File('$path/' + fileName);
   }
 
+  static Future<void> deleteCacheDir() async {
+    final cacheDir = await getTemporaryDirectory();
+
+    if (cacheDir.existsSync()) {
+      cacheDir.deleteSync(recursive: true);
+    }
+  }
+
+  static Future<void> deleteAppDir() async {
+    final appDir = await getApplicationSupportDirectory();
+
+    if (appDir.existsSync()) {
+      appDir.deleteSync(recursive: true);
+    }
+  }
+
   static String convTimestampToRelative(int timestamp) {
     var now = DateTime.now();
     var today = DateTime(now.year, now.month, now.day, 23, 59, 59, 999, 999);

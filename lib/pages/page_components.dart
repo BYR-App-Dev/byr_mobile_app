@@ -87,7 +87,9 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
                           absorbing: true,
                           child: Container(
                             color: screenshotIndexes[(index / 2).floor()] ?? false
-                                ? E().isThemeDarkStyle ? E().threadPageBackgroundColor.lighten(10) : E().threadPageBackgroundColor.darken(10)
+                                ? E().isThemeDarkStyle
+                                    ? E().threadPageBackgroundColor.lighten(10)
+                                    : E().threadPageBackgroundColor.darken(10)
                                 : E().threadPageBackgroundColor,
                             child: buildCell(
                               context,
@@ -428,7 +430,7 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
         if (screenshotImg != null) {
           ByteData byteData = await screenshotImg.toByteData(format: ui.ImageByteFormat.png);
           Uint8List pngBytes = byteData.buffer.asUint8List();
-          final directory = (await getApplicationDocumentsDirectory()).path;
+          final directory = (await getTemporaryDirectory()).path;
           String fileName = DateTime.now().toIso8601String();
           var path = '$directory/$fileName.png';
           File image = new File(path);
@@ -1019,111 +1021,132 @@ class TextFormFieldWrapperState extends State<TextFormFieldWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 50,
-        child: ExtendedTextField(
-          textSelectionControls: Platform.isAndroid
-              ? CustomMaterialTextSelectionControls(
-                  canCancelTarget: widget.canCancelReplyTarget,
-                  cancelTarget: widget.cancelReplyTarget,
-                )
-              : CustomCupertinoTextSelectionControls(
-                  canCancelTarget: widget.canCancelReplyTarget,
-                  cancelTarget: widget.cancelReplyTarget,
-                ),
-          maxLines: null,
-          textInputAction: TextInputAction.newline,
-          controller: widget.replyController,
-          focusNode: _focusNode,
-          decoration: InputDecoration(
-            prefixIcon: IconButton(
-              icon: Icon(
-                FontAwesomeIcons.smile,
-                color: Color.fromARGB(
-                  255,
-                  (E().threadPageReplyBarButtonBackgroundColor.red +
-                                  E().threadPageReplyBarButtonBackgroundColor.green +
-                                  E().threadPageReplyBarButtonBackgroundColor.blue) /
-                              3 >
-                          128
-                      ? Color(0xFF888888).red
-                      : Color(0xFFAAAAAA).red,
-                  (E().threadPageReplyBarButtonBackgroundColor.red +
-                                  E().threadPageReplyBarButtonBackgroundColor.green +
-                                  E().threadPageReplyBarButtonBackgroundColor.blue) /
-                              3 >
-                          128
-                      ? Color(0xFF888888).green
-                      : Color(0xFFAAAAAA).green,
-                  (E().threadPageReplyBarButtonBackgroundColor.red +
-                                  E().threadPageReplyBarButtonBackgroundColor.green +
-                                  E().threadPageReplyBarButtonBackgroundColor.blue) /
-                              3 >
-                          128
-                      ? Color(0xFF888888).blue
-                      : Color(0xFFAAAAAA).blue,
-                ),
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minHeight: 50.0,
+        maxHeight: 150.0,
+      ),
+      child: ExtendedTextField(
+        // expands: true,
+        textSelectionControls: Platform.isAndroid
+            ? CustomMaterialTextSelectionControls(
+                canCancelTarget: widget.canCancelReplyTarget,
+                cancelTarget: widget.cancelReplyTarget,
+              )
+            : CustomCupertinoTextSelectionControls(
+                canCancelTarget: widget.canCancelReplyTarget,
+                cancelTarget: widget.cancelReplyTarget,
               ),
-              onPressed: () {
-                widget.emoticonTap();
-                if (_focusNode.hasFocus) {
-                  _focusNode.unfocus();
-                }
-                Provider.of<EmoticonPanelProvider>(context, listen: false).changeState();
-              },
-            ),
-            hintText: _placeholder ?? "replycontentTrans".tr,
-            hintStyle: TextStyle(
+        maxLines: 3,
+        minLines: 1,
+        textInputAction: TextInputAction.newline,
+        controller: widget.replyController,
+        focusNode: _focusNode,
+        decoration: InputDecoration(
+          prefixIcon: IconButton(
+            icon: Icon(
+              FontAwesomeIcons.smile,
               color: Color.fromARGB(
                 255,
-                (E().threadPageReplyBarInputBackgroundColor.red + E().threadPageReplyBarInputBackgroundColor.green + E().threadPageReplyBarInputBackgroundColor.blue) /
+                (E().threadPageReplyBarButtonBackgroundColor.red +
+                                E().threadPageReplyBarButtonBackgroundColor.green +
+                                E().threadPageReplyBarButtonBackgroundColor.blue) /
                             3 >
                         128
-                    ? Color(0xFFAAAAAA).red
-                    : Color(0xFF888888).red,
-                (E().threadPageReplyBarInputBackgroundColor.red + E().threadPageReplyBarInputBackgroundColor.green + E().threadPageReplyBarInputBackgroundColor.blue) /
+                    ? Color(0xFF888888).red
+                    : Color(0xFFAAAAAA).red,
+                (E().threadPageReplyBarButtonBackgroundColor.red +
+                                E().threadPageReplyBarButtonBackgroundColor.green +
+                                E().threadPageReplyBarButtonBackgroundColor.blue) /
                             3 >
                         128
-                    ? Color(0xFFAAAAAA).green
-                    : Color(0xFF888888).green,
-                (E().threadPageReplyBarInputBackgroundColor.red + E().threadPageReplyBarInputBackgroundColor.green + E().threadPageReplyBarInputBackgroundColor.blue) /
+                    ? Color(0xFF888888).green
+                    : Color(0xFFAAAAAA).green,
+                (E().threadPageReplyBarButtonBackgroundColor.red +
+                                E().threadPageReplyBarButtonBackgroundColor.green +
+                                E().threadPageReplyBarButtonBackgroundColor.blue) /
                             3 >
                         128
-                    ? Color(0xFFAAAAAA).blue
-                    : Color(0xFF888888).blue,
+                    ? Color(0xFF888888).blue
+                    : Color(0xFFAAAAAA).blue,
               ),
             ),
-            filled: true,
-            fillColor: E().threadPageReplyBarInputBackgroundColor,
-            contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 13.0),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: E().threadPageReplyBarInputBackgroundColor),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: E().threadPageReplyBarInputBackgroundColor),
-              borderRadius: BorderRadius.circular(12),
-            ),
+            onPressed: () {
+              widget.emoticonTap();
+              if (_focusNode.hasFocus) {
+                _focusNode.unfocus();
+              }
+              Provider.of<EmoticonPanelProvider>(context, listen: false).changeState();
+            },
           ),
-          style: TextStyle(
-            height: 1.2,
+          hintText: _placeholder ?? "replycontentTrans".tr,
+          hintStyle: TextStyle(
             color: Color.fromARGB(
               255,
-              (E().threadPageReplyBarInputBackgroundColor.red + E().threadPageReplyBarInputBackgroundColor.green + E().threadPageReplyBarInputBackgroundColor.blue) / 3 >
+              (E().threadPageReplyBarInputBackgroundColor.red +
+                              E().threadPageReplyBarInputBackgroundColor.green +
+                              E().threadPageReplyBarInputBackgroundColor.blue) /
+                          3 >
                       128
-                  ? Color(0xFF555555).red
-                  : Color(0xFFDDDDDD).red,
-              (E().threadPageReplyBarInputBackgroundColor.red + E().threadPageReplyBarInputBackgroundColor.green + E().threadPageReplyBarInputBackgroundColor.blue) / 3 >
+                  ? Color(0xFFAAAAAA).red
+                  : Color(0xFF888888).red,
+              (E().threadPageReplyBarInputBackgroundColor.red +
+                              E().threadPageReplyBarInputBackgroundColor.green +
+                              E().threadPageReplyBarInputBackgroundColor.blue) /
+                          3 >
                       128
-                  ? Color(0xFF555555).green
-                  : Color(0xFFDDDDDD).green,
-              (E().threadPageReplyBarInputBackgroundColor.red + E().threadPageReplyBarInputBackgroundColor.green + E().threadPageReplyBarInputBackgroundColor.blue) / 3 >
+                  ? Color(0xFFAAAAAA).green
+                  : Color(0xFF888888).green,
+              (E().threadPageReplyBarInputBackgroundColor.red +
+                              E().threadPageReplyBarInputBackgroundColor.green +
+                              E().threadPageReplyBarInputBackgroundColor.blue) /
+                          3 >
                       128
-                  ? Color(0xFF555555).blue
-                  : Color(0xFFDDDDDD).blue,
+                  ? Color(0xFFAAAAAA).blue
+                  : Color(0xFF888888).blue,
             ),
           ),
-        ));
+          filled: true,
+          fillColor: E().threadPageReplyBarInputBackgroundColor,
+          contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 13.0),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: E().threadPageReplyBarInputBackgroundColor),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: E().threadPageReplyBarInputBackgroundColor),
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        style: TextStyle(
+          height: 1.2,
+          color: Color.fromARGB(
+            255,
+            (E().threadPageReplyBarInputBackgroundColor.red +
+                            E().threadPageReplyBarInputBackgroundColor.green +
+                            E().threadPageReplyBarInputBackgroundColor.blue) /
+                        3 >
+                    128
+                ? Color(0xFF555555).red
+                : Color(0xFFDDDDDD).red,
+            (E().threadPageReplyBarInputBackgroundColor.red +
+                            E().threadPageReplyBarInputBackgroundColor.green +
+                            E().threadPageReplyBarInputBackgroundColor.blue) /
+                        3 >
+                    128
+                ? Color(0xFF555555).green
+                : Color(0xFFDDDDDD).green,
+            (E().threadPageReplyBarInputBackgroundColor.red +
+                            E().threadPageReplyBarInputBackgroundColor.green +
+                            E().threadPageReplyBarInputBackgroundColor.blue) /
+                        3 >
+                    128
+                ? Color(0xFF555555).blue
+                : Color(0xFFDDDDDD).blue,
+          ),
+        ),
+      ),
+    );
   }
 }
 

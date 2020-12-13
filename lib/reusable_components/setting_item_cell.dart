@@ -10,6 +10,7 @@ class SettingItemCell extends StatefulWidget {
     this.newFeatureKey,
     this.showArrow = true,
     this.onTap,
+    this.height = 66,
   });
   final Widget leading;
   final String title;
@@ -17,13 +18,16 @@ class SettingItemCell extends StatefulWidget {
   final String newFeatureKey;
   final bool showArrow;
   final VoidCallback onTap;
+  final double height;
   @override
   _SettingItemCellState createState() => _SettingItemCellState();
 }
 
 class _SettingItemCellState extends State<SettingItemCell> {
   _closeFeatureHint() {
-    if (widget.newFeatureKey != null && widget.newFeatureKey.isNotEmpty && (LocalStorage.getFeatureKeys()[widget.newFeatureKey] ?? true) == true) {
+    if (widget.newFeatureKey != null &&
+        widget.newFeatureKey.isNotEmpty &&
+        (LocalStorage.getFeatureKeys()[widget.newFeatureKey] ?? true) == true) {
       Map<String, bool> featureKeys = LocalStorage.getFeatureKeys();
       featureKeys[widget.newFeatureKey] = false;
       LocalStorage.setFeatureKeys(featureKeys);
@@ -35,8 +39,7 @@ class _SettingItemCellState extends State<SettingItemCell> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
+    return InkWell(
       onTap: () {
         _closeFeatureHint();
         if (widget.onTap != null) {
@@ -45,7 +48,7 @@ class _SettingItemCellState extends State<SettingItemCell> {
       },
       child: Container(
         width: double.infinity,
-        height: 50,
+        height: widget.height,
         padding: EdgeInsets.symmetric(horizontal: 15),
         child: Row(
           children: <Widget>[
@@ -78,7 +81,9 @@ class _SettingItemCellState extends State<SettingItemCell> {
                   ),
                 ),
               ),
-            if (widget.newFeatureKey != null && widget.newFeatureKey.isNotEmpty && (LocalStorage.getFeatureKeys()[widget.newFeatureKey] ?? true) == true)
+            if (widget.newFeatureKey != null &&
+                widget.newFeatureKey.isNotEmpty &&
+                (LocalStorage.getFeatureKeys()[widget.newFeatureKey] ?? true) == true)
               Padding(
                 padding: EdgeInsets.only(right: 10),
                 child: Container(

@@ -144,7 +144,7 @@ class ToptenPageState extends State<ToptenPage> with AutomaticKeepAliveClientMix
       child: Screenshot(
         controller: screenshotController,
         child: Container(
-          color: E().threadPageBackgroundColor,
+          // color: E().threadPageBackgroundColor,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: List.generate(
@@ -184,10 +184,10 @@ class ToptenPageState extends State<ToptenPage> with AutomaticKeepAliveClientMix
 
   Widget _buildToptenRow(FrontArticleModel threadObject) {
     return Container(
-      color: E().threadListBackgroundColor,
+      // color: E().threadListBackgroundColor,
       child: InkWell(
-        highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
-        splashColor: E().threadListBackgroundColor.withOpacity(0.15),
+        // highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
+        // splashColor: E().threadListBackgroundColor.withOpacity(0.15),
         onTap: () {
           navigator.pushNamed("thread_page",
               arguments: ThreadPageRouteArg(threadObject.boardName, threadObject.groupId));

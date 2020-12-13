@@ -35,8 +35,8 @@ class HistoryPageState extends ArticleListBasePageState<HistoryListModel, Histor
   Widget buildCell(BuildContext context, int index) {
     HistoryArticleModel historyArticleObject = data.articleList.article[index];
     return InkWell(
-      highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
-      splashColor: E().threadListBackgroundColor.withOpacity(0.15),
+      // highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
+      // splashColor: E().threadListBackgroundColor.withOpacity(0.15),
       onTap: () async {
         await Navigator.pushNamed(context, "thread_page",
             arguments: ThreadPageRouteArg(

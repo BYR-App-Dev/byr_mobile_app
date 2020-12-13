@@ -20,39 +20,41 @@ class VoteListingCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () {
-        if (int.tryParse(vote.vid) != null) {
-          Navigator.pushNamed(context, "vote_page", arguments: VotePageRouteArg(int.tryParse(vote.vid)));
-        }
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              vote.title,
-              style: TextStyle(
-                fontSize: 17.0,
-                color: E().threadListTileTitleColor,
+      child: InkWell(
+        onTap: () {
+          if (int.tryParse(vote.vid) != null) {
+            Navigator.pushNamed(context, "vote_page", arguments: VotePageRouteArg(int.tryParse(vote.vid)));
+          }
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                vote.title,
+                style: TextStyle(
+                  fontSize: 17.0,
+                  color: E().threadListTileTitleColor,
+                ),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
               ),
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-            Container(
-              padding: EdgeInsets.only(
-                right: 10,
-                top: 5,
+              Container(
+                padding: EdgeInsets.only(
+                  right: 10,
+                  top: 5,
+                ),
+                child: Text(
+                  DateTime.fromMillisecondsSinceEpoch(int.tryParse(vote.end) * 1000)
+                      .toString()
+                      .replaceAll(RegExp(r'....$'), ''),
+                  style: TextStyle(fontSize: 12.0, color: E().threadListOtherTextColor),
+                  overflow: TextOverflow.fade,
+                ),
               ),
-              child: Text(
-                DateTime.fromMillisecondsSinceEpoch(int.tryParse(vote.end) * 1000)
-                    .toString()
-                    .replaceAll(RegExp(r'....$'), ''),
-                style: TextStyle(fontSize: 12.0, color: E().threadListOtherTextColor),
-                overflow: TextOverflow.fade,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

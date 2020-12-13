@@ -34,7 +34,7 @@ class ScreenshotController {
         ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
         Uint8List pngBytes = byteData.buffer.asUint8List();
         if (path == "") {
-          final directory = (await getApplicationDocumentsDirectory()).path;
+          final directory = (await getTemporaryDirectory()).path;
           String fileName = DateTime.now().toIso8601String();
           path = '$directory/$fileName.png';
         }

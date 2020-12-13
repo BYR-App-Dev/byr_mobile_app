@@ -19,7 +19,8 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart' hide AlwaysScrollableClampingScrollPhysics;
+import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
+    hide AlwaysScrollableClampingScrollPhysics;
 import 'package:tuple/tuple.dart';
 
 typedef UserListRefreshCallback = Future<Tuple2<UserModel, List>> Function(int refreshType);
@@ -117,7 +118,8 @@ class UserDetailListState extends State<UserDetailList> {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 16,
-              color: users[index]['token'] == NForumService.currentToken ? E().mePageSelectedColor : E().mePageTextColor,
+              color:
+                  users[index]['token'] == NForumService.currentToken ? E().mePageSelectedColor : E().mePageTextColor,
             ),
           ),
           trailing: ButtonTheme(
@@ -216,9 +218,12 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
     return Column(
       children: <Widget>[
         SettingItemCell(
+          height: 50,
           leading: Icon(MaterialIcons.wb_sunny, color: E().settingItemCellMainColor),
           title: "themeStyleTrans".tr,
-          value: LocalStorage.getIsAutoTheme() ? "themeAuto".tr : BYRThemeManager.instance().themeMap[E().themeName].themeDisplayName,
+          value: LocalStorage.getIsAutoTheme()
+              ? "themeAuto".tr
+              : BYRThemeManager.instance().themeMap[E().themeName].themeDisplayName,
           showArrow: false,
           onTap: () {
             List<String> themeKeys = BYRThemeManager.instance().themeMap.keys.toList();
@@ -248,6 +253,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
           },
         ),
         SettingItemCell(
+          height: 50,
           leading: Icon(Icons.audiotrack, color: E().settingItemCellMainColor),
           title: "myAudioPlaylist".tr,
           showArrow: false,
@@ -258,6 +264,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
           },
         ),
         SettingItemCell(
+          height: 50,
           leading: Icon(Icons.collections_bookmark, color: E().settingItemCellMainColor),
           title: "collectionTrans".tr,
           onTap: () {
@@ -265,6 +272,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
           },
         ),
         SettingItemCell(
+          height: 50,
           leading: Icon(Icons.history, color: E().settingItemCellMainColor),
           title: "browsingHistory".tr,
           onTap: () {
@@ -272,6 +280,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
           },
         ),
         SettingItemCell(
+          height: 50,
           leading: Icon(Icons.view_list, color: E().settingItemCellMainColor),
           title: "sectionButtonTrans".tr,
           onTap: () {
@@ -280,6 +289,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
         ),
         Divider(),
         SettingItemCell(
+          height: 50,
           leading: Icon(Icons.settings, color: E().settingItemCellMainColor),
           title: "settings".tr,
           newFeatureKey: 'fullscreen_back_gesture',
@@ -288,6 +298,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
           },
         ),
         SettingItemCell(
+          height: 50,
           leading: Icon(Icons.local_post_office, color: E().settingItemCellMainColor),
           title: "feedbackTrans".tr,
           onTap: () {
@@ -306,6 +317,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
           },
         ),
         SettingItemCell(
+          height: 50,
           leading: Icon(FontAwesomeIcons.exclamationCircle, color: E().settingItemCellMainColor),
           title: "aboutButtonTrans".tr,
           onTap: () {
@@ -372,7 +384,8 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                   padding: const EdgeInsets.only(left: 10),
                   child: FutureBuilder(
                     builder: (context, snapshot) => snapshot.hasData
-                        ? Text(snapshot.data?.id, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0, color: E().mePageTextColor))
+                        ? Text(snapshot.data?.id,
+                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0, color: E().mePageTextColor))
                         : Container(),
                     future: SharedObjects.me,
                   ),
@@ -417,14 +430,16 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                             Padding(
                               padding: const EdgeInsets.only(top: 10),
                               child: FutureBuilder(
-                                builder: (context, snapshot) =>
-                                    snapshot.hasData ? Text(snapshot.data?.id, style: HStyle.titleNav()) : Text("", style: HStyle.titleNav()),
+                                builder: (context, snapshot) => snapshot.hasData
+                                    ? Text(snapshot.data?.id, style: HStyle.titleNav())
+                                    : Text("", style: HStyle.titleNav()),
                                 future: SharedObjects.me,
                               ),
                             ),
                             FutureBuilder(
-                              builder: (context, snapshot) =>
-                                  snapshot.hasData ? Text(snapshot.data?.userName, style: HStyle.bodyWhite()) : Text("", style: HStyle.bodyWhite()),
+                              builder: (context, snapshot) => snapshot.hasData
+                                  ? Text(snapshot.data?.userName, style: HStyle.bodyWhite())
+                                  : Text("", style: HStyle.bodyWhite()),
                               future: SharedObjects.me,
                             ),
                           ],
@@ -433,7 +448,8 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                       GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: () {
-                          GallerySaver.saveImage(SharedObjects.welImageInfo.path, albumName: 'BYRDownload').then((value) {
+                          GallerySaver.saveImage(SharedObjects.welImageInfo.path, albumName: 'BYRDownload')
+                              .then((value) {
                             AdaptiveComponents.showToast(context, '保存${value ? '成功' : '失败'}');
                           });
                         },
@@ -543,9 +559,9 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
   Widget build(BuildContext context) {
     super.build(context);
     return Obx(
-      () => Container(
-        color: E().mePageBackgroundColor,
-        child: PullToRefreshNotification(
+      () => Scaffold(
+        backgroundColor: E().mePageBackgroundColor,
+        body: PullToRefreshNotification(
           pullBackOnRefresh: false,
           maxDragOffset: 200,
           onRefresh: () => Future.value(true),

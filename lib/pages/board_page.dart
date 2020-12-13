@@ -370,7 +370,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
         backgroundColorEnd: E().threadListBackgroundColor,
         iconColorBegin: Colors.blue,
         iconColorEnd: Colors.blue,
-        title: GestureDetector(
+        title: InkWell(
           child: Row(
             children: <Widget>[
               Container(
@@ -539,7 +539,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
   }
 
   Widget _buildBoardRow(FrontArticleModel boardArticleObject) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         Navigator.pushNamed(
           context,
@@ -552,7 +552,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
         );
       },
       child: Container(
-        color: E().threadListBackgroundColor,
+        // color: E().threadListBackgroundColor,
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

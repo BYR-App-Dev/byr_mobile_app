@@ -33,8 +33,8 @@ class TimelinePageState extends ArticleListBasePageState<TimelineModel, Timeline
   @override
   Widget buildCell(BuildContext context, int index) {
     return InkWell(
-      highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
-      splashColor: E().threadListBackgroundColor.withOpacity(0.15),
+      // highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
+      // splashColor: E().threadListBackgroundColor.withOpacity(0.15),
       onTap: () {
         navigator.pushNamed(
           "thread_page",

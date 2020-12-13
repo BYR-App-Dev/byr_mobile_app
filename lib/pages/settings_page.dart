@@ -2,6 +2,7 @@ import 'package:byr_mobile_app/configurations/configurations.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/customizations/translation.dart';
 import 'package:byr_mobile_app/customizations/translator_manager.dart';
+import 'package:byr_mobile_app/helper/helper.dart';
 import 'package:byr_mobile_app/local_objects/local_storage.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/pages/refresher_settings_page.dart';
@@ -35,7 +36,7 @@ class SettingsPageState extends State<SettingsPage> {
         ),
         backgroundColor: E().otherPagePrimaryColor,
         body: Container(
-          color: E().otherPagePrimaryColor,
+          // color: E().otherPagePrimaryColor,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +60,7 @@ class SettingsPageState extends State<SettingsPage> {
                     );
                   },
                 ),
-                Divider(),
+                Divider(height: 1),
                 SettingItemCell(
                   title: "networkType".tr,
                   value: AppConfigs.isIPv6Used ? "useIPv6".tr : "useIPv4".tr,
@@ -86,21 +87,21 @@ class SettingsPageState extends State<SettingsPage> {
                     );
                   },
                 ),
-                Divider(),
+                Divider(height: 1),
                 SettingItemCell(
                   title: "themeSettings".tr,
                   onTap: () {
                     Navigator.of(context).push(FullscreenBackPageRoute(builder: (_) => ThemeSettingsPage()));
                   },
                 ),
-                Divider(),
+                Divider(height: 1),
                 SettingItemCell(
                   title: "refresherSettings".tr,
                   onTap: () {
                     Navigator.of(context).push(FullscreenBackPageRoute(builder: (_) => RefresherSettingsPage()));
                   },
                 ),
-                Divider(),
+                Divider(height: 1),
                 SettingItemCell(
                   title: "appBarStyle".tr,
                   showArrow: false,
@@ -108,7 +109,28 @@ class SettingsPageState extends State<SettingsPage> {
                     AdaptiveComponents.showBottomWidget(context, AppBarChoosePanel());
                   },
                 ),
-                Divider(),
+                Divider(height: 1),
+                SettingItemCell(
+                  title: "clearCache".tr,
+                  showArrow: false,
+                  onTap: () {
+                    AdaptiveComponents.showAlertDialog(
+                      context,
+                      title: "clearCache".tr,
+                      hideCancel: true,
+                      onDismiss: (value) async {
+                        if (value == AlertResult.confirm) {
+                          await Helper.deleteAppDir();
+                          await Helper.deleteCacheDir();
+                          if (mounted) {
+                            setState(() {});
+                          }
+                        }
+                      },
+                    );
+                  },
+                ),
+                Divider(height: 1),
                 NonPaddingListTile(
                   contentPadding: EdgeInsets.only(left: 15, right: 5),
                   title: Text(
@@ -126,7 +148,7 @@ class SettingsPageState extends State<SettingsPage> {
                       }),
                   onTap: null,
                 ),
-                Divider(),
+                Divider(height: 1),
                 NonPaddingListTile(
                   contentPadding: EdgeInsets.only(left: 15, right: 5),
                   title: Text(
@@ -163,7 +185,7 @@ class SettingsPageState extends State<SettingsPage> {
                       }),
                   onTap: null,
                 ),
-                Divider(),
+                Divider(height: 1),
                 NonPaddingListTile(
                   contentPadding: EdgeInsets.only(left: 15, right: 5),
                   title: Text(
@@ -181,7 +203,7 @@ class SettingsPageState extends State<SettingsPage> {
                       }),
                   onTap: null,
                 ),
-                if (UniversalPlatform.isAndroid) Divider(),
+                if (UniversalPlatform.isAndroid) Divider(height: 1),
                 if (UniversalPlatform.isAndroid)
                   NonPaddingListTile(
                     contentPadding: EdgeInsets.only(left: 15, right: 5),
@@ -200,7 +222,7 @@ class SettingsPageState extends State<SettingsPage> {
                         }),
                     onTap: null,
                   ),
-                if (UniversalPlatform.isAndroid) Divider(),
+                if (UniversalPlatform.isAndroid) Divider(height: 1),
                 if (UniversalPlatform.isAndroid)
                   NonPaddingListTile(
                     contentPadding: EdgeInsets.only(left: 15, right: 5),
@@ -219,7 +241,7 @@ class SettingsPageState extends State<SettingsPage> {
                         }),
                     onTap: null,
                   ),
-                if (UniversalPlatform.isAndroid) Divider(),
+                if (UniversalPlatform.isAndroid) Divider(height: 1),
                 if (UniversalPlatform.isAndroid)
                   SettingItemCell(
                     title: "downgradeTrans".tr,
@@ -231,7 +253,7 @@ class SettingsPageState extends State<SettingsPage> {
                       );
                     },
                   ),
-                Divider(),
+                Divider(height: 1),
               ],
             ),
           ),
