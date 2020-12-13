@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.0"
+  ai_barcode:
+    dependency: "direct main"
+    description:
+      name: ai_barcode
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.4"
   analyzer:
     dependency: transitive
     description:
@@ -749,8 +756,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "8d5488569b335639d8d1df4c79b79f4622f8b294"
-      resolved-ref: "8d5488569b335639d8d1df4c79b79f4622f8b294"
+      ref: f42f5fd23648fd5b802a286fd6334b5e4dcc2498
+      resolved-ref: f42f5fd23648fd5b802a286fd6334b5e4dcc2498
       url: "ssh://git@github.com/BYR-App-Dev/secrets.git"
     source: git
     version: "1.0.0+1"
@@ -782,6 +789,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
+  simple_rsa:
+    dependency: "direct main"
+    description:
+      name: simple_rsa
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.5"
   sky_engine:
     dependency: transitive
     description: flutter

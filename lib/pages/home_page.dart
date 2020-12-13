@@ -8,6 +8,7 @@ import 'package:byr_mobile_app/local_objects/local_storage.dart';
 import 'package:byr_mobile_app/nforum/nforum_link_handler.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
+import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/custom_tabs.dart';
 import 'package:byr_mobile_app/reusable_components/ota_dialog.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
@@ -45,6 +46,27 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
 
   void handleLink(String link) {
     NForumLinkHandler.byrLinkHandler(link);
+  }
+
+  void clipboardDetect() {
+    Clipboard.getData(Clipboard.kTextPlain).then((value) {
+      if (value != null && value.text != null) {
+        if (NForumLinkHandler.isBYRLinkHandlable(value.text)) {
+          AdaptiveComponents.showAlertDialog(
+            context,
+            title: "打开链接",
+            content: value.text,
+            hideCancel: true,
+            onDismiss: (value1) {
+              if (value1 == AlertResult.confirm) {
+                Clipboard.setData(ClipboardData(text: ""));
+                handleLink(value.text);
+              }
+            },
+          );
+        }
+      }
+    }).catchError((error) {});
   }
 
   void androidCheckUpdate() {
@@ -110,6 +132,7 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
   }
 
   void handleAppLifecycleState() {
+    clipboardDetect();
     SystemChannels.lifecycle.setMessageHandler(
       (msg) {
         switch (msg) {
@@ -125,13 +148,17 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
                 systemNavigationBarIconBrightness: !E().isThemeDarkStyle ? Brightness.dark : Brightness.light,
               ),
             );
+            clipboardDetect();
             if (mounted) {
               setState(() {});
             }
             break;
           case "AppLifecycleState.paused":
+            break;
           case "AppLifecycleState.inactive":
+            break;
           case "AppLifecycleState.suspending":
+            break;
           default:
             break;
         }

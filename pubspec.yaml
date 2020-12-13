@@ -28,7 +28,7 @@ dependencies:
   pull_to_refresh: ^1.6.2
   flutter_gifimage: ^1.0.0
   shimmer: ^1.1.1
-  qr_flutter: ^3.1.0
+  qr_flutter: ^3.2.0
   markdown: ^2.1.8
   flutter_markdown: ^0.4.3
   fast_gbk: ^0.1.2+1
@@ -50,6 +50,8 @@ dependencies:
   toast: ^0.1.5	
   webview_flutter: ^0.3.22+1
   video_player: ^0.10.12+3
+  ai_barcode: ^1.1.4
+  simple_rsa: ^0.0.5
   flutter_liquidcore:
     git:
       url: https://github.com/BYR-App-Dev/flutter_liquidcore.git
@@ -78,7 +80,7 @@ dependencies:
   secrets:
     git:
       url: ssh://git@github.com/BYR-App-Dev/secrets.git
-      ref: 8d5488569b335639d8d1df4c79b79f4622f8b294
+      ref: f42f5fd23648fd5b802a286fd6334b5e4dcc2498
 dev_dependencies:
   flutter_test:
     sdk: flutter

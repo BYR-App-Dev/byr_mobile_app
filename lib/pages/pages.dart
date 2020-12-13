@@ -32,6 +32,7 @@ export 'package:byr_mobile_app/pages/vote_list_page.dart';
 export 'package:byr_mobile_app/pages/vote_page.dart';
 export 'package:byr_mobile_app/pages/web_page.dart';
 export 'package:byr_mobile_app/pages/welcome_page.dart';
+export 'package:byr_mobile_app/pages/microscan_page.dart';
 export 'package:byr_mobile_app/reusable_components/fullscreen_back_page_route.dart';
 export 'package:get/get.dart';
 

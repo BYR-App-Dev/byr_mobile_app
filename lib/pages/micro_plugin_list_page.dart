@@ -7,10 +7,13 @@ import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/pages/page_components.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
+import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
+import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class MicroPluginListBaseData<X extends MicroPluginListModel> extends PageableListBaseData<X> {
@@ -228,33 +231,63 @@ class MicroPluginListPageState extends PageableListBasePageState<MicroPluginList
     return Obx(
       () => Scaffold(
         backgroundColor: E().threadListBackgroundColor,
-        body: RefreshConfiguration(
-          child: Center(
-            child: widgetCase(
-              initializationStatus,
-              {
-                InitializationStatus.Initializing: _buildLoadingView(),
-                InitializationStatus.Initialized: data.articleList == null
-                    ? _buildLoadingView()
-                    : RefresherFactory(
-                        factor,
-                        refreshController,
-                        true,
-                        false,
-                        onTopRefresh,
-                        null,
-                        buildList(),
-                      ),
-                InitializationStatus.Failed: InitializationFailureView(
-                  failureInfo: failureInfo,
-                  textColor: E().threadListOtherTextColor,
-                  buttonColor: E().threadListOtherTextColor,
-                  refresh: initialization,
+        body: Column(
+          children: [
+            if (data.articleList.showWebLink)
+              Center(
+                child: Text("网页版: " + data.articleList.webLink),
+              ),
+            if (data.articleList.showWebLink)
+              ListTile(
+                title: Center(
+                  child: Text(
+                    "网页版小程序扫码登录",
+                    style: TextStyle(color: E().otherPagePrimaryTextColor),
+                  ),
                 ),
-              },
-              _buildLoadingView(),
+                onTap: () async {
+                  UserModel me;
+                  if (SharedObjects.me != null) {
+                    me = await SharedObjects.me;
+                  }
+                  if (me != null && me.id != null && me.id != "") {
+                    navigator.push(CupertinoPageRoute(builder: (_) => FullScreenScannerPage(me.id)));
+                  } else {
+                    AdaptiveComponents.showToast(context, "请等待【我】页面用户资料加载完成再扫码");
+                  }
+                },
+              ),
+            Expanded(
+              child: RefreshConfiguration(
+                child: Center(
+                  child: widgetCase(
+                    initializationStatus,
+                    {
+                      InitializationStatus.Initializing: _buildLoadingView(),
+                      InitializationStatus.Initialized: data.articleList == null
+                          ? _buildLoadingView()
+                          : RefresherFactory(
+                              factor,
+                              refreshController,
+                              true,
+                              false,
+                              onTopRefresh,
+                              null,
+                              buildList(),
+                            ),
+                      InitializationStatus.Failed: InitializationFailureView(
+                        failureInfo: failureInfo,
+                        textColor: E().threadListOtherTextColor,
+                        buttonColor: E().threadListOtherTextColor,
+                        refresh: initialization,
+                      ),
+                    },
+                    _buildLoadingView(),
+                  ),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

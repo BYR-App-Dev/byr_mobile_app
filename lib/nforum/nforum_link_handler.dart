@@ -31,6 +31,29 @@ class NForumLinkHandler {
     return false;
   }
 
+  static bool isBYRLinkHandlable(String url) {
+    if (url == null) {
+      return false;
+    }
+    var thread = NForumTextParser.threadPattern.firstMatch(url);
+    if (thread != null && int.tryParse(thread.group(2)) != null) {
+      return true;
+    }
+    var board = NForumTextParser.boardPattern.firstMatch(url);
+    if (board != null) {
+      return true;
+    }
+    var bet = NForumTextParser.betPattern.firstMatch(url);
+    if (bet != null && int.tryParse(bet.group(1)) != null) {
+      return true;
+    }
+    var vote = NForumTextParser.votePattern.firstMatch(url);
+    if (vote != null && int.tryParse(vote.group(1)) != null) {
+      return true;
+    }
+    return false;
+  }
+
   static bool webLinkHandler(String url) {
     canLaunch(url).then((r) {
       launch(url);

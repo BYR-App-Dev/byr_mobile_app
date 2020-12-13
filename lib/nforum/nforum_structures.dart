@@ -1249,10 +1249,16 @@ class MicroPluginListModel extends PageableListBaseModel<MicroPluginItemModel> {
   PaginationModel pagination;
   @JsonKey(name: 'micro_plugins')
   List<MicroPluginItemModel> article;
+  @JsonKey(name: 'show_web_link')
+  bool showWebLink;
+  @JsonKey(name: 'web_link')
+  String webLink;
 
   MicroPluginListModel(
     this.pagination,
     this.article,
+    this.showWebLink,
+    this.webLink,
   ) : super(pagination: pagination, article: article);
 
   factory MicroPluginListModel.fromJson(Map<String, dynamic> json) => _$MicroPluginListModelFromJson(json);

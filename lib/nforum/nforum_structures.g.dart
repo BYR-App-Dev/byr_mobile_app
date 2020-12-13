@@ -964,10 +964,14 @@ MicroPluginListModel _$MicroPluginListModelFromJson(Map<String, dynamic> json) {
     (json['micro_plugins'] as List)
         ?.map((e) => e == null ? null : MicroPluginItemModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    json['show_web_link'] as bool,
+    json['web_link'] as String,
   );
 }
 
 Map<String, dynamic> _$MicroPluginListModelToJson(MicroPluginListModel instance) => <String, dynamic>{
       'pagination': instance.pagination,
       'micro_plugins': instance.article,
+      'show_web_link': instance.showWebLink,
+      'web_link': instance.webLink,
     };
