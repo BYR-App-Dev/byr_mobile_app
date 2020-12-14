@@ -37,7 +37,7 @@ class MicroPluginPageState extends State<MicroPluginPage> {
         title: Text(widget.pluginName),
       ),
       body: Center(
-        child: layout(this.layoutMap) ?? Text("loading"),
+        child: layout(this.layoutMap) ?? CircularProgressIndicator(),
       ),
     );
   }

@@ -209,7 +209,8 @@ class MicroPluginListPageState extends PageableListBasePageState<MicroPluginList
         margin: EdgeInsetsDirectional.zero,
         decoration: BoxDecoration(
           border: Border(
-            bottom: BorderSide(color: Colors.transparent, width: 4),
+            bottom: BorderSide(
+                color: data.articleList.showWebLink ? E().threadListDividerColor : Colors.transparent, width: 4),
           ),
         ),
       );
@@ -234,15 +235,30 @@ class MicroPluginListPageState extends PageableListBasePageState<MicroPluginList
         body: Column(
           children: [
             if (data.articleList.showWebLink)
-              Center(
-                child: Text("网页版: " + data.articleList.webLink),
+              Container(
+                child: Center(
+                  child: Text(
+                    "网页版: " + data.articleList.webLink,
+                    style: TextStyle(color: E().otherPagePrimaryTextColor),
+                  ),
+                ),
               ),
             if (data.articleList.showWebLink)
               ListTile(
                 title: Center(
-                  child: Text(
-                    "网页版小程序扫码登录",
-                    style: TextStyle(color: E().otherPagePrimaryTextColor),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Icon(Icons.devices_sharp, color: E().otherPagePrimaryTextColor),
+                      ),
+                      Text(
+                        "网页版小程序扫码登录",
+                        style: TextStyle(color: E().otherPagePrimaryTextColor),
+                      ),
+                    ],
                   ),
                 ),
                 onTap: () async {
@@ -257,7 +273,6 @@ class MicroPluginListPageState extends PageableListBasePageState<MicroPluginList
                   }
                 },
               ),
-            if (data.articleList.showWebLink) Divider(),
             Expanded(
               child: RefreshConfiguration(
                 child: Center(
