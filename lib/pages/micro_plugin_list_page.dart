@@ -257,6 +257,7 @@ class MicroPluginListPageState extends PageableListBasePageState<MicroPluginList
                   }
                 },
               ),
+            if (data.articleList.showWebLink) Divider(),
             Expanded(
               child: RefreshConfiguration(
                 child: Center(
