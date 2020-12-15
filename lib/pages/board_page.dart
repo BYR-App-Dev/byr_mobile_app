@@ -199,7 +199,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
     super.build(context);
     return Obx(
       () => Scaffold(
-        backgroundColor: E().threadListBackgroundColor,
+        // backgroundColor: E().threadListBackgroundColor,
         appBar: !widget.arg.keepTop
             ? null
             : BYRAppBar(
@@ -662,7 +662,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
     return Container(
       padding: EdgeInsets.all(4),
       color: E().threadListDividerColor,
-      child: GestureDetector(
+      child: InkWell(
         onTap: () {
           Navigator.pushNamed(
             context,
@@ -699,8 +699,8 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                                             E().threadListBackgroundColor.blue) /
                                         3 <
                                     128)
-                                ? AssetImage("resources/icon/media_black.png")
-                                : AssetImage("resources/icon/media_white.png"),
+                                ? AssetImage("resources/thread/media_black.png")
+                                : AssetImage("resources/thread/media_white.png"),
                             fit: BoxFit.cover,
                           )
                         : Center(
