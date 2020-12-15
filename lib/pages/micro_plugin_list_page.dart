@@ -234,7 +234,9 @@ class MicroPluginListPageState extends PageableListBasePageState<MicroPluginList
         backgroundColor: E().threadListBackgroundColor,
         body: Column(
           children: [
-            if (data.articleList.showWebLink)
+            if (initializationStatus == InitializationStatus.Initialized &&
+                data.articleList != null &&
+                data.articleList.showWebLink)
               Container(
                 child: Center(
                   child: Text(
@@ -243,7 +245,9 @@ class MicroPluginListPageState extends PageableListBasePageState<MicroPluginList
                   ),
                 ),
               ),
-            if (data.articleList.showWebLink)
+            if (initializationStatus == InitializationStatus.Initialized &&
+                data.articleList != null &&
+                data.articleList.showWebLink)
               ListTile(
                 title: Center(
                   child: Row(
