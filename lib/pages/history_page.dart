@@ -126,6 +126,15 @@ class HistoryPageState extends ArticleListBasePageState<HistoryListModel, Histor
           title: Text(
             "browsingHistory".tr,
           ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.delete_sweep, color: E().otherPageTopBarButtonColor),
+              onPressed: () async {
+                HistoryModel.clearHistory();
+                onTopRefresh();
+              },
+            ),
+          ],
         ),
         body: RefreshConfiguration(
           child: Center(

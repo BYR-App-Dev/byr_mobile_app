@@ -193,6 +193,17 @@ class HistoryModel {
     }
     _saveHistory(_history);
   }
+
+  static void clearHistory() {
+    if (_history == null) {
+      _history = HistoryModel(article: Set());
+    }
+    if (_history.article == null) {
+      _history.article = Set();
+    }
+    _history.article.clear();
+    _saveHistory(_history);
+  }
 }
 
 HistoryArticleModel _$HistoryArticleModelFromJson(Map<String, dynamic> json) {
