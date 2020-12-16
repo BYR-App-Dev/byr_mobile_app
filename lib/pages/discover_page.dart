@@ -175,7 +175,7 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
                         BoardPageRouteArg(
                           element,
                           keepTop: false,
-                          isPicWaterfall: element == "Picture",
+                          // isPicWaterfall: element == "Picture",
                         ),
                       ),
                     ))
