@@ -52,18 +52,44 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
     Clipboard.getData(Clipboard.kTextPlain).then((value) {
       if (value != null && value.text != null) {
         if (NForumLinkHandler.isBYRLinkHandlable(value.text)) {
-          AdaptiveComponents.showAlertDialog(
-            context,
-            title: "打开链接",
-            content: value.text,
-            hideCancel: true,
-            onDismiss: (value1) {
-              if (value1 == AlertResult.confirm) {
-                Clipboard.setData(ClipboardData(text: ""));
-                handleLink(value.text);
-              }
-            },
-          );
+          showDialog<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return Theme(
+                  data: ThemeData(brightness: E().isThemeDarkStyle ? Brightness.dark : Brightness.light),
+                  child: AlertDialog(
+                    title: Text(
+                      "打开链接",
+                    ),
+                    content: Text(
+                      value.text,
+                    ),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text("confirmTrans".tr),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Clipboard.setData(ClipboardData(text: ""));
+                          handleLink(value.text);
+                        },
+                      ),
+                      FlatButton(
+                        child: Text("clearClipboard".tr),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Clipboard.setData(ClipboardData(text: ""));
+                        },
+                      ),
+                      FlatButton(
+                        child: Text("cancelTrans".tr),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              });
         }
       }
     }).catchError((error) {});

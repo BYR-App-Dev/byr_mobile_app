@@ -218,6 +218,7 @@ class Translation extends Translations {
     "fullscreenBackGesture": '全局返回手势',
     "oversea": "海外用户",
     "clearCache": "清空缓存",
+    "clearClipboard": "清空剪贴板",
   };
 
   static Map<String, String> zhHant = {
@@ -431,6 +432,7 @@ class Translation extends Translations {
     "fullscreenBackGesture": '全局返回手勢',
     "oversea": "海外用戶",
     "clearCache": "清除緩存",
+    "clearClipboard": "清除剪貼板",
   };
 
   static Map<String, String> en = {
@@ -644,6 +646,7 @@ class Translation extends Translations {
     "fullscreenBackGesture": 'Fullscreen Back Gesture',
     "oversea": "Oversea Mode",
     "clearCache": "Clear cache",
+    "clearClipboard": "Clear Clipboard",
   };
 
   @override
