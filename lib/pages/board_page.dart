@@ -207,18 +207,18 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                   data.articleList?.description ?? "",
                 ),
                 boardName: widget.arg.boardName,
-                actions: <Widget>[
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        'search_thread_page',
-                        arguments: SearchThreadPageRouteArg(widget.arg.boardName),
-                      );
-                    },
-                    icon: Icon(Icons.search),
-                    iconSize: 24,
-                  ),
-                ],
+                // actions: <Widget>[
+                //   IconButton(
+                //     onPressed: () {
+                //       Navigator.of(context).pushNamed(
+                //         'search_thread_page',
+                //         arguments: SearchThreadPageRouteArg(widget.arg.boardName),
+                //       );
+                //     },
+                //     icon: Icon(Icons.search),
+                //     iconSize: 24,
+                //   ),
+                // ],
               ),
         body: Center(
           child: widgetCase(
@@ -497,20 +497,20 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                 Container(
                   width: 10,
                 ),
-              if (!widget.arg.keepTop)
-                Container(
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        'search_thread_page',
-                        arguments: SearchThreadPageRouteArg(widget.arg.boardName),
-                      );
-                    },
-                    icon: Icon(Icons.search),
-                    iconSize: 24,
-                    color: E().otherPageButtonColor,
-                  ),
-                ),
+              // if (!widget.arg.keepTop)
+              //   Container(
+              //     child: IconButton(
+              //       onPressed: () {
+              //         Navigator.of(context).pushNamed(
+              //           'search_thread_page',
+              //           arguments: SearchThreadPageRouteArg(widget.arg.boardName),
+              //         );
+              //       },
+              //       icon: Icon(Icons.search),
+              //       iconSize: 24,
+              //       color: E().otherPageButtonColor,
+              //     ),
+              //   ),
             ],
           ),
         ));
