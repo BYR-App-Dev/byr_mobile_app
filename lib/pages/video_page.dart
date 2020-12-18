@@ -14,17 +14,20 @@ class _VideoPageState extends State<VideoPage> {
   VideoPlayerController _controller;
 
   bool showMenu;
+  bool rotated;
 
   @override
   void initState() {
     super.initState();
     showMenu = true;
-    SystemChrome.setEnabledSystemUIOverlays([]);
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
-    _controller = VideoPlayerController.network(widget.resourceUrl, formatHint: VideoFormat.hls)
+    rotated = false;
+    // SystemChrome.setEnabledSystemUIOverlays([]);
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.landscapeRight,
+    //   DeviceOrientation.landscapeLeft,
+    // ]);
+    print(widget.resourceUrl);
+    _controller = VideoPlayerController.network(widget.resourceUrl)
       ..initialize().then((_) {
         if (mounted) {
           setState(() {});
@@ -159,6 +162,32 @@ class _VideoPageState extends State<VideoPage> {
                           },
                         ),
                       ],
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: E().otherPagePrimaryColor,
+                    ),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.screen_rotation,
+                        color: E().otherPageButtonColor,
+                      ),
+                      onPressed: () {
+                        if (rotated) {
+                          rotated = false;
+                          SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+                          SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+                        } else {
+                          rotated = true;
+                          SystemChrome.setEnabledSystemUIOverlays([]);
+                          SystemChrome.setPreferredOrientations([
+                            DeviceOrientation.landscapeRight,
+                            DeviceOrientation.landscapeLeft,
+                          ]);
+                        }
+                      },
                     ),
                   ),
                 ],
