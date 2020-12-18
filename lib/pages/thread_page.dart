@@ -74,21 +74,24 @@ class ThreadPageState extends ThreadPageBaseState<ThreadPage, ThreadPageData> {
     /// 2020-09-30 malikwang
     /// 等待页面push完毕再请求数据，防止页面在push过程中数据已经加载完毕造成视觉卡顿错觉
     /// 400毫秒 是route的transitionDuration的时间
-    await Future.delayed(Duration(milliseconds: 400));
-    return NForumService.getThread(data.boardName, data.groupId, page: startingPg).then((thread) {
-      if (data.authorToShow != null && data.authorToShow != "") {
-        thread.likeArticles = [];
-      }
-      data.thread = thread;
-      HistoryModel.addHistoryItem(HistoryArticleModel(
-          boardName: thread.boardName,
-          title: thread.title,
-          groupId: thread.groupId,
-          createdTime: DateTime.now().millisecondsSinceEpoch ~/ 1000));
-      firstPageJump = data.thread.likeArticles?.length ?? 0;
-      currentPage = thread.pagination?.pageCurrentCount ?? 1;
-      maxPage = thread.pagination?.pageAllCount ?? maxPage;
-      data.isCollected = data.thread?.collect;
+    Future.wait([
+      Future.delayed(Duration(milliseconds: 400)),
+      NForumService.getThread(data.boardName, data.groupId, page: startingPg).then((thread) {
+        if (data.authorToShow != null && data.authorToShow != "") {
+          thread.likeArticles = [];
+        }
+        data.thread = thread;
+        HistoryModel.addHistoryItem(HistoryArticleModel(
+            boardName: thread.boardName,
+            title: thread.title,
+            groupId: thread.groupId,
+            createdTime: DateTime.now().millisecondsSinceEpoch ~/ 1000));
+        firstPageJump = data.thread.likeArticles?.length ?? 0;
+        currentPage = thread.pagination?.pageCurrentCount ?? 1;
+        maxPage = thread.pagination?.pageAllCount ?? maxPage;
+        data.isCollected = data.thread?.collect;
+      })
+    ]).then((v) {
       if (afterLoad != null) {
         afterLoad();
       }
