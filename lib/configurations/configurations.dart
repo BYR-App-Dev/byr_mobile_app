@@ -2,7 +2,7 @@ import 'package:byr_mobile_app/local_objects/local_storage.dart';
 import 'package:secrets/secrets.dart';
 
 class AppConfigs {
-  static const String version = '3.2.2';
+  static const String version = '3.3.0';
   static const clientID = Secrets.clientID;
   static const appleID = Secrets.appleID;
   static const bundleID = Secrets.bundleID;
