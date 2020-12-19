@@ -1,12 +1,10 @@
 import 'package:byr_mobile_app/networking/http_request.dart';
-import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/barcaode_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:secrets/secrets.dart';
-import 'package:simple_rsa/simple_rsa.dart';
-import 'dart:convert';
+import 'package:encrypt/encrypt.dart';
 
 ///
 /// FullScreenScannerPage
@@ -22,7 +20,14 @@ class _FullScreenScannerPageState extends State<FullScreenScannerPage> {
 
   Future<String> decrypt(String encryptedText) async {
     try {
-      return await decryptStringWithPublicKey(encryptedText, null, publicKey);
+      final pubK = RSAKeyParser().parse("-----BEGIN PUBLIC KEY-----\r" + publicKey + "\r-----END PUBLIC KEY-----");
+      final encrypter = Encrypter(RSAReversed(
+        publicKey: pubK,
+      ));
+      final encrypted = Encrypted.fromBase64(encryptedText);
+      final decrypted = encrypter.decrypt(encrypted);
+
+      return decrypted;
     } catch (e) {
       return null;
     }

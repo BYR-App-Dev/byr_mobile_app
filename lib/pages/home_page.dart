@@ -8,7 +8,6 @@ import 'package:byr_mobile_app/local_objects/local_storage.dart';
 import 'package:byr_mobile_app/nforum/nforum_link_handler.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
-import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/custom_tabs.dart';
 import 'package:byr_mobile_app/reusable_components/ota_dialog.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';

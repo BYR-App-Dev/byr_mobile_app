@@ -13,7 +13,6 @@ import 'package:byr_mobile_app/reusable_components/refreshers.dart';
 import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class MicroPluginListBaseData<X extends MicroPluginListModel> extends PageableListBaseData<X> {

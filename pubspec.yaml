@@ -51,7 +51,10 @@ dependencies:
   webview_flutter: ^0.3.22+1
   video_player: ^0.10.12+3
   ai_barcode: ^1.1.4
-  simple_rsa: ^0.0.5
+  encrypt:
+    git:
+      url: https://github.com/BYR-App-Dev/encrypt.git
+      ref: 6f3c9703c8164112820b0ce10d3ffb95018b0848
   flutter_liquidcore:
     git:
       url: https://github.com/BYR-App-Dev/flutter_liquidcore.git
