@@ -39,7 +39,6 @@ class _FullScreenScannerPageState extends State<FullScreenScannerPage> {
       appBar: AppBar(),
       body: AppBarcodeScannerWidget.defaultStyle(
         resultCallback: (String code) {
-          print(code);
           decrypt(code).then((value) {
             if (value == null) {
               navigator.pop();
