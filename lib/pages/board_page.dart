@@ -199,7 +199,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
     super.build(context);
     return Obx(
       () => Scaffold(
-        // backgroundColor: E().threadListBackgroundColor,
+        backgroundColor: E().threadListBackgroundColor,
         appBar: !widget.arg.keepTop
             ? null
             : BYRAppBar(
