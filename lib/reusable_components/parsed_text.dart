@@ -373,7 +373,7 @@ class ParsedText extends StatelessWidget {
   Widget build(BuildContext context) {
     return NForumParsedText(
       NForumTextParsingConfig(
-        text,
+        text.replaceAll("\r--\n", ""),
         uploads,
         title: title,
         isMDBackgroundDark: E().isThemeDarkStyle,
