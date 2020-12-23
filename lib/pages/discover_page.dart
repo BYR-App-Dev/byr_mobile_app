@@ -134,22 +134,22 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
                               : previousValue,
                         )
                         .toList()
-                          ..insert(
-                            0,
-                            CustomTab(
-                              unselectedFontSize: 12,
-                              text: "竞猜",
-                            ),
-                          )
-                          ..insert(
-                            0,
+                          ..add(
+                            // 0,
                             CustomTab(
                               unselectedFontSize: 12,
                               text: "投票",
                             ),
                           )
-                          ..insert(
-                            0,
+                          ..add(
+                            // 0,
+                            CustomTab(
+                              unselectedFontSize: 12,
+                              text: "竞猜",
+                            ),
+                          )
+                          ..add(
+                            // 0,
                             CustomTab(
                               unselectedFontSize: 12,
                               text: "小程序",
@@ -182,16 +182,16 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
                   : previousValue,
             )
             .toList()
-              ..insert(
-                0,
-                BetListPage(),
-              )
-              ..insert(
-                0,
+              ..add(
+                // 0,
                 VoteListPage(),
               )
-              ..insert(
-                0,
+              ..add(
+                // 0,
+                BetListPage(),
+              )
+              ..add(
+                // 0,
                 MicroPluginListPage(),
               ),
         controller: controller,
