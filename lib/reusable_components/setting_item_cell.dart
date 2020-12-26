@@ -72,7 +72,7 @@ class _SettingItemCellState extends State<SettingItemCell> {
             ),
             if (widget.value != null && widget.value.isNotEmpty)
               Padding(
-                padding: EdgeInsets.only(right: 10),
+                padding: EdgeInsets.only(right: 0),
                 child: Text(
                   widget.value,
                   style: TextStyle(

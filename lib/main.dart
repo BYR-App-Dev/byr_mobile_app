@@ -47,6 +47,9 @@ void main() {
           case "history_page":
             return FullscreenBackPageRoute(
                 builder: (context) => HistoryPage(), settings: settings, maintainState: true);
+          case "message_page":
+            return FullscreenBackPageRoute(
+                builder: (context) => MessagePage(), settings: settings, maintainState: true);
           case "section_page":
             if (settings.arguments is String || settings.arguments == null) {
               return FullscreenBackPageRoute(

@@ -26,10 +26,12 @@ import 'package:get/get.dart';
 class BoardPageRouteArg {
   final String boardName;
   final bool keepTop;
+  final bool keepHead;
   final bool keepAlive;
   final bool isPicWaterfall;
 
-  BoardPageRouteArg(this.boardName, {this.keepTop = true, this.keepAlive = true, this.isPicWaterfall = false});
+  BoardPageRouteArg(this.boardName,
+      {this.keepTop = true, this.keepHead = true, this.keepAlive = true, this.isPicWaterfall = false});
 }
 
 class BoardPage extends ArticleListBasePage {
@@ -274,6 +276,13 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
 
   @override
   buildList() {
+    if (!widget.arg.keepHead) {
+      if (widget.arg.isPicWaterfall) {
+        return _buildPicBoardSliverListView();
+      } else {
+        return _buildBoardSliverListView();
+      }
+    }
     return CustomScrollView(
       physics: ScrollPhysics(),
       controller: scrollController,
@@ -517,6 +526,25 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
   }
 
   Widget _buildBoardSliverListView() {
+    if (!widget.arg.keepHead) {
+      return ListView.builder(
+          itemCount: max((data.articleList.article.length - topArticles.length) * 2 - 1, 0),
+          itemBuilder: (context, index) {
+            final int itemIndex = index ~/ 2;
+            if (index.isEven) {
+              return _buildBoardRow(data.articleList.article.sublist(topArticles.length)[itemIndex]);
+            }
+            return Container(
+              height: 0.0,
+              margin: EdgeInsetsDirectional.only(start: 14),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: E().threadListDividerColor, width: 0.8),
+                ),
+              ),
+            );
+          });
+    }
     return SliverList(
         delegate: SliverChildBuilderDelegate(
       (_, index) {
@@ -648,6 +676,15 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
   }
 
   Widget _buildPicBoardSliverListView() {
+    if (!widget.arg.keepHead) {
+      return StaggeredGridView.countBuilder(
+          crossAxisCount: 4,
+          itemBuilder: (BuildContext context, int index) {
+            return _buildPicBoardRow(data.articleList.article.sublist(topArticles.length)[index]);
+          },
+          staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
+          itemCount: max((data.articleList.article.length - topArticles.length), 0));
+    }
     return SliverStaggeredGrid.countBuilder(
       crossAxisCount: 4,
       itemCount: max((data.articleList.article.length - topArticles.length), 0),
@@ -689,7 +726,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
                             boardArticleObject.attachment.file.length > 0 &&
                             UploadedModelUploadedExtractor().getIsImage(boardArticleObject.attachment.file[0]))
                         ? CappedRatioFadeInImage(
-                            cap: 2,
+                            cap: 1,
                             image: NetworkImage(
                               UploadedModelUploadedExtractor().getImgThumbnail(boardArticleObject.attachment.file[0]),
                             ),

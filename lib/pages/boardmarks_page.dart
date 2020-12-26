@@ -14,6 +14,7 @@ import 'package:byr_mobile_app/reusable_components/circle_icon_button.dart';
 import 'package:byr_mobile_app/reusable_components/no_padding_list_tile.dart';
 import 'package:byr_mobile_app/reusable_components/page_initialization.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
+import 'package:byr_mobile_app/reusable_components/setting_item_cell.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -421,6 +422,29 @@ class BoardmarksPageState extends State<BoardmarksPage>
                                       return bannerWidgets[index % banner.count];
                                     },
                                   ),
+                          );
+                        },
+                        childCount: 1,
+                      ),
+                    ),
+                    SliverFixedExtentList(
+                      itemExtent: 55,
+                      delegate: SliverChildBuilderDelegate(
+                        (context0, index) {
+                          return Column(
+                            children: [
+                              SettingItemCell(
+                                height: 50,
+                                leading: Icon(Icons.view_list, color: E().settingItemCellMainColor),
+                                title: "sectionButtonTrans".tr,
+                                onTap: () {
+                                  Navigator.pushNamed(context, "section_page");
+                                },
+                              ),
+                              Divider(
+                                height: 1,
+                              ),
+                            ],
                           );
                         },
                         childCount: 1,

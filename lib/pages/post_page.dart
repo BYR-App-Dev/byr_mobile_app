@@ -577,7 +577,9 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
                                     : null,
                                 emptyUser: (_toBoard == 'IWhisper' && _anonymous)
                                     ? true
-                                    : userSnapshot.hasData ? userSnapshot.data?.faceUrl == null : true,
+                                    : userSnapshot.hasData
+                                        ? userSnapshot.data?.faceUrl == null
+                                        : true,
                                 onTap: null,
                               ),
                               Container(
@@ -588,7 +590,9 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
                                     Text(
                                       (_toBoard == 'IWhisper' && _anonymous)
                                           ? 'IWhisper#XXX'
-                                          : userSnapshot.hasData ? userSnapshot.data?.id : "username",
+                                          : userSnapshot.hasData
+                                              ? userSnapshot.data?.id
+                                              : "username",
                                       style: TextStyle(
                                           fontSize: 18.0,
                                           color: (_toBoard == 'IWhisper' && _anonymous)
@@ -728,7 +732,11 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
         () => Scaffold(
           appBar: BYRAppBar(
             title: Text(
-              _updateMode ? "edit".tr : _reid == null ? "postArticle".tr : "replyTrans".tr,
+              _updateMode
+                  ? "edit".tr
+                  : _reid == null
+                      ? "postArticle".tr
+                      : "replyTrans".tr,
             ),
             actions: <Widget>[
               Consumer<PostArticleProvider>(
@@ -755,7 +763,7 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
                       }
                     },
                     label: Text(
-                      _preview ? "close".tr + "preview".tr : "preview".tr,
+                      "", // _preview ? "close".tr + "preview".tr : "preview".tr,
                       style: TextStyle(
                         fontSize: 17,
                         color: E().topBarTitleNormalColor,
@@ -775,7 +783,7 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
                       _send(context, provider);
                     },
                     label: Text(
-                      "submitTrans".tr,
+                      "", // "submitTrans".tr,
                       style: TextStyle(
                         fontSize: 17,
                         color: E().topBarTitleNormalColor,

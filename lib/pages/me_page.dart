@@ -1,3 +1,4 @@
+import 'package:byr_mobile_app/customizations/byr_icons.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/customizations/theme_manager.dart';
 import 'package:byr_mobile_app/local_objects/local_storage.dart';
@@ -254,7 +255,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
         ),
         SettingItemCell(
           height: 50,
-          leading: Icon(Icons.audiotrack, color: E().settingItemCellMainColor),
+          leading: Icon(Icons.my_library_music, color: E().settingItemCellMainColor),
           title: "myAudioPlaylist".tr,
           showArrow: false,
           onTap: () {
@@ -279,14 +280,6 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
             Navigator.pushNamed(context, "history_page");
           },
         ),
-        SettingItemCell(
-          height: 50,
-          leading: Icon(Icons.view_list, color: E().settingItemCellMainColor),
-          title: "sectionButtonTrans".tr,
-          onTap: () {
-            Navigator.pushNamed(context, "section_page");
-          },
-        ),
         Divider(),
         SettingItemCell(
           height: 50,
@@ -295,33 +288,6 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
           newFeatureKey: 'fullscreen_back_gesture',
           onTap: () {
             Navigator.pushNamed(context, "settings_page");
-          },
-        ),
-        SettingItemCell(
-          height: 50,
-          leading: Icon(Icons.local_post_office, color: E().settingItemCellMainColor),
-          title: "feedbackTrans".tr,
-          onTap: () {
-            navigator.pushNamed(
-              'post_page',
-              arguments: PostPageRouteArg(
-                board: BoardModel(
-                  name: 'Advice',
-                  description: '意见与建议',
-                  allowAnonymous: false,
-                  allowPost: true,
-                  allowAttachment: true,
-                ),
-              ),
-            );
-          },
-        ),
-        SettingItemCell(
-          height: 50,
-          leading: Icon(FontAwesomeIcons.exclamationCircle, color: E().settingItemCellMainColor),
-          title: "aboutButtonTrans".tr,
-          onTap: () {
-            navigator.push(FullscreenBackPageRoute(builder: (_) => AboutPage()));
           },
         ),
       ],
@@ -414,99 +380,168 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
             Positioned(
               left: 20,
               bottom: 20,
-              right: 20,
+              right: 0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   _getAvatar(40),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: FutureBuilder(
-                                builder: (context, snapshot) => snapshot.hasData
-                                    ? Text(snapshot.data?.id, style: HStyle.titleNav())
-                                    : Text("", style: HStyle.titleNav()),
-                                future: SharedObjects.me,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () {
+                            AdaptiveComponents.showBottomWidget(
+                                context,
+                                UserDetailList(
+                                  users: users,
+                                  user: user,
+                                  refresh: (int type) async {
+                                    if (type == 1) {
+                                      user = await SharedObjects.me;
+                                    } else if (type == 2) {
+                                      users = NForumService.getAllUser();
+                                    } else {
+                                      user = await SharedObjects.me;
+                                      users = NForumService.getAllUser();
+                                    }
+                                    if (mounted) {
+                                      setState(() {});
+                                    }
+                                    return Tuple2(user, users);
+                                  },
+                                ));
+                          },
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: FutureBuilder(
+                                      builder: (context, snapshot) => snapshot.hasData
+                                          ? Text(snapshot.data?.id, style: HStyle.titleNav())
+                                          : Text("", style: HStyle.titleNav()),
+                                      future: SharedObjects.me,
+                                    ),
+                                  ),
+                                  FutureBuilder(
+                                    builder: (context, snapshot) => snapshot.hasData
+                                        ? Text(snapshot.data?.userName, style: HStyle.bodyWhite())
+                                        : Text("", style: HStyle.bodyWhite()),
+                                    future: SharedObjects.me,
+                                  ),
+                                ],
                               ),
+                              IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_drop_down,
+                                    color: E().mePageUserIdColor,
+                                  ),
+                                  onPressed: null),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // GestureDetector(
+                      //   behavior: HitTestBehavior.translucent,
+                      //   onTap: () {
+                      //     GallerySaver.saveImage(SharedObjects.welImageInfo.path, albumName: 'BYRDownload')
+                      //         .then((value) {
+                      //       AdaptiveComponents.showToast(context, '保存${value ? '成功' : '失败'}');
+                      //     });
+                      //   },
+                      //   child: Container(
+                      //     decoration: BoxDecoration(
+                      //       border: Border.all(
+                      //         color: E().mePageUsernameColor,
+                      //         width: 1,
+                      //         style: BorderStyle.solid,
+                      //       ),
+                      //     ),
+                      //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      //     child: Text(
+                      //       '保存背景',
+                      //       style: HStyle.bodyWhite(),
+                      //     ),
+                      //   ),
+                      // ),
+                      // GestureDetector(
+                      //   behavior: HitTestBehavior.translucent,
+                      //   onTap: () {
+                      //     AdaptiveComponents.showBottomWidget(
+                      //         context,
+                      //         UserDetailList(
+                      //           users: users,
+                      //           user: user,
+                      //           refresh: (int type) async {
+                      //             if (type == 1) {
+                      //               user = await SharedObjects.me;
+                      //             } else if (type == 2) {
+                      //               users = NForumService.getAllUser();
+                      //             } else {
+                      //               user = await SharedObjects.me;
+                      //               users = NForumService.getAllUser();
+                      //             }
+                      //             if (mounted) {
+                      //               setState(() {});
+                      //             }
+                      //             return Tuple2(user, users);
+                      //           },
+                      //         ));
+                      //   },
+                      //   child: Container(
+                      //     decoration: BoxDecoration(
+                      //       border: Border.all(
+                      //         color: E().mePageUsernameColor,
+                      //         width: 1,
+                      //         style: BorderStyle.solid,
+                      //       ),
+                      //     ),
+                      //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      //     margin: EdgeInsets.only(left: 15),
+                      //     child: Text(
+                      //       '切换账号',
+                      //       style: HStyle.bodyWhite(),
+                      //     ),
+                      //   ),
+                      // ),
+                      IconButton(
+                        icon: Stack(
+                          overflow: Overflow.visible,
+                          children: <Widget>[
+                            Icon(
+                              Icons.mail_outline,
+                              color: !_showAppBar ? E().mePageUserIdColor : E().mePageIconColor,
                             ),
-                            FutureBuilder(
-                              builder: (context, snapshot) => snapshot.hasData
-                                  ? Text(snapshot.data?.userName, style: HStyle.bodyWhite())
-                                  : Text("", style: HStyle.bodyWhite()),
-                              future: SharedObjects.me,
-                            ),
+                            Get.find<MessageController>().allCount > 0
+                                ? Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: Container(
+                                      padding: EdgeInsets.all(3),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      constraints: BoxConstraints(
+                                        minWidth: 8,
+                                        minHeight: 8,
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox.shrink()
                           ],
                         ),
-                      ),
-                      GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: () {
-                          GallerySaver.saveImage(SharedObjects.welImageInfo.path, albumName: 'BYRDownload')
-                              .then((value) {
-                            AdaptiveComponents.showToast(context, '保存${value ? '成功' : '失败'}');
-                          });
+                        // color: !_showAppBar ? E().mePageBackgroundColor : E().mePageIconColor,
+                        // ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, "message_page");
                         },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: E().mePageUsernameColor,
-                              width: 1,
-                              style: BorderStyle.solid,
-                            ),
-                          ),
-                          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                          child: Text(
-                            '保存背景',
-                            style: HStyle.bodyWhite(),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: () {
-                          AdaptiveComponents.showBottomWidget(
-                              context,
-                              UserDetailList(
-                                users: users,
-                                user: user,
-                                refresh: (int type) async {
-                                  if (type == 1) {
-                                    user = await SharedObjects.me;
-                                  } else if (type == 2) {
-                                    users = NForumService.getAllUser();
-                                  } else {
-                                    user = await SharedObjects.me;
-                                    users = NForumService.getAllUser();
-                                  }
-                                  if (mounted) {
-                                    setState(() {});
-                                  }
-                                  return Tuple2(user, users);
-                                },
-                              ));
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: E().mePageUsernameColor,
-                              width: 1,
-                              style: BorderStyle.solid,
-                            ),
-                          ),
-                          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                          margin: EdgeInsets.only(left: 15),
-                          child: Text(
-                            '切换账号',
-                            style: HStyle.bodyWhite(),
-                          ),
-                        ),
                       ),
                     ],
                   ),
@@ -519,8 +554,27 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
       actions: <Widget>[
         IconButton(
           icon: Icon(
+            Icons.save_alt,
+            color: !_showAppBar ? E().mePageUserIdColor : E().mePageIconColor,
+          ),
+          onPressed: () {
+            AdaptiveComponents.showAlertDialog(
+              context,
+              title: "保存背景图片",
+              onDismiss: (value) {
+                if (value == AlertResult.confirm) {
+                  GallerySaver.saveImage(SharedObjects.welImageInfo.path, albumName: 'BYRDownload').then((value) {
+                    AdaptiveComponents.showToast(context, '保存${value ? '成功' : '失败'}');
+                  });
+                }
+              },
+            );
+          },
+        ),
+        IconButton(
+          icon: Icon(
             Icons.search,
-            color: !_showAppBar ? E().mePageBackgroundColor : E().mePageIconColor,
+            color: !_showAppBar ? E().mePageUserIdColor : E().mePageIconColor,
           ),
           onPressed: () {
             AdaptiveComponents.showAlertDialog(

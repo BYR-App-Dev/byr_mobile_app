@@ -106,7 +106,7 @@ class MessagePageState extends State<MessagePage> with SingleTickerProviderState
           ],
           flexibleSpace: SafeArea(
             child: Padding(
-              padding: EdgeInsets.only(left: 15.0, right: IconTheme.of(context).size * (2 + 1)),
+              padding: EdgeInsets.only(left: IconTheme.of(context).size * (2), right: IconTheme.of(context).size * (2)),
               child: CustomTabBar(
                 indicator: FixedUnderlineTabIndicator(
                   borderSide: BorderSide(
@@ -115,7 +115,7 @@ class MessagePageState extends State<MessagePage> with SingleTickerProviderState
                   ),
                 ),
                 indicatorWeight: 3,
-                labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                labelStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 labelColor: E().topBarTitleNormalColor,
                 unselectedLabelStyle: TextStyle(fontSize: 12),
                 unselectedLabelColor: E().topBarTitleUnSelectedColor,

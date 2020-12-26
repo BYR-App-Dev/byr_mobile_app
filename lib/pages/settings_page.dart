@@ -4,6 +4,8 @@ import 'package:byr_mobile_app/customizations/translation.dart';
 import 'package:byr_mobile_app/customizations/translator_manager.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
 import 'package:byr_mobile_app/local_objects/local_storage.dart';
+import 'package:byr_mobile_app/nforum/nforum_structures.dart';
+import 'package:byr_mobile_app/pages/about_page.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/pages/refresher_settings_page.dart';
 import 'package:byr_mobile_app/pages/theme_settings_page.dart';
@@ -14,6 +16,7 @@ import 'package:byr_mobile_app/reusable_components/no_padding_list_tile.dart';
 import 'package:byr_mobile_app/reusable_components/setting_item_cell.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:universal_platform/universal_platform.dart';
 
@@ -185,62 +188,6 @@ class SettingsPageState extends State<SettingsPage> {
                       }),
                   onTap: null,
                 ),
-                Divider(height: 1),
-                NonPaddingListTile(
-                  contentPadding: EdgeInsets.only(left: 15, right: 5),
-                  title: Text(
-                    "oversea".tr,
-                    style: TextStyle(
-                      color: E().otherPagePrimaryTextColor,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  trailing: Switch(
-                      value: LocalStorage.getIsOverseaEnabled(),
-                      onChanged: (newValue) async {
-                        await LocalStorage.setIsOverseaEnabled(newValue);
-                        setState(() {});
-                      }),
-                  onTap: null,
-                ),
-                if (UniversalPlatform.isAndroid) Divider(height: 1),
-                if (UniversalPlatform.isAndroid)
-                  NonPaddingListTile(
-                    contentPadding: EdgeInsets.only(left: 15, right: 5),
-                    title: Text(
-                      "ABI",
-                      style: TextStyle(
-                        color: E().otherPagePrimaryTextColor,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    trailing: Switch(
-                        value: LocalStorage.getIsABIEnabled(),
-                        onChanged: (newValue) async {
-                          await LocalStorage.setIsABIEnabled(newValue);
-                          setState(() {});
-                        }),
-                    onTap: null,
-                  ),
-                if (UniversalPlatform.isAndroid) Divider(height: 1),
-                if (UniversalPlatform.isAndroid)
-                  NonPaddingListTile(
-                    contentPadding: EdgeInsets.only(left: 15, right: 5),
-                    title: Text(
-                      "publicTesting".tr,
-                      style: TextStyle(
-                        color: E().otherPagePrimaryTextColor,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    trailing: Switch(
-                        value: LocalStorage.getIsDevChannelEnabled(),
-                        onChanged: (newValue) async {
-                          await LocalStorage.setIsDevChannelEnabled(newValue);
-                          setState(() {});
-                        }),
-                    onTap: null,
-                  ),
                 if (UniversalPlatform.isAndroid) Divider(height: 1),
                 if (UniversalPlatform.isAndroid)
                   SettingItemCell(
@@ -253,6 +200,35 @@ class SettingsPageState extends State<SettingsPage> {
                       );
                     },
                   ),
+                Divider(height: 1),
+                SettingItemCell(
+                  // height: 50,
+                  // leading: Icon(Icons.local_post_office, color: E().settingItemCellMainColor),
+                  title: "feedbackTrans".tr,
+                  onTap: () {
+                    navigator.pushNamed(
+                      'post_page',
+                      arguments: PostPageRouteArg(
+                        board: BoardModel(
+                          name: 'Advice',
+                          description: '意见与建议',
+                          allowAnonymous: false,
+                          allowPost: true,
+                          allowAttachment: true,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                Divider(height: 1),
+                SettingItemCell(
+                  // height: 50,
+                  // leading: Icon(FontAwesomeIcons.exclamationCircle, color: E().settingItemCellMainColor),
+                  title: "aboutButtonTrans".tr,
+                  onTap: () {
+                    navigator.push(FullscreenBackPageRoute(builder: (_) => AboutPage()));
+                  },
+                ),
                 Divider(height: 1),
               ],
             ),
