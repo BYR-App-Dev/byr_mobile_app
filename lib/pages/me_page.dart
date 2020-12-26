@@ -447,102 +447,37 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                           ),
                         ),
                       ),
-                      // GestureDetector(
-                      //   behavior: HitTestBehavior.translucent,
-                      //   onTap: () {
-                      //     GallerySaver.saveImage(SharedObjects.welImageInfo.path, albumName: 'BYRDownload')
-                      //         .then((value) {
-                      //       AdaptiveComponents.showToast(context, '保存${value ? '成功' : '失败'}');
-                      //     });
-                      //   },
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //       border: Border.all(
-                      //         color: E().mePageUsernameColor,
-                      //         width: 1,
-                      //         style: BorderStyle.solid,
+                      // IconButton(
+                      //   icon: Stack(
+                      //     overflow: Overflow.visible,
+                      //     children: <Widget>[
+                      //       Icon(
+                      //         Icons.mail_outline,
+                      //         color: !_showAppBar ? E().mePageUserIdColor : E().mePageIconColor,
                       //       ),
-                      //     ),
-                      //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                      //     child: Text(
-                      //       '保存背景',
-                      //       style: HStyle.bodyWhite(),
-                      //     ),
+                      //       Get.find<MessageController>().allCount > 0
+                      //           ? Positioned(
+                      //               top: 0,
+                      //               right: 0,
+                      //               child: Container(
+                      //                 padding: EdgeInsets.all(3),
+                      //                 decoration: BoxDecoration(
+                      //                   color: Colors.red,
+                      //                   shape: BoxShape.circle,
+                      //                 ),
+                      //                 constraints: BoxConstraints(
+                      //                   minWidth: 8,
+                      //                   minHeight: 8,
+                      //                 ),
+                      //               ),
+                      //             )
+                      //           : SizedBox.shrink()
+                      //     ],
                       //   ),
-                      // ),
-                      // GestureDetector(
-                      //   behavior: HitTestBehavior.translucent,
-                      //   onTap: () {
-                      //     AdaptiveComponents.showBottomWidget(
-                      //         context,
-                      //         UserDetailList(
-                      //           users: users,
-                      //           user: user,
-                      //           refresh: (int type) async {
-                      //             if (type == 1) {
-                      //               user = await SharedObjects.me;
-                      //             } else if (type == 2) {
-                      //               users = NForumService.getAllUser();
-                      //             } else {
-                      //               user = await SharedObjects.me;
-                      //               users = NForumService.getAllUser();
-                      //             }
-                      //             if (mounted) {
-                      //               setState(() {});
-                      //             }
-                      //             return Tuple2(user, users);
-                      //           },
-                      //         ));
+                      //   onPressed: () {
+                      //     Navigator.pushNamed(context, "message_page");
                       //   },
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //       border: Border.all(
-                      //         color: E().mePageUsernameColor,
-                      //         width: 1,
-                      //         style: BorderStyle.solid,
-                      //       ),
-                      //     ),
-                      //     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                      //     margin: EdgeInsets.only(left: 15),
-                      //     child: Text(
-                      //       '切换账号',
-                      //       style: HStyle.bodyWhite(),
-                      //     ),
-                      //   ),
                       // ),
-                      IconButton(
-                        icon: Stack(
-                          overflow: Overflow.visible,
-                          children: <Widget>[
-                            Icon(
-                              Icons.mail_outline,
-                              color: !_showAppBar ? E().mePageUserIdColor : E().mePageIconColor,
-                            ),
-                            Get.find<MessageController>().allCount > 0
-                                ? Positioned(
-                                    top: 0,
-                                    right: 0,
-                                    child: Container(
-                                      padding: EdgeInsets.all(3),
-                                      decoration: BoxDecoration(
-                                        color: Colors.red,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      constraints: BoxConstraints(
-                                        minWidth: 8,
-                                        minHeight: 8,
-                                      ),
-                                    ),
-                                  )
-                                : SizedBox.shrink()
-                          ],
-                        ),
-                        // color: !_showAppBar ? E().mePageBackgroundColor : E().mePageIconColor,
-                        // ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, "message_page");
-                        },
-                      ),
                     ],
                   ),
                 ],
