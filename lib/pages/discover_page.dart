@@ -8,7 +8,7 @@ import 'package:byr_mobile_app/reusable_components/custom_tabs.dart';
 import 'package:byr_mobile_app/reusable_components/custom_underline_indicator.dart';
 import 'package:flutter/material.dart';
 
-const int additionalTabs = 3;
+const int additionalTabs = 2;
 
 class DiscoverPage extends StatefulWidget {
   @override
@@ -148,13 +148,14 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
                               text: "竞猜",
                             ),
                           )
-                          ..add(
-                            // 0,
-                            CustomTab(
-                              unselectedFontSize: 12,
-                              text: "小程序",
-                            ),
-                          ),
+                          // ..add(
+                          //   // 0,
+                          //   CustomTab(
+                          //     unselectedFontSize: 12,
+                          //     text: "小程序",
+                          //   ),
+                          // )
+                          ,
                     indicatorColor: E().tabPageTopBarSliderColor,
                     controller: controller,
                   ),
@@ -190,10 +191,11 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
                 // 0,
                 BetListPage(),
               )
-              ..add(
-                // 0,
-                MicroPluginListPage(),
-              ),
+              // ..add(
+              //   // 0,
+              //   MicroPluginListPage(),
+              // )
+              ,
         controller: controller,
       ),
     );

@@ -13,6 +13,7 @@ typedef Future<T> PageableListDataRequestHandler<T>(int page);
 
 class PageableListBaseData<X extends PageableListBaseModel> extends PagedBaseData {
   X articleList;
+  Set<String> objCodes;
   PageableListDataRequestHandler<X> dataRequestHandler;
 }
 
@@ -138,15 +139,29 @@ abstract class PageableListBasePageState<Y extends PageableListBaseModel, Z exte
   }
 
   Future<void> bottomDataLoader({Function afterLoad}) {
-    return data.dataRequestHandler(data.currentMaxPage).then((timelime) {
+    return data.dataRequestHandler(data.currentMaxPage).then((responseData) {
       var oldCount = data.articleList.article.length % PageConfig.pageItemCount;
       oldCount = oldCount == 0 ? PageConfig.pageItemCount : oldCount;
       var oldLength = data.articleList.article.length;
       var lastPageStartIndex = oldLength - oldCount;
       if (data.articleList.pagination.pageCurrentCount == data.currentMaxPage) {
+        data.articleList.article.sublist(lastPageStartIndex, oldLength).forEach((element) {
+          data.objCodes.remove(element.objCode);
+        });
         data.articleList.article.removeRange(lastPageStartIndex, oldLength);
-        data.articleList.article.addAll(timelime.article);
-        data.articleList.pagination = timelime.pagination;
+
+        int itemAdded = 0;
+        responseData.article.forEach((element) {
+          if (data.objCodes.contains(element.objCode)) {
+          } else {
+            data.objCodes.add(element.objCode);
+            data.articleList.article.add(element);
+            itemAdded += 1;
+          }
+        });
+
+        data.articleList.pagination = responseData.pagination;
+        data.articleList.pagination.itemPageCount = itemAdded;
       }
       refreshController.loadComplete();
       if (afterLoad != null) {
@@ -159,11 +174,22 @@ abstract class PageableListBasePageState<Y extends PageableListBaseModel, Z exte
   }
 
   Future<void> lastBottomDataLoader({Function afterLoad}) {
-    return data.dataRequestHandler(data.currentMaxPage + 1).then((timeline) {
-      if (timeline.pagination.pageCurrentCount == data.currentMaxPage + 1) {
+    return data.dataRequestHandler(data.currentMaxPage + 1).then((responseData) {
+      if (responseData.pagination.pageCurrentCount == data.currentMaxPage + 1) {
         data.currentMaxPage += 1;
-        data.articleList.article.addAll(timeline.article);
-        data.articleList.pagination = timeline.pagination;
+
+        int itemAdded = 0;
+        responseData.article.forEach((element) {
+          if (data.objCodes.contains(element.objCode)) {
+          } else {
+            data.objCodes.add(element.objCode);
+            data.articleList.article.add(element);
+            itemAdded += 1;
+          }
+        });
+
+        data.articleList.pagination = responseData.pagination;
+        data.articleList.pagination.itemPageCount = itemAdded;
       }
       refreshController.loadComplete();
       if (afterLoad != null) {
@@ -176,11 +202,21 @@ abstract class PageableListBasePageState<Y extends PageableListBaseModel, Z exte
   }
 
   Future<void> firstTopDataLoader({Function afterLoad}) {
-    return data.dataRequestHandler(1).then((timeline) {
+    return data.dataRequestHandler(1).then((responseData) {
       refreshController.refreshCompleted();
       data.currentMinPage = 1;
       data.currentMaxPage = 1;
-      data.articleList = timeline;
+
+      data.objCodes.clear();
+      data.articleList = responseData;
+
+      responseData.article.forEach((element) {
+        if (data.objCodes.contains(element.objCode)) {
+        } else {
+          data.objCodes.add(element.objCode);
+        }
+      });
+
       if (afterLoad != null) {
         afterLoad();
       }
@@ -195,10 +231,20 @@ abstract class PageableListBasePageState<Y extends PageableListBaseModel, Z exte
     data.currentMinPage = 1;
     data.currentMaxPage = 1;
 
+    data.objCodes = Set<String>();
+
     isBottomLoading = false;
 
-    return data.dataRequestHandler(1).then((timeline) {
-      data.articleList = timeline;
+    return data.dataRequestHandler(1).then((responseData) {
+      data.objCodes.clear();
+      data.articleList = responseData;
+
+      responseData.article.forEach((element) {
+        if (data.objCodes.contains(element.objCode)) {
+        } else {
+          data.objCodes.add(element.objCode);
+        }
+      });
       if (afterLoad != null) {
         afterLoad();
       }
@@ -210,11 +256,24 @@ abstract class PageableListBasePageState<Y extends PageableListBaseModel, Z exte
 
   Future<void> topDataLoader({Function afterLoad}) {
     var currentMinPage = max(1, data.currentMinPage - 1);
-    return data.dataRequestHandler(currentMinPage).then((timeline) {
+    return data.dataRequestHandler(currentMinPage).then((responseData) {
       refreshController.refreshCompleted();
       data.currentMinPage = currentMinPage;
-      data.articleList.article.insertAll(0, timeline.article);
-      data.articleList.pagination = timeline.pagination;
+
+      int itemAdded = 0;
+      responseData.article.reversed.forEach((element) {
+        if (data.objCodes.contains(element.objCode)) {
+        } else {
+          data.objCodes.add(element.objCode);
+          data.articleList.article.insert(0, element);
+          itemAdded += 1;
+        }
+      });
+
+      data.articleList.pagination = responseData.pagination;
+      data.articleList.pagination.itemPageCount = itemAdded;
+
+      data.articleList.pagination = responseData.pagination;
       if (afterLoad != null) {
         afterLoad();
       }

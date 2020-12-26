@@ -275,12 +275,17 @@ class ArticleBaseModel extends PageableBaseModel {
   @JsonKey(name: 'board_name')
   var boardName;
 
+  @override
+  String get objCode => "article/" + boardName.toString() + "/" + groupId.toString();
+
   factory ArticleBaseModel.fromJson(Map<String, dynamic> json) => _$ArticleBaseModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ArticleBaseModelToJson(this);
 }
 
-abstract class PageableBaseModel {}
+abstract class PageableBaseModel {
+  String get objCode;
+}
 
 abstract class PageableListBaseModel<T extends PageableBaseModel> {
   PageableListBaseModel({
@@ -371,6 +376,9 @@ class ThreadArticleModel extends ArticleBaseModel {
   @JsonKey(name: 'hidden_by_votedown')
   bool hiddenByVotedown;
 
+  @override
+  String get objCode => "threadarticle/" + boardName.toString() + "/" + id.toString();
+
   factory ThreadArticleModel.fromJson(Map<String, dynamic> json) => _$ThreadArticleModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ThreadArticleModelToJson(this);
@@ -436,6 +444,9 @@ class LikeArticleModel extends ArticleBaseModel {
   @JsonKey(name: 'is_liked')
   bool isLiked;
   bool isVotedown = false;
+
+  @override
+  String get objCode => "likearticle/" + boardName.toString() + "/" + id.toString();
 
   factory LikeArticleModel.fromJson(Map<String, dynamic> json) => _$LikeArticleModelFromJson(json);
 
@@ -681,6 +692,9 @@ class BetModel extends PageableBaseModel {
     this.mybet,
   ) : super();
 
+  @override
+  String get objCode => "bet/" + bid.toString();
+
   factory BetModel.fromJson(Map<String, dynamic> json) => _$BetModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$BetModelToJson(this);
@@ -822,6 +836,9 @@ class VoteModel extends PageableBaseModel {
       this.voteStatus = VoteStatusModel.fromJson(voteStatus);
     }
   }
+
+  @override
+  String get objCode => "vote/" + vid.toString();
 
   factory VoteModel.fromJson(Map<String, dynamic> json) => _$VoteModelFromJson(json);
 
@@ -1038,6 +1055,9 @@ class CollectionArticleModel extends ArticleBaseModel {
           boardName: boardName,
         );
 
+  @override
+  String get objCode => "collectionarticle/" + boardName.toString() + "/" + groupId.toString();
+
   factory CollectionArticleModel.fromJson(Map<String, dynamic> json) => _$CollectionArticleModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$CollectionArticleModelToJson(this);
@@ -1097,6 +1117,9 @@ class ReferModel extends ArticleBaseModel {
           groupId: groupId,
           boardName: boardName,
         );
+
+  @override
+  String get objCode => "refer/" + boardName.toString() + "/" + id.toString();
 
   factory ReferModel.fromJson(Map<String, dynamic> json) => _$ReferModelFromJson(json);
 
@@ -1158,6 +1181,9 @@ class MailModel extends PageableBaseModel {
     this.attachment,
   ) : super();
 
+  @override
+  String get objCode => "mail/" + boxName.toString() + "/" + index.toString();
+
   factory MailModel.fromJson(Map<String, dynamic> json) => _$MailModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$MailModelToJson(this);
@@ -1214,54 +1240,54 @@ class ThreadSearchModel {
   Map<String, dynamic> toJson() => _$ThreadSearchModelToJson(this);
 }
 
-@JsonSerializable()
-class MicroPluginItemModel extends PageableBaseModel {
-  MicroPluginItemModel({
-    this.uriAndroid,
-    this.uriiOS,
-    this.uriAndroidOversea,
-    this.uriiOSOversea,
-    this.uri,
-    this.uriOversea,
-    this.name,
-  }) : super();
+// @JsonSerializable()
+// class MicroPluginItemModel extends PageableBaseModel {
+//   MicroPluginItemModel({
+//     this.uriAndroid,
+//     this.uriiOS,
+//     this.uriAndroidOversea,
+//     this.uriiOSOversea,
+//     this.uri,
+//     this.uriOversea,
+//     this.name,
+//   }) : super();
 
-  @JsonKey(name: 'uri_android')
-  String uriAndroid;
-  @JsonKey(name: 'uri_ios')
-  String uriiOS;
-  @JsonKey(name: 'uri_android_oversea')
-  String uriAndroidOversea;
-  @JsonKey(name: 'uri_ios_oversea')
-  String uriiOSOversea;
-  String uri;
-  @JsonKey(name: 'uri_oversea')
-  String uriOversea;
-  String name;
+//   @JsonKey(name: 'uri_android')
+//   String uriAndroid;
+//   @JsonKey(name: 'uri_ios')
+//   String uriiOS;
+//   @JsonKey(name: 'uri_android_oversea')
+//   String uriAndroidOversea;
+//   @JsonKey(name: 'uri_ios_oversea')
+//   String uriiOSOversea;
+//   String uri;
+//   @JsonKey(name: 'uri_oversea')
+//   String uriOversea;
+//   String name;
 
-  factory MicroPluginItemModel.fromJson(Map<String, dynamic> json) => _$MicroPluginItemModelFromJson(json);
+//   factory MicroPluginItemModel.fromJson(Map<String, dynamic> json) => _$MicroPluginItemModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$MicroPluginItemModelToJson(this);
-}
+//   Map<String, dynamic> toJson() => _$MicroPluginItemModelToJson(this);
+// }
 
-@JsonSerializable()
-class MicroPluginListModel extends PageableListBaseModel<MicroPluginItemModel> {
-  PaginationModel pagination;
-  @JsonKey(name: 'micro_plugins')
-  List<MicroPluginItemModel> article;
-  @JsonKey(name: 'show_web_link')
-  bool showWebLink;
-  @JsonKey(name: 'web_link')
-  String webLink;
+// @JsonSerializable()
+// class MicroPluginListModel extends PageableListBaseModel<MicroPluginItemModel> {
+//   PaginationModel pagination;
+//   @JsonKey(name: 'micro_plugins')
+//   List<MicroPluginItemModel> article;
+//   @JsonKey(name: 'show_web_link')
+//   bool showWebLink;
+//   @JsonKey(name: 'web_link')
+//   String webLink;
 
-  MicroPluginListModel(
-    this.pagination,
-    this.article,
-    this.showWebLink,
-    this.webLink,
-  ) : super(pagination: pagination, article: article);
+//   MicroPluginListModel(
+//     this.pagination,
+//     this.article,
+//     this.showWebLink,
+//     this.webLink,
+//   ) : super(pagination: pagination, article: article);
 
-  factory MicroPluginListModel.fromJson(Map<String, dynamic> json) => _$MicroPluginListModelFromJson(json);
+//   factory MicroPluginListModel.fromJson(Map<String, dynamic> json) => _$MicroPluginListModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$MicroPluginListModelToJson(this);
-}
+//   Map<String, dynamic> toJson() => _$MicroPluginListModelToJson(this);
+// }
