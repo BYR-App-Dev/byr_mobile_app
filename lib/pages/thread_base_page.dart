@@ -1199,19 +1199,19 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                                 "share".tr,
                                 onTap: shareArticle,
                               ),
-                              _itemWidget(
-                                FontAwesomeIcons.exclamationCircle,
-                                "reportTrans".tr,
-                                onTap: () {
-                                  AdaptiveComponents.showAlertDialog(
-                                    context,
-                                    title: "reportConfirmTrans".tr,
-                                    onDismiss: (result) {
-                                      print(result);
-                                    },
-                                  );
-                                },
-                              ),
+                              // _itemWidget(
+                              //   FontAwesomeIcons.exclamationCircle,
+                              //   "reportTrans".tr,
+                              //   onTap: () {
+                              //     AdaptiveComponents.showAlertDialog(
+                              //       context,
+                              //       title: "reportConfirmTrans".tr,
+                              //       onDismiss: (result) {
+                              //         print(result);
+                              //       },
+                              //     );
+                              //   },
+                              // ),
                             ],
                           ),
                         ),
