@@ -47,13 +47,17 @@ class BlocklistPageState extends State<BlocklistPage> {
                       controller: userIdController,
                       decoration: InputDecoration(labelText: 'id'),
                       style: TextStyle(color: E().dialogContentColor),
-                      maxLines: 1,
+                      maxLines: null,
                     ),
                     color: Colors.transparent,
                   ),
                   onDismiss: (result) {
                     if (result == AlertResult.confirm) {
-                      Blocklist.addBlocklistItem(userIdController.text);
+                      userIdController.text.split(RegExp(r'[\s\n\r]')).forEach((element) {
+                        if (element != null && element.length > 0) {
+                          Blocklist.addBlocklistItem(element);
+                        }
+                      });
                       userIdController.clear();
                       setState(() {});
                     } else {
