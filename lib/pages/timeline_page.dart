@@ -2,6 +2,7 @@ import 'package:byr_mobile_app/customizations/board_info.dart';
 import 'package:byr_mobile_app/customizations/shimmer_theme.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
+import 'package:byr_mobile_app/local_objects/local_models.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/nforum/nforum_text_parser.dart';
@@ -32,6 +33,10 @@ class TimelinePageState extends ArticleListBasePageState<TimelineModel, Timeline
 
   @override
   Widget buildCell(BuildContext context, int index) {
+    if (Blocklist.getIsBlocked() == true &&
+        Blocklist.getBlocklist()[data.articleList.article[index].user?.id] == true) {
+      return Container();
+    }
     return InkWell(
       // highlightColor: E().threadListBackgroundColor.withOpacity(0.12),
       // splashColor: E().threadListBackgroundColor.withOpacity(0.15),
@@ -138,6 +143,10 @@ class TimelinePageState extends ArticleListBasePageState<TimelineModel, Timeline
           ),
         ),
       );
+    }
+    if (Blocklist.getIsBlocked() == true &&
+        Blocklist.getBlocklist()[data.articleList.article[index - 1].user.id] == true) {
+      return Container();
     }
     return Container(
       height: 4.0,

@@ -238,4 +238,20 @@ class LocalStorage {
   static Future<void> setMusicList(List<Map> v) async {
     return await _enter("musicList", v);
   }
+
+  static Map<String, bool> getBlockList() {
+    return _extract("blockList")?.cast<String, bool>() ?? Map<String, bool>();
+  }
+
+  static Future<void> setBlockList(Map<String, bool> v) async {
+    return await _enter("blockList", v);
+  }
+
+  static bool getIsBlocklistBlocked() {
+    return _extract("isBlocklistBlocked") ?? true;
+  }
+
+  static Future<void> setIsBlocklistBlocked(bool v) async {
+    return await _enter("isBlocklistBlocked", v);
+  }
 }

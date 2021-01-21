@@ -219,6 +219,10 @@ class Translation extends Translations {
     "oversea": "海外用户",
     "clearCache": "清空缓存",
     "clearClipboard": "清空剪贴板",
+    "blocklist": "黑名单",
+    "addBlocklistEntry": "添加到黑名单",
+    "removeBlocklistEntry": "移出黑名单",
+    "clearBlocklist": "清除黑名单",
   };
 
   static Map<String, String> zhHant = {
@@ -433,6 +437,10 @@ class Translation extends Translations {
     "oversea": "海外用戶",
     "clearCache": "清除緩存",
     "clearClipboard": "清除剪貼板",
+    "blocklist": "黑名單",
+    "addBlocklistEntry": "加入黑名單",
+    "removeBlocklistEntry": "清出黑名單",
+    "clearBlocklist": "清除黑名單",
   };
 
   static Map<String, String> en = {
@@ -647,6 +655,10 @@ class Translation extends Translations {
     "oversea": "Oversea Mode",
     "clearCache": "Clear cache",
     "clearClipboard": "Clear Clipboard",
+    "blocklist": "Blocklist",
+    "addBlocklistEntry": "Add Blocklist Entry",
+    "removeBlocklistEntry": "Remove Blocklist Entry",
+    "clearBlocklist": "Clear Blocklist",
   };
 
   @override

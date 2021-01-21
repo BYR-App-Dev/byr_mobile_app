@@ -1,6 +1,7 @@
 import 'package:byr_mobile_app/customizations/board_info.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
+import 'package:byr_mobile_app/local_objects/local_models.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/nforum/nforum_text_parser.dart';
@@ -394,6 +395,7 @@ class ThreadPageListCell<T> extends StatefulWidget {
   final bool isSubject;
   final String authorShown;
   final String threadAuthor;
+  final bool isBlocklistBlocked;
 
   ThreadPageListCell(
     this.data,
@@ -406,6 +408,7 @@ class ThreadPageListCell<T> extends StatefulWidget {
     this.isSubject = false,
     this.authorShown = '',
     this.threadAuthor = "",
+    this.isBlocklistBlocked = true,
   });
 
   @override
@@ -427,6 +430,7 @@ class ThreadPageListSubjectCell<T> extends ThreadPageListCell<T> {
     authorShown = '',
     String threadAuthor = "",
     this.onBackToBoard,
+    bool isBlocklistBlocked,
   }) : super(
           data,
           dataLayouter,
@@ -438,6 +442,7 @@ class ThreadPageListSubjectCell<T> extends ThreadPageListCell<T> {
           isSubject: isSubject,
           authorShown: authorShown,
           threadAuthor: threadAuthor,
+          isBlocklistBlocked: isBlocklistBlocked,
         );
   final Function onBackToBoard;
   @override
@@ -850,25 +855,27 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
   Widget build(BuildContext context) {
     final d = widget.data;
     final l = widget.dataLayouter;
-    return InkWell(
-      highlightColor: l.getHighlightColor(d),
-      splashColor: l.getSplashColor(d),
-      onTap: () {},
-      onLongPress: () {
-        this.widget.onLongPress();
-      },
-      child: ListTile(
-        contentPadding: EdgeInsets.only(
-          top: 0,
-          left: 18,
-          right: 18,
-        ),
-        onTap: () {
-          this.widget.onTap();
-        },
-        title: buildTitle(l, d),
-        subtitle: buildSubtitle(l, d),
-      ),
-    );
+    return widget.isBlocklistBlocked == true && Blocklist.getBlocklist()[l.getUser(d)?.id] == true
+        ? Container()
+        : InkWell(
+            highlightColor: l.getHighlightColor(d),
+            splashColor: l.getSplashColor(d),
+            onTap: () {},
+            onLongPress: () {
+              this.widget.onLongPress();
+            },
+            child: ListTile(
+              contentPadding: EdgeInsets.only(
+                top: 0,
+                left: 18,
+                right: 18,
+              ),
+              onTap: () {
+                this.widget.onTap();
+              },
+              title: buildTitle(l, d),
+              subtitle: buildSubtitle(l, d),
+            ),
+          );
   }
 }

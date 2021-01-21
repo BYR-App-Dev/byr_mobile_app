@@ -1,5 +1,6 @@
 import 'package:byr_mobile_app/customizations/const_colors.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
+import 'package:byr_mobile_app/local_objects/local_models.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
@@ -10,11 +11,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   final UserModel user;
 
   const ProfilePage({Key key, this.user}) : super(key: key);
 
+  @override
+  State<StatefulWidget> createState() {
+    return ProfilePageState();
+  }
+}
+
+class ProfilePageState extends State<ProfilePage> {
   _cardInfoCell(String title, String value) {
     return Column(
       children: <Widget>[
@@ -69,6 +77,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var blocklist = Blocklist.getBlocklist();
     return Obx(
       () => Scaffold(
         backgroundColor: E().userPagePrimaryBackgroundColor,
@@ -76,6 +85,28 @@ class ProfilePage extends StatelessWidget {
           title: Text(
             "profilePageName".tr,
           ),
+          actions: [
+            if (blocklist[widget.user.id] == null || blocklist[widget.user.id] == false)
+              IconButton(
+                icon: Icon(Icons.do_disturb_on_outlined, color: E().otherPageTopBarButtonColor),
+                onPressed: () async {
+                  Blocklist.addBlocklistItem(widget.user.id);
+                  if (mounted) {
+                    setState(() {});
+                  }
+                },
+              )
+            else
+              IconButton(
+                icon: Icon(Icons.do_disturb_off_outlined, color: E().otherPageTopBarButtonColor),
+                onPressed: () async {
+                  Blocklist.removeBlocklistItem(widget.user.id);
+                  if (mounted) {
+                    setState(() {});
+                  }
+                },
+              )
+          ],
         ),
         body: CustomScrollView(
           slivers: <Widget>[
@@ -116,14 +147,16 @@ class ProfilePage extends StatelessWidget {
                                               barrierLabel: "PicDialog",
                                               pageBuilder: (c, _, __) => PicSwiper(
                                                 index: 0,
-                                                pics: [PicSwiperItem(picUrl: NForumService.makeGetURL(user.faceUrl))],
+                                                pics: [
+                                                  PicSwiperItem(picUrl: NForumService.makeGetURL(widget.user.faceUrl))
+                                                ],
                                               ),
                                               context: context,
                                             );
                                           },
-                                          isWhisper: (user?.id ?? "").startsWith("IWhisper"),
-                                          imageLink: NForumService.makeGetURL(user.faceUrl),
-                                          emptyUser: !GetUtils.isURL(user?.faceUrl),
+                                          isWhisper: (widget.user?.id ?? "").startsWith("IWhisper"),
+                                          imageLink: NForumService.makeGetURL(widget.user.faceUrl),
+                                          emptyUser: !GetUtils.isURL(widget.user?.faceUrl),
                                         ),
                                       ),
                                       Positioned(
@@ -147,7 +180,7 @@ class ProfilePage extends StatelessWidget {
                                           width: 20,
                                           height: 20,
                                           decoration: BoxDecoration(
-                                            color: ConstColors.getUsernameColor(user?.gender).withOpacity(0.3),
+                                            color: ConstColors.getUsernameColor(widget.user?.gender).withOpacity(0.3),
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(10.0),
                                             ),
@@ -157,10 +190,12 @@ class ProfilePage extends StatelessWidget {
                                             ),
                                           ),
                                           child: Icon(
-                                            user.gender == 'm'
+                                            widget.user.gender == 'm'
                                                 ? FontAwesomeIcons.mars
-                                                : user.gender == 'f' ? FontAwesomeIcons.venus : FontAwesomeIcons.genderless,
-                                            color: ConstColors.getUsernameColor(user?.gender),
+                                                : widget.user.gender == 'f'
+                                                    ? FontAwesomeIcons.venus
+                                                    : FontAwesomeIcons.genderless,
+                                            color: ConstColors.getUsernameColor(widget.user?.gender),
                                             size: 15,
                                           ),
                                         ),
@@ -173,10 +208,10 @@ class ProfilePage extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          user?.id ?? "",
+                                          widget.user?.id ?? "",
                                           style: TextStyle(
                                             fontSize: 22.0,
-                                            color: ConstColors.getUsernameColor(user?.gender),
+                                            color: ConstColors.getUsernameColor(widget.user?.gender),
                                           ),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
@@ -184,7 +219,7 @@ class ProfilePage extends StatelessWidget {
                                         Padding(
                                           padding: EdgeInsets.only(top: 5),
                                           child: Text(
-                                            user?.userName ?? "",
+                                            widget.user?.userName ?? "",
                                             style: TextStyle(
                                               fontSize: 16.0,
                                               color: E().userPageTextColor,
@@ -202,7 +237,7 @@ class ProfilePage extends StatelessWidget {
                                                 'send_mail_page',
                                                 arguments: SendMailPageRouteArg(
                                                   mail: null,
-                                                  username: user.id,
+                                                  username: widget.user.id,
                                                   isReply: false,
                                                 ),
                                               );
@@ -238,9 +273,9 @@ class ProfilePage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: <Widget>[
-                                  _cardInfoCell("profileLife".tr, user.life.toString()),
-                                  _cardInfoCell("profilePostCount".tr, user.postCount.toString()),
-                                  _cardInfoCell("profileScore".tr, user.score.toString()),
+                                  _cardInfoCell("profileLife".tr, widget.user.life.toString()),
+                                  _cardInfoCell("profilePostCount".tr, widget.user.postCount.toString()),
+                                  _cardInfoCell("profileScore".tr, widget.user.score.toString()),
                                 ],
                               ),
                             ),
@@ -254,19 +289,19 @@ class ProfilePage extends StatelessWidget {
                         height: 1,
                         color: E().userPageSecondaryBackgroundColor,
                       ),
-                      _detailCell("profileLevel".tr, user.level),
-                      _detailCell("profileState".tr, user.isOnline ? "profileOnline".tr : "profileOffline".tr),
+                      _detailCell("profileLevel".tr, widget.user.level),
+                      _detailCell("profileState".tr, widget.user.isOnline ? "profileOnline".tr : "profileOffline".tr),
                       _detailCell(
                         "profileStarSign".tr,
-                        user.astro == '' ? '--' : user.astro,
+                        widget.user.astro == '' ? '--' : widget.user.astro,
                       ),
                       _detailCell(
                         "profileHomePage".tr,
-                        user.homePage == '' ? '--' : user.homePage,
+                        widget.user.homePage == '' ? '--' : widget.user.homePage,
                       ),
                       _detailCell(
                         "profileQQ".tr,
-                        user.qq == '' ? '--' : user.qq,
+                        widget.user.qq == '' ? '--' : widget.user.qq,
                       ),
                     ],
                   );

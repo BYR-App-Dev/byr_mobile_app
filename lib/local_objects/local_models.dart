@@ -225,3 +225,51 @@ Map<String, dynamic> _$HistoryArticleModelToJson(HistoryArticleModel instance) =
       'gid': instance.groupId,
       'user': instance.user,
     };
+
+class Blocklist {
+  static Map<String, bool> getBlocklist() {
+    startBlocklist();
+    return _blocklist;
+  }
+
+  static bool getIsBlocked() {
+    startBlocklist();
+    return _isBlocked;
+  }
+
+  static void setIsBlocked(bool v) {
+    startBlocklist();
+    _isBlocked = v;
+    LocalStorage.setIsBlocklistBlocked(_isBlocked);
+  }
+
+  static Map<String, bool> _blocklist;
+  static bool _isBlocked;
+
+  static void startBlocklist() {
+    if (_blocklist == null) {
+      _blocklist = LocalStorage.getBlockList();
+    }
+    if (_isBlocked == null) {
+      _isBlocked = LocalStorage.getIsBlocklistBlocked();
+    }
+  }
+
+  static void addBlocklistItem(String a) {
+    startBlocklist();
+    _blocklist[a] = true;
+    LocalStorage.setBlockList(_blocklist);
+  }
+
+  static void removeBlocklistItem(String a) {
+    startBlocklist();
+    _blocklist.remove(a);
+    LocalStorage.setBlockList(_blocklist);
+  }
+
+  static void clearBlocklist() {
+    startBlocklist();
+    _blocklist.clear();
+    LocalStorage.setBlockList(_blocklist);
+  }
+}

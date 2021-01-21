@@ -22,6 +22,25 @@ class _AboutPageUserWidgetState extends State<AboutPageUserWidget> {
   UserModel _userModel;
 
   @override
+  void didUpdateWidget(AboutPageUserWidget oldWidget) {
+    if (oldWidget.id != widget.id) {
+      _isLoading = true;
+      _userModel = null;
+      if (mounted) {
+        setState(() {});
+      }
+      NForumService.getUserInfo(widget.id).then((user) {
+        _isLoading = false;
+        _userModel = user;
+        if (mounted) {
+          setState(() {});
+        }
+      });
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void initState() {
     NForumService.getUserInfo(widget.id).then((user) {
       if (mounted) {

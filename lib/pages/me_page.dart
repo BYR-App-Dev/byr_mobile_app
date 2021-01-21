@@ -1,15 +1,12 @@
-import 'package:byr_mobile_app/customizations/byr_icons.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/customizations/theme_manager.dart';
 import 'package:byr_mobile_app/local_objects/local_storage.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
-import 'package:byr_mobile_app/pages/about_page.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/audio_player_view.dart';
 import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
-import 'package:byr_mobile_app/reusable_components/fullscreen_back_page_route.dart';
 import 'package:byr_mobile_app/reusable_components/setting_item_cell.dart';
 import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
@@ -280,6 +276,14 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
             Navigator.pushNamed(context, "history_page");
           },
         ),
+        SettingItemCell(
+          height: 50,
+          leading: Icon(Icons.block, color: E().settingItemCellMainColor),
+          title: "blocklist".tr,
+          onTap: () {
+            Navigator.pushNamed(context, "blocklist_page");
+          },
+        ),
         Divider(),
         SettingItemCell(
           height: 50,
@@ -508,7 +512,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
         ),
         IconButton(
           icon: Icon(
-            Icons.search,
+            Icons.person_search,
             color: !_showAppBar ? E().mePageUserIdColor : E().mePageIconColor,
           ),
           onPressed: () {
@@ -531,6 +535,7 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                     userIdController.clear();
                     navigator.pushNamed("profile_page", arguments: value);
                   }).catchError((e) {
+                    userIdController.clear();
                     AdaptiveComponents.showToast(context, e.toString());
                   });
                 } else {

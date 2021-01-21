@@ -5,6 +5,7 @@ import 'package:byr_mobile_app/customizations/board_info.dart';
 import 'package:byr_mobile_app/customizations/shimmer_theme.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/helper/helper.dart';
+import 'package:byr_mobile_app/local_objects/local_models.dart';
 import 'package:byr_mobile_app/networking/http_request.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
@@ -89,6 +90,8 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   bool isLoading;
 
   String failureInfo;
+
+  bool isBlocklistBlocked = Blocklist.getIsBlocked();
 
   int firstPageJump;
 
@@ -588,6 +591,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         authorShown: data.authorToShow,
         threadAuthor: data.thread?.user?.id,
         onBackToBoard: backtoBoard,
+        isBlocklistBlocked: isBlocklistBlocked,
       );
     }
 
@@ -613,6 +617,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
         },
         _author,
         threadAuthor: data.thread?.user?.id,
+        isBlocklistBlocked: isBlocklistBlocked,
       );
     }
 
@@ -635,6 +640,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
       },
       _author,
       threadAuthor: data.thread?.user?.id,
+      isBlocklistBlocked: isBlocklistBlocked,
     );
   }
 
@@ -1169,6 +1175,16 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
+                              _itemWidget(
+                                FontAwesomeIcons.thList,
+                                isBlocklistBlocked ? "关闭黑名单" : "打开黑名单",
+                                onTap: () {
+                                  isBlocklistBlocked = !isBlocklistBlocked;
+                                  if (mounted) {
+                                    setState(() {});
+                                  }
+                                },
+                              ),
                               _itemWidget(
                                 FontAwesomeIcons.thList,
                                 "backToBoardTrans".tr,

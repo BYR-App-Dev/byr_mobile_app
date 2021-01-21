@@ -104,11 +104,13 @@ class AdaptiveComponents {
     String cancel,
     bool hideCancel = false,
     bool hideConfirm = false,
+    bool barrierDismissible = false,
     void Function(AlertResult result) onDismiss,
   }) async {
     if (Platform.isAndroid) {
       showDialog<void>(
           context: context,
+          barrierDismissible: barrierDismissible,
           builder: (BuildContext context) {
             return Theme(
               data: ThemeData(brightness: E().isThemeDarkStyle ? Brightness.dark : Brightness.light),
