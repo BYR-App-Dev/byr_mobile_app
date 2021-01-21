@@ -834,6 +834,59 @@ class NForumService {
     });
   }
 
+  static Future<ThreadArticleModel> getBlocklist() async {
+    return Request.httpGet(
+      NForumSpecs.baseURL + 'blacklist/list.json',
+      {
+        'oauth_token': currentToken,
+      },
+    ).then((response) {
+      Map resultMap = jsonDecode(response.body);
+      if (resultMap["code"] != null) {
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
+      }
+      return resultMap["status"];
+    }).catchError((e) {
+      throw e;
+    });
+  }
+
+  static Future<ThreadArticleModel> addBlocklistEntry(String id) async {
+    return Request.httpPost(
+      NForumSpecs.baseURL + 'blacklist/add.json',
+      {
+        'oauth_token': currentToken,
+        'id': id,
+      },
+    ).then((response) {
+      Map resultMap = jsonDecode(response.body);
+      if (resultMap["code"] != null) {
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
+      }
+      return resultMap["status"];
+    }).catchError((e) {
+      throw e;
+    });
+  }
+
+  static Future<bool> deleteBlocklistEntry(String id) async {
+    return Request.httpPost(
+      NForumSpecs.baseURL + 'blacklist/delete.json',
+      {
+        'oauth_token': currentToken,
+        'id': id,
+      },
+    ).then((response) {
+      Map resultMap = jsonDecode(response.body);
+      if (resultMap["code"] != null) {
+        throw APIException(resultMap['msg'], code: resultMap["code"]);
+      }
+      return resultMap["status"];
+    }).catchError((e) {
+      throw e;
+    });
+  }
+
   static Future<ReferBoxModel> getReply(int page, {int count = PageConfig.pageItemCount}) async {
     return Request.httpGet(
       NForumSpecs.baseURL + 'refer/reply.json',

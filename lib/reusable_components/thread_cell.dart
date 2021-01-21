@@ -621,7 +621,12 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                   Container(
                     child: Text(
                       l.getUsername(d),
-                      style: TextStyle(fontSize: 18.0, color: l.getUsernameColor(d)),
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          color: l.getUsernameColor(d),
+                          decoration: Blocklist.getBlocklist()[l.getUser(d)?.id] == true
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none),
                     ),
                   ),
                   Container(

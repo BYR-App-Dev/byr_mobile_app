@@ -35,7 +35,7 @@ class _AboutPageUserWidgetState extends State<AboutPageUserWidget> {
         if (mounted) {
           setState(() {});
         }
-      });
+      }).catchError((e) {});
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -49,7 +49,7 @@ class _AboutPageUserWidgetState extends State<AboutPageUserWidget> {
           _userModel = user;
         });
       }
-    });
+    }).catchError((e) {});
     super.initState();
   }
 
