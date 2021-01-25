@@ -135,13 +135,14 @@ class AdaptiveComponents {
                       if (onDismiss != null) onDismiss(AlertResult.confirm);
                     },
                   ),
-                  FlatButton(
-                    child: Text(cancel ?? "cancelTrans".tr),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      if (onDismiss != null) onDismiss(AlertResult.cancel);
-                    },
-                  ),
+                  if (!hideCancel)
+                    FlatButton(
+                      child: Text(cancel ?? "cancelTrans".tr),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        if (onDismiss != null) onDismiss(AlertResult.cancel);
+                      },
+                    ),
                 ],
               ),
             );
