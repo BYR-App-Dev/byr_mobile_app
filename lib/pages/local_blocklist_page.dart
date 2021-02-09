@@ -6,6 +6,7 @@ import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/byr_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class LocalBlocklistPage extends StatefulWidget {
@@ -38,6 +39,17 @@ class LocalBlocklistPageState extends State<LocalBlocklistPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    IconButton(
+                      padding: EdgeInsets.all(0.0),
+                      icon: Icon(
+                        Icons.copy,
+                        size: 28,
+                      ),
+                      onPressed: () {
+                        Clipboard.setData(ClipboardData(text: Blocklist.getBlocklist().keys.toList().join("\n")));
+                        AdaptiveComponents.showToast(context, "已复制到剪贴板");
+                      },
+                    ),
                     IconButton(
                       padding: EdgeInsets.all(0.0),
                       icon: Icon(
