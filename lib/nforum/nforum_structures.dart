@@ -56,7 +56,7 @@ class StatusModel {
 }
 
 @JsonSerializable()
-class UserModel {
+class UserModel extends PageableBaseModel {
   UserModel(this.id, this.userName, this.faceUrl);
 
   String id;
@@ -108,6 +108,9 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
+
+  @override
+  String get objCode => "user/" + id.toString();
 }
 
 @JsonSerializable()
@@ -295,6 +298,22 @@ abstract class PageableListBaseModel<T extends PageableBaseModel> {
 
   PaginationModel pagination;
   List<T> article;
+}
+
+@JsonSerializable()
+class UserListModel extends PageableListBaseModel<UserModel> {
+  UserListModel({
+    this.pagination,
+    this.article,
+  }) : super(pagination: pagination, article: article);
+
+  PaginationModel pagination;
+  @JsonKey(name: 'user')
+  List<UserModel> article;
+
+  factory UserListModel.fromJson(Map<String, dynamic> json) => _$UserListModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserListModelToJson(this);
 }
 
 abstract class ArticleListBaseModel<T extends ArticleBaseModel> extends PageableListBaseModel<T> {

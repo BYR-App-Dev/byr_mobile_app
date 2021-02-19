@@ -59,7 +59,6 @@ class TabModel {
   }
 }
 
-@JsonSerializable()
 class HistoryArticleModel extends ArticleBaseModel {
   @override
   int get hashCode => _getHistoryId(this).hashCode;
@@ -122,7 +121,6 @@ class HistoryListModel extends ArticleListBaseModel<HistoryArticleModel> {
         );
 }
 
-@JsonSerializable()
 class HistoryModel {
   Set<HistoryArticleModel> article;
 

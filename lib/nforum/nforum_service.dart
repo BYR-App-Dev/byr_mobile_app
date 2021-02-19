@@ -834,10 +834,12 @@ class NForumService {
     });
   }
 
-  static Future<ThreadArticleModel> getBlocklist() async {
+  static Future<UserListModel> getBlocklist(int page, {int count = PageConfig.pageItemCount}) async {
     return Request.httpGet(
       NForumSpecs.baseURL + 'blacklist/list.json',
       {
+        'page': page,
+        'count': count,
         'oauth_token': currentToken,
       },
     ).then((response) {
@@ -845,20 +847,24 @@ class NForumService {
       if (resultMap["code"] != null) {
         throw APIException(resultMap['msg'], code: resultMap["code"]);
       }
-      return resultMap["status"];
+      var result = UserListModel.fromJson(resultMap);
+      if (result == null) {
+        throw DataException();
+      }
+      return result;
     }).catchError((e) {
       throw e;
     });
   }
 
-  static Future<ThreadArticleModel> addBlocklistEntry(String id) async {
+  static Future<bool> addBlocklistEntry(String id) async {
     return Request.httpPost(
       NForumSpecs.baseURL + 'blacklist/add.json',
       {
         'oauth_token': currentToken,
         'id': id,
       },
-    ).then((response) {
+    ).then<bool>((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
         throw APIException(resultMap['msg'], code: resultMap["code"]);
@@ -876,7 +882,7 @@ class NForumService {
         'oauth_token': currentToken,
         'id': id,
       },
-    ).then((response) {
+    ).then<bool>((response) {
       Map resultMap = jsonDecode(response.body);
       if (resultMap["code"] != null) {
         throw APIException(resultMap['msg'], code: resultMap["code"]);

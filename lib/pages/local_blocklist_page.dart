@@ -3,7 +3,6 @@ import 'package:byr_mobile_app/local_objects/local_models.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/about_page_user_widget.dart';
 import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
-import 'package:byr_mobile_app/reusable_components/byr_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,6 +25,7 @@ class LocalBlocklistPageState extends State<LocalBlocklistPage> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
+        backgroundColor: E().threadListBackgroundColor,
         // appBar: BYRAppBar(
         //   title: Text(
         //     "blocklist".tr,

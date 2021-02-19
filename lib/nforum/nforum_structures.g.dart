@@ -14,7 +14,8 @@ WelcomeInfo _$WelcomeInfoFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$WelcomeInfoToJson(WelcomeInfo instance) => <String, dynamic>{
+Map<String, dynamic> _$WelcomeInfoToJson(WelcomeInfo instance) =>
+    <String, dynamic>{
       'ver': instance.ver,
       'url': instance.url,
       'sign': instance.sign,
@@ -27,7 +28,8 @@ OAuthAccessInfo _$OAuthAccessInfoFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$OAuthAccessInfoToJson(OAuthAccessInfo instance) => <String, dynamic>{
+Map<String, dynamic> _$OAuthAccessInfoToJson(OAuthAccessInfo instance) =>
+    <String, dynamic>{
       'access_token': instance.accessToken,
       'expires_in': instance.expiresIn,
     };
@@ -39,7 +41,8 @@ OAuthErrorInfo _$OAuthErrorInfoFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$OAuthErrorInfoToJson(OAuthErrorInfo instance) => <String, dynamic>{
+Map<String, dynamic> _$OAuthErrorInfoToJson(OAuthErrorInfo instance) =>
+    <String, dynamic>{
       'code': instance.code,
       'msg': instance.msg,
     };
@@ -50,7 +53,8 @@ StatusModel _$StatusModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$StatusModelToJson(StatusModel instance) => <String, dynamic>{
+Map<String, dynamic> _$StatusModelToJson(StatusModel instance) =>
+    <String, dynamic>{
       'status': instance.status,
     };
 
@@ -119,7 +123,8 @@ UploadedModel _$UploadedModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$UploadedModelToJson(UploadedModel instance) => <String, dynamic>{
+Map<String, dynamic> _$UploadedModelToJson(UploadedModel instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'url': instance.url,
       'size': instance.size,
@@ -130,13 +135,18 @@ Map<String, dynamic> _$UploadedModelToJson(UploadedModel instance) => <String, d
 
 AttachmentModel _$AttachmentModelFromJson(Map<String, dynamic> json) {
   return AttachmentModel(
-    (json['file'] as List)?.map((e) => e == null ? null : UploadedModel.fromJson(e as Map<String, dynamic>))?.toList(),
+    (json['file'] as List)
+        ?.map((e) => e == null
+            ? null
+            : UploadedModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
     json['remain_space'] as String,
     json['remain_count'] as int,
   );
 }
 
-Map<String, dynamic> _$AttachmentModelToJson(AttachmentModel instance) => <String, dynamic>{
+Map<String, dynamic> _$AttachmentModelToJson(AttachmentModel instance) =>
+    <String, dynamic>{
       'file': instance.file,
       'remain_space': instance.remainSpace,
       'remain_count': instance.remainCount,
@@ -148,12 +158,15 @@ ToptenModel _$ToptenModelFromJson(Map<String, dynamic> json) {
     title: json['title'] as String,
     time: json['time'] as int,
     article: (json['article'] as List)
-        ?.map((e) => e == null ? null : FrontArticleModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : FrontArticleModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
 
-Map<String, dynamic> _$ToptenModelToJson(ToptenModel instance) => <String, dynamic>{
+Map<String, dynamic> _$ToptenModelToJson(ToptenModel instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'title': instance.title,
       'time': instance.time,
@@ -172,13 +185,16 @@ FrontArticleModel _$FrontArticleModelFromJson(Map<String, dynamic> json) {
     hasAttachment: json['has_attachment'] as bool,
     isAdmin: json['is_admin'] as bool,
     title: json['title'] as String,
-    user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+    user: json['user'] == null
+        ? null
+        : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     postTime: json['post_time'],
     boardName: json['board_name'],
     boardDescription: json['board_description'] as String,
     content: json['content'] as String,
-    attachment:
-        json['attachment'] == null ? null : AttachmentModel.fromJson(json['attachment'] as Map<String, dynamic>),
+    attachment: json['attachment'] == null
+        ? null
+        : AttachmentModel.fromJson(json['attachment'] as Map<String, dynamic>),
     replyCount: json['reply_count'] as int,
     lastReplyUserId: json['last_reply_user_id'] as String,
     lastReplyTime: json['last_reply_time'] as int,
@@ -186,7 +202,8 @@ FrontArticleModel _$FrontArticleModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$FrontArticleModelToJson(FrontArticleModel instance) => <String, dynamic>{
+Map<String, dynamic> _$FrontArticleModelToJson(FrontArticleModel instance) =>
+    <String, dynamic>{
       'group_id': instance.groupId,
       'title': instance.title,
       'user': instance.user,
@@ -212,14 +229,18 @@ Map<String, dynamic> _$FrontArticleModelToJson(FrontArticleModel instance) => <S
 TimelineModel _$TimelineModelFromJson(Map<String, dynamic> json) {
   return TimelineModel(
     article: (json['article'] as List)
-        ?.map((e) => e == null ? null : FrontArticleModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : FrontArticleModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    pagination:
-        json['pagination'] == null ? null : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+    pagination: json['pagination'] == null
+        ? null
+        : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$TimelineModelToJson(TimelineModel instance) => <String, dynamic>{
+Map<String, dynamic> _$TimelineModelToJson(TimelineModel instance) =>
+    <String, dynamic>{
       'article': instance.article,
       'pagination': instance.pagination,
     };
@@ -228,18 +249,39 @@ ArticleBaseModel _$ArticleBaseModelFromJson(Map<String, dynamic> json) {
   return ArticleBaseModel(
     groupId: json['group_id'],
     title: json['title'] as String,
-    user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+    user: json['user'] == null
+        ? null
+        : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     postTime: json['post_time'],
     boardName: json['board_name'],
   );
 }
 
-Map<String, dynamic> _$ArticleBaseModelToJson(ArticleBaseModel instance) => <String, dynamic>{
+Map<String, dynamic> _$ArticleBaseModelToJson(ArticleBaseModel instance) =>
+    <String, dynamic>{
       'group_id': instance.groupId,
       'title': instance.title,
       'user': instance.user,
       'post_time': instance.postTime,
       'board_name': instance.boardName,
+    };
+
+UserListModel _$UserListModelFromJson(Map<String, dynamic> json) {
+  return UserListModel(
+    pagination: json['pagination'] == null
+        ? null
+        : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+    article: (json['user'] as List)
+        ?.map((e) =>
+            e == null ? null : UserModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
+}
+
+Map<String, dynamic> _$UserListModelToJson(UserListModel instance) =>
+    <String, dynamic>{
+      'pagination': instance.pagination,
+      'user': instance.article,
     };
 
 ThreadArticleModel _$ThreadArticleModelFromJson(Map<String, dynamic> json) {
@@ -254,13 +296,16 @@ ThreadArticleModel _$ThreadArticleModelFromJson(Map<String, dynamic> json) {
     hasAttachment: json['has_attachment'] as bool,
     isAdmin: json['is_admin'] as bool,
     title: json['title'] as String,
-    user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+    user: json['user'] == null
+        ? null
+        : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     postTime: json['post_time'],
     boardName: json['board_name'],
     boardDescription: json['board_description'] as String,
     content: json['content'] as String,
-    attachment:
-        json['attachment'] == null ? null : AttachmentModel.fromJson(json['attachment'] as Map<String, dynamic>),
+    attachment: json['attachment'] == null
+        ? null
+        : AttachmentModel.fromJson(json['attachment'] as Map<String, dynamic>),
     likeSum: json['like_sum'] as String,
     isLiked: json['is_liked'] as bool,
     votedownSum: json['votedown_sum'] as String,
@@ -269,7 +314,8 @@ ThreadArticleModel _$ThreadArticleModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ThreadArticleModelToJson(ThreadArticleModel instance) => <String, dynamic>{
+Map<String, dynamic> _$ThreadArticleModelToJson(ThreadArticleModel instance) =>
+    <String, dynamic>{
       'group_id': instance.groupId,
       'title': instance.title,
       'user': instance.user,
@@ -305,19 +351,23 @@ LikeArticleModel _$LikeArticleModelFromJson(Map<String, dynamic> json) {
     hasAttachment: json['has_attachment'] as bool,
     isAdmin: json['is_admin'] as bool,
     title: json['title'] as String,
-    user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+    user: json['user'] == null
+        ? null
+        : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     postTime: json['post_time'],
     boardName: json['board_name'],
     boardDescription: json['board_description'] as String,
     content: json['content'] as String,
-    attachment:
-        json['attachment'] == null ? null : AttachmentModel.fromJson(json['attachment'] as Map<String, dynamic>),
+    attachment: json['attachment'] == null
+        ? null
+        : AttachmentModel.fromJson(json['attachment'] as Map<String, dynamic>),
     likeSum: json['like_sum'] as String,
     isLiked: json['is_liked'] as bool,
   )..isVotedown = json['isVotedown'] as bool;
 }
 
-Map<String, dynamic> _$LikeArticleModelToJson(LikeArticleModel instance) => <String, dynamic>{
+Map<String, dynamic> _$LikeArticleModelToJson(LikeArticleModel instance) =>
+    <String, dynamic>{
       'group_id': instance.groupId,
       'title': instance.title,
       'user': instance.user,
@@ -348,7 +398,8 @@ PaginationModel _$PaginationModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$PaginationModelToJson(PaginationModel instance) => <String, dynamic>{
+Map<String, dynamic> _$PaginationModelToJson(PaginationModel instance) =>
+    <String, dynamic>{
       'page_all_count': instance.pageAllCount,
       'page_current_count': instance.pageCurrentCount,
       'item_page_count': instance.itemPageCount,
@@ -367,7 +418,9 @@ ThreadModel _$ThreadModelFromJson(Map<String, dynamic> json) {
     hasAttachment: json['has_attachment'] as bool,
     isAdmin: json['is_admin'] as bool,
     title: json['title'] as String,
-    user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+    user: json['user'] == null
+        ? null
+        : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     postTime: json['post_time'] as int,
     boardName: json['board_name'] as String,
     boardDescription: json['board_description'] as String,
@@ -381,17 +434,23 @@ ThreadModel _$ThreadModelFromJson(Map<String, dynamic> json) {
     lastReplyUserId: json['last_reply_user_id'] as String,
     lastReplyTime: json['last_reply_time'] as int,
     likeArticles: (json['like_articles'] as List)
-        ?.map((e) => e == null ? null : LikeArticleModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : LikeArticleModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    pagination:
-        json['pagination'] == null ? null : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+    pagination: json['pagination'] == null
+        ? null
+        : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
     article: (json['article'] as List)
-        ?.map((e) => e == null ? null : ThreadArticleModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : ThreadArticleModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
 
-Map<String, dynamic> _$ThreadModelToJson(ThreadModel instance) => <String, dynamic>{
+Map<String, dynamic> _$ThreadModelToJson(ThreadModel instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'group_id': instance.groupId,
       'reply_id': instance.replyId,
@@ -423,12 +482,15 @@ Map<String, dynamic> _$ThreadModelToJson(ThreadModel instance) => <String, dynam
 BetCategoriesModel _$BetCategoriesModelFromJson(Map<String, dynamic> json) {
   return BetCategoriesModel(
     (json['category'] as List)
-        ?.map((e) => e == null ? null : BetCategoryModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : BetCategoryModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
 
-Map<String, dynamic> _$BetCategoriesModelToJson(BetCategoriesModel instance) => <String, dynamic>{
+Map<String, dynamic> _$BetCategoriesModelToJson(BetCategoriesModel instance) =>
+    <String, dynamic>{
       'category': instance.category,
     };
 
@@ -440,7 +502,8 @@ BetCategoryModel _$BetCategoryModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$BetCategoryModelToJson(BetCategoryModel instance) => <String, dynamic>{
+Map<String, dynamic> _$BetCategoryModelToJson(BetCategoryModel instance) =>
+    <String, dynamic>{
       'cid': instance.cid,
       'name': instance.name,
       'show': instance.show,
@@ -456,7 +519,8 @@ BetItemModel _$BetItemModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$BetItemModelToJson(BetItemModel instance) => <String, dynamic>{
+Map<String, dynamic> _$BetItemModelToJson(BetItemModel instance) =>
+    <String, dynamic>{
       'biid': instance.biid,
       'label': instance.label,
       'num': instance.number,
@@ -474,7 +538,8 @@ MyBetItemModel _$MyBetItemModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$MyBetItemModelToJson(MyBetItemModel instance) => <String, dynamic>{
+Map<String, dynamic> _$MyBetItemModelToJson(MyBetItemModel instance) =>
+    <String, dynamic>{
       'uid': instance.uid,
       'biid': instance.biid,
       'score': instance.score,
@@ -499,8 +564,13 @@ BetModel _$BetModelFromJson(Map<String, dynamic> json) {
     json['isEnd'] as bool,
     json['isDel'] as bool,
     json['hasResult'] as bool,
-    (json['bitems'] as List)?.map((e) => e == null ? null : BetItemModel.fromJson(e as Map<String, dynamic>))?.toList(),
-    json['mybet'] == null ? null : MyBetItemModel.fromJson(json['mybet'] as Map<String, dynamic>),
+    (json['bitems'] as List)
+        ?.map((e) =>
+            e == null ? null : BetItemModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    json['mybet'] == null
+        ? null
+        : MyBetItemModel.fromJson(json['mybet'] as Map<String, dynamic>),
   );
 }
 
@@ -526,13 +596,19 @@ Map<String, dynamic> _$BetModelToJson(BetModel instance) => <String, dynamic>{
 
 BetListModel _$BetListModelFromJson(Map<String, dynamic> json) {
   return BetListModel(
-    json['pagination'] == null ? null : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
-    (json['bets'] as List)?.map((e) => e == null ? null : BetModel.fromJson(e as Map<String, dynamic>))?.toList(),
+    json['pagination'] == null
+        ? null
+        : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+    (json['bets'] as List)
+        ?.map((e) =>
+            e == null ? null : BetModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
     json['title'] as String,
   );
 }
 
-Map<String, dynamic> _$BetListModelToJson(BetListModel instance) => <String, dynamic>{
+Map<String, dynamic> _$BetListModelToJson(BetListModel instance) =>
+    <String, dynamic>{
       'pagination': instance.pagination,
       'bets': instance.article,
       'title': instance.title,
@@ -548,7 +624,8 @@ BetRankItemModel _$BetRankItemModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$BetRankItemModelToJson(BetRankItemModel instance) => <String, dynamic>{
+Map<String, dynamic> _$BetRankItemModelToJson(BetRankItemModel instance) =>
+    <String, dynamic>{
       'uid': instance.uid,
       'total': instance.total,
       'win': instance.win,
@@ -562,12 +639,15 @@ BetRankListModel _$BetRankListModelFromJson(Map<String, dynamic> json) {
       (k, e) => MapEntry(k, e as String),
     ),
     (json['rank'] as List)
-        ?.map((e) => e == null ? null : BetRankItemModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : BetRankItemModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
 
-Map<String, dynamic> _$BetRankListModelToJson(BetRankListModel instance) => <String, dynamic>{
+Map<String, dynamic> _$BetRankListModelToJson(BetRankListModel instance) =>
+    <String, dynamic>{
       'types': instance.types,
       'rank': instance.rank,
     };
@@ -580,7 +660,8 @@ VoteItemModel _$VoteItemModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$VoteItemModelToJson(VoteItemModel instance) => <String, dynamic>{
+Map<String, dynamic> _$VoteItemModelToJson(VoteItemModel instance) =>
+    <String, dynamic>{
       'viid': instance.viid,
       'label': instance.label,
       'num': instance.number,
@@ -593,7 +674,8 @@ VoteStatusModel _$VoteStatusModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$VoteStatusModelToJson(VoteStatusModel instance) => <String, dynamic>{
+Map<String, dynamic> _$VoteStatusModelToJson(VoteStatusModel instance) =>
+    <String, dynamic>{
       'time': instance.time,
       'viid': instance.viid,
     };
@@ -612,10 +694,14 @@ VoteModel _$VoteModelFromJson(Map<String, dynamic> json) {
     json['is_end'] as bool,
     json['is_deleted'] as bool,
     json['is_result_voted'] as bool,
-    json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+    json['user'] == null
+        ? null
+        : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     json['vote_status'],
     (json['options'] as List)
-        ?.map((e) => e == null ? null : VoteItemModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : VoteItemModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
@@ -640,12 +726,18 @@ Map<String, dynamic> _$VoteModelToJson(VoteModel instance) => <String, dynamic>{
 
 VoteListModel _$VoteListModelFromJson(Map<String, dynamic> json) {
   return VoteListModel(
-    json['pagination'] == null ? null : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
-    (json['votes'] as List)?.map((e) => e == null ? null : VoteModel.fromJson(e as Map<String, dynamic>))?.toList(),
+    json['pagination'] == null
+        ? null
+        : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+    (json['votes'] as List)
+        ?.map((e) =>
+            e == null ? null : VoteModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
-Map<String, dynamic> _$VoteListModelToJson(VoteListModel instance) => <String, dynamic>{
+Map<String, dynamic> _$VoteListModelToJson(VoteListModel instance) =>
+    <String, dynamic>{
       'pagination': instance.pagination,
       'votes': instance.article,
     };
@@ -658,7 +750,8 @@ BannerElementModel _$BannerElementModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$BannerElementModelToJson(BannerElementModel instance) => <String, dynamic>{
+Map<String, dynamic> _$BannerElementModelToJson(BannerElementModel instance) =>
+    <String, dynamic>{
       'image_url': instance.imageUrl,
       'intro': instance.intro,
       'url': instance.url,
@@ -668,12 +761,15 @@ BannerModel _$BannerModelFromJson(Map<String, dynamic> json) {
   return BannerModel(
     json['count'] as int,
     (json['banners'] as List)
-        ?.map((e) => e == null ? null : BannerElementModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : BannerElementModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
 
-Map<String, dynamic> _$BannerModelToJson(BannerModel instance) => <String, dynamic>{
+Map<String, dynamic> _$BannerModelToJson(BannerModel instance) =>
+    <String, dynamic>{
       'count': instance.count,
       'banners': instance.banners,
     };
@@ -685,11 +781,15 @@ SectionModel _$SectionModelFromJson(Map<String, dynamic> json) {
     json['is_root'] as bool,
     json['parent'] as String,
     json['sub_section'],
-    (json['board'] as List)?.map((e) => e == null ? null : BoardModel.fromJson(e as Map<String, dynamic>))?.toList(),
+    (json['board'] as List)
+        ?.map((e) =>
+            e == null ? null : BoardModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
-Map<String, dynamic> _$SectionModelToJson(SectionModel instance) => <String, dynamic>{
+Map<String, dynamic> _$SectionModelToJson(SectionModel instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'is_root': instance.isRoot,
@@ -701,12 +801,14 @@ Map<String, dynamic> _$SectionModelToJson(SectionModel instance) => <String, dyn
 SectionListModel _$SectionListModelFromJson(Map<String, dynamic> json) {
   return SectionListModel(
     (json['section'] as List)
-        ?.map((e) => e == null ? null : SectionModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) =>
+            e == null ? null : SectionModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
 
-Map<String, dynamic> _$SectionListModelToJson(SectionListModel instance) => <String, dynamic>{
+Map<String, dynamic> _$SectionListModelToJson(SectionListModel instance) =>
+    <String, dynamic>{
       'section': instance.sections,
     };
 
@@ -731,15 +833,19 @@ BoardModel _$BoardModelFromJson(Map<String, dynamic> json) {
     allowAnonymous: json['allow_anonymous'] as bool,
     allowOutgo: json['allow_outgo'] as bool,
     allowPost: json['allow_post'] as bool,
-    pagination:
-        json['pagination'] == null ? null : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+    pagination: json['pagination'] == null
+        ? null
+        : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
     article: (json['article'] as List)
-        ?.map((e) => e == null ? null : FrontArticleModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : FrontArticleModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
 
-Map<String, dynamic> _$BoardModelToJson(BoardModel instance) => <String, dynamic>{
+Map<String, dynamic> _$BoardModelToJson(BoardModel instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'manager': instance.manager,
       'description': instance.description,
@@ -766,20 +872,29 @@ Map<String, dynamic> _$BoardModelToJson(BoardModel instance) => <String, dynamic
 FavBoardsModel _$FavBoardsModelFromJson(Map<String, dynamic> json) {
   return FavBoardsModel(
     (json['sub_favorite'] as List)
-        ?.map((e) => e == null ? null : BoardModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) =>
+            e == null ? null : BoardModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    (json['section'] as List)?.map((e) => e == null ? null : BoardModel.fromJson(e as Map<String, dynamic>))?.toList(),
-    (json['board'] as List)?.map((e) => e == null ? null : BoardModel.fromJson(e as Map<String, dynamic>))?.toList(),
+    (json['section'] as List)
+        ?.map((e) =>
+            e == null ? null : BoardModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    (json['board'] as List)
+        ?.map((e) =>
+            e == null ? null : BoardModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
-Map<String, dynamic> _$FavBoardsModelToJson(FavBoardsModel instance) => <String, dynamic>{
+Map<String, dynamic> _$FavBoardsModelToJson(FavBoardsModel instance) =>
+    <String, dynamic>{
       'sub_favorite': instance.subFavorite,
       'section': instance.section,
       'board': instance.board,
     };
 
-CollectionArticleModel _$CollectionArticleModelFromJson(Map<String, dynamic> json) {
+CollectionArticleModel _$CollectionArticleModelFromJson(
+    Map<String, dynamic> json) {
   return CollectionArticleModel(
     createdTime: json['createdTime'],
     title: json['title'] as String,
@@ -787,11 +902,15 @@ CollectionArticleModel _$CollectionArticleModelFromJson(Map<String, dynamic> jso
     boardName: json['bname'],
     number: json['num'],
     groupId: json['gid'],
-    user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+    user: json['user'] == null
+        ? null
+        : UserModel.fromJson(json['user'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$CollectionArticleModelToJson(CollectionArticleModel instance) => <String, dynamic>{
+Map<String, dynamic> _$CollectionArticleModelToJson(
+        CollectionArticleModel instance) =>
+    <String, dynamic>{
       'createdTime': instance.createdTime,
       'title': instance.title,
       'post_time': instance.postTime,
@@ -804,14 +923,18 @@ Map<String, dynamic> _$CollectionArticleModelToJson(CollectionArticleModel insta
 CollectionModel _$CollectionModelFromJson(Map<String, dynamic> json) {
   return CollectionModel(
     article: (json['article'] as List)
-        ?.map((e) => e == null ? null : CollectionArticleModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : CollectionArticleModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    pagination:
-        json['pagination'] == null ? null : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+    pagination: json['pagination'] == null
+        ? null
+        : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$CollectionModelToJson(CollectionModel instance) => <String, dynamic>{
+Map<String, dynamic> _$CollectionModelToJson(CollectionModel instance) =>
+    <String, dynamic>{
       'article': instance.article,
       'pagination': instance.pagination,
     };
@@ -825,13 +948,16 @@ ReferModel _$ReferModelFromJson(Map<String, dynamic> json) {
     boardName: json['board_name'],
     title: json['title'] as String,
     pos: json['pos'] as int,
-    user: json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+    user: json['user'] == null
+        ? null
+        : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     time: json['time'] as int,
     isRead: json['is_read'] as bool,
   )..postTime = json['post_time'];
 }
 
-Map<String, dynamic> _$ReferModelToJson(ReferModel instance) => <String, dynamic>{
+Map<String, dynamic> _$ReferModelToJson(ReferModel instance) =>
+    <String, dynamic>{
       'post_time': instance.postTime,
       'index': instance.index,
       'id': instance.id,
@@ -848,15 +974,18 @@ Map<String, dynamic> _$ReferModelToJson(ReferModel instance) => <String, dynamic
 ReferBoxModel _$ReferBoxModelFromJson(Map<String, dynamic> json) {
   return ReferBoxModel(
     description: json['description'] as String,
-    pagination:
-        json['pagination'] == null ? null : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+    pagination: json['pagination'] == null
+        ? null
+        : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
     article: (json['article'] as List)
-        ?.map((e) => e == null ? null : ReferModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) =>
+            e == null ? null : ReferModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
 
-Map<String, dynamic> _$ReferBoxModelToJson(ReferBoxModel instance) => <String, dynamic>{
+Map<String, dynamic> _$ReferBoxModelToJson(ReferBoxModel instance) =>
+    <String, dynamic>{
       'description': instance.description,
       'pagination': instance.pagination,
       'article': instance.article,
@@ -870,11 +999,15 @@ MailModel _$MailModelFromJson(Map<String, dynamic> json) {
     json['is_reply'] as bool,
     json['has_attachment'] as bool,
     json['title'] as String,
-    json['user'] == null ? null : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+    json['user'] == null
+        ? null
+        : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     json['post_time'] as int,
     json['box_name'] as String,
     json['content'] as String,
-    json['attachment'] == null ? null : AttachmentModel.fromJson(json['attachment'] as Map<String, dynamic>),
+    json['attachment'] == null
+        ? null
+        : AttachmentModel.fromJson(json['attachment'] as Map<String, dynamic>),
   );
 }
 
@@ -896,14 +1029,18 @@ MailBoxModel _$MailBoxModelFromJson(Map<String, dynamic> json) {
   return MailBoxModel(
     description: json['description'] as String,
     newNum: json['new_num'] as int,
-    pagination:
-        json['pagination'] == null ? null : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
-    article:
-        (json['mail'] as List)?.map((e) => e == null ? null : MailModel.fromJson(e as Map<String, dynamic>))?.toList(),
+    pagination: json['pagination'] == null
+        ? null
+        : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+    article: (json['mail'] as List)
+        ?.map((e) =>
+            e == null ? null : MailModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
-Map<String, dynamic> _$MailBoxModelToJson(MailBoxModel instance) => <String, dynamic>{
+Map<String, dynamic> _$MailBoxModelToJson(MailBoxModel instance) =>
+    <String, dynamic>{
       'description': instance.description,
       'new_num': instance.newNum,
       'pagination': instance.pagination,
@@ -913,65 +1050,34 @@ Map<String, dynamic> _$MailBoxModelToJson(MailBoxModel instance) => <String, dyn
 BoardSearchModel _$BoardSearchModelFromJson(Map<String, dynamic> json) {
   return BoardSearchModel(
     json['section'],
-    (json['board'] as List)?.map((e) => e == null ? null : BoardModel.fromJson(e as Map<String, dynamic>))?.toList(),
+    (json['board'] as List)
+        ?.map((e) =>
+            e == null ? null : BoardModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
-Map<String, dynamic> _$BoardSearchModelToJson(BoardSearchModel instance) => <String, dynamic>{
+Map<String, dynamic> _$BoardSearchModelToJson(BoardSearchModel instance) =>
+    <String, dynamic>{
       'section': instance.section,
       'board': instance.board,
     };
 
 ThreadSearchModel _$ThreadSearchModelFromJson(Map<String, dynamic> json) {
   return ThreadSearchModel(
-    json['pagination'] == null ? null : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+    json['pagination'] == null
+        ? null
+        : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
     (json['threads'] as List)
-        ?.map((e) => e == null ? null : FrontArticleModel.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : FrontArticleModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
 
-Map<String, dynamic> _$ThreadSearchModelToJson(ThreadSearchModel instance) => <String, dynamic>{
+Map<String, dynamic> _$ThreadSearchModelToJson(ThreadSearchModel instance) =>
+    <String, dynamic>{
       'pagination': instance.pagination,
       'threads': instance.articles,
     };
-
-// MicroPluginItemModel _$MicroPluginItemModelFromJson(Map<String, dynamic> json) {
-//   return MicroPluginItemModel(
-//     uriAndroid: json['uri_android'] as String,
-//     uriiOS: json['uri_ios'] as String,
-//     uriAndroidOversea: json['uri_android_oversea'] as String,
-//     uriiOSOversea: json['uri_ios_oversea'] as String,
-//     uri: json['uri'] as String,
-//     uriOversea: json['uri_oversea'] as String,
-//     name: json['name'] as String,
-//   );
-// }
-
-// Map<String, dynamic> _$MicroPluginItemModelToJson(MicroPluginItemModel instance) => <String, dynamic>{
-//       'uri_android': instance.uriAndroid,
-//       'uri_ios': instance.uriiOS,
-//       'uri_android_oversea': instance.uriAndroidOversea,
-//       'uri_ios_oversea': instance.uriiOSOversea,
-//       'uri': instance.uri,
-//       'uri_oversea': instance.uriOversea,
-//       'name': instance.name,
-//     };
-
-// MicroPluginListModel _$MicroPluginListModelFromJson(Map<String, dynamic> json) {
-//   return MicroPluginListModel(
-//     json['pagination'] == null ? null : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
-//     (json['micro_plugins'] as List)
-//         ?.map((e) => e == null ? null : MicroPluginItemModel.fromJson(e as Map<String, dynamic>))
-//         ?.toList(),
-//     json['show_web_link'] as bool,
-//     json['web_link'] as String,
-//   );
-// }
-
-// Map<String, dynamic> _$MicroPluginListModelToJson(MicroPluginListModel instance) => <String, dynamic>{
-//       'pagination': instance.pagination,
-//       'micro_plugins': instance.article,
-//       'show_web_link': instance.showWebLink,
-//       'web_link': instance.webLink,
-//     };

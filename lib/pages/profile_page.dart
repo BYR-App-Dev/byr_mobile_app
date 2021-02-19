@@ -4,6 +4,7 @@ import 'package:byr_mobile_app/local_objects/local_models.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
+import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/byr_app_bar.dart';
 import 'package:byr_mobile_app/reusable_components/clickable_avatar.dart';
 import 'package:byr_mobile_app/reusable_components/pic_swiper.dart';
@@ -88,7 +89,7 @@ class ProfilePageState extends State<ProfilePage> {
           actions: [
             if (blocklist[widget.user.id] == null || blocklist[widget.user.id] == false)
               IconButton(
-                icon: Icon(Icons.do_disturb_on_outlined, color: E().otherPageTopBarButtonColor),
+                icon: Icon(Icons.visibility_off_outlined, color: E().otherPageTopBarButtonColor),
                 onPressed: () async {
                   Blocklist.addBlocklistItem(widget.user.id);
                   if (mounted) {
@@ -98,14 +99,34 @@ class ProfilePageState extends State<ProfilePage> {
               )
             else
               IconButton(
-                icon: Icon(Icons.do_disturb_off_outlined, color: E().otherPageTopBarButtonColor),
+                icon: Icon(Icons.visibility_outlined, color: E().otherPageTopBarButtonColor),
                 onPressed: () async {
                   Blocklist.removeBlocklistItem(widget.user.id);
                   if (mounted) {
                     setState(() {});
                   }
                 },
-              )
+              ),
+            IconButton(
+              icon: Icon(Icons.notifications_off_outlined, color: E().otherPageTopBarButtonColor),
+              onPressed: () async {
+                AdaptiveComponents.showAlertDialog(
+                  context,
+                  title: "addBlocklistEntry".tr,
+                  barrierDismissible: false,
+                  onDismiss: (result) {
+                    if (result == AlertResult.confirm) {
+                      AdaptiveComponents.showLoading(context);
+                      NForumService.addBlocklistEntry(widget.user.id).then((value) {
+                        AdaptiveComponents.hideLoading();
+                      }).catchError((e) {
+                        AdaptiveComponents.hideLoading();
+                      });
+                    } else {}
+                  },
+                );
+              },
+            ),
           ],
         ),
         body: CustomScrollView(

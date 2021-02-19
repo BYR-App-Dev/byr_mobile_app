@@ -9,7 +9,7 @@ import 'package:byr_mobile_app/local_objects/local_models.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
 import 'package:byr_mobile_app/nforum/nforum_text_parser.dart';
-import 'package:byr_mobile_app/pages/article_list_base_page.dart';
+import 'package:byr_mobile_app/pages/list_base_page.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/byr_app_bar.dart';
 import 'package:byr_mobile_app/reusable_components/capped_ratio_fade_in_image.dart';
