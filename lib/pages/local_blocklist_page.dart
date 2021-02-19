@@ -44,6 +44,7 @@ class LocalBlocklistPageState extends State<LocalBlocklistPage> {
                       icon: Icon(
                         Icons.copy,
                         size: 28,
+                        color: E().otherPageTopBarButtonColor,
                       ),
                       onPressed: () {
                         Clipboard.setData(ClipboardData(text: Blocklist.getBlocklist().keys.toList().join("\n")));
@@ -55,6 +56,7 @@ class LocalBlocklistPageState extends State<LocalBlocklistPage> {
                       icon: Icon(
                         Icons.add,
                         size: 28,
+                        color: E().otherPageTopBarButtonColor,
                       ),
                       onPressed: () {
                         AdaptiveComponents.showAlertDialog(
@@ -92,6 +94,7 @@ class LocalBlocklistPageState extends State<LocalBlocklistPage> {
                       icon: Icon(
                         Icons.delete_forever,
                         size: 28,
+                        color: E().otherPageTopBarButtonColor,
                       ),
                       onPressed: () {
                         AdaptiveComponents.showAlertDialog(

@@ -93,6 +93,7 @@ class CloudBlocklistPageState extends UserListPageState<UserListModel, CloudBloc
                       icon: Icon(
                         Icons.add,
                         size: 28,
+                        color: E().otherPageTopBarButtonColor,
                       ),
                       onPressed: () {
                         AdaptiveComponents.showAlertDialog(
