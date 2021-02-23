@@ -120,7 +120,6 @@ class SettingsPageState extends State<SettingsPage> {
                     AdaptiveComponents.showAlertDialog(
                       context,
                       title: "clearCache".tr,
-                      hideCancel: true,
                       onDismiss: (value) async {
                         if (value == AlertResult.confirm) {
                           await Helper.deleteAppDir();

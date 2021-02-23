@@ -1,5 +1,6 @@
 import 'package:byr_mobile_app/configurations/configurations.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
+import 'package:byr_mobile_app/pages/board_page.dart';
 import 'package:byr_mobile_app/pages/web_page.dart';
 import 'package:byr_mobile_app/reusable_components/about_page_user_widget.dart';
 import 'package:byr_mobile_app/reusable_components/byr_app_bar.dart';
@@ -123,8 +124,7 @@ class _AboutPageState extends State<AboutPage> {
                   children: <Widget>[
                     GestureDetector(
                       onDoubleTap: () {
-                        navigator.push(CupertinoPageRoute(
-                            builder: (_) => WebPage(WebPageRouteArg("https://bbs.byr.cn/n/board/IWhisper"))));
+                        navigator.push(CupertinoPageRoute(builder: (_) => BoardPage(BoardPageRouteArg("IWhisper"))));
                       },
                       child: Container(
                         width: double.infinity,

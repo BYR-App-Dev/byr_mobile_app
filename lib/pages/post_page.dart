@@ -731,50 +731,6 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
                     ),
                   ),
                 ),
-                // Row(
-                //   mainAxisSize: MainAxisSize.max,
-                //   mainAxisAlignment: MainAxisAlignment.start,
-                //   children: <Widget>[
-                //     Expanded(
-                //       flex: 1,
-                //       child: Container(
-                //           child: Row(
-                //         mainAxisAlignment: MainAxisAlignment.center,
-                //         children: <Widget>[
-                //           IconButton(
-                //             padding: EdgeInsets.all(0),
-                //             icon: Icon(Icons.thumb_up, color: E().threadPageVoteUpDownUnpickedColor),
-                //             iconSize: 24,
-                //             onPressed: () {},
-                //           ),
-                //           Text(
-                //             '0',
-                //             style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
-                //           ),
-                //         ],
-                //       )),
-                //     ),
-                //     Expanded(
-                //       flex: 1,
-                //       child: Container(
-                //           child: Row(
-                //         mainAxisAlignment: MainAxisAlignment.center,
-                //         children: <Widget>[
-                //           IconButton(
-                //             padding: EdgeInsets.all(0),
-                //             icon: Icon(Icons.thumb_down, color: E().threadPageVoteUpDownUnpickedColor),
-                //             iconSize: 24,
-                //             onPressed: () {},
-                //           ),
-                //           Text(
-                //             '0',
-                //             style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
-                //           ),
-                //         ],
-                //       )),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           ),
