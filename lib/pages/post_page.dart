@@ -21,7 +21,9 @@ import 'package:byr_mobile_app/reusable_components/post_article_provider.dart';
 import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
@@ -642,50 +644,137 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          IconButton(
-                            padding: EdgeInsets.all(0),
-                            icon: Icon(Icons.thumb_up, color: E().threadPageVoteUpDownUnpickedColor),
-                            iconSize: 24,
-                            onPressed: () {},
+                Container(
+                  padding: EdgeInsets.only(
+                    right: 18,
+                  ),
+                  child: DefaultTextStyle(
+                    style: TextStyle(fontSize: 14.0, color: E().threadPageOtherTextColor),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        LikeButton(
+                          isLiked: false,
+                          likeBuilder: (bool voteUp) {
+                            return Icon(
+                              FontAwesomeIcons.thumbsUp,
+                              color: voteUp ? E().threadPageVoteUpPickedColor : E().threadPageVoteUpDownUnpickedColor,
+                              size: 18,
+                            );
+                          },
+                          size: 18,
+                          circleColor: CircleColor(
+                            start: E().threadPageVoteUpPickedColor.withOpacity(0.5),
+                            end: E().threadPageVoteUpPickedColor,
                           ),
-                          Text(
-                            '0',
-                            style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
+                          bubblesColor: BubblesColor(
+                            dotPrimaryColor: E().threadPageVoteUpPickedColor,
+                            dotSecondaryColor: E().threadPageVoteUpPickedColor.withOpacity(0.5),
                           ),
-                        ],
-                      )),
+                          likeCountAnimationType: LikeCountAnimationType.none,
+                          likeCount: 0,
+                          likeCountPadding: EdgeInsets.only(left: 5),
+                          countBuilder: (int voteUpCount, bool voteUp, String text) {
+                            return Text(
+                              ' 赞($voteUpCount)',
+                              style: voteUp
+                                  ? TextStyle(fontSize: 14.0, color: E().threadPageOtherTextColor)
+                                      .copyWith(color: E().threadPageVoteUpPickedColor)
+                                  : null,
+                            );
+                          },
+                          onTap: (bool voteUp) async {
+                            return Future.value(false);
+                          },
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 50),
+                          child: LikeButton(
+                            isLiked: false,
+                            likeBuilder: (bool voteDown) {
+                              return Icon(
+                                FontAwesomeIcons.thumbsDown,
+                                color: voteDown
+                                    ? E().threadPageVoteDownPickedColor
+                                    : E().threadPageVoteUpDownUnpickedColor,
+                                size: 18,
+                              );
+                            },
+                            size: 18,
+                            circleColor: CircleColor(
+                              start: E().threadPageVoteDownPickedColor.withOpacity(0.5),
+                              end: E().threadPageVoteDownPickedColor,
+                            ),
+                            bubblesColor: BubblesColor(
+                              dotPrimaryColor: E().threadPageVoteDownPickedColor,
+                              dotSecondaryColor: E().threadPageVoteDownPickedColor.withOpacity(0.5),
+                            ),
+                            likeCountAnimationType: LikeCountAnimationType.none,
+                            likeCount: 0,
+                            likeCountPadding: EdgeInsets.only(left: 5),
+                            countBuilder: (int voteDownCount, bool voteDown, String text) {
+                              return Text(
+                                ' 踩($voteDownCount)',
+                                style: voteDown
+                                    ? TextStyle(fontSize: 14.0, color: E().threadPageOtherTextColor)
+                                        .copyWith(color: E().threadPageVoteDownPickedColor)
+                                    : null,
+                              );
+                            },
+                            onTap: (bool voteDown) async {
+                              return Future.value(false);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          IconButton(
-                            padding: EdgeInsets.all(0),
-                            icon: Icon(Icons.thumb_down, color: E().threadPageVoteUpDownUnpickedColor),
-                            iconSize: 24,
-                            onPressed: () {},
-                          ),
-                          Text(
-                            '0',
-                            style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
-                          ),
-                        ],
-                      )),
-                    ),
-                  ],
+                  ),
                 ),
+                // Row(
+                //   mainAxisSize: MainAxisSize.max,
+                //   mainAxisAlignment: MainAxisAlignment.start,
+                //   children: <Widget>[
+                //     Expanded(
+                //       flex: 1,
+                //       child: Container(
+                //           child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: <Widget>[
+                //           IconButton(
+                //             padding: EdgeInsets.all(0),
+                //             icon: Icon(Icons.thumb_up, color: E().threadPageVoteUpDownUnpickedColor),
+                //             iconSize: 24,
+                //             onPressed: () {},
+                //           ),
+                //           Text(
+                //             '0',
+                //             style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
+                //           ),
+                //         ],
+                //       )),
+                //     ),
+                //     Expanded(
+                //       flex: 1,
+                //       child: Container(
+                //           child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: <Widget>[
+                //           IconButton(
+                //             padding: EdgeInsets.all(0),
+                //             icon: Icon(Icons.thumb_down, color: E().threadPageVoteUpDownUnpickedColor),
+                //             iconSize: 24,
+                //             onPressed: () {},
+                //           ),
+                //           Text(
+                //             '0',
+                //             style: TextStyle(fontSize: 14.0, color: E().threadPageVoteUpDownNumberColor),
+                //           ),
+                //         ],
+                //       )),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),
