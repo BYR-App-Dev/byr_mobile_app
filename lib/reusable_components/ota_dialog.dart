@@ -119,7 +119,7 @@ class _OTADialogState extends State<OTADialog> {
           },
         ),
         FlatButton(
-          child: Text("cancelTrans".tr),
+          child: Text(_started ? "minimizeTrans".tr : "cancelTrans".tr),
           onPressed: () {
             Navigator.of(context).pop();
           },
