@@ -81,11 +81,14 @@ class NForumService {
     }
   }
 
-  static bool logoutUser(String token) {
+  static Future<bool> logoutUser(String token) async {
     Map<String, String> tokenMap = LocalStorage.getTokensWithIds();
     if (tokenMap[token] != null) {
       tokenMap.remove(token);
       LocalStorage.setTokensWithIds(tokenMap);
+    }
+    if (_currentToken == token) {
+      await LocalStorage.setCurrentToken('');
     }
     return true;
   }

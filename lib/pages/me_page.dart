@@ -126,7 +126,7 @@ class UserDetailListState extends State<UserDetailList> {
             child: FlatButton(
               shape: RoundedRectangleBorder(side: BorderSide(color: E().mePageTextColor)),
               onPressed: () async {
-                NForumService.logoutUser(users[index]['token']);
+                await NForumService.logoutUser(users[index]['token']);
                 if (users[index]['token'] != NForumService.currentToken) {
                   Tuple2 tp = await refresh(2);
                   user = tp.item1;
