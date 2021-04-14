@@ -427,6 +427,17 @@ class NForumParsedText extends StatelessWidget {
     ];
   }
 
+  static String removeQuote(String str) {
+    var quote = quotePattern.firstMatch(str);
+    var s1 = str.substring(0, quote.start).trim();
+    var s2 = str.substring(quote.end).trim();
+    if (quote != null) {
+      return s1 + (s2.length > 0 ? "\n" : "") + s2;
+    } else {
+      return str;
+    }
+  }
+
   static List<InlineSpan> _bbText(
       NForumTextParsingConfig parsingConfig, String str, TextStyle defT, GestureRecognizer rec) {
     var t = defT;

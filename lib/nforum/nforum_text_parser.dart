@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
+import 'package:byr_mobile_app/reusable_components/nforum_parsed_text.dart';
 import 'package:characters/characters.dart';
 import 'package:fast_gbk/fast_gbk.dart';
 import 'package:flutter/material.dart';
@@ -153,8 +154,9 @@ class NForumTextParser {
   }
 
   static String removeBBSQuote(String s) {
-    int index = s.indexOf(RegExp(r'【\s?在.*的大作中提到:\s?】'));
-    return index == -1 ? s : s.substring(0, index);
+    // int index = s.indexOf(RegExp(r'【\s?在.*的大作中提到:\s?】'));
+    // return index == -1 ? s : s.substring(0, index);
+    return NForumParsedText.removeQuote(s);
   }
 
   static String getEnumValue(dynamic t) {
