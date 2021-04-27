@@ -216,7 +216,7 @@ class NForumParsedText extends StatelessWidget {
         rst = TextStyle(
           color: st.color,
           fontStyle: st.fontStyle,
-          fontSize: (double.tryParse(arg) ?? ((st.fontSize - 16) / 1 + 1) - 1) * 1 + 16,
+          fontSize: math.sqrt((double.tryParse(arg) ?? 3) / 3) * 16,
           fontWeight: st.fontWeight,
           decoration: st.decoration,
         );
