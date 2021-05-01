@@ -48,8 +48,7 @@ class NForumSpecs {
   static String byrFaceF = NForumSpecs.bbsURL + "img/face_default_f.jpg";
   static const attachmentSize = 5242880;
 
-  static String get androidUpdateLink =>
-      LocalStorage.getIsDevChannelEnabled() == true ? Secrets.androidDevUpdateLink : Secrets.androidStableUpdateLink;
+  static String get androidUpdateLink => Secrets.androidStableUpdateLink;
   static String get androidVersionsLink => Secrets.androidVersionsLink;
 
   static String get microPluginListLink => Secrets.microPluginListLink;
