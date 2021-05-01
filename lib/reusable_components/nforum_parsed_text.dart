@@ -32,12 +32,14 @@ class NForumTextParsingConfig {
   final WidgetSpanChildHandler themeAttachmentWidget;
   final WidgetSpanChildHandler refresherAttachmentWidget;
   final WidgetSpanChildHandler otherAttachmentWidget;
+  final Function tap;
 
   NForumTextParsingConfig(
     this.text,
     this.uploads, {
     this.uploadedExtractor,
     this.title,
+    this.tap,
     this.isMDBackgroundDark,
     this.byrLinkHandler,
     this.webLinkHandler,
@@ -57,6 +59,7 @@ class NForumTextParsingConfig {
     this.text,
     this.uploads, {
     this.title,
+    this.tap,
     this.isMDBackgroundDark,
     this.byrLinkHandler,
     this.webLinkHandler,
@@ -76,6 +79,7 @@ class NForumTextParsingConfig {
     this.text,
     this.uploads, {
     this.title,
+    this.tap,
     this.isMDBackgroundDark,
     this.byrLinkHandler,
     this.webLinkHandler,
@@ -674,6 +678,7 @@ class NForumParsedText extends StatelessWidget {
             children: _bbText(parsingConfig, str.substring(0, m.start), bbPlain(parsingConfig), null),
           ),
           selectionEnabled: true,
+          onTap: parsingConfig.tap,
           strutStyle: StrutStyle(height: 2),
         ),
       ];
@@ -695,6 +700,7 @@ class NForumParsedText extends StatelessWidget {
           TextSpan(
             children: _bbText(parsingConfig, str, bbPlain(parsingConfig), null),
           ),
+          onTap: parsingConfig.tap,
           selectionEnabled: true,
           strutStyle: StrutStyle(height: 2),
         ),
@@ -720,6 +726,7 @@ class NForumParsedText extends StatelessWidget {
           TextSpan(
             children: _bbText(parsingConfig, "\n" + uploadsRest, bbPlain(parsingConfig), null),
           ),
+          onTap: parsingConfig.tap,
           selectionEnabled: true,
           strutStyle: StrutStyle(height: 2),
         ),

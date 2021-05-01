@@ -18,6 +18,7 @@ class ParsedText extends StatelessWidget {
   final String title;
   final bool isPreview;
   final UploadedExtractor uploadedExtractor;
+  final Function tap;
 
   const ParsedText({
     Key key,
@@ -26,6 +27,7 @@ class ParsedText extends StatelessWidget {
     this.title,
     this.isPreview,
     this.uploadedExtractor,
+    this.tap,
   }) : super(key: key);
 
   ParsedText.uploaded({
@@ -34,6 +36,7 @@ class ParsedText extends StatelessWidget {
     this.uploads,
     this.title,
     this.isPreview = false,
+    this.tap,
   })  : uploadedExtractor = UploadedModelUploadedExtractor(),
         super(key: key);
 
@@ -43,6 +46,7 @@ class ParsedText extends StatelessWidget {
     this.uploads,
     this.title,
     this.isPreview = true,
+    this.tap,
   })  : uploadedExtractor = PreviewUploadedExtractor(),
         super(key: key);
 
@@ -376,6 +380,7 @@ class ParsedText extends StatelessWidget {
         text.replaceAll("\r--\n", ""),
         uploads,
         title: title,
+        tap: tap,
         isMDBackgroundDark: E().isThemeDarkStyle,
         byrLinkHandler: NForumLinkHandler.byrLinkHandler,
         webLinkHandler: NForumLinkHandler.webLinkHandler,

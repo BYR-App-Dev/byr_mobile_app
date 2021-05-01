@@ -738,6 +738,7 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                   text: l.getContent(d),
                   uploads: l.getAttachmentFiles(d),
                   title: l.getTitle(d),
+                  tap: this.widget.onTap,
                 ),
                 Container(
                   child: buildBottomRow(l, d),
@@ -854,21 +855,21 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                 },
               ),
             ),
-          Container(
-            margin: EdgeInsets.only(left: 30),
-            width: 18,
-            height: 18,
-            child: IconButton(
-              icon: Icon(
-                Icons.reply,
-                size: 20,
-                color: E().threadPageButtonUnselectedColor,
-              ),
-              iconSize: 20,
-              padding: EdgeInsets.all(0),
-              onPressed: this.widget.onTap,
-            ),
-          ),
+          // Container(
+          //   margin: EdgeInsets.only(left: 30),
+          //   width: 18,
+          //   height: 18,
+          //   child: IconButton(
+          //     icon: Icon(
+          //       Icons.reply,
+          //       size: 20,
+          //       color: E().threadPageButtonUnselectedColor,
+          //     ),
+          //     iconSize: 20,
+          //     padding: EdgeInsets.all(0),
+          //     onPressed: this.widget.onTap,
+          //   ),
+          // ),
           Container(
             margin: EdgeInsets.only(left: 25),
             width: 18,
@@ -908,9 +909,9 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                 left: 18,
                 right: 18,
               ),
-              // onTap: () {
-              //   this.widget.onTap();
-              // },
+              onTap: () {
+                this.widget.onTap();
+              },
               // onLongPress: () {
               //   this.widget.onLongPress();
               // },
