@@ -5,6 +5,7 @@ import 'package:byr_mobile_app/nforum/nforum_text_parser.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:extended_text/extended_text.dart';
 
 typedef bool BYRLinkHandler(String link);
 typedef bool WebLinkHandler(String link);
@@ -282,33 +283,38 @@ class NForumParsedText extends StatelessWidget {
     return rst;
   }
 
-  static InlineSpan _getImageAttachmentSpan(NForumTextParsingConfig parsingConfig, int upId) {
-    return WidgetSpan(
+  static InlineSpan _getImageAttachmentSpan(NForumTextParsingConfig parsingConfig, int upId, String actualText) {
+    return ExtendedWidgetSpan(
       child: parsingConfig.imageAttachmentWidget(upId),
+      actualText: actualText,
     );
   }
 
-  static InlineSpan _getAudioAttachmentSpan(NForumTextParsingConfig parsingConfig, int upId) {
-    return WidgetSpan(
+  static InlineSpan _getAudioAttachmentSpan(NForumTextParsingConfig parsingConfig, int upId, String actualText) {
+    return ExtendedWidgetSpan(
       child: parsingConfig.audioAttachmentWidget(upId),
+      actualText: actualText,
     );
   }
 
-  static InlineSpan _getThemeAttachmentSpan(NForumTextParsingConfig parsingConfig, int upId) {
-    return WidgetSpan(
+  static InlineSpan _getThemeAttachmentSpan(NForumTextParsingConfig parsingConfig, int upId, String actualText) {
+    return ExtendedWidgetSpan(
       child: parsingConfig.themeAttachmentWidget(upId),
+      actualText: actualText,
     );
   }
 
-  static InlineSpan _getRefresherAttachmentSpan(NForumTextParsingConfig parsingConfig, int upId) {
-    return WidgetSpan(
+  static InlineSpan _getRefresherAttachmentSpan(NForumTextParsingConfig parsingConfig, int upId, String actualText) {
+    return ExtendedWidgetSpan(
       child: parsingConfig.refresherAttachmentWidget(upId),
+      actualText: actualText,
     );
   }
 
-  static InlineSpan _getOtherAttachmentSpan(NForumTextParsingConfig parsingConfig, int upId) {
-    return WidgetSpan(
+  static InlineSpan _getOtherAttachmentSpan(NForumTextParsingConfig parsingConfig, int upId, String actualText) {
+    return ExtendedWidgetSpan(
       child: parsingConfig.otherAttachmentWidget(upId),
+      actualText: actualText,
     );
   }
 
@@ -325,15 +331,15 @@ class NForumParsedText extends StatelessWidget {
         recognizer: rec,
       ),
       if (isImg)
-        _getImageAttachmentSpan(parsingConfig, upId)
+        _getImageAttachmentSpan(parsingConfig, upId, str.substring(m.start, m.end))
       else if (isAudio)
-        _getAudioAttachmentSpan(parsingConfig, upId)
+        _getAudioAttachmentSpan(parsingConfig, upId, str.substring(m.start, m.end))
       else if (isTheme)
-        _getThemeAttachmentSpan(parsingConfig, upId)
+        _getThemeAttachmentSpan(parsingConfig, upId, str.substring(m.start, m.end))
       else if (isRefresher)
-        _getRefresherAttachmentSpan(parsingConfig, upId)
+        _getRefresherAttachmentSpan(parsingConfig, upId, str.substring(m.start, m.end))
       else
-        _getOtherAttachmentSpan(parsingConfig, upId),
+        _getOtherAttachmentSpan(parsingConfig, upId, str.substring(m.start, m.end)),
       TextSpan(
         children: _bbText(parsingConfig, str.substring(m.end), defT, rec),
         recognizer: rec,
@@ -348,7 +354,7 @@ class NForumParsedText extends StatelessWidget {
         children: _bbText(parsingConfig, str.substring(0, quote.start).trim() + "\n", defT, rec),
         recognizer: rec,
       ),
-      WidgetSpan(
+      ExtendedWidgetSpan(
         child: Container(
           margin: EdgeInsets.only(top: 8.0),
           padding: EdgeInsets.all(8.0),
@@ -393,6 +399,7 @@ class NForumParsedText extends StatelessWidget {
             ],
           ),
         ),
+        actualText: str.substring(quote.start, quote.end),
       ),
       TextSpan(
         children: _bbText(parsingConfig, str.substring(quote.end), defT, rec),
@@ -414,12 +421,14 @@ class NForumParsedText extends StatelessWidget {
             rec,
           ),
           recognizer: rec),
-      WidgetSpan(
-          child: Image.asset(
-        'resources/em/' + mm.group(1) + '.gif',
-        width: sz,
-        height: sz,
-      )),
+      ExtendedWidgetSpan(
+        child: Image.asset(
+          'resources/em/' + mm.group(1) + '.gif',
+          width: sz,
+          height: sz,
+        ),
+        actualText: str.substring(mm.start, mm.end),
+      ),
       TextSpan(
         children: _bbText(parsingConfig, str.substring(mm.end), defT, rec),
         recognizer: rec,
@@ -484,8 +493,9 @@ class NForumParsedText extends StatelessWidget {
               children: _bbText(parsingConfig, str.substring(0, m.start) + "\n", defT, rec),
               recognizer: rec,
             ),
-            WidgetSpan(
+            ExtendedWidgetSpan(
               child: parsingConfig.externalImageWidget(upAddr),
+              actualText: str.substring(m.start, m.end),
             ),
             TextSpan(
               children: _bbText(parsingConfig, str.substring(m.end), defT, rec),
@@ -499,8 +509,9 @@ class NForumParsedText extends StatelessWidget {
               children: _bbText(parsingConfig, str.substring(0, m.start) + "\n", defT, rec),
               recognizer: rec,
             ),
-            WidgetSpan(
+            ExtendedWidgetSpan(
               child: parsingConfig.externalAudioWidget(upAddr.split(" ")[0].replaceFirst("http://", "https://")),
+              actualText: str.substring(m.start, m.end),
             ),
             TextSpan(
               children: _bbText(parsingConfig, str.substring(m.end), defT, rec),
@@ -514,8 +525,9 @@ class NForumParsedText extends StatelessWidget {
               children: _bbText(parsingConfig, str.substring(0, m.start) + "\n", defT, rec),
               recognizer: rec,
             ),
-            WidgetSpan(
+            ExtendedWidgetSpan(
               child: parsingConfig.externalVideoWidget(upAddr),
+              actualText: str.substring(m.start, m.end),
             ),
             TextSpan(
               children: _bbText(parsingConfig, str.substring(m.end), defT, rec),
@@ -657,10 +669,11 @@ class NForumParsedText extends StatelessWidget {
     var m = RegExp(r'\[md\]((?:.|[\n\r])+?)\[\/md\]').firstMatch(str);
     if (m != null) {
       List<Widget> richTextWidgets = [
-        Text.rich(
+        ExtendedText.rich(
           TextSpan(
             children: _bbText(parsingConfig, str.substring(0, m.start), bbPlain(parsingConfig), null),
           ),
+          selectionEnabled: true,
           strutStyle: StrutStyle(height: 2),
         ),
       ];
@@ -678,10 +691,11 @@ class NForumParsedText extends StatelessWidget {
       return richTextWidgets;
     } else {
       return [
-        Text.rich(
+        ExtendedText.rich(
           TextSpan(
             children: _bbText(parsingConfig, str, bbPlain(parsingConfig), null),
           ),
+          selectionEnabled: true,
           strutStyle: StrutStyle(height: 2),
         ),
       ];
@@ -702,10 +716,11 @@ class NForumParsedText extends StatelessWidget {
     }
     if (uploadsRest != '') {
       richTextWidgets.addAll([
-        Text.rich(
+        ExtendedText.rich(
           TextSpan(
             children: _bbText(parsingConfig, "\n" + uploadsRest, bbPlain(parsingConfig), null),
           ),
+          selectionEnabled: true,
           strutStyle: StrutStyle(height: 2),
         ),
       ]);

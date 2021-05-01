@@ -756,55 +756,58 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          LikeButton(
-            key: _voteUpKey,
-            isLiked: l.getIsLiked(d),
-            likeBuilder: (bool voteUp) {
-              return Icon(
-                FontAwesomeIcons.thumbsUp,
-                color: voteUp ? E().threadPageVoteUpPickedColor : E().threadPageVoteUpDownUnpickedColor,
-                size: 18,
-              );
-            },
-            size: 18,
-            circleColor: CircleColor(
-              start: E().threadPageVoteUpPickedColor.withOpacity(0.5),
-              end: E().threadPageVoteUpPickedColor,
-            ),
-            bubblesColor: BubblesColor(
-              dotPrimaryColor: E().threadPageVoteUpPickedColor,
-              dotSecondaryColor: E().threadPageVoteUpPickedColor.withOpacity(0.5),
-            ),
-            likeCountAnimationType: LikeCountAnimationType.none,
-            likeCount: l.getLikes(d),
-            likeCountPadding: EdgeInsets.only(left: 5),
-            countBuilder: (int voteUpCount, bool voteUp, String text) {
-              return Text(
-                ' 赞($voteUpCount)',
-                style: voteUp ? textStyle.copyWith(color: E().threadPageVoteUpPickedColor) : null,
-              );
-            },
-            onTap: (bool voteUp) async {
-              HapticFeedback.lightImpact();
-              if (l.getIsLiked(d)) {
-                AdaptiveComponents.showToast(context, '赞后不能取消');
-              } else {
-                if (l.getIsVotedown(d)) {
-                  // 取消踩的状态
-                  _voteDownKey?.currentState?.handleIsLikeChanged(false);
+          Container(
+            // margin: EdgeInsets.only(left: 30),
+            child: LikeButton(
+              key: _voteUpKey,
+              isLiked: l.getIsLiked(d),
+              likeBuilder: (bool voteUp) {
+                return Icon(
+                  FontAwesomeIcons.thumbsUp,
+                  color: voteUp ? E().threadPageVoteUpPickedColor : E().threadPageVoteUpDownUnpickedColor,
+                  size: 18,
+                );
+              },
+              size: 18,
+              circleColor: CircleColor(
+                start: E().threadPageVoteUpPickedColor.withOpacity(0.5),
+                end: E().threadPageVoteUpPickedColor,
+              ),
+              bubblesColor: BubblesColor(
+                dotPrimaryColor: E().threadPageVoteUpPickedColor,
+                dotSecondaryColor: E().threadPageVoteUpPickedColor.withOpacity(0.5),
+              ),
+              likeCountAnimationType: LikeCountAnimationType.none,
+              likeCount: l.getLikes(d),
+              likeCountPadding: EdgeInsets.only(left: 5),
+              countBuilder: (int voteUpCount, bool voteUp, String text) {
+                return Text(
+                  ' 赞($voteUpCount)',
+                  style: voteUp ? textStyle.copyWith(color: E().threadPageVoteUpPickedColor) : null,
+                );
+              },
+              onTap: (bool voteUp) async {
+                HapticFeedback.lightImpact();
+                if (l.getIsLiked(d)) {
+                  AdaptiveComponents.showToast(context, '赞后不能取消');
+                } else {
+                  if (l.getIsVotedown(d)) {
+                    // 取消踩的状态
+                    _voteDownKey?.currentState?.handleIsLikeChanged(false);
+                  }
+                  l.setIsLiked(d, true);
+                  l.setIsVotedown(d, false);
+                  l.setLikes(d, l.getLikes(d) + 1);
+                  _voteUp(l, d);
                 }
-                l.setIsLiked(d, true);
-                l.setIsVotedown(d, false);
-                l.setLikes(d, l.getLikes(d) + 1);
-                _voteUp(l, d);
-              }
-              return Future.value(true);
-            },
+                return Future.value(true);
+              },
+            ),
           ),
           // 热门回复不显示踩
           if (!l.isLikeModel(d))
             Container(
-              margin: EdgeInsets.only(left: 50),
+              margin: EdgeInsets.only(left: 30),
               child: LikeButton(
                 key: _voteDownKey,
                 isLiked: l.getIsVotedown(d),
@@ -851,6 +854,36 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                 },
               ),
             ),
+          Container(
+            margin: EdgeInsets.only(left: 30),
+            width: 18,
+            height: 18,
+            child: IconButton(
+              icon: Icon(
+                Icons.reply,
+                size: 20,
+                color: E().threadPageButtonUnselectedColor,
+              ),
+              iconSize: 20,
+              padding: EdgeInsets.all(0),
+              onPressed: this.widget.onTap,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 25),
+            width: 18,
+            height: 18,
+            child: IconButton(
+              icon: Icon(
+                Icons.more_horiz,
+                size: 20,
+                color: E().threadPageButtonUnselectedColor,
+              ),
+              iconSize: 20,
+              padding: EdgeInsets.all(0),
+              onPressed: this.widget.onLongPress,
+            ),
+          ),
         ],
       ),
     );
@@ -865,19 +898,22 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
         : InkWell(
             highlightColor: l.getHighlightColor(d),
             splashColor: l.getSplashColor(d),
-            onTap: () {},
-            onLongPress: () {
-              this.widget.onLongPress();
-            },
+            // onTap: () {},
+            // onLongPress: () {
+            //   this.widget.onLongPress();
+            // },
             child: ListTile(
               contentPadding: EdgeInsets.only(
                 top: 0,
                 left: 18,
                 right: 18,
               ),
-              onTap: () {
-                this.widget.onTap();
-              },
+              // onTap: () {
+              //   this.widget.onTap();
+              // },
+              // onLongPress: () {
+              //   this.widget.onLongPress();
+              // },
               title: buildTitle(l, d),
               subtitle: buildSubtitle(l, d),
             ),

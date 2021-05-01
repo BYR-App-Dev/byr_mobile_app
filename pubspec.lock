@@ -220,20 +220,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.0"
+  extended_text:
+    dependency: "direct main"
+    description:
+      name: extended_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.0"
   extended_text_field:
     dependency: "direct main"
     description:
       name: extended_text_field
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0"
+    version: "5.0.4"
   extended_text_library:
     dependency: transitive
     description:
       name: extended_text_library
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.3"
   fake_async:
     dependency: transitive
     description:
