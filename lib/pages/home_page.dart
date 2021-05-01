@@ -111,6 +111,7 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
         String _ignoreVersion = LocalStorage.getIgnoreVersion();
         if (jsonMap != null &&
             jsonMap["latest_version"] != null &&
+            jsonMap["latest_version"] != '22April2021' &&
             jsonMap["latest_version"] != AppConfigs.version &&
             jsonMap["latest_version"] != _ignoreVersion) {
           LocalStorage.setIgnoreVersion(null);

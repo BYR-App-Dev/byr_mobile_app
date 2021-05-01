@@ -138,7 +138,8 @@ class NForumService {
 
   static Future<Map<dynamic, dynamic>> getAndroidLatest() {
     return Request.httpGet(NForumSpecs.androidUpdateLink, {}).then((response) {
-      Map resultMap = jsonDecode(response.body);
+      Utf8Decoder utf8decoder = Utf8Decoder();
+      Map resultMap = json.decode(utf8decoder.convert(response.bodyBytes));
       return resultMap;
     });
   }
