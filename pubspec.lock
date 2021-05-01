@@ -763,8 +763,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: f42f5fd23648fd5b802a286fd6334b5e4dcc2498
-      resolved-ref: f42f5fd23648fd5b802a286fd6334b5e4dcc2498
+      ref: c142cc33816705c01d7d0b71b22799aba4a109af
+      resolved-ref: c142cc33816705c01d7d0b71b22799aba4a109af
       url: "ssh://git@github.com/BYR-App-Dev/secrets.git"
     source: git
     version: "1.0.0+1"
