@@ -738,7 +738,9 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                   text: l.getContent(d),
                   uploads: l.getAttachmentFiles(d),
                   title: l.getTitle(d),
-                  tap: this.widget.onTap,
+                  tap: () {
+                    this.widget.onTap();
+                  },
                 ),
                 Container(
                   child: buildBottomRow(l, d),
@@ -882,7 +884,9 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
               ),
               iconSize: 20,
               padding: EdgeInsets.all(0),
-              onPressed: this.widget.onLongPress,
+              onPressed: () {
+                this.widget.onLongPress();
+              },
             ),
           ),
         ],
