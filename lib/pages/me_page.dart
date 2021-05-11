@@ -146,7 +146,8 @@ class UserDetailListState extends State<UserDetailList> {
                     setState(() {});
                   }
                 } else {
-                  Navigator.of(context).pushReplacementNamed('login_page', arguments: LoginPageRouteArg());
+                  Navigator.of(context).pushNamedAndRemoveUntil('login_page', (Route<dynamic> route) => false,
+                      arguments: LoginPageRouteArg());
                 }
               },
               child: Text(

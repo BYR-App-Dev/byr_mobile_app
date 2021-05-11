@@ -229,6 +229,19 @@ class SettingsPageState extends State<SettingsPage> {
                   },
                 ),
                 Divider(height: 1),
+                SettingItemCell(
+                  // height: 50,
+                  // leading: Icon(FontAwesomeIcons.exclamationCircle, color: E().settingItemCellMainColor),
+                  title: "登出全部账号",
+                  onTap: () async {
+                    Map<String, String> tokenMap = {};
+                    await LocalStorage.setTokensWithIds(tokenMap);
+                    await LocalStorage.setCurrentToken('');
+                    Navigator.of(context).pushNamedAndRemoveUntil('login_page', (Route<dynamic> route) => false,
+                        arguments: LoginPageRouteArg());
+                  },
+                ),
+                Divider(height: 1),
               ],
             ),
           ),
