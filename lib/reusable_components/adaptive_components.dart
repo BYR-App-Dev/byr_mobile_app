@@ -200,9 +200,9 @@ class AdaptiveComponents {
       color: backgroundColor ?? E().mePageBackgroundColor,
     );
     if (Platform.isAndroid) {
-      showMaterialModalBottomSheet(context: context, builder: (context, scrollController) => child);
+      showMaterialModalBottomSheet(context: context, builder: (context) => child);
     } else {
-      showCupertinoModalBottomSheet(context: context, builder: (context, scrollController) => child);
+      showCupertinoModalBottomSheet(context: context, builder: (context) => child);
     }
   }
 

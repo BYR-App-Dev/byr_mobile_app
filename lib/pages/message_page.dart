@@ -29,7 +29,7 @@ class MessageController extends GetxController {
   }
 
   @override
-  Future<void> onClose() {
+  void onClose() {
     _timer.cancel();
     return super.onClose();
   }

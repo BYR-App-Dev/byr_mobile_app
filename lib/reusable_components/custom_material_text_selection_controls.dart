@@ -177,7 +177,8 @@ class _TextSelectionToolbarState extends State<_TextSelectionToolbar> with Ticke
     final List<_ItemData> itemDatas = <_ItemData>[
       if (widget.handleCut != null) _ItemData(widget.handleCut, localizations.cutButtonLabel),
       if (widget.handleCopy != null) _ItemData(widget.handleCopy, localizations.copyButtonLabel),
-      if (widget.handlePaste != null && _clipboardStatus.value == ClipboardStatus.pasteable) _ItemData(widget.handlePaste, localizations.pasteButtonLabel),
+      if (widget.handlePaste != null && _clipboardStatus.value == ClipboardStatus.pasteable)
+        _ItemData(widget.handlePaste, localizations.pasteButtonLabel),
       if (widget.handleSelectAll != null) _ItemData(widget.handleSelectAll, localizations.selectAllButtonLabel),
       if (widget.handleCancelTarget != null) _ItemData(widget.handleCancelTarget, "dismissReplyPointerTrans".tr),
     ];
@@ -394,7 +395,8 @@ class _TextSelectionToolbarItemsElement extends MultiChildRenderObjectElement {
   }
 }
 
-class _TextSelectionToolbarItemsRenderBox extends RenderBox with ContainerRenderObjectMixin<RenderBox, ToolbarItemsParentData> {
+class _TextSelectionToolbarItemsRenderBox extends RenderBox
+    with ContainerRenderObjectMixin<RenderBox, ToolbarItemsParentData> {
   _TextSelectionToolbarItemsRenderBox({
     @required bool isAbove,
     @required bool overflowOpen,
@@ -463,7 +465,9 @@ class _TextSelectionToolbarItemsRenderBox extends RenderBox with ContainerRender
     // If the last child overflows, but only because of the width of the
     // overflow button, then just show it and hide the overflow button.
     final RenderBox navButton = firstChild;
-    if (_lastIndexThatFits != -1 && _lastIndexThatFits == childCount - 2 && width - navButton.size.width <= sizedConstraints.maxWidth) {
+    if (_lastIndexThatFits != -1 &&
+        _lastIndexThatFits == childCount - 2 &&
+        width - navButton.size.width <= sizedConstraints.maxWidth) {
       _lastIndexThatFits = -1;
     }
   }
@@ -735,6 +739,7 @@ class CustomMaterialTextSelectionControls extends TextSelectionControls {
     List<TextSelectionPoint> endpoints,
     TextSelectionDelegate delegate,
     ClipboardStatusNotifier clipboardStatus,
+    Offset lastSecondaryTapDownPosition,
   ) {
     assert(debugCheckHasMediaQuery(context));
     assert(debugCheckHasMaterialLocalizations(context));
@@ -745,7 +750,8 @@ class CustomMaterialTextSelectionControls extends TextSelectionControls {
     final TextSelectionPoint endTextSelectionPoint = endpoints.length > 1 ? endpoints[1] : endpoints[0];
     const double closedToolbarHeightNeeded = _kToolbarScreenPadding + _kToolbarHeight + _kToolbarContentDistance;
     final double paddingTop = MediaQuery.of(context).padding.top;
-    final double availableHeight = globalEditableRegion.top + startTextSelectionPoint.point.dy - textLineHeight - paddingTop;
+    final double availableHeight =
+        globalEditableRegion.top + startTextSelectionPoint.point.dy - textLineHeight - paddingTop;
     final bool fitsAbove = closedToolbarHeightNeeded <= availableHeight;
     final Offset anchor = Offset(
       globalEditableRegion.left + selectionMidpoint.dx,
@@ -835,6 +841,8 @@ class CustomMaterialTextSelectionControls extends TextSelectionControls {
     // Android allows SelectAll when selection is not collapsed, unless
     // everything has already been selected.
     final TextEditingValue value = delegate.textEditingValue;
-    return delegate.selectAllEnabled && value.text.isNotEmpty && !(value.selection.start == 0 && value.selection.end == value.text.length);
+    return delegate.selectAllEnabled &&
+        value.text.isNotEmpty &&
+        !(value.selection.start == 0 && value.selection.end == value.text.length);
   }
 }

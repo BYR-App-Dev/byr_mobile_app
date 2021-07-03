@@ -822,8 +822,8 @@ class _ImageState extends State<CappedRatioImage> with WidgetsBindingObserver {
   }
 
   void _updateInvertColors() {
-    _invertColors = MediaQuery.of(context, nullOk: true)?.invertColors ??
-        SemanticsBinding.instance.accessibilityFeatures.invertColors;
+    _invertColors =
+        MediaQuery.maybeOf(context)?.invertColors ?? SemanticsBinding.instance.accessibilityFeatures.invertColors;
   }
 
   void _resolveImage() {

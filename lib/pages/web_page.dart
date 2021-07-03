@@ -31,7 +31,7 @@ class WebPageState extends State<WebPage> {
   void finishedLoading(String url) async {
     if (this.controller != null) {
       if (url.startsWith("https://bbs.byr.cn/n/login")) {
-        Tuple2 userIdAndPassword = await showDialog(context: context, child: LoginDialog());
+        Tuple2 userIdAndPassword = await showDialog(context: context, builder: (context) => LoginDialog());
         if (userIdAndPassword != null) {
           String userid = userIdAndPassword.item1;
           String password = userIdAndPassword.item2;

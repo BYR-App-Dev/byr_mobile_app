@@ -1028,7 +1028,7 @@ class TextFormFieldWrapperState extends State<TextFormFieldWrapper> {
       ),
       child: ExtendedTextField(
         // expands: true,
-        textSelectionControls: Platform.isAndroid
+        selectionControls: Platform.isAndroid
             ? CustomMaterialTextSelectionControls(
                 canCancelTarget: widget.canCancelReplyTarget,
                 cancelTarget: widget.cancelReplyTarget,

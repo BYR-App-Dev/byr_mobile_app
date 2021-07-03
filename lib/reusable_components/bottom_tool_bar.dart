@@ -335,7 +335,8 @@ class BottomToolBar extends StatelessWidget {
                   onItemTap: (int index) async {
                     provider.hideKeyBoard();
                     if (index == 0) {
-                      var path = await showDialog(barrierDismissible: false, context: context, child: RecorderDialog());
+                      var path = await showDialog(
+                          barrierDismissible: false, context: context, builder: (context) => RecorderDialog());
                       if (path == null) {
                         return;
                       }
@@ -374,7 +375,8 @@ class BottomToolBar extends StatelessWidget {
                       );
                     }
                     if (index == 2) {
-                      String qqkgUrl = await showDialog(context: context, child: QQKGURLRetrieveDialog());
+                      String qqkgUrl =
+                          await showDialog(context: context, builder: (context) => QQKGURLRetrieveDialog());
                       if (qqkgUrl == null) {
                         return;
                       }

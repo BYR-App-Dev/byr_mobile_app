@@ -114,7 +114,7 @@ class FullscreenBackPageRoute<T> extends PageRoute<T> {
   })  : assert(builder != null),
         assert(maintainState != null),
         assert(fullscreenDialog != null),
-        assert(opaque),
+        // assert(opaque),
         super(settings: settings, fullscreenDialog: fullscreenDialog);
 
   /// Builds the primary contents of the route.
@@ -320,7 +320,8 @@ class FullscreenBackPageRoute<T> extends PageRoute<T> {
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
     return buildPageTransitions<T>(this, context, animation, secondaryAnimation, child);
   }
 
@@ -574,8 +575,11 @@ class _CupertinoBackGestureDetectorState<T> extends State<_CupertinoBackGestureD
     assert(debugCheckHasDirectionality(context));
     // For devices with notches, the drag area needs to be larger on the side
     // that has the notch.
-    double dragAreaWidth = Directionality.of(context) == TextDirection.ltr ? MediaQuery.of(context).padding.left : MediaQuery.of(context).padding.right;
-    dragAreaWidth = max(dragAreaWidth, LocalStorage.getIsFullscreenBackEnabled() ? MediaQuery.of(context).size.width : _kBackGestureWidth);
+    double dragAreaWidth = Directionality.of(context) == TextDirection.ltr
+        ? MediaQuery.of(context).padding.left
+        : MediaQuery.of(context).padding.right;
+    dragAreaWidth = max(dragAreaWidth,
+        LocalStorage.getIsFullscreenBackEnabled() ? MediaQuery.of(context).size.width : _kBackGestureWidth);
     return Stack(
       fit: StackFit.passthrough,
       children: <Widget>[
@@ -656,7 +660,8 @@ class _CupertinoBackGestureController<T> {
         lerpDouble(_kMaxDroppedSwipePageForwardAnimationTime, 0, controller.value).floor(),
         _kMaxPageBackAnimationTime,
       );
-      controller.animateTo(1.0, duration: Duration(milliseconds: droppedPageForwardAnimationTime), curve: animationCurve);
+      controller.animateTo(1.0,
+          duration: Duration(milliseconds: droppedPageForwardAnimationTime), curve: animationCurve);
     } else {
       // This route is destined to pop at this point. Reuse navigator's pop.
       navigator.pop();
@@ -664,8 +669,10 @@ class _CupertinoBackGestureController<T> {
       // The popping may have finished inline if already at the target destination.
       if (controller.isAnimating) {
         // Otherwise, use a custom popping animation duration and curve.
-        final int droppedPageBackAnimationTime = lerpDouble(0, _kMaxDroppedSwipePageForwardAnimationTime, controller.value).floor();
-        controller.animateBack(0.0, duration: Duration(milliseconds: droppedPageBackAnimationTime), curve: animationCurve);
+        final int droppedPageBackAnimationTime =
+            lerpDouble(0, _kMaxDroppedSwipePageForwardAnimationTime, controller.value).floor();
+        controller.animateBack(0.0,
+            duration: Duration(milliseconds: droppedPageBackAnimationTime), curve: animationCurve);
       }
     }
 
@@ -866,7 +873,8 @@ class _CupertinoModalPopupRoute<T> extends PopupRoute<T> {
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: FractionalTranslation(
@@ -930,9 +938,11 @@ Future<T> showCupertinoModalPopup<T>({
 // The curve and initial scale values were mostly eyeballed from iOS, however
 // they reuse the same animation curve that was modeled after native page
 // transitions.
-final Animatable<double> _dialogScaleTween = Tween<double>(begin: 1.3, end: 1.0).chain(CurveTween(curve: Curves.linearToEaseOut));
+final Animatable<double> _dialogScaleTween =
+    Tween<double>(begin: 1.3, end: 1.0).chain(CurveTween(curve: Curves.linearToEaseOut));
 
-Widget _buildCupertinoDialogTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+Widget _buildCupertinoDialogTransitions(
+    BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
   final CurvedAnimation fadeAnimation = CurvedAnimation(
     parent: animation,
     curve: Curves.easeInOut,

@@ -93,7 +93,7 @@ class _VideoPageState extends State<VideoPage> {
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            _controller.value.initialized
+            _controller.value.isInitialized
                 ? AspectRatio(
                     aspectRatio: _controller.value.aspectRatio,
                     child: VideoPlayer(_controller),
