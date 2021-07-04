@@ -330,6 +330,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  flutter_liquidcore:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: efaf5ac636b9c6da24bd5d712108b7716a6a8828
+      resolved-ref: efaf5ac636b9c6da24bd5d712108b7716a6a8828
+      url: "https://github.com/BYR-App-Dev/flutter_liquidcore.git"
+    source: git
+    version: "1.1.1"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -498,9 +507,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: b1237b6dfee6fef6ddb980dd1c4668a39edfbbca
-      url: "git://github.com/malikwang/like_button"
+      ref: "8cb0ffb20205c0d183e379a30ef2ae261d667704"
+      resolved-ref: "8cb0ffb20205c0d183e379a30ef2ae261d667704"
+      url: "git://github.com/BYR-App-Dev/like_button"
     source: git
     version: "1.0.1"
   loaded_list_view:

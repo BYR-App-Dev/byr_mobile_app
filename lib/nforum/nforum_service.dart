@@ -229,25 +229,25 @@ class NForumService {
     return result;
   }
 
-  // static Future<MicroPluginListModel> getMicroPlugins() async {
-  //   var response;
-  //   try {
-  //     response = await Request.httpGet(NForumSpecs.microPluginListLink, null);
-  //   } catch (e) {
-  //     throw e;
-  //   }
-  //   Map resultMap = jsonDecode(response.body);
-  //   if (resultMap["code"] != null) {
-  //     throw APIException(resultMap['msg'], code: resultMap["code"]);
-  //   }
+  static Future<MicroPluginListModel> getMicroPlugins() async {
+    var response;
+    try {
+      response = await Request.httpGet(NForumSpecs.microPluginListLink, null);
+    } catch (e) {
+      throw e;
+    }
+    Map resultMap = jsonDecode(response.body);
+    if (resultMap["code"] != null) {
+      throw APIException(resultMap['msg'], code: resultMap["code"]);
+    }
 
-  //   var result = MicroPluginListModel.fromJson(resultMap);
-  //   result.pagination = PaginationModel(1, 1, result.article.length, result.article.length);
-  //   if (result == null) {
-  //     throw DataException();
-  //   }
-  //   return result;
-  // }
+    var result = MicroPluginListModel.fromJson(resultMap);
+    result.pagination = PaginationModel(1, 1, result.article.length, result.article.length);
+    if (result == null) {
+      throw DataException();
+    }
+    return result;
+  }
 
   static Future<WelcomeInfo> getWelcomeInfo() async {
     return Request.httpGet(NForumSpecs.baseURL + 'welcomeimg.json', null).then((response) {

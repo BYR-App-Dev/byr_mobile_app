@@ -1259,54 +1259,87 @@ class ThreadSearchModel {
   Map<String, dynamic> toJson() => _$ThreadSearchModelToJson(this);
 }
 
-// @JsonSerializable()
-// class MicroPluginItemModel extends PageableBaseModel {
-//   MicroPluginItemModel({
-//     this.uriAndroid,
-//     this.uriiOS,
-//     this.uriAndroidOversea,
-//     this.uriiOSOversea,
-//     this.uri,
-//     this.uriOversea,
-//     this.name,
-//   }) : super();
+class MicroPluginItemModel extends PageableBaseModel {
+  MicroPluginItemModel({
+    this.uriAndroid,
+    this.uriiOS,
+    this.uriAndroidOversea,
+    this.uriiOSOversea,
+    this.uri,
+    this.uriOversea,
+    this.name,
+  }) : super();
 
-//   @JsonKey(name: 'uri_android')
-//   String uriAndroid;
-//   @JsonKey(name: 'uri_ios')
-//   String uriiOS;
-//   @JsonKey(name: 'uri_android_oversea')
-//   String uriAndroidOversea;
-//   @JsonKey(name: 'uri_ios_oversea')
-//   String uriiOSOversea;
-//   String uri;
-//   @JsonKey(name: 'uri_oversea')
-//   String uriOversea;
-//   String name;
+  String uriAndroid;
+  String uriiOS;
+  String uriAndroidOversea;
+  String uriiOSOversea;
+  String uri;
+  String uriOversea;
+  String name;
 
-//   factory MicroPluginItemModel.fromJson(Map<String, dynamic> json) => _$MicroPluginItemModelFromJson(json);
+  factory MicroPluginItemModel.fromJson(Map<String, dynamic> json) => _$MicroPluginItemModelFromJson(json);
 
-//   Map<String, dynamic> toJson() => _$MicroPluginItemModelToJson(this);
-// }
+  Map<String, dynamic> toJson() => _$MicroPluginItemModelToJson(this);
 
-// @JsonSerializable()
-// class MicroPluginListModel extends PageableListBaseModel<MicroPluginItemModel> {
-//   PaginationModel pagination;
-//   @JsonKey(name: 'micro_plugins')
-//   List<MicroPluginItemModel> article;
-//   @JsonKey(name: 'show_web_link')
-//   bool showWebLink;
-//   @JsonKey(name: 'web_link')
-//   String webLink;
+  @override
+  String get objCode => name;
+}
 
-//   MicroPluginListModel(
-//     this.pagination,
-//     this.article,
-//     this.showWebLink,
-//     this.webLink,
-//   ) : super(pagination: pagination, article: article);
+class MicroPluginListModel extends PageableListBaseModel<MicroPluginItemModel> {
+  PaginationModel pagination;
+  List<MicroPluginItemModel> article;
+  bool showWebLink;
+  String webLink;
 
-//   factory MicroPluginListModel.fromJson(Map<String, dynamic> json) => _$MicroPluginListModelFromJson(json);
+  MicroPluginListModel(
+    this.pagination,
+    this.article,
+    this.showWebLink,
+    this.webLink,
+  ) : super(pagination: pagination, article: article);
 
-//   Map<String, dynamic> toJson() => _$MicroPluginListModelToJson(this);
-// }
+  factory MicroPluginListModel.fromJson(Map<String, dynamic> json) => _$MicroPluginListModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MicroPluginListModelToJson(this);
+}
+
+MicroPluginItemModel _$MicroPluginItemModelFromJson(Map<String, dynamic> json) {
+  return MicroPluginItemModel(
+    uriAndroid: json['uri_android'] as String,
+    uriiOS: json['uri_ios'] as String,
+    uriAndroidOversea: json['uri_android_oversea'] as String,
+    uriiOSOversea: json['uri_ios_oversea'] as String,
+    uri: json['uri'] as String,
+    uriOversea: json['uri_oversea'] as String,
+    name: json['name'] as String,
+  );
+}
+
+Map<String, dynamic> _$MicroPluginItemModelToJson(MicroPluginItemModel instance) => <String, dynamic>{
+      'uri_android': instance.uriAndroid,
+      'uri_ios': instance.uriiOS,
+      'uri_android_oversea': instance.uriAndroidOversea,
+      'uri_ios_oversea': instance.uriiOSOversea,
+      'uri': instance.uri,
+      'uri_oversea': instance.uriOversea,
+      'name': instance.name,
+    };
+
+MicroPluginListModel _$MicroPluginListModelFromJson(Map<String, dynamic> json) {
+  return MicroPluginListModel(
+    json['pagination'] == null ? null : PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+    (json['micro_plugins'] as List)
+        ?.map((e) => e == null ? null : MicroPluginItemModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    json['show_web_link'] as bool,
+    json['web_link'] as String,
+  );
+}
+
+Map<String, dynamic> _$MicroPluginListModelToJson(MicroPluginListModel instance) => <String, dynamic>{
+      'pagination': instance.pagination,
+      'micro_plugins': instance.article,
+      'show_web_link': instance.showWebLink,
+      'web_link': instance.webLink,
+    };

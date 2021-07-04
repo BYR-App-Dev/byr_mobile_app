@@ -387,6 +387,9 @@ class ThreadPageListCell<T> extends StatefulWidget {
   final T data;
   final ThreadPageListCellDataLayouter<T> dataLayouter;
 
+  final GlobalKey<LikeButtonState> _voteUpKey = GlobalKey<LikeButtonState>();
+  final GlobalKey<LikeButtonState> _voteDownKey = GlobalKey<LikeButtonState>();
+
   final String title;
   final String boardName;
   final Function onLongPress;
@@ -511,17 +514,17 @@ class ThreadPageSubjectCellState extends ThreadPageListCellState<ThreadPageListS
   // }
 
   @override
-  Widget buildTitle(ThreadPageListCellDataLayouter l, dynamic d) {
+  Widget buildTitle(ThreadPageListCellDataLayouter _, dynamic __) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            buildNamePosTime(l, d),
+            buildNamePosTime(widget.dataLayouter, widget.data),
             _buildBoardName(
-              l.getBoardName(d),
-              l.getBoardDescription(d),
+              widget.dataLayouter.getBoardName(widget.data),
+              widget.dataLayouter.getBoardDescription(widget.data),
             ),
           ],
         ),
@@ -546,11 +549,10 @@ class ThreadPageSubjectCellState extends ThreadPageListCellState<ThreadPageListS
 }
 
 class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
-  final GlobalKey<LikeButtonState> _voteUpKey = GlobalKey<LikeButtonState>();
-  final GlobalKey<LikeButtonState> _voteDownKey = GlobalKey<LikeButtonState>();
-
-  _voteUp(ThreadPageListCellDataLayouter l, dynamic d) {
-    NForumService.likeArticle(l.getBoardName(d), l.getArticleId(d)).then((flag) {
+  _voteUp(ThreadPageListCellDataLayouter _, dynamic __) {
+    NForumService.likeArticle(
+            widget.dataLayouter.getBoardName(widget.data), widget.dataLayouter.getArticleId(widget.data))
+        .then((flag) {
       // if (flag) {
       // l.setIsLiked(d, true);
       // l.setIsVotedown(d, false);
@@ -562,16 +564,18 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
       //   _voteUpKey?.currentState?.handleIsLikeChanged(false);
       // }
     }).catchError((_) {
-      if (l.getIsVotedown(d)) {
+      if (widget.dataLayouter.getIsVotedown(widget.data)) {
         // 返回原始的状态
-        _voteDownKey?.currentState?.handleIsLikeChanged(true);
+        widget._voteDownKey?.currentState?.handleIsLikeChanged(true);
       }
-      _voteUpKey?.currentState?.handleIsLikeChanged(false);
+      widget._voteUpKey?.currentState?.handleIsLikeChanged(false);
     });
   }
 
-  _voteDown(ThreadPageListCellDataLayouter l, dynamic d) {
-    NForumService.votedownArticle(l.getBoardName(d), l.getArticleId(d)).then((flag) {
+  _voteDown(ThreadPageListCellDataLayouter _, dynamic __) {
+    NForumService.votedownArticle(
+            widget.dataLayouter.getBoardName(widget.data), widget.dataLayouter.getArticleId(widget.data))
+        .then((flag) {
       // if (flag) {
       // l.setIsVotedown(d, true);
       // l.setIsLiked(d, false);
@@ -583,30 +587,30 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
       //   _voteDownKey?.currentState?.handleIsLikeChanged(false);
       // }
     }).catchError((_) {
-      if (l.getIsLiked(d)) {
+      if (widget.dataLayouter.getIsLiked(widget.data)) {
         // 返回原始的状态
-        _voteUpKey?.currentState?.handleIsLikeChanged(true);
+        widget._voteUpKey?.currentState?.handleIsLikeChanged(true);
       }
-      _voteDownKey?.currentState?.handleIsLikeChanged(false);
+      widget._voteDownKey?.currentState?.handleIsLikeChanged(false);
     });
   }
 
-  Widget buildNamePosTime(ThreadPageListCellDataLayouter l, dynamic d) {
+  Widget buildNamePosTime(ThreadPageListCellDataLayouter _, dynamic __) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ClickableAvatar(
           radius: 18,
-          isWhisper: (l.getUser(d)?.id ?? "").startsWith("IWhisper"),
-          emptyUser: l.getIsUserEmpty(d),
-          imageLink: l.getUserImageLink(d),
+          isWhisper: (widget.dataLayouter.getUser(widget.data)?.id ?? "").startsWith("IWhisper"),
+          emptyUser: widget.dataLayouter.getIsUserEmpty(widget.data),
+          imageLink: widget.dataLayouter.getUserImageLink(widget.data),
           onTap: () {
-            if (l.getIsUserEmpty(d)) {
+            if (widget.dataLayouter.getIsUserEmpty(widget.data)) {
               return;
             }
             navigator.pushNamed(
               "profile_page",
-              arguments: l.getUser(d),
+              arguments: widget.dataLayouter.getUser(widget.data),
             );
           },
         ),
@@ -620,11 +624,11 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                 children: <Widget>[
                   Container(
                     child: Text(
-                      l.getUsername(d),
+                      widget.dataLayouter.getUsername(widget.data),
                       style: TextStyle(
                           fontSize: 18.0,
-                          color: l.getUsernameColor(d),
-                          decoration: Blocklist.getBlocklist()[l.getUser(d)?.id] == true
+                          color: widget.dataLayouter.getUsernameColor(widget.data),
+                          decoration: Blocklist.getBlocklist()[widget.dataLayouter.getUser(widget.data)?.id] == true
                               ? TextDecoration.lineThrough
                               : TextDecoration.none),
                     ),
@@ -632,16 +636,17 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 2),
                   ),
-                  if (l.getPositionName(d) != "positionTransAuthor".tr && widget.threadAuthor == l.getUsername(d))
+                  if (widget.dataLayouter.getPositionName(widget.data) != "positionTransAuthor".tr &&
+                      widget.threadAuthor == widget.dataLayouter.getUsername(widget.data))
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 2),
                       child: Text(
                         "positionTransAuthor".tr,
-                        style: TextStyle(fontSize: 12.0, color: l.getTimeColor(d)),
+                        style: TextStyle(fontSize: 12.0, color: widget.dataLayouter.getTimeColor(widget.data)),
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: l.getTimeColor(d),
+                          color: widget.dataLayouter.getTimeColor(widget.data),
                           width: 1,
                         ),
                         borderRadius: BorderRadius.all(
@@ -652,8 +657,8 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                 ],
               ),
               Text(
-                l.getTimeText(d),
-                style: TextStyle(fontSize: 12.0, color: l.getTimeColor(d)),
+                widget.dataLayouter.getTimeText(widget.data),
+                style: TextStyle(fontSize: 12.0, color: widget.dataLayouter.getTimeColor(widget.data)),
               ),
             ],
           ),
@@ -662,17 +667,17 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
     );
   }
 
-  Widget buildTitle(ThreadPageListCellDataLayouter l, dynamic d) {
+  Widget buildTitle(ThreadPageListCellDataLayouter _, dynamic __) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            buildNamePosTime(l, d),
+            buildNamePosTime(widget.dataLayouter, widget.data),
             Text(
-              l.getPositionName(d),
-              style: TextStyle(fontSize: 12.0, color: l.getPositionColor(d)),
+              widget.dataLayouter.getPositionName(widget.data),
+              style: TextStyle(fontSize: 12.0, color: widget.dataLayouter.getPositionColor(widget.data)),
             ),
           ],
         ),
@@ -695,10 +700,10 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
     );
   }
 
-  Widget buildSubtitle(ThreadPageListCellDataLayouter l, dynamic d) {
+  Widget buildSubtitle(ThreadPageListCellDataLayouter _, dynamic __) {
     return Container(
       padding: (this.widget.title == null || this.widget.title == "") ? EdgeInsets.only(left: 45) : EdgeInsets.zero,
-      child: l.getIsHiddenByVotedown(d)
+      child: widget.dataLayouter.getIsHiddenByVotedown(widget.data)
           ? Container(
               child: Column(
                 children: <Widget>[
@@ -722,7 +727,7 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                       ),
                     ),
                     onPressed: () {
-                      l.setIsHiddenByVotedown(d, false);
+                      widget.dataLayouter.setIsHiddenByVotedown(widget.data, false);
                       if (mounted) {
                         setState(() {});
                       }
@@ -735,15 +740,15 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 ParsedText.uploaded(
-                  text: l.getContent(d),
-                  uploads: l.getAttachmentFiles(d),
-                  title: l.getTitle(d),
+                  text: widget.dataLayouter.getContent(widget.data),
+                  uploads: widget.dataLayouter.getAttachmentFiles(widget.data),
+                  title: widget.dataLayouter.getTitle(widget.data),
                   tap: () {
                     this.widget.onTap();
                   },
                 ),
                 Container(
-                  child: buildBottomRow(l, d),
+                  child: buildBottomRow(widget.dataLayouter, widget.data),
                   margin: EdgeInsets.only(top: 10, bottom: 5),
                 ),
               ],
@@ -751,7 +756,7 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
     );
   }
 
-  Widget buildBottomRow(ThreadPageListCellDataLayouter l, dynamic d) {
+  Widget buildBottomRow(ThreadPageListCellDataLayouter _, dynamic __) {
     TextStyle textStyle = TextStyle(fontSize: 14.0, color: E().threadPageOtherTextColor);
     return DefaultTextStyle(
       style: textStyle,
@@ -762,8 +767,8 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
           Container(
             // margin: EdgeInsets.only(left: 30),
             child: LikeButton(
-              key: _voteUpKey,
-              isLiked: l.getIsLiked(d),
+              key: widget._voteUpKey,
+              isLiked: widget.dataLayouter.getIsLiked(widget.data),
               likeBuilder: (bool voteUp) {
                 return Icon(
                   FontAwesomeIcons.thumbsUp,
@@ -781,7 +786,7 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                 dotSecondaryColor: E().threadPageVoteUpPickedColor.withOpacity(0.5),
               ),
               likeCountAnimationType: LikeCountAnimationType.none,
-              likeCount: l.getLikes(d),
+              likeCount: widget.dataLayouter.getLikes(widget.data),
               likeCountPadding: EdgeInsets.only(left: 5),
               countBuilder: (int voteUpCount, bool voteUp, String text) {
                 return Text(
@@ -791,29 +796,30 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
               },
               onTap: (bool voteUp) async {
                 HapticFeedback.lightImpact();
-                if (l.getIsLiked(d)) {
+                if (widget.dataLayouter.getIsLiked(widget.data)) {
                   AdaptiveComponents.showToast(context, '赞后不能取消');
                 } else {
-                  if (l.getIsVotedown(d)) {
+                  if (widget.dataLayouter.getIsVotedown(widget.data)) {
                     // 取消踩的状态
-                    _voteDownKey?.currentState?.handleIsLikeChanged(false);
+                    widget._voteDownKey?.currentState?.handleIsLikeChanged(false);
+                    widget.dataLayouter.setVotedowns(widget.data, widget.dataLayouter.getVotedowns(widget.data) - 1);
                   }
-                  l.setIsLiked(d, true);
-                  l.setIsVotedown(d, false);
-                  l.setLikes(d, l.getLikes(d) + 1);
-                  _voteUp(l, d);
+                  widget.dataLayouter.setIsLiked(widget.data, true);
+                  widget.dataLayouter.setIsVotedown(widget.data, false);
+                  widget.dataLayouter.setLikes(widget.data, widget.dataLayouter.getLikes(widget.data) + 1);
+                  _voteUp(widget.dataLayouter, widget.data);
                 }
                 return Future.value(true);
               },
             ),
           ),
           // 热门回复不显示踩
-          if (!l.isLikeModel(d))
+          if (!widget.dataLayouter.isLikeModel(widget.data))
             Container(
               margin: EdgeInsets.only(left: 30),
               child: LikeButton(
-                key: _voteDownKey,
-                isLiked: l.getIsVotedown(d),
+                key: widget._voteDownKey,
+                isLiked: widget.dataLayouter.getIsVotedown(widget.data),
                 likeBuilder: (bool voteDown) {
                   return Icon(
                     FontAwesomeIcons.thumbsDown,
@@ -831,7 +837,7 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                   dotSecondaryColor: E().threadPageVoteDownPickedColor.withOpacity(0.5),
                 ),
                 likeCountAnimationType: LikeCountAnimationType.none,
-                likeCount: l.getVotedowns(d),
+                likeCount: widget.dataLayouter.getVotedowns(widget.data),
                 likeCountPadding: EdgeInsets.only(left: 5),
                 countBuilder: (int voteDownCount, bool voteDown, String text) {
                   return Text(
@@ -841,17 +847,18 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                 },
                 onTap: (bool voteDown) async {
                   HapticFeedback.lightImpact();
-                  if (l.getIsVotedown(d)) {
+                  if (widget.dataLayouter.getIsVotedown(widget.data)) {
                     AdaptiveComponents.showToast(context, '踩后不能取消');
                   } else {
-                    if (l.getIsLiked(d)) {
+                    if (widget.dataLayouter.getIsLiked(widget.data)) {
                       // 取消赞的状态
-                      _voteUpKey?.currentState?.handleIsLikeChanged(false);
+                      widget._voteUpKey?.currentState?.handleIsLikeChanged(false);
+                      widget.dataLayouter.setLikes(widget.data, widget.dataLayouter.getLikes(widget.data) - 1);
                     }
-                    l.setIsVotedown(d, true);
-                    l.setIsLiked(d, false);
-                    l.setVotedowns(d, l.getVotedowns(d) + 1);
-                    _voteDown(l, d);
+                    widget.dataLayouter.setIsVotedown(widget.data, true);
+                    widget.dataLayouter.setIsLiked(widget.data, false);
+                    widget.dataLayouter.setVotedowns(widget.data, widget.dataLayouter.getVotedowns(widget.data) + 1);
+                    _voteDown(widget.dataLayouter, widget.data);
                   }
                   return Future.value(true);
                 },
@@ -896,13 +903,12 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
 
   @override
   Widget build(BuildContext context) {
-    final d = widget.data;
-    final l = widget.dataLayouter;
-    return widget.isBlocklistBlocked == true && Blocklist.getBlocklist()[l.getUser(d)?.id] == true
+    return widget.isBlocklistBlocked == true &&
+            Blocklist.getBlocklist()[widget.dataLayouter.getUser(widget.data)?.id] == true
         ? Container()
         : InkWell(
-            highlightColor: l.getHighlightColor(d),
-            splashColor: l.getSplashColor(d),
+            highlightColor: widget.dataLayouter.getHighlightColor(widget.data),
+            splashColor: widget.dataLayouter.getSplashColor(widget.data),
             // onTap: () {},
             // onLongPress: () {
             //   this.widget.onLongPress();
@@ -919,8 +925,8 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
               // onLongPress: () {
               //   this.widget.onLongPress();
               // },
-              title: buildTitle(l, d),
-              subtitle: buildSubtitle(l, d),
+              title: buildTitle(widget.dataLayouter, widget.data),
+              subtitle: buildSubtitle(widget.dataLayouter, widget.data),
             ),
           );
   }

@@ -4,7 +4,7 @@
 [中文](README.md)|EN
 
 ## Compile and Run
-- Install [Flutter](https://flutter.dev/docs/get-started/), version 1.17.5
+- Install [Flutter](https://flutter.dev/docs/get-started/), version ^2.2.0
 - Configure Secrets
     - Apply for *clientID*、*OAuth URL*、*identifier*, etc under [open api board](https://bbs.byr.cn/#!board/BBSOpenAPI) of BYR BBS
     - Create a new repository of name *Secrets* with following project structure
