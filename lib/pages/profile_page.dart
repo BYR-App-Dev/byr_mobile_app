@@ -223,63 +223,65 @@ class ProfilePageState extends State<ProfilePage> {
                                       ),
                                     ],
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 10, top: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          widget.user?.id ?? "",
-                                          style: TextStyle(
-                                            fontSize: 22.0,
-                                            color: ConstColors.getUsernameColor(widget.user?.gender),
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(top: 5),
-                                          child: Text(
-                                            widget.user?.userName ?? "",
+                                  Flexible(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 10, top: 5),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            widget.user?.id ?? "",
                                             style: TextStyle(
-                                              fontSize: 16.0,
-                                              color: E().userPageTextColor,
+                                              fontSize: 22.0,
+                                              color: ConstColors.getUsernameColor(widget.user?.gender),
                                             ),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(top: 5),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              Navigator.pushNamed(
-                                                context,
-                                                'send_mail_page',
-                                                arguments: SendMailPageRouteArg(
-                                                  mail: null,
-                                                  username: widget.user.id,
-                                                  isReply: false,
-                                                ),
-                                              );
-                                            },
-                                            child: Container(
-                                              alignment: Alignment(0, 0),
-                                              width: 30,
-                                              height: 30,
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey,
-                                                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                                          Container(
+                                            padding: EdgeInsets.only(top: 5),
+                                            child: Text(
+                                              widget.user?.userName ?? "",
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                color: E().userPageTextColor,
                                               ),
-                                              child: Icon(
-                                                FontAwesomeIcons.solidComment,
-                                                color: E().userPageButtonFillColor,
-                                                size: 15,
+                                              // maxLines: 1,
+                                              // overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 5),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.pushNamed(
+                                                  context,
+                                                  'send_mail_page',
+                                                  arguments: SendMailPageRouteArg(
+                                                    mail: null,
+                                                    username: widget.user.id,
+                                                    isReply: false,
+                                                  ),
+                                                );
+                                              },
+                                              child: Container(
+                                                alignment: Alignment(0, 0),
+                                                width: 30,
+                                                height: 30,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey,
+                                                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                                                ),
+                                                child: Icon(
+                                                  FontAwesomeIcons.solidComment,
+                                                  color: E().userPageButtonFillColor,
+                                                  size: 15,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],

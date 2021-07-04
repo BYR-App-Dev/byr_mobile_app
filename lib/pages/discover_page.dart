@@ -8,7 +8,7 @@ import 'package:byr_mobile_app/reusable_components/custom_tabs.dart';
 import 'package:byr_mobile_app/reusable_components/custom_underline_indicator.dart';
 import 'package:flutter/material.dart';
 
-const int additionalTabs = 2;
+const int additionalTabs = 3;
 
 class DiscoverPage extends StatefulWidget {
   @override
@@ -120,42 +120,39 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
                     labelColor: E().topBarTitleNormalColor,
                     unselectedLabelStyle: TextStyle(fontSize: 12),
                     unselectedLabelColor: E().topBarTitleUnSelectedColor,
-                    tabs: boardsToLoad
-                        .fold<List<Widget>>(
-                          List<Widget>(),
-                          (previousValue, element) => boardsAvailable[element] == true
-                              ? (previousValue
-                                ..add(
-                                  CustomTab(
-                                    unselectedFontSize: 12,
-                                    text: BoardAttInfo.desc(element),
-                                  ),
-                                ))
-                              : previousValue,
-                        )
-                        .toList()
-                          ..add(
-                            // 0,
-                            CustomTab(
-                              unselectedFontSize: 12,
-                              text: "投票",
-                            ),
-                          )
-                          ..add(
-                            // 0,
-                            CustomTab(
-                              unselectedFontSize: 12,
-                              text: "竞猜",
-                            ),
-                          )
-                          // ..add(
-                          //   // 0,
-                          //   CustomTab(
-                          //     unselectedFontSize: 12,
-                          //     text: "小程序",
-                          //   ),
-                          // )
-                          ,
+                    tabs: boardsToLoad.fold<List<Widget>>(
+                      <Widget>[],
+                      (previousValue, element) => boardsAvailable[element] == true
+                          ? (previousValue
+                            ..add(
+                              CustomTab(
+                                unselectedFontSize: 12,
+                                text: BoardAttInfo.desc(element),
+                              ),
+                            ))
+                          : previousValue,
+                    ).toList()
+                      ..add(
+                        // 0,
+                        CustomTab(
+                          unselectedFontSize: 12,
+                          text: "投票",
+                        ),
+                      )
+                      ..add(
+                        // 0,
+                        CustomTab(
+                          unselectedFontSize: 12,
+                          text: "竞猜",
+                        ),
+                      )
+                      ..add(
+                        // 0,
+                        CustomTab(
+                          unselectedFontSize: 12,
+                          text: "小程序",
+                        ),
+                      ),
                     indicatorColor: E().tabPageTopBarSliderColor,
                     controller: controller,
                   ),
@@ -166,36 +163,33 @@ class DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSta
         ),
       ),
       body: CustomTabBarView(
-        children: boardsToLoad
-            .fold<List<Widget>>(
-              List<Widget>(),
-              (previousValue, element) => boardsAvailable[element] == true
-                  ? (previousValue
-                    ..add(
-                      BoardPage(
-                        BoardPageRouteArg(
-                          element,
-                          keepTop: false,
-                          // isPicWaterfall: element == "Picture",
-                        ),
-                      ),
-                    ))
-                  : previousValue,
-            )
-            .toList()
-              ..add(
-                // 0,
-                VoteListPage(),
-              )
-              ..add(
-                // 0,
-                BetListPage(),
-              )
-              // ..add(
-              //   // 0,
-              //   MicroPluginListPage(),
-              // )
-              ,
+        children: boardsToLoad.fold<List<Widget>>(
+          <Widget>[],
+          (previousValue, element) => boardsAvailable[element] == true
+              ? (previousValue
+                ..add(
+                  BoardPage(
+                    BoardPageRouteArg(
+                      element,
+                      keepTop: false,
+                      // isPicWaterfall: element == "Picture",
+                    ),
+                  ),
+                ))
+              : previousValue,
+        ).toList()
+          ..add(
+            // 0,
+            VoteListPage(),
+          )
+          ..add(
+            // 0,
+            BetListPage(),
+          )
+          ..add(
+            // 0,
+            MicroPluginListPage(),
+          ),
         controller: controller,
       ),
     );

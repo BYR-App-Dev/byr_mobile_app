@@ -29,7 +29,7 @@ class FrontPageState extends State<FrontPage> with AutomaticKeepAliveClientMixin
   @override
   bool get wantKeepAlive => true;
 
-  List<TabModel> tabModelList = List<TabModel>();
+  List<TabModel> tabModelList = <TabModel>[];
 
   CustomTabController _tabController;
 
@@ -101,7 +101,7 @@ class FrontPageState extends State<FrontPage> with AutomaticKeepAliveClientMixin
     bool _firstOpen = false;
     if (tabModelList == null || tabModelList.length <= 0) {
       _firstOpen = true;
-      tabModelList = List<TabModel>();
+      tabModelList = <TabModel>[];
       tabModelList.add(TabModel('Timeline', 'timeline', editable: false));
       tabModelList.add(TabModel('Top10', 'topten', editable: false));
       tabModelList.add(TabModel('Boardmarks', 'boardmarks', editable: false));
@@ -163,7 +163,11 @@ class FrontPageState extends State<FrontPage> with AutomaticKeepAliveClientMixin
                                 unselectedFontSize: 12,
                                 text: tab.key == 'timeline'
                                     ? "timelineTrans".tr
-                                    : tab.key == 'topten' ? "toptenTrans".tr : tab.key == 'boardmarks' ? "boardmarksTrans".tr : tab.title,
+                                    : tab.key == 'topten'
+                                        ? "toptenTrans".tr
+                                        : tab.key == 'boardmarks'
+                                            ? "boardmarksTrans".tr
+                                            : tab.title,
                               );
                             }).toList(),
                             indicatorColor: E().tabPageTopBarSliderColor,
@@ -177,7 +181,8 @@ class FrontPageState extends State<FrontPage> with AutomaticKeepAliveClientMixin
                     builder: (context, snapshot) {
                       if (snapshot.hasData && snapshot.data.item1.id == snapshot.data.item2) {
                         return GestureDetector(
-                          onTap: () => Navigator.of(context).push(FullscreenBackPageRoute(builder: (_) => FrontTabSettingPage())),
+                          onTap: () => Navigator.of(context)
+                              .push(FullscreenBackPageRoute(builder: (_) => FrontTabSettingPage())),
                           child: Icon(
                             FontAwesomeIcons.slidersH,
                             color: E().tabPageTopBarButtonColor,
