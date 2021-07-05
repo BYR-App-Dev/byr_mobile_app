@@ -347,9 +347,11 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
   int cellCount();
 
   void scrollListen(List<int> _) {
-    int index1 = scrollController.currentTagIndexInViewport(preferPosition: AutoScrollPosition.begin);
-    int index2 = scrollController.currentTagIndexInViewport(preferPosition: AutoScrollPosition.end);
-    scrollSolver(index1, index2, scrollController.position.extentBefore, scrollController.position.extentAfter);
+    if (scrollController.hasClients) {
+      int index1 = scrollController.currentTagIndexInViewport(preferPosition: AutoScrollPosition.begin);
+      int index2 = scrollController.currentTagIndexInViewport(preferPosition: AutoScrollPosition.end);
+      scrollSolver(index1, index2, scrollController.position.extentBefore, scrollController.position.extentAfter);
+    }
   }
 
   void onScroll() {
