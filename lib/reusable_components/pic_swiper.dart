@@ -98,9 +98,14 @@ class _PicSwiperState extends State<PicSwiper> with SingleTickerProviderStateMix
                       return Hero(
                         tag: item,
                         child: result,
-                        flightShuttleBuilder: (BuildContext flightContext, Animation<double> animation, HeroFlightDirection flightDirection,
-                            BuildContext fromHeroContext, BuildContext toHeroContext) {
-                          final Hero hero = flightDirection == HeroFlightDirection.pop ? fromHeroContext.widget : toHeroContext.widget;
+                        flightShuttleBuilder: (BuildContext flightContext,
+                            Animation<double> animation,
+                            HeroFlightDirection flightDirection,
+                            BuildContext fromHeroContext,
+                            BuildContext toHeroContext) {
+                          final Hero hero = flightDirection == HeroFlightDirection.pop
+                              ? fromHeroContext.widget
+                              : toHeroContext.widget;
                           return hero.child;
                         },
                       );
@@ -114,7 +119,8 @@ class _PicSwiperState extends State<PicSwiper> with SingleTickerProviderStateMix
                       initialScale = initScale(
                           size: size,
                           initialScale: initialScale,
-                          imageSize: Size(state.extendedImageInfo.image.width.toDouble(), state.extendedImageInfo.image.height.toDouble()));
+                          imageSize: Size(state.extendedImageInfo.image.width.toDouble(),
+                              state.extendedImageInfo.image.height.toDouble()));
                     }
                     return GestureConfig(
                         inPageView: true,
@@ -145,14 +151,14 @@ class _PicSwiperState extends State<PicSwiper> with SingleTickerProviderStateMix
                     _animationController.forward();
                   },
                 );
-                image = GestureDetector(
+                Widget imageWrapper = GestureDetector(
                   child: image,
                   onTap: () {
                     slidePagekey.currentState.popPage();
                     Navigator.pop(context);
                   },
                 );
-                return image;
+                return imageWrapper;
               },
               itemCount: widget.pics.length,
               onPageChanged: (int index) {

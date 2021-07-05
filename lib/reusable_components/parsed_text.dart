@@ -95,10 +95,12 @@ class ParsedText extends StatelessWidget {
             barrierDismissible: false,
             transitionDuration: Duration(milliseconds: 200),
             barrierLabel: "PicDialog",
-            pageBuilder: (c, _, __) => PicSwiper(
-              index: upId,
-              pics: _pics,
-            ),
+            pageBuilder: (c, _, __) {
+              return PicSwiper(
+                index: upId,
+                pics: _pics,
+              );
+            },
             context: context,
           );
         },

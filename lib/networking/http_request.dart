@@ -18,7 +18,7 @@ class Request {
 
   static Future<http.Response> httpGet(String url, Map<String, dynamic> body) async {
     if (body == null) {
-      return await client.get(url);
+      return await client.get(Uri.parse(url));
     } else {
       var paramString = '?';
       body.forEach((k, v) {
@@ -28,7 +28,7 @@ class Request {
       });
       try {
         var result = await client.get(
-          url + paramString.substring(0, paramString.length - 1),
+          Uri.parse(url + paramString.substring(0, paramString.length - 1)),
         );
         return result;
       } catch (_) {
@@ -40,7 +40,7 @@ class Request {
   static Future<http.Response> httpPost(String url, Map<String, dynamic> body) async {
     if (body == null) {
       try {
-        var result = await client.post(url);
+        var result = await client.post(Uri.parse(url));
         return result;
       } catch (_) {
         throw NetworkException();
@@ -53,7 +53,7 @@ class Request {
         }
       });
       try {
-        var result = await client.post(url, body: paramMap);
+        var result = await client.post(Uri.parse(url), body: paramMap);
         return result;
       } catch (_) {
         throw NetworkException();
