@@ -131,9 +131,12 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
     }
   }
 
+  void userAgreements() {}
+
   @override
   initState() {
     super.initState();
+    userAgreements();
     selectedIndex = 0;
     StartupTasks.initializeMessage();
     initUniLinks();

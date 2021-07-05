@@ -82,7 +82,7 @@ dependencies:
       url: git://github.com/BYR-App-Dev/tinycolor
   loaded_list_view:
     git:
-      url: git://github.com/DawenZhang/LoadedListView
+      url: git://github.com/OnTheThirdDay/LoadedListView
   secrets:
     git:
       url: ssh://git@github.com/BYR-App-Dev/secrets.git
