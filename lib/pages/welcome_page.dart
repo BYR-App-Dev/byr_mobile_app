@@ -6,6 +6,7 @@ import 'package:byr_mobile_app/shared_objects/shared_objects.dart';
 import 'package:byr_mobile_app/tasks/startup_tasks.dart';
 import 'package:byr_mobile_app/tasks/welcome_page_tasks.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -18,6 +19,8 @@ class WelcomePage extends StatefulWidget {
 
 class WelcomePageState extends State<WelcomePage> {
   InitializationStatus initializationStatus;
+
+  bool skipped = false;
 
   Future<void> startupApp() async {
     await StartupTasks.startupAll();
@@ -32,6 +35,15 @@ class WelcomePageState extends State<WelcomePage> {
     });
   }
 
+  void skip() {
+    skipped = true;
+    if (NForumService.currentToken == null) {
+      navigator.pushReplacementNamed("login_page", arguments: LoginPageRouteArg(isAddingMoreAccount: false));
+    } else {
+      navigator.pushReplacementNamed("home_page");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -44,13 +56,16 @@ class WelcomePageState extends State<WelcomePage> {
         final Brightness brightness = MediaQuery.platformBrightnessOf(context);
         BYRThemeManager.instance().autoSwitchDarkMode(brightness);
       }
-      initializePage();
-      Future.delayed(Duration(seconds: 3), () {
-        if (NForumService.currentToken == null) {
-          navigator.pushReplacementNamed("login_page", arguments: LoginPageRouteArg(isAddingMoreAccount: false));
-        } else {
-          navigator.pushReplacementNamed("home_page");
-        }
+      initializePage().then((value) {
+        Future.delayed(Duration(milliseconds: 1500), () {
+          if (skipped == false) {
+            if (NForumService.currentToken == null) {
+              navigator.pushReplacementNamed("login_page", arguments: LoginPageRouteArg(isAddingMoreAccount: false));
+            } else {
+              navigator.pushReplacementNamed("home_page");
+            }
+          }
+        });
       });
     });
   }
@@ -66,11 +81,57 @@ class WelcomePageState extends State<WelcomePage> {
             : 'resources/welcome_page/bbs_ipxmax.png'),
       )),
       child: initializationStatus == InitializationStatus.Initialized
-          ? FadeInImage(
-              fadeInDuration: Duration(milliseconds: 100),
-              fit: BoxFit.fill,
-              placeholder: MemoryImage(kTransparentImage),
-              image: SharedObjects.welImage)
+          ? Stack(
+              children: [
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: FadeInImage(
+                    fadeInDuration: Duration(milliseconds: 100),
+                    fit: BoxFit.fill,
+                    placeholder: MemoryImage(kTransparentImage),
+                    image: SharedObjects.welImage,
+                  ),
+                ),
+                Positioned(
+                  right: 30,
+                  bottom: 30,
+                  child: TextButton(
+                    onPressed: () {
+                      skip();
+                    },
+                    child: Text(
+                      "跳过",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 30,
+                  bottom: 30,
+                  child: TextButton(
+                    onPressed: () {
+                      skip();
+                    },
+                    child: Text(
+                      "跳过",
+                      style: TextStyle(
+                        fontSize: 18,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 0.5
+                          ..color = Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
           : Container(),
     );
   }
