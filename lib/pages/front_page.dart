@@ -1,5 +1,6 @@
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
 import 'package:byr_mobile_app/local_objects/local_models.dart';
+import 'package:byr_mobile_app/local_objects/local_storage.dart';
 import 'package:byr_mobile_app/nforum/board_att_info.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/nforum/nforum_structures.dart';
@@ -39,6 +40,16 @@ class FrontPageState extends State<FrontPage> with AutomaticKeepAliveClientMixin
     eventBus.on(UPDATE_MAIN_TAB_SETTING, (event) {
       _updateTabSetting();
     });
+    eventBus.on(UPDATE_SIMPLE_HOME_SETTING, (event) {
+      bool simpleHome = LocalStorage.getIsSimpleHomeEnabled();
+      if (simpleHome) {
+        _tabController.index = _tabController.index > 2 ? 1 : _tabController.index;
+        _tabController.setLength(3);
+      } else {
+        _tabController.setLength(tabModelList.length);
+      }
+      setState(() {});
+    });
     super.initState();
   }
 
@@ -67,11 +78,13 @@ class FrontPageState extends State<FrontPage> with AutomaticKeepAliveClientMixin
   }
 
   void _initContent({int initialIndex = 1}) {
+    bool simpleHome = LocalStorage.getIsSimpleHomeEnabled();
     if (_tabController == null) {
-      _tabController = CustomTabController(initialIndex: initialIndex, length: tabModelList.length, vsync: this);
+      _tabController =
+          CustomTabController(initialIndex: initialIndex, length: simpleHome ? 3 : tabModelList.length, vsync: this);
     } else {
       _tabController.index = initialIndex;
-      _tabController.setLength(tabModelList.length);
+      _tabController.setLength(simpleHome ? 3 : tabModelList.length);
     }
     if (mounted) {
       setState(() {});
@@ -115,6 +128,7 @@ class FrontPageState extends State<FrontPage> with AutomaticKeepAliveClientMixin
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    bool simpleHome = LocalStorage.getIsSimpleHomeEnabled();
     return Obx(
       () => Scaffold(
         appBar: BYRAppBar(
@@ -146,7 +160,7 @@ class FrontPageState extends State<FrontPage> with AutomaticKeepAliveClientMixin
                         child: Container(
                           padding: EdgeInsets.only(right: 10.0),
                           child: CustomTabBar(
-                            isScrollable: tabModelList.length > 3 ? true : false,
+                            isScrollable: simpleHome ? false : (tabModelList.length > 3 ? true : false),
                             indicator: FixedUnderlineTabIndicator(
                               borderSide: BorderSide(
                                 width: 3,
@@ -158,18 +172,33 @@ class FrontPageState extends State<FrontPage> with AutomaticKeepAliveClientMixin
                             labelColor: E().topBarTitleNormalColor,
                             unselectedLabelStyle: TextStyle(fontSize: 12),
                             unselectedLabelColor: E().topBarTitleUnSelectedColor,
-                            tabs: tabModelList.map<Widget>((tab) {
-                              return CustomTab(
-                                unselectedFontSize: 12,
-                                text: tab.key == 'timeline'
-                                    ? "timelineTrans".tr
-                                    : tab.key == 'topten'
-                                        ? "toptenTrans".tr
-                                        : tab.key == 'boardmarks'
-                                            ? "boardmarksTrans".tr
-                                            : tab.title,
-                              );
-                            }).toList(),
+                            tabs: simpleHome
+                                ? [
+                                    CustomTab(
+                                      unselectedFontSize: 12,
+                                      text: "timelineTrans".tr,
+                                    ),
+                                    CustomTab(
+                                      unselectedFontSize: 12,
+                                      text: "toptenTrans".tr,
+                                    ),
+                                    CustomTab(
+                                      unselectedFontSize: 12,
+                                      text: "boardmarksTrans".tr,
+                                    ),
+                                  ]
+                                : (tabModelList.map<Widget>((tab) {
+                                    return CustomTab(
+                                      unselectedFontSize: 12,
+                                      text: tab.key == 'timeline'
+                                          ? "timelineTrans".tr
+                                          : tab.key == 'topten'
+                                              ? "toptenTrans".tr
+                                              : tab.key == 'boardmarks'
+                                                  ? "boardmarksTrans".tr
+                                                  : tab.title,
+                                    );
+                                  }).toList()),
                             indicatorColor: E().tabPageTopBarSliderColor,
                             controller: _tabController,
                           ),
@@ -177,51 +206,58 @@ class FrontPageState extends State<FrontPage> with AutomaticKeepAliveClientMixin
                       ),
                     ),
                   ),
-                  FutureBuilder<Tuple2<UserModel, String>>(
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData && snapshot.data.item1.id == snapshot.data.item2) {
-                        return GestureDetector(
-                          onTap: () => Navigator.of(context)
-                              .push(FullscreenBackPageRoute(builder: (_) => FrontTabSettingPage())),
-                          child: Icon(
-                            FontAwesomeIcons.slidersH,
-                            color: E().tabPageTopBarButtonColor,
-                          ),
-                        );
-                      } else {
-                        return GestureDetector(
-                          onTap: null,
-                          child: Icon(
-                            FontAwesomeIcons.slidersH,
-                            color: Colors.transparent,
-                          ),
-                        );
-                      }
-                    },
-                    future: SharedObjects.me?.then((v) {
-                      var id = NForumService.getIdByToken(NForumService.currentToken);
-                      return Tuple2(v, id);
-                    }),
-                  )
+                  if (!simpleHome)
+                    FutureBuilder<Tuple2<UserModel, String>>(
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData && snapshot.data.item1.id == snapshot.data.item2) {
+                          return GestureDetector(
+                            onTap: () => Navigator.of(context)
+                                .push(FullscreenBackPageRoute(builder: (_) => FrontTabSettingPage())),
+                            child: Icon(
+                              FontAwesomeIcons.slidersH,
+                              color: E().tabPageTopBarButtonColor,
+                            ),
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: null,
+                            child: Icon(
+                              FontAwesomeIcons.slidersH,
+                              color: Colors.transparent,
+                            ),
+                          );
+                        }
+                      },
+                      future: SharedObjects.me?.then((v) {
+                        var id = NForumService.getIdByToken(NForumService.currentToken);
+                        return Tuple2(v, id);
+                      }),
+                    )
                 ],
               ),
             ),
           ),
         ),
         body: CustomTabBarView(
-          children: tabModelList.map<Widget>((tab) {
-            if (tab.key == 'timeline') {
-              return TimelinePage();
-            } else if (tab.key == 'topten') {
-              return ToptenPage();
-            } else if (tab.key == 'boardmarks') {
-              return BoardmarksPage();
-            } else {
-              return BoardPage(
-                BoardPageRouteArg(tab.key, keepTop: false),
-              );
-            }
-          }).toList(),
+          children: simpleHome
+              ? [
+                  TimelinePage(),
+                  ToptenPage(),
+                  BoardmarksPage(),
+                ]
+              : (tabModelList.map<Widget>((tab) {
+                  if (tab.key == 'timeline') {
+                    return TimelinePage();
+                  } else if (tab.key == 'topten') {
+                    return ToptenPage();
+                  } else if (tab.key == 'boardmarks') {
+                    return BoardmarksPage();
+                  } else {
+                    return BoardPage(
+                      BoardPageRouteArg(tab.key, keepTop: false),
+                    );
+                  }
+                }).toList()),
           controller: _tabController,
         ),
       ),
