@@ -9,6 +9,7 @@ import 'package:byr_mobile_app/nforum/nforum_link_handler.dart';
 import 'package:byr_mobile_app/nforum/nforum_service.dart';
 import 'package:byr_mobile_app/pages/pages.dart';
 import 'package:byr_mobile_app/reusable_components/custom_tabs.dart';
+import 'package:byr_mobile_app/reusable_components/event_bus.dart';
 import 'package:byr_mobile_app/reusable_components/ota_dialog.dart';
 import 'package:byr_mobile_app/reusable_components/refreshers.dart';
 import 'package:byr_mobile_app/reusable_components/tap_bottom_navigation_bar.dart';
@@ -136,6 +137,15 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
   @override
   initState() {
     super.initState();
+    eventBus.on(UPDATE_SIMPLE_HOME_SETTING, (event) {
+      bool simpleHome = LocalStorage.getIsSimpleHomeEnabled();
+      if (simpleHome) {
+        selectedIndex = selectedIndex > 2 ? 2 : 0;
+      } else {
+        selectedIndex = selectedIndex > 1 ? 4 : 0;
+      }
+      setState(() {});
+    });
     userAgreements();
     selectedIndex = 0;
     StartupTasks.initializeMessage();
@@ -254,11 +264,12 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
   int selectedIndex;
 
   void onItemTapped(int index, int oldIndex) {
-    if (index == 2) {
+    bool simpleHome = LocalStorage.getIsSimpleHomeEnabled();
+    if (index == 2 - (simpleHome ? 1 : 0)) {
       Navigator.pushNamed(context, 'post_page', arguments: PostPageRouteArg());
       return;
     }
-    if (oldIndex == index && index != 4) {
+    if (oldIndex == index && index != 4 - (simpleHome ? 2 : 0)) {
       refreshCurrentPage(index);
     }
     selectedIndex = index;
@@ -270,13 +281,14 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    bool simpleHome = LocalStorage.getIsSimpleHomeEnabled();
     return Scaffold(
       body: IndexedStack(
-        index: selectedIndex > 2 ? selectedIndex - 1 : selectedIndex,
+        index: selectedIndex > (simpleHome ? 1 : 2) ? selectedIndex - 1 : selectedIndex,
         children: <Widget>[
           FrontPage(),
-          DiscoverPage(),
-          MessagePage(),
+          if (!simpleHome) DiscoverPage(),
+          if (!simpleHome) MessagePage(),
           MePage(),
         ],
       ),
@@ -316,12 +328,13 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
                   "homePage".tr,
                 ),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  selectedIndex == 1 ? BYRIcons.dizzy_solid : BYRIcons.dizzy,
+              if (!simpleHome)
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    selectedIndex == 1 ? BYRIcons.dizzy_solid : BYRIcons.dizzy,
+                  ),
+                  title: Text("discover".tr),
                 ),
-                title: Text("discover".tr),
-              ),
               BottomNavigationBarItem(
                 icon: Container(
                   width: 50,
@@ -337,40 +350,71 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
                 ),
                 title: Text(''),
               ),
-              BottomNavigationBarItem(
-                icon: Stack(
-                  overflow: Overflow.visible,
-                  children: <Widget>[
-                    Icon(
-                      selectedIndex == 3 ? BYRIcons.comment_dots_solid : BYRIcons.comment_dots,
-                    ),
-                    Get.find<MessageController>().allCount > 0
-                        ? Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Container(
-                              padding: EdgeInsets.all(3),
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                shape: BoxShape.circle,
+              if (!simpleHome)
+                BottomNavigationBarItem(
+                  icon: Stack(
+                    overflow: Overflow.visible,
+                    children: <Widget>[
+                      Icon(
+                        selectedIndex == 3 ? BYRIcons.comment_dots_solid : BYRIcons.comment_dots,
+                      ),
+                      Get.find<MessageController>().allCount > 0
+                          ? Positioned(
+                              top: 0,
+                              right: 0,
+                              child: Container(
+                                padding: EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                constraints: BoxConstraints(
+                                  minWidth: 8,
+                                  minHeight: 8,
+                                ),
                               ),
-                              constraints: BoxConstraints(
-                                minWidth: 8,
-                                minHeight: 8,
+                            )
+                          : SizedBox.shrink()
+                    ],
+                  ),
+                  title: Text("messageTrans".tr),
+                ),
+              if (simpleHome)
+                BottomNavigationBarItem(
+                  icon: Stack(
+                    overflow: Overflow.visible,
+                    children: <Widget>[
+                      Icon(
+                        selectedIndex == (simpleHome ? 2 : 4) ? BYRIcons.user_circle_solid : BYRIcons.user_circle,
+                      ),
+                      Get.find<MessageController>().allCount > 0
+                          ? Positioned(
+                              top: 0,
+                              right: 0,
+                              child: Container(
+                                padding: EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                constraints: BoxConstraints(
+                                  minWidth: 8,
+                                  minHeight: 8,
+                                ),
                               ),
-                            ),
-                          )
-                        : SizedBox.shrink()
-                  ],
+                            )
+                          : SizedBox.shrink()
+                    ],
+                  ),
+                  title: Text("me".tr),
+                )
+              else
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    selectedIndex == (simpleHome ? 2 : 4) ? BYRIcons.user_circle_solid : BYRIcons.user_circle,
+                  ),
+                  title: Text("me".tr),
                 ),
-                title: Text("messageTrans".tr),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  selectedIndex == 4 ? BYRIcons.user_circle_solid : BYRIcons.user_circle,
-                ),
-                title: Text("me".tr),
-              ),
             ],
             currentIndex: selectedIndex,
             onTap: onItemTapped,

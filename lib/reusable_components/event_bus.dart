@@ -33,3 +33,4 @@ class EventBus {
 
 var eventBus = EventBus();
 const String UPDATE_MAIN_TAB_SETTING = 'update_main_tab_setting';
+const String UPDATE_SIMPLE_HOME_SETTING = 'update_simple_home_setting';

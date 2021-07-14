@@ -224,6 +224,10 @@ class Translation extends Translations {
     "addBlocklistEntry": "添加到黑名单",
     "removeBlocklistEntry": "移出黑名单",
     "clearBlocklist": "清除黑名单",
+    "simpleHome": "精简版主页",
+    "logoutAll": "登出全部帐号",
+    "viewInstr": "查看说明文档",
+    "open": "打开",
   };
 
   static Map<String, String> zhHant = {
@@ -443,6 +447,10 @@ class Translation extends Translations {
     "addBlocklistEntry": "加入黑名單",
     "removeBlocklistEntry": "清出黑名單",
     "clearBlocklist": "清除黑名單",
+    "simpleHome": "簡化版主頁",
+    "logoutAll": "登出所有帳戶",
+    "viewInstr": "查看說明文檔",
+    "open": "打開",
   };
 
   static Map<String, String> en = {
@@ -662,6 +670,10 @@ class Translation extends Translations {
     "addBlocklistEntry": "Add Blocklist Entry",
     "removeBlocklistEntry": "Remove Blocklist Entry",
     "clearBlocklist": "Clear Blocklist",
+    "simpleHome": "Simplified home page",
+    "logoutAll": "Logout all accounts",
+    "viewInstr": "View instruction",
+    "open": "open",
   };
 
   @override

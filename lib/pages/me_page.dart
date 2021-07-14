@@ -452,37 +452,38 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
                           ),
                         ),
                       ),
-                      // IconButton(
-                      //   icon: Stack(
-                      //     overflow: Overflow.visible,
-                      //     children: <Widget>[
-                      //       Icon(
-                      //         Icons.mail_outline,
-                      //         color: !_showAppBar ? E().mePageUserIdColor : E().mePageIconColor,
-                      //       ),
-                      //       Get.find<MessageController>().allCount > 0
-                      //           ? Positioned(
-                      //               top: 0,
-                      //               right: 0,
-                      //               child: Container(
-                      //                 padding: EdgeInsets.all(3),
-                      //                 decoration: BoxDecoration(
-                      //                   color: Colors.red,
-                      //                   shape: BoxShape.circle,
-                      //                 ),
-                      //                 constraints: BoxConstraints(
-                      //                   minWidth: 8,
-                      //                   minHeight: 8,
-                      //                 ),
-                      //               ),
-                      //             )
-                      //           : SizedBox.shrink()
-                      //     ],
-                      //   ),
-                      //   onPressed: () {
-                      //     Navigator.pushNamed(context, "message_page");
-                      //   },
-                      // ),
+                      if (LocalStorage.getIsSimpleHomeEnabled())
+                        IconButton(
+                          icon: Stack(
+                            clipBehavior: Clip.hardEdge,
+                            children: <Widget>[
+                              Icon(
+                                Icons.mail_outline,
+                                color: !_showAppBar ? E().mePageUserIdColor : E().mePageIconColor,
+                              ),
+                              Get.find<MessageController>().allCount > 0
+                                  ? Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: Container(
+                                        padding: EdgeInsets.all(3),
+                                        decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        constraints: BoxConstraints(
+                                          minWidth: 8,
+                                          minHeight: 8,
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox.shrink()
+                            ],
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, "message_page");
+                          },
+                        ),
                     ],
                   ),
                 ],

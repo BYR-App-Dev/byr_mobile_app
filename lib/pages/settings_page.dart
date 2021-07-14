@@ -11,6 +11,7 @@ import 'package:byr_mobile_app/pages/refresher_settings_page.dart';
 import 'package:byr_mobile_app/pages/theme_settings_page.dart';
 import 'package:byr_mobile_app/reusable_components/adaptive_components.dart';
 import 'package:byr_mobile_app/reusable_components/byr_app_bar.dart';
+import 'package:byr_mobile_app/reusable_components/event_bus.dart';
 import 'package:byr_mobile_app/reusable_components/fullscreen_back_page_route.dart';
 import 'package:byr_mobile_app/reusable_components/no_padding_list_tile.dart';
 import 'package:byr_mobile_app/reusable_components/setting_item_cell.dart';
@@ -167,8 +168,8 @@ class SettingsPageState extends State<SettingsPage> {
                           await LocalStorage.setIsFullscreenBackEnabled(newValue);
                           AdaptiveComponents.showAlertDialog(
                             context,
-                            title: "点击查看说明文档",
-                            confirm: "查看文档",
+                            title: "viewInstr".tr,
+                            confirm: "open".tr,
                             hideCancel: true,
                             onDismiss: (value) async {
                               if (value == AlertResult.confirm) {
@@ -184,6 +185,25 @@ class SettingsPageState extends State<SettingsPage> {
                           await LocalStorage.setIsFullscreenBackEnabled(newValue);
                           setState(() {});
                         }
+                      }),
+                  onTap: null,
+                ),
+                Divider(height: 1),
+                NonPaddingListTile(
+                  contentPadding: EdgeInsets.only(left: 15, right: 5),
+                  title: Text(
+                    "simpleHome".tr,
+                    style: TextStyle(
+                      color: E().otherPagePrimaryTextColor,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  trailing: Switch(
+                      value: LocalStorage.getIsSimpleHomeEnabled(),
+                      onChanged: (newValue) async {
+                        await LocalStorage.setIsSimpleHomeEnabled(newValue);
+                        eventBus.emit(UPDATE_SIMPLE_HOME_SETTING);
+                        setState(() {});
                       }),
                   onTap: null,
                 ),
@@ -232,7 +252,7 @@ class SettingsPageState extends State<SettingsPage> {
                 SettingItemCell(
                   // height: 50,
                   // leading: Icon(FontAwesomeIcons.exclamationCircle, color: E().settingItemCellMainColor),
-                  title: "登出全部账号",
+                  title: "logoutAll".tr,
                   onTap: () async {
                     Map<String, String> tokenMap = {};
                     await LocalStorage.setTokensWithIds(tokenMap);

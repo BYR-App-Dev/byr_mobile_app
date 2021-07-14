@@ -254,4 +254,12 @@ class LocalStorage {
   static Future<void> setIsBlocklistBlocked(bool v) async {
     return await _enter("isBlocklistBlocked", v);
   }
+
+  static bool getIsSimpleHomeEnabled() {
+    return _extract("isSimpleHomeEnabled") ?? false;
+  }
+
+  static Future<void> setIsSimpleHomeEnabled(bool v) async {
+    return await _enter("isSimpleHomeEnabled", v);
+  }
 }

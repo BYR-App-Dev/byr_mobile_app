@@ -103,7 +103,7 @@ class WelcomePageState extends State<WelcomePage> {
                       skip();
                     },
                     child: Text(
-                      "跳过",
+                      "skipTrans".tr,
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
@@ -119,7 +119,7 @@ class WelcomePageState extends State<WelcomePage> {
                       skip();
                     },
                     child: Text(
-                      "跳过",
+                      "skipTrans".tr,
                       style: TextStyle(
                         fontSize: 18,
                         foreground: Paint()
