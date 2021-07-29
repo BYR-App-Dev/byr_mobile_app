@@ -228,6 +228,7 @@ class Translation extends Translations {
     "logoutAll": "登出全部帐号",
     "viewInstr": "查看说明文档",
     "open": "打开",
+    "clipBoardDetection": "剪切板链接检测",
   };
 
   static Map<String, String> zhHant = {
@@ -451,6 +452,7 @@ class Translation extends Translations {
     "logoutAll": "登出所有帳戶",
     "viewInstr": "查看說明文檔",
     "open": "打開",
+    "clipBoardDetection": "剪貼板链接讀取",
   };
 
   static Map<String, String> en = {
@@ -674,6 +676,7 @@ class Translation extends Translations {
     "logoutAll": "Logout all accounts",
     "viewInstr": "View instruction",
     "open": "open",
+    "clipBoardDetection": "Clipboard link detection",
   };
 
   @override

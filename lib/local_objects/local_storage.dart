@@ -262,4 +262,12 @@ class LocalStorage {
   static Future<void> setIsSimpleHomeEnabled(bool v) async {
     return await _enter("isSimpleHomeEnabled", v);
   }
+
+  static bool getIsClipBoardDetectionEnabled() {
+    return _extract("isClipBoardDetectionEnabled") ?? false;
+  }
+
+  static Future<void> setIsClipBoardDetectionEnabled(bool v) async {
+    return await _enter("isClipBoardDetectionEnabled", v);
+  }
 }

@@ -207,6 +207,23 @@ class SettingsPageState extends State<SettingsPage> {
                       }),
                   onTap: null,
                 ),
+                NonPaddingListTile(
+                  contentPadding: EdgeInsets.only(left: 15, right: 5),
+                  title: Text(
+                    "clipBoardDetection".tr,
+                    style: TextStyle(
+                      color: E().otherPagePrimaryTextColor,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  trailing: Switch(
+                      value: LocalStorage.getIsClipBoardDetectionEnabled(),
+                      onChanged: (newValue) async {
+                        await LocalStorage.setIsClipBoardDetectionEnabled(newValue);
+                        setState(() {});
+                      }),
+                  onTap: null,
+                ),
                 if (UniversalPlatform.isAndroid) Divider(height: 1),
                 if (UniversalPlatform.isAndroid)
                   SettingItemCell(

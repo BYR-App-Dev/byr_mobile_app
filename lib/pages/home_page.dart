@@ -49,6 +49,9 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, 
   }
 
   void clipboardDetect() {
+    if (!LocalStorage.getIsClipBoardDetectionEnabled()) {
+      return;
+    }
     Clipboard.getData(Clipboard.kTextPlain).then((value) {
       if (value != null && value.text != null) {
         if (NForumLinkHandler.isBYRLinkHandlable(value.text)) {
