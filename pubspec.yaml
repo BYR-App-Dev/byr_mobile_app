@@ -56,10 +56,6 @@ dependencies:
     git:
       url: https://github.com/BYR-App-Dev/encrypt.git
       ref: 6f3c9703c8164112820b0ce10d3ffb95018b0848
-  flutter_liquidcore:
-    git:
-      url: https://github.com/BYR-App-Dev/flutter_liquidcore.git
-      ref: efaf5ac636b9c6da24bd5d712108b7716a6a8828
   flutter_device_information: ^0.1.3
   pull_to_refresh_notification: ^1.1.2
   speech_recognition:
@@ -72,7 +68,7 @@ dependencies:
       ref: 8cb0ffb20205c0d183e379a30ef2ae261d667704
   gallery_saver:
     git:
-      url: git://github.com/OnTheThirdDay/gallery_saver
+      url: git://github.com/BYR-App-Dev/gallery_saver
       ref: f2216552808a7b4ea84ecdcabfb7a93591362121
   scroll_to_index: 
     git:
@@ -82,11 +78,11 @@ dependencies:
       url: git://github.com/BYR-App-Dev/tinycolor
   loaded_list_view:
     git:
-      url: git://github.com/OnTheThirdDay/LoadedListView
+      url: git://github.com/BYR-App-Dev/LoadedListView
   secrets:
     git:
       url: ssh://git@github.com/BYR-App-Dev/secrets.git
-      ref: 0181a102eae4549ec6c33b27aea4960cd921fc8c
+      ref: ee6a32e0fd14aa2b0931a4722c1118dbba895b0f
 dev_dependencies:
   flutter_test:
     sdk: flutter

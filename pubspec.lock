@@ -330,15 +330,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  flutter_liquidcore:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: efaf5ac636b9c6da24bd5d712108b7716a6a8828
-      resolved-ref: efaf5ac636b9c6da24bd5d712108b7716a6a8828
-      url: "https://github.com/BYR-App-Dev/flutter_liquidcore.git"
-    source: git
-    version: "1.1.1"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -388,7 +379,7 @@ packages:
       path: "."
       ref: f2216552808a7b4ea84ecdcabfb7a93591362121
       resolved-ref: f2216552808a7b4ea84ecdcabfb7a93591362121
-      url: "git://github.com/OnTheThirdDay/gallery_saver"
+      url: "git://github.com/BYR-App-Dev/gallery_saver"
     source: git
     version: "2.0.1"
   get:
@@ -518,7 +509,7 @@ packages:
       path: "."
       ref: HEAD
       resolved-ref: "777282df32effe1721923c3b0bdf5fdf21bcf5df"
-      url: "git://github.com/OnTheThirdDay/LoadedListView"
+      url: "git://github.com/BYR-App-Dev/LoadedListView"
     source: git
     version: "1.0.1+1"
   logging:
@@ -779,8 +770,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0181a102eae4549ec6c33b27aea4960cd921fc8c"
-      resolved-ref: "0181a102eae4549ec6c33b27aea4960cd921fc8c"
+      ref: ee6a32e0fd14aa2b0931a4722c1118dbba895b0f
+      resolved-ref: ee6a32e0fd14aa2b0931a4722c1118dbba895b0f
       url: "ssh://git@github.com/BYR-App-Dev/secrets.git"
     source: git
     version: "1.0.0+1"

@@ -61,9 +61,7 @@ class RefresherSettingsPageState extends State<RefresherSettingsPage> {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (!(entryList[index].key == 'BUPTHeartBeat' ||
-                            entryList[index].key == 'AirconSummerBUPT' ||
-                            entryList[index].key == 'MemoryOfBUPT'))
+                        if (!(entryList[index].key == 'BUPTHeartBeat' || entryList[index].key == 'AirconSummerBUPT'))
                           FlatButton(
                             child: Icon(
                               Icons.delete,

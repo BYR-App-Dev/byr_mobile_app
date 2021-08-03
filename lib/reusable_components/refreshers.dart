@@ -11,7 +11,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'bupt_heart_beat_refresher.dart';
 import 'custom_gif_refresher.dart';
-import 'memory_of_bupt_refresher.dart';
 
 export 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -49,34 +48,6 @@ class AirconSummerRefresher extends Refresher {
         onLoading: onBottomRefresh,
         header: AirconSummerHeader(),
         footer: bottomScreenshot ? ScreenshotFooter() : AirconSummerFooter(),
-        child: childWidget,
-      ),
-    );
-  }
-}
-
-class MemoryOfBUPTRefresher extends Refresher {
-  MemoryOfBUPTRefresher(RefreshController refreshController, bool top, bool bottom, void Function() onTopRefresh,
-      void Function() onBottomRefresh, Widget childWidget, {bottomScreenshot = false})
-      : super(refreshController, top, bottom, onTopRefresh, onBottomRefresh, childWidget,
-            bottomScreenshot: bottomScreenshot);
-
-  @override
-  Widget build(BuildContext context) {
-    return RefreshConfiguration(
-      topHitBoundary: 0,
-      bottomHitBoundary: 0,
-      headerTriggerDistance: MemoryOfBUPTHeader.recommendedHeight,
-      footerTriggerDistance:
-          -(bottomScreenshot ? ScreenshotFooter.recommendedHeight : MemoryOfBUPTFooter.recommendedHeight) / 2,
-      child: SmartRefresher(
-        enablePullDown: top,
-        enablePullUp: bottom,
-        controller: refreshController,
-        onRefresh: onTopRefresh,
-        onLoading: onBottomRefresh,
-        header: MemoryOfBUPTHeader(),
-        footer: bottomScreenshot ? ScreenshotFooter() : MemoryOfBUPTFooter(),
         child: childWidget,
       ),
     );
@@ -194,15 +165,10 @@ class RefresherFactory extends StatelessWidget {
         .where((element) => element.value.enabled)
         .toList()[factor % count]
         .key];
-    if (refresher.refresherName == 'BUPTHeartBeat' ||
-        refresher.refresherName == 'AirconSummerBUPT' ||
-        refresher.refresherName == 'MemoryOfBUPT') {
+    if (refresher.refresherName == 'BUPTHeartBeat' || refresher.refresherName == 'AirconSummerBUPT') {
       switch (refresher.refresherName) {
         case "AirconSummerBUPT":
           return AirconSummerRefresher(refreshController, top, bottom, onTopRefresh, onBottomRefresh, childWidget,
-              bottomScreenshot: bottomScreenshot);
-        case "MemoryOfBUPT":
-          return MemoryOfBUPTRefresher(refreshController, top, bottom, onTopRefresh, onBottomRefresh, childWidget,
               bottomScreenshot: bottomScreenshot);
         case "BUPTHeartBeat":
           return BUPTHeartBeatRefresher(refreshController, top, bottom, onTopRefresh, onBottomRefresh, childWidget,
@@ -279,7 +245,6 @@ class BYRRefresherManager {
         [
           {"loc": "", "refresherName": "BUPTHeartBeat", "enabled": "yes"},
           {"loc": "", "refresherName": "AirconSummerBUPT", "enabled": "yes"},
-          {"loc": "", "refresherName": "MemoryOfBUPT", "enabled": "yes"}
         ],
       );
     }
@@ -288,9 +253,7 @@ class BYRRefresherManager {
   Future<void> mapLocal() async {
     List<Map> refreshers = LocalStorage.getRefreshers();
     for (int i = 0; i < refreshers.length; ++i) {
-      if (refreshers[i]["refresherName"] == 'BUPTHeartBeat' ||
-          refreshers[i]["refresherName"] == 'AirconSummerBUPT' ||
-          refreshers[i]["refresherName"] == 'MemoryOfBUPT') {
+      if (refreshers[i]["refresherName"] == 'BUPTHeartBeat' || refreshers[i]["refresherName"] == 'AirconSummerBUPT') {
         switch (refreshers[i]["refresherName"]) {
           case "BUPTHeartBeat":
             refresherMap["BUPTHeartBeat"] = CustomGifRefresherModel("BUPTHeartBeat", "北邮心跳", "", "", 0, 0,
@@ -298,10 +261,6 @@ class BYRRefresherManager {
             break;
           case "AirconSummerBUPT":
             refresherMap["AirconSummerBUPT"] = CustomGifRefresherModel("AirconSummerBUPT", "有空调的北邮夏", "", "", 0, 0,
-                enabled: refreshers[i]["enabled"] == "yes");
-            break;
-          case "MemoryOfBUPT":
-            refresherMap["MemoryOfBUPT"] = CustomGifRefresherModel("MemoryOfBUPT", "北邮记忆轮", "", "", 0, 0,
                 enabled: refreshers[i]["enabled"] == "yes");
             break;
           default:
@@ -360,10 +319,8 @@ class BYRRefresherManager {
               enabled: true);
           if (refresher.refresherName == 'BUPTHeartBeat' ||
               refresher.refresherName == 'AirconSummerBUPT' ||
-              refresher.refresherName == 'MemoryOfBUPT' ||
               refresher.refresherDisplayName == '北邮心跳' ||
-              refresher.refresherDisplayName == '有空调的北邮夏' ||
-              refresher.refresherName == '北邮记忆轮') {
+              refresher.refresherDisplayName == '有空调的北邮夏') {
             return null;
           }
           if (refresherMap[refresher.refresherName] != null) {
@@ -416,8 +373,7 @@ class BYRRefresherManager {
                 refresher.refresherName == 'AirconSummerBUPT' ||
                 refresher.refresherName == 'MemoryOfBUPT' ||
                 refresher.refresherDisplayName == '北邮心跳' ||
-                refresher.refresherDisplayName == '有空调的北邮夏' ||
-                refresher.refresherName == '北邮记忆轮') {
+                refresher.refresherDisplayName == '有空调的北邮夏') {
               return null;
             }
             refresherMap[refresher.refresherName] = refresher;

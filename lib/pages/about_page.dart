@@ -160,7 +160,7 @@ class _AboutPageState extends State<AboutPage> {
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 15),
                       child: Text(
-                        '    此应用为北京邮电大学北邮人论坛的官方客户端，于2019~2020年使用Flutter重新开发。',
+                        '    此应用为北京邮电大学北邮人论坛的官方客户端，于2019~2021年使用Flutter重新开发。',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -177,7 +177,6 @@ class _AboutPageState extends State<AboutPage> {
                             '开发人员',
                             [
                               _Contributor('wdjwxh', ''),
-                              _Contributor('darkfrost', ''),
                               _Contributor('nmslwsnd', ''),
                             ],
                           ),
@@ -197,7 +196,6 @@ class _AboutPageState extends State<AboutPage> {
                             [
                               _Contributor('zifeiyu4024', '#北邮心跳'),
                               _Contributor('buddleia', '#有空调酱的北邮夏'),
-                              _Contributor('cdddemy', '#Memory of BUPT'),
                             ],
                           ),
                         ],
