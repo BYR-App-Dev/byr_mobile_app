@@ -95,7 +95,7 @@ class BoardPageState extends ArticleListBasePageState<BoardModel, BoardPage> {
   }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     FrontArticleModel boardArticleObject = data.articleList.article[index];
     return GestureDetector(
       onTap: () {

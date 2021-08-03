@@ -114,7 +114,9 @@ class BetItemCellState extends State<BetItemCell> with SingleTickerProviderState
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             color: widget.isWinner
                                 ? E().voteBetOptionResultBarFillColor
-                                : widget.isBetable ? E().voteBetBarFillColor : E().voteBetBarFillColor.withOpacity(0.9),
+                                : widget.isBetable
+                                    ? E().voteBetBarFillColor
+                                    : E().voteBetBarFillColor.withOpacity(0.9),
                           ),
                           height: 10.0,
                         ),
@@ -513,7 +515,7 @@ class BetPageState extends ThreadPageBaseState<BetPage, BetData> {
   }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     int delSubjectLength = 1;
     if (data.thread?.id != null) {
       delSubjectLength = data.thread.article[0].isSubject == false && data.currentMinPage == 1 ? 1 : 0;

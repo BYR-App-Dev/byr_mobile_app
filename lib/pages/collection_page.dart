@@ -35,7 +35,7 @@ class CollectionPageState extends ArticleListBasePageState<CollectionModel, Coll
   }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     CollectionArticleModel collectionArticleObject = data.articleList.article[index];
     return InkWell(
       // highlightColor: E().threadListBackgroundColor.withOpacity(0.12),

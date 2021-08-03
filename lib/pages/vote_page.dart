@@ -624,7 +624,7 @@ class VotePageState extends ThreadPageBaseState<VotePage, VoteData> {
   }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     int delSubjectLength = 1;
     if (data.thread?.id != null) {
       delSubjectLength = data.thread.article[0].isSubject == false && data.currentMinPage == 1 ? 1 : 0;

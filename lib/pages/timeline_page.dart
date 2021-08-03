@@ -32,7 +32,7 @@ class TimelinePageState extends ArticleListBasePageState<TimelineModel, Timeline
   }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     if (Blocklist.getIsBlocked() == true &&
         Blocklist.getBlocklist()[data.articleList.article[index].user?.id] == true) {
       return Container();

@@ -39,7 +39,7 @@ class MailboxPageState extends PageableListBasePageState<MailBoxModel, MailboxPa
   }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     MailModel object = data.articleList.article[index];
     return Container(
       decoration:

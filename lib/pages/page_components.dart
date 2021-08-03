@@ -54,7 +54,7 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
 
   Widget buildSeparator(BuildContext context, int index, {bool isLast = false});
 
-  Widget buildCell(BuildContext context, int index);
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false});
 
   Widget buildList() {
     if (screenshotStatus == ScreenshotStatus.Selecting) {
@@ -94,6 +94,7 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
                             child: buildCell(
                               context,
                               (index / 2).floor(),
+                              isScreenshot: true,
                             ),
                           ),
                         ),
@@ -197,6 +198,7 @@ mixin ScrollableListMixin<X extends StatefulWidget, T> on State<X> {
                               child: buildCell(
                                 context,
                                 toCapture[(index / 2).floor()],
+                                isScreenshot: true,
                               ),
                             );
                           } else {

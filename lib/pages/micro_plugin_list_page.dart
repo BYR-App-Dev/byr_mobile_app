@@ -176,7 +176,7 @@ class MicroPluginListPageState extends PageableListBasePageState<MicroPluginList
   // }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     return ListTile(
       title: Text(
         data.articleList.article[index].name,

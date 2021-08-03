@@ -32,7 +32,7 @@ class CloudBlocklistPageState extends UserListPageState<UserListModel, CloudBloc
   }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     UserModel articleObject = data.articleList.article[index];
     return GestureDetector(
       behavior: HitTestBehavior.translucent,

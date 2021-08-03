@@ -43,7 +43,7 @@ class ReferboxPageState extends ArticleListBasePageState<ReferBoxModel, Referbox
   }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     ReferModel referArticleObject = data.articleList.article[index];
     return InkWell(
       highlightColor: E().threadListBackgroundColor.withOpacity(0.12),

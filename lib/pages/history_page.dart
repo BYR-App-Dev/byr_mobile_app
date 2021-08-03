@@ -32,7 +32,7 @@ class HistoryPageState extends ArticleListBasePageState<HistoryListModel, Histor
   }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     HistoryArticleModel historyArticleObject = data.articleList.article[index];
     return InkWell(
       // highlightColor: E().threadListBackgroundColor.withOpacity(0.12),

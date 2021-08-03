@@ -93,7 +93,7 @@ class VoteListPageState extends PageableListBasePageState<VoteListModel, VoteLis
   }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     return VoteListingCell(data.articleList.article[index]);
   }
 

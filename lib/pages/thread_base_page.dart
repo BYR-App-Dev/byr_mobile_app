@@ -551,7 +551,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     int delSubjectLength = 1;
     if (data.thread?.id != null) {
       delSubjectLength = data.thread.article[0].isSubject == false && data.currentMinPage == 1 ? 1 : 0;
@@ -621,7 +621,10 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
       );
     }
 
-    var threadArticleObject = data.thread.article[j - (data.thread.likeArticles?.length ?? 0)];
+    ThreadArticleModel threadArticleObject = data.thread.article[j - (data.thread.likeArticles?.length ?? 0)];
+    if (isScreenshot) {
+      threadArticleObject.hiddenByVotedown = false;
+    }
     return ThreadPageListCell<ThreadArticleModel>(
       threadArticleObject,
       ThreadPageListCellArticleLayouter(),

@@ -149,7 +149,7 @@ class BetListPageState extends PageableListBasePageState<BetListModel, BetListPa
   }
 
   @override
-  Widget buildCell(BuildContext context, int index) {
+  Widget buildCell(BuildContext context, int index, {bool isScreenshot = false}) {
     return BetListingCell(data.articleList.article[index]);
   }
 
