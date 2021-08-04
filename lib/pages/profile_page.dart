@@ -86,48 +86,6 @@ class ProfilePageState extends State<ProfilePage> {
           title: Text(
             "profilePageName".tr,
           ),
-          actions: [
-            if (blocklist[widget.user.id] == null || blocklist[widget.user.id] == false)
-              IconButton(
-                icon: Icon(Icons.visibility_off_outlined, color: E().otherPageTopBarButtonColor),
-                onPressed: () async {
-                  Blocklist.addBlocklistItem(widget.user.id);
-                  if (mounted) {
-                    setState(() {});
-                  }
-                },
-              )
-            else
-              IconButton(
-                icon: Icon(Icons.visibility_outlined, color: E().otherPageTopBarButtonColor),
-                onPressed: () async {
-                  Blocklist.removeBlocklistItem(widget.user.id);
-                  if (mounted) {
-                    setState(() {});
-                  }
-                },
-              ),
-            IconButton(
-              icon: Icon(Icons.notifications_off_outlined, color: E().otherPageTopBarButtonColor),
-              onPressed: () async {
-                AdaptiveComponents.showAlertDialog(
-                  context,
-                  title: "addBlocklistEntry".tr,
-                  barrierDismissible: false,
-                  onDismiss: (result) {
-                    if (result == AlertResult.confirm) {
-                      AdaptiveComponents.showLoading(context);
-                      NForumService.addBlocklistEntry(widget.user.id).then((value) {
-                        AdaptiveComponents.hideLoading();
-                      }).catchError((e) {
-                        AdaptiveComponents.hideLoading();
-                      });
-                    } else {}
-                  },
-                );
-              },
-            ),
-          ],
         ),
         body: CustomScrollView(
           slivers: <Widget>[
