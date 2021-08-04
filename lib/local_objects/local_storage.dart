@@ -240,7 +240,7 @@ class LocalStorage {
   }
 
   static Map<String, bool> getBlockList() {
-    return _extract("blockList")?.cast<String, bool>() ?? Map<String, bool>();
+    return Map<String, bool>();
   }
 
   static Future<void> setBlockList(Map<String, bool> v) async {
