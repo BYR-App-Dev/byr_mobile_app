@@ -252,37 +252,10 @@ class MePageState extends State<MePage> with AutomaticKeepAliveClientMixin, Tick
         ),
         SettingItemCell(
           height: 50,
-          leading: Icon(Icons.my_library_music, color: E().settingItemCellMainColor),
-          title: "myAudioPlaylist".tr,
-          showArrow: false,
-          onTap: () {
-            AudioPlayerView.show(
-              context,
-            );
-          },
-        ),
-        SettingItemCell(
-          height: 50,
           leading: Icon(Icons.collections_bookmark, color: E().settingItemCellMainColor),
           title: "collectionTrans".tr,
           onTap: () {
             Navigator.pushNamed(context, "collection_page");
-          },
-        ),
-        SettingItemCell(
-          height: 50,
-          leading: Icon(Icons.history, color: E().settingItemCellMainColor),
-          title: "browsingHistory".tr,
-          onTap: () {
-            Navigator.pushNamed(context, "history_page");
-          },
-        ),
-        SettingItemCell(
-          height: 50,
-          leading: Icon(Icons.block, color: E().settingItemCellMainColor),
-          title: "blocklist".tr,
-          onTap: () {
-            Navigator.pushNamed(context, "blocklist_page");
           },
         ),
         Divider(),

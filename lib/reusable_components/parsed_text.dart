@@ -119,62 +119,7 @@ class ParsedText extends StatelessWidget {
   WidgetSpanChildHandler audioAttachmentHandlerGenerator(BuildContext context) {
     WidgetSpanChildHandler ret = (int upId) {
       return Container(
-        child: Row(
-          children: <Widget>[
-            FlatButton(
-              child: Icon(
-                Icons.music_note,
-                color: E().threadPageContentColor,
-              ),
-              onPressed: () {
-                if (uploadedExtractor.getIsPreview(uploads[upId])) {
-                  return;
-                }
-                AudioPlayerView.show(
-                  context,
-                );
-              },
-            ),
-            FlatButton(
-              child: Icon(
-                Icons.play_circle_filled,
-                color: E().threadPageContentColor,
-              ),
-              onPressed: () {
-                if (uploadedExtractor.getIsPreview(uploads[upId])) {
-                  return;
-                }
-                AudioPlayerView.setCurrentPlaying(
-                  Tuple3(
-                    title ?? "...",
-                    uploadedExtractor.getAudioLoc(uploads[upId]),
-                    uploadedExtractor.getIsAudioLocal(uploads[upId]),
-                  ),
-                  context,
-                );
-              },
-            ),
-            FlatButton(
-              child: Icon(
-                Icons.playlist_add,
-                color: E().threadPageContentColor,
-              ),
-              onPressed: () {
-                if (uploadedExtractor.getIsPreview(uploads[upId])) {
-                  return;
-                }
-                AudioPlayerView.addMusic(
-                  Tuple3(
-                    title ?? "...",
-                    uploadedExtractor.getAudioLoc(uploads[upId]),
-                    uploadedExtractor.getIsAudioLocal(uploads[upId]),
-                  ),
-                  context,
-                );
-              },
-            ),
-          ],
-        ),
+        child: Text("音频文件请使用网页版打开"),
       );
     };
     return ret;
@@ -302,53 +247,7 @@ class ParsedText extends StatelessWidget {
   WidgetSpanExternalAudioChildHandler externalAudioHandlerGenerator(BuildContext context) {
     WidgetSpanExternalAudioChildHandler ret = (String url) {
       return Container(
-        child: Row(
-          children: <Widget>[
-            FlatButton(
-              child: Icon(
-                Icons.music_note,
-                color: E().threadPageContentColor,
-              ),
-              onPressed: () {
-                AudioPlayerView.show(
-                  context,
-                );
-              },
-            ),
-            FlatButton(
-              child: Icon(
-                Icons.play_circle_filled,
-                color: E().threadPageContentColor,
-              ),
-              onPressed: () {
-                AudioPlayerView.setCurrentPlaying(
-                  Tuple3(
-                    title ?? "...",
-                    url,
-                    false,
-                  ),
-                  context,
-                );
-              },
-            ),
-            FlatButton(
-              child: Icon(
-                Icons.playlist_add,
-                color: E().threadPageContentColor,
-              ),
-              onPressed: () {
-                AudioPlayerView.addMusic(
-                  Tuple3(
-                    title ?? "...",
-                    url,
-                    false,
-                  ),
-                  context,
-                );
-              },
-            ),
-          ],
-        ),
+        child: Text("音频文件请使用网页版打开"),
       );
     };
     return ret;
@@ -357,19 +256,7 @@ class ParsedText extends StatelessWidget {
   WidgetSpanExternalAudioChildHandler externalVideoHandlerGenerator(BuildContext context) {
     WidgetSpanExternalAudioChildHandler ret = (String url) {
       return Container(
-        child: Row(
-          children: <Widget>[
-            FlatButton(
-              child: Icon(
-                Icons.video_library,
-                color: E().threadPageContentColor,
-              ),
-              onPressed: () {
-                navigator.pushNamed("video_page", arguments: url);
-              },
-            ),
-          ],
-        ),
+        child: Text("视频文件请使用网页版打开"),
       );
     };
     return ret;
