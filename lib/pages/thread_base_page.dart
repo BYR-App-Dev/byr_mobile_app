@@ -23,6 +23,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
@@ -101,6 +102,7 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
   @override
   void dispose() {
     removePopupMenu();
+    FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
     refreshController.dispose();
     super.dispose();
   }
@@ -126,7 +128,9 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
       setState(() {});
     }
     failureInfo = '';
-
+    if (widget.arg.boardName == "IWhisper") {
+      FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+    }
     initialDataLoader(afterLoad: () {
       initializationStatus = InitializationStatus.Initialized;
       if (mounted) {

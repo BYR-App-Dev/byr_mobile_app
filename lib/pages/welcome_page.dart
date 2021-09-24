@@ -52,24 +52,23 @@ class WelcomePageState extends State<WelcomePage> {
     if (mounted) {
       setState(() {});
     }
-    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE).then((_) => startupApp().then((value) {
-          if (BYRThemeManager.instance().getIsAutoSwitchDarkModel() == true) {
-            final Brightness brightness = MediaQuery.platformBrightnessOf(context);
-            BYRThemeManager.instance().autoSwitchDarkMode(brightness);
+    startupApp().then((value) {
+      if (BYRThemeManager.instance().getIsAutoSwitchDarkModel() == true) {
+        final Brightness brightness = MediaQuery.platformBrightnessOf(context);
+        BYRThemeManager.instance().autoSwitchDarkMode(brightness);
+      }
+      initializePage().then((value) {
+        Future.delayed(Duration(milliseconds: 1500), () {
+          if (skipped == false) {
+            if (NForumService.currentToken == null) {
+              navigator.pushReplacementNamed("login_page", arguments: LoginPageRouteArg(isAddingMoreAccount: false));
+            } else {
+              navigator.pushReplacementNamed("home_page");
+            }
           }
-          initializePage().then((value) {
-            Future.delayed(Duration(milliseconds: 1500), () {
-              if (skipped == false) {
-                if (NForumService.currentToken == null) {
-                  navigator.pushReplacementNamed("login_page",
-                      arguments: LoginPageRouteArg(isAddingMoreAccount: false));
-                } else {
-                  navigator.pushReplacementNamed("home_page");
-                }
-              }
-            });
-          });
-        }));
+        });
+      });
+    });
   }
 
   @override
