@@ -7,6 +7,7 @@ import 'package:byr_mobile_app/tasks/startup_tasks.dart';
 import 'package:byr_mobile_app/tasks/welcome_page_tasks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -51,23 +52,24 @@ class WelcomePageState extends State<WelcomePage> {
     if (mounted) {
       setState(() {});
     }
-    startupApp().then((value) {
-      if (BYRThemeManager.instance().getIsAutoSwitchDarkModel() == true) {
-        final Brightness brightness = MediaQuery.platformBrightnessOf(context);
-        BYRThemeManager.instance().autoSwitchDarkMode(brightness);
-      }
-      initializePage().then((value) {
-        Future.delayed(Duration(milliseconds: 1500), () {
-          if (skipped == false) {
-            if (NForumService.currentToken == null) {
-              navigator.pushReplacementNamed("login_page", arguments: LoginPageRouteArg(isAddingMoreAccount: false));
-            } else {
-              navigator.pushReplacementNamed("home_page");
-            }
+    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE).then((_) => startupApp().then((value) {
+          if (BYRThemeManager.instance().getIsAutoSwitchDarkModel() == true) {
+            final Brightness brightness = MediaQuery.platformBrightnessOf(context);
+            BYRThemeManager.instance().autoSwitchDarkMode(brightness);
           }
-        });
-      });
-    });
+          initializePage().then((value) {
+            Future.delayed(Duration(milliseconds: 1500), () {
+              if (skipped == false) {
+                if (NForumService.currentToken == null) {
+                  navigator.pushReplacementNamed("login_page",
+                      arguments: LoginPageRouteArg(isAddingMoreAccount: false));
+                } else {
+                  navigator.pushReplacementNamed("home_page");
+                }
+              }
+            });
+          });
+        }));
   }
 
   @override

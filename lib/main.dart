@@ -17,7 +17,7 @@ void main() {
         GlobalWidgetsLocalizations.delegate,
       ],
       translations: Translation(),
-      locale: ui.window.locale,
+      locale: Locale('zh', 'CN'),
       fallbackLocale: Locale('zh', 'CN'),
       supportedLocales: <Locale>[
         Locale('zh', 'CN'),

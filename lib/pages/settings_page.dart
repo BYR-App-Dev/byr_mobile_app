@@ -45,26 +45,26 @@ class SettingsPageState extends State<SettingsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SettingItemCell(
-                  title: "language".tr,
-                  value: Translation.localeNames["translationName".tr],
-                  showArrow: false,
-                  onTap: () {
-                    List<MapEntry<String, String>> translations = Translation.localeNames.entries.toList();
-                    AdaptiveComponents.showBottomSheet(
-                      context,
-                      translations.map((value) => value.value).toList(),
-                      textStyle: TextStyle(
-                        color: E().settingItemCellMainColor,
-                        fontSize: 16,
-                      ),
-                      onItemTap: (int index) {
-                        BYRTranslatorManager.turnTranslator(translations[index].key);
-                      },
-                    );
-                  },
-                ),
-                Divider(height: 1),
+                // SettingItemCell(
+                //   title: "language".tr,
+                //   value: Translation.localeNames["translationName".tr],
+                //   showArrow: false,
+                //   onTap: () {
+                //     List<MapEntry<String, String>> translations = Translation.localeNames.entries.toList();
+                //     AdaptiveComponents.showBottomSheet(
+                //       context,
+                //       translations.map((value) => value.value).toList(),
+                //       textStyle: TextStyle(
+                //         color: E().settingItemCellMainColor,
+                //         fontSize: 16,
+                //       ),
+                //       onItemTap: (int index) {
+                //         BYRTranslatorManager.turnTranslator(translations[index].key);
+                //       },
+                //     );
+                //   },
+                // ),
+                // Divider(height: 1),
                 SettingItemCell(
                   title: "networkType".tr,
                   value: AppConfigs.isIPv6Used ? "useIPv6".tr : "useIPv4".tr,
@@ -91,20 +91,20 @@ class SettingsPageState extends State<SettingsPage> {
                     );
                   },
                 ),
-                Divider(height: 1),
-                SettingItemCell(
-                  title: "themeSettings".tr,
-                  onTap: () {
-                    Navigator.of(context).push(FullscreenBackPageRoute(builder: (_) => ThemeSettingsPage()));
-                  },
-                ),
-                Divider(height: 1),
-                SettingItemCell(
-                  title: "refresherSettings".tr,
-                  onTap: () {
-                    Navigator.of(context).push(FullscreenBackPageRoute(builder: (_) => RefresherSettingsPage()));
-                  },
-                ),
+                // Divider(height: 1),
+                // SettingItemCell(
+                //   title: "themeSettings".tr,
+                //   onTap: () {
+                //     Navigator.of(context).push(FullscreenBackPageRoute(builder: (_) => ThemeSettingsPage()));
+                //   },
+                // ),
+                // Divider(height: 1),
+                // SettingItemCell(
+                //   title: "refresherSettings".tr,
+                //   onTap: () {
+                //     Navigator.of(context).push(FullscreenBackPageRoute(builder: (_) => RefresherSettingsPage()));
+                //   },
+                // ),
                 Divider(height: 1),
                 SettingItemCell(
                   title: "appBarStyle".tr,
@@ -188,55 +188,55 @@ class SettingsPageState extends State<SettingsPage> {
                       }),
                   onTap: null,
                 ),
-                Divider(height: 1),
-                NonPaddingListTile(
-                  contentPadding: EdgeInsets.only(left: 15, right: 5),
-                  title: Text(
-                    "simpleHome".tr,
-                    style: TextStyle(
-                      color: E().otherPagePrimaryTextColor,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  trailing: Switch(
-                      value: LocalStorage.getIsSimpleHomeEnabled(),
-                      onChanged: (newValue) async {
-                        await LocalStorage.setIsSimpleHomeEnabled(newValue);
-                        eventBus.emit(UPDATE_SIMPLE_HOME_SETTING);
-                        setState(() {});
-                      }),
-                  onTap: null,
-                ),
-                NonPaddingListTile(
-                  contentPadding: EdgeInsets.only(left: 15, right: 5),
-                  title: Text(
-                    "clipBoardDetection".tr,
-                    style: TextStyle(
-                      color: E().otherPagePrimaryTextColor,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  trailing: Switch(
-                      value: LocalStorage.getIsClipBoardDetectionEnabled(),
-                      onChanged: (newValue) async {
-                        await LocalStorage.setIsClipBoardDetectionEnabled(newValue);
-                        setState(() {});
-                      }),
-                  onTap: null,
-                ),
+                // Divider(height: 1),
+                // NonPaddingListTile(
+                //   contentPadding: EdgeInsets.only(left: 15, right: 5),
+                //   title: Text(
+                //     "simpleHome".tr,
+                //     style: TextStyle(
+                //       color: E().otherPagePrimaryTextColor,
+                //       fontWeight: FontWeight.normal,
+                //     ),
+                //   ),
+                //   trailing: Switch(
+                //       value: LocalStorage.getIsSimpleHomeEnabled(),
+                //       onChanged: (newValue) async {
+                //         await LocalStorage.setIsSimpleHomeEnabled(newValue);
+                //         eventBus.emit(UPDATE_SIMPLE_HOME_SETTING);
+                //         setState(() {});
+                //       }),
+                //   onTap: null,
+                // ),
+                // NonPaddingListTile(
+                //   contentPadding: EdgeInsets.only(left: 15, right: 5),
+                //   title: Text(
+                //     "clipBoardDetection".tr,
+                //     style: TextStyle(
+                //       color: E().otherPagePrimaryTextColor,
+                //       fontWeight: FontWeight.normal,
+                //     ),
+                //   ),
+                //   trailing: Switch(
+                //       value: LocalStorage.getIsClipBoardDetectionEnabled(),
+                //       onChanged: (newValue) async {
+                //         await LocalStorage.setIsClipBoardDetectionEnabled(newValue);
+                //         setState(() {});
+                //       }),
+                //   onTap: null,
+                // ),
                 if (UniversalPlatform.isAndroid) Divider(height: 1),
-                if (UniversalPlatform.isAndroid)
-                  SettingItemCell(
-                    title: "downgradeTrans".tr,
-                    onTap: () {
-                      Navigator.of(context).push(
-                        FullscreenBackPageRoute(
-                          builder: (_) => DowngradingPage(),
-                        ),
-                      );
-                    },
-                  ),
-                Divider(height: 1),
+                // if (UniversalPlatform.isAndroid)
+                //   SettingItemCell(
+                //     title: "downgradeTrans".tr,
+                //     onTap: () {
+                //       Navigator.of(context).push(
+                //         FullscreenBackPageRoute(
+                //           builder: (_) => DowngradingPage(),
+                //         ),
+                //       );
+                //     },
+                //   ),
+                // Divider(height: 1),
                 SettingItemCell(
                   // height: 50,
                   // leading: Icon(Icons.local_post_office, color: E().settingItemCellMainColor),

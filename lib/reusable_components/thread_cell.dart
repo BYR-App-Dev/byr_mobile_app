@@ -217,7 +217,7 @@ class ThreadPageListCellLikeArticleLayouter extends ThreadPageListCellDataLayout
 
   @override
   String getTimeText(LikeArticleModel d) {
-    if (d.boardName == 'Constellations' && d.groupId == 326533) {
+    if (d.boardName == 'Constellations' && (d.groupId == 326533 || d.groupId == 408580)) {
       return Helper.convTimestampToRelativeIncludingSeconds(d.postTime);
     } else {
       return Helper.convTimestampToRelative(d.postTime);
@@ -637,6 +637,7 @@ class ThreadPageListCellState<T extends ThreadPageListCell> extends State<T> {
                     padding: EdgeInsets.symmetric(horizontal: 2),
                   ),
                   if (widget.dataLayouter.getPositionName(widget.data) != "positionTransAuthor".tr &&
+                      widget.dataLayouter.getBoardName(widget.data) != "IWhisper" &&
                       widget.threadAuthor == widget.dataLayouter.getUsername(widget.data))
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 2),

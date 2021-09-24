@@ -283,13 +283,13 @@ class BottomToolBar extends StatelessWidget {
                 provider.toggleEmoticonPanel();
               },
             ),
-            _buildFuncButton(
-              Icons.text_format,
-              'BIU~',
-              onTap: () {
-                provider.toggleBiuPanel();
-              },
-            ),
+            // _buildFuncButton(
+            //   Icons.text_format,
+            //   'BIU~',
+            //   onTap: () {
+            //     provider.toggleBiuPanel();
+            //   },
+            // ),
             _buildFuncButton(
               FontAwesomeIcons.fileImage,
               "gallery".tr,
@@ -322,70 +322,70 @@ class BottomToolBar extends StatelessWidget {
                 );
               },
             ),
-            _buildFuncButton(
-              FontAwesomeIcons.fileAudio,
-              "audioFileTrans".tr,
-              enable: allowAttach && provider.attachList.length < 10,
-              onTap: () async {
-                provider.hideKeyBoard();
-                AdaptiveComponents.showBottomSheet(
-                  context,
-                  ["audioRecordTrans".tr, "audioFileTrans".tr, "外部音频"],
-                  textStyle: TextStyle(fontSize: 17, color: E().dialogButtonTextColor),
-                  onItemTap: (int index) async {
-                    provider.hideKeyBoard();
-                    if (index == 0) {
-                      var path = await showDialog(
-                          barrierDismissible: false, context: context, builder: (context) => RecorderDialog());
-                      if (path == null) {
-                        return;
-                      }
-                      File audioFile = File(path);
-                      if (audioFile == null) {
-                        return;
-                      }
-                      var size = await audioFile.length();
-                      AdaptiveComponents.showAlertDialog(
-                        context,
-                        content: "audioPostWarning".tr,
-                        onDismiss: (value) {
-                          if (value == AlertResult.confirm) {
-                            provider.addAttach(audioFile.uri.toString(), 2, size);
-                          }
-                        },
-                      );
-                    }
-                    if (index == 1) {
-                      File audioFile = await FilePicker.getFile(
-                        type: FileType.custom,
-                        allowedExtensions: ['mp3', 'm4a'],
-                      );
-                      if (audioFile == null) {
-                        return;
-                      }
-                      var size = await audioFile.length();
-                      AdaptiveComponents.showAlertDialog(
-                        context,
-                        content: "audioPostWarning".tr,
-                        onDismiss: (value) {
-                          if (value == AlertResult.confirm) {
-                            provider.addAttach(audioFile.uri.toString(), 2, size);
-                          }
-                        },
-                      );
-                    }
-                    if (index == 2) {
-                      String qqkgUrl =
-                          await showDialog(context: context, builder: (context) => QQKGURLRetrieveDialog());
-                      if (qqkgUrl == null) {
-                        return;
-                      }
-                      provider.insertQQKGURL(qqkgUrl);
-                    }
-                  },
-                );
-              },
-            ),
+            // _buildFuncButton(
+            //   FontAwesomeIcons.fileAudio,
+            //   "audioFileTrans".tr,
+            //   enable: allowAttach && provider.attachList.length < 10,
+            //   onTap: () async {
+            //     provider.hideKeyBoard();
+            //     AdaptiveComponents.showBottomSheet(
+            //       context,
+            //       ["audioRecordTrans".tr, "audioFileTrans".tr, "外部音频"],
+            //       textStyle: TextStyle(fontSize: 17, color: E().dialogButtonTextColor),
+            //       onItemTap: (int index) async {
+            //         provider.hideKeyBoard();
+            //         if (index == 0) {
+            //           var path = await showDialog(
+            //               barrierDismissible: false, context: context, builder: (context) => RecorderDialog());
+            //           if (path == null) {
+            //             return;
+            //           }
+            //           File audioFile = File(path);
+            //           if (audioFile == null) {
+            //             return;
+            //           }
+            //           var size = await audioFile.length();
+            //           AdaptiveComponents.showAlertDialog(
+            //             context,
+            //             content: "audioPostWarning".tr,
+            //             onDismiss: (value) {
+            //               if (value == AlertResult.confirm) {
+            //                 provider.addAttach(audioFile.uri.toString(), 2, size);
+            //               }
+            //             },
+            //           );
+            //         }
+            //         if (index == 1) {
+            //           File audioFile = await FilePicker.getFile(
+            //             type: FileType.custom,
+            //             allowedExtensions: ['mp3', 'm4a'],
+            //           );
+            //           if (audioFile == null) {
+            //             return;
+            //           }
+            //           var size = await audioFile.length();
+            //           AdaptiveComponents.showAlertDialog(
+            //             context,
+            //             content: "audioPostWarning".tr,
+            //             onDismiss: (value) {
+            //               if (value == AlertResult.confirm) {
+            //                 provider.addAttach(audioFile.uri.toString(), 2, size);
+            //               }
+            //             },
+            //           );
+            //         }
+            //         if (index == 2) {
+            //           String qqkgUrl =
+            //               await showDialog(context: context, builder: (context) => QQKGURLRetrieveDialog());
+            //           if (qqkgUrl == null) {
+            //             return;
+            //           }
+            //           provider.insertQQKGURL(qqkgUrl);
+            //         }
+            //       },
+            //     );
+            //   },
+            // ),
             _buildFuncButton(
               FontAwesomeIcons.keyboard,
               "close".tr,

@@ -51,6 +51,7 @@ dependencies:
   toast: ^0.1.5	
   webview_flutter: ^0.3.22+1
   video_player: ^2.1.6
+  flutter_windowmanager: ^0.2.0
   ai_barcode: ^1.1.4
   encrypt:
     git:

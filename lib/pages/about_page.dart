@@ -1,6 +1,5 @@
 import 'package:byr_mobile_app/configurations/configurations.dart';
 import 'package:byr_mobile_app/customizations/theme_controller.dart';
-import 'package:byr_mobile_app/pages/board_page.dart';
 import 'package:byr_mobile_app/pages/web_page.dart';
 import 'package:byr_mobile_app/reusable_components/about_page_user_widget.dart';
 import 'package:byr_mobile_app/reusable_components/byr_app_bar.dart';
@@ -124,7 +123,7 @@ class _AboutPageState extends State<AboutPage> {
                   children: <Widget>[
                     GestureDetector(
                       onDoubleTap: () {
-                        navigator.push(CupertinoPageRoute(builder: (_) => BoardPage(BoardPageRouteArg("IWhisper"))));
+                        // navigator.push(CupertinoPageRoute(builder: (_) => BoardPage(BoardPageRouteArg("IWhisper"))));
                       },
                       child: Container(
                         width: double.infinity,
@@ -160,7 +159,7 @@ class _AboutPageState extends State<AboutPage> {
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 15),
                       child: Text(
-                        '    此应用为北京邮电大学北邮人论坛的官方客户端，于2019~2021年使用Flutter重新开发。',
+                        '    此应用为北京邮电大学北邮人论坛的官方客户端，于2019~${DateTime.now().year}年使用Flutter重新开发。',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -176,6 +175,7 @@ class _AboutPageState extends State<AboutPage> {
                           _buildCell(
                             '开发人员',
                             [
+                              _Contributor('darkfrost', ''),
                               _Contributor('wdjwxh', ''),
                               _Contributor('nmslwsnd', ''),
                             ],
@@ -186,7 +186,7 @@ class _AboutPageState extends State<AboutPage> {
                               _Contributor('paper777', '后台'),
                               _Contributor('dss886', 'Android'),
                               _Contributor('icyfox', 'Android'),
-                              _Contributor('friparia', 'IOS'),
+                              _Contributor('frip', 'iOS'),
                               _Contributor('huanwoyeye', '设计'),
                               _Contributor('Moby22', '设计'),
                             ],
@@ -211,7 +211,7 @@ class _AboutPageState extends State<AboutPage> {
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        'Powered by BYR-Team © 2009-2020. All Rights Reserved.',
+                        'Powered by BYR-Team © 2009-${DateTime.now().year}. All Rights Reserved.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,

@@ -1178,16 +1178,16 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
-                              _itemWidget(
-                                FontAwesomeIcons.thList,
-                                isBlocklistBlocked ? "关闭黑名单" : "打开黑名单",
-                                onTap: () {
-                                  isBlocklistBlocked = !isBlocklistBlocked;
-                                  if (mounted) {
-                                    setState(() {});
-                                  }
-                                },
-                              ),
+                              // _itemWidget(
+                              //   FontAwesomeIcons.thList,
+                              //   isBlocklistBlocked ? "关闭黑名单" : "打开黑名单",
+                              //   onTap: () {
+                              //     isBlocklistBlocked = !isBlocklistBlocked;
+                              //     if (mounted) {
+                              //       setState(() {});
+                              //     }
+                              //   },
+                              // ),
                               _itemWidget(
                                 FontAwesomeIcons.thList,
                                 "backToBoardTrans".tr,
@@ -1207,12 +1207,12 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                                     }
                                   },
                                 ),
-                              if (screenshotStatus == ScreenshotStatus.Dismissed)
-                                _itemWidget(
-                                  FontAwesomeIcons.camera,
-                                  "screenshotPage".tr,
-                                  onTap: captureScreenshot,
-                                ),
+                              // if (screenshotStatus == ScreenshotStatus.Dismissed)
+                              //   _itemWidget(
+                              //     FontAwesomeIcons.camera,
+                              //     "screenshotPage".tr,
+                              //     onTap: captureScreenshot,
+                              //   ),
                               _itemWidget(
                                 FontAwesomeIcons.shareAlt,
                                 "share".tr,
