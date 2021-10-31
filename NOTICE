@@ -1,0 +1,43 @@
+Copyright 2021 BYR Team
+
+The distribution of this software may include the attribution of work within the source code and binary.
+
+This software bundles the following open-source projects:
+flutter
+hive
+get
+flutter_cache_manager
+universal_platform
+transparent_image
+cached_network_image
+font_awesome_flutter
+pull_to_refresh
+flutter_gifimage
+shimmer
+qr_flutter
+fast_gbk
+image_picker
+extended_text_field
+extended_image
+extended_text
+audioplayers
+file_picker
+permission_handler
+flutter_audio_recorder
+flutter_icons
+ota_update
+uni_links
+modal_bottom_sheet
+toast
+webview_flutter
+video_player
+flutter_windowmanager
+ai_barcode
+encrypt
+flutter_device_information
+pull_to_refresh_notification
+speech_recognition
+like_button
+gallery_saver
+scroll_to_index
+tinycolor
