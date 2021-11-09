@@ -11,6 +11,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tuple/tuple.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ParsedText extends StatelessWidget {
   final String text;
@@ -119,7 +120,62 @@ class ParsedText extends StatelessWidget {
   WidgetSpanChildHandler audioAttachmentHandlerGenerator(BuildContext context) {
     WidgetSpanChildHandler ret = (int upId) {
       return Container(
-        child: Text("音频文件请使用网页版打开"),
+        child: Row(
+          children: <Widget>[
+            FlatButton(
+              child: Icon(
+                Icons.music_note,
+                color: E().threadPageContentColor,
+              ),
+              onPressed: () {
+                if (uploadedExtractor.getIsPreview(uploads[upId])) {
+                  return;
+                }
+                AudioPlayerView.show(
+                  context,
+                );
+              },
+            ),
+            FlatButton(
+              child: Icon(
+                Icons.play_circle_filled,
+                color: E().threadPageContentColor,
+              ),
+              onPressed: () {
+                if (uploadedExtractor.getIsPreview(uploads[upId])) {
+                  return;
+                }
+                AudioPlayerView.setCurrentPlaying(
+                  Tuple3(
+                    title ?? "...",
+                    uploadedExtractor.getAudioLoc(uploads[upId]),
+                    uploadedExtractor.getIsAudioLocal(uploads[upId]),
+                  ),
+                  context,
+                );
+              },
+            ),
+            FlatButton(
+              child: Icon(
+                Icons.playlist_add,
+                color: E().threadPageContentColor,
+              ),
+              onPressed: () {
+                if (uploadedExtractor.getIsPreview(uploads[upId])) {
+                  return;
+                }
+                AudioPlayerView.addMusic(
+                  Tuple3(
+                    title ?? "...",
+                    uploadedExtractor.getAudioLoc(uploads[upId]),
+                    uploadedExtractor.getIsAudioLocal(uploads[upId]),
+                  ),
+                  context,
+                );
+              },
+            ),
+          ],
+        ),
       );
     };
     return ret;
@@ -211,7 +267,14 @@ class ParsedText extends StatelessWidget {
 
   WidgetSpanChildHandler otherAttachmentHandlerGenerator(BuildContext context) {
     WidgetSpanChildHandler ret = (int upId) {
-      return Text("Please download on web");
+      return GestureDetector(
+        onTap: () {
+          canLaunch(uploadedExtractor.getOriginalUrl(uploads[upId])).then((r) {
+            launch(uploadedExtractor.getOriginalUrl(uploads[upId]));
+          });
+        },
+        child: Text(uploadedExtractor.getFileName(uploads[upId])),
+      );
     };
     return ret;
   }
@@ -247,7 +310,53 @@ class ParsedText extends StatelessWidget {
   WidgetSpanExternalAudioChildHandler externalAudioHandlerGenerator(BuildContext context) {
     WidgetSpanExternalAudioChildHandler ret = (String url) {
       return Container(
-        child: Text("音频文件请使用网页版打开"),
+        child: Row(
+          children: <Widget>[
+            FlatButton(
+              child: Icon(
+                Icons.music_note,
+                color: E().threadPageContentColor,
+              ),
+              onPressed: () {
+                AudioPlayerView.show(
+                  context,
+                );
+              },
+            ),
+            FlatButton(
+              child: Icon(
+                Icons.play_circle_filled,
+                color: E().threadPageContentColor,
+              ),
+              onPressed: () {
+                AudioPlayerView.setCurrentPlaying(
+                  Tuple3(
+                    title ?? "...",
+                    url,
+                    false,
+                  ),
+                  context,
+                );
+              },
+            ),
+            FlatButton(
+              child: Icon(
+                Icons.playlist_add,
+                color: E().threadPageContentColor,
+              ),
+              onPressed: () {
+                AudioPlayerView.addMusic(
+                  Tuple3(
+                    title ?? "...",
+                    url,
+                    false,
+                  ),
+                  context,
+                );
+              },
+            ),
+          ],
+        ),
       );
     };
     return ret;
@@ -256,7 +365,19 @@ class ParsedText extends StatelessWidget {
   WidgetSpanExternalAudioChildHandler externalVideoHandlerGenerator(BuildContext context) {
     WidgetSpanExternalAudioChildHandler ret = (String url) {
       return Container(
-        child: Text("视频文件请使用网页版打开"),
+        child: Row(
+          children: <Widget>[
+            FlatButton(
+              child: Icon(
+                Icons.video_library,
+                color: E().threadPageContentColor,
+              ),
+              onPressed: () {
+                navigator.pushNamed("video_page", arguments: url);
+              },
+            ),
+          ],
+        ),
       );
     };
     return ret;

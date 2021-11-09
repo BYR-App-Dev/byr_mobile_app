@@ -1211,12 +1211,12 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                                     }
                                   },
                                 ),
-                              // if (screenshotStatus == ScreenshotStatus.Dismissed)
-                              //   _itemWidget(
-                              //     FontAwesomeIcons.camera,
-                              //     "screenshotPage".tr,
-                              //     onTap: captureScreenshot,
-                              //   ),
+                              if (screenshotStatus == ScreenshotStatus.Dismissed)
+                                _itemWidget(
+                                  FontAwesomeIcons.camera,
+                                  "screenshotPage".tr,
+                                  onTap: captureScreenshot,
+                                ),
                               _itemWidget(
                                 FontAwesomeIcons.shareAlt,
                                 "share".tr,
@@ -1305,7 +1305,31 @@ class ThreadPageBaseState<BaseThreadPage extends ThreadBasePage, BaseThreadData 
                               ],
                             ),
                           ),
-                        ),
+                        )
+                      else if (screenshotStatus == ScreenshotStatus.Previewing)
+                        Positioned(
+                          right: 15,
+                          bottom: 50,
+                          child: Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: E().threadPageButtonUnselectedColor.lighten(30),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(40.0),
+                              ),
+                            ),
+                            child: Text(
+                              (lengthPercentage * 100).ceil().toString() +
+                                  "%" +
+                                  ((lengthPercentage * 100).ceil() > 100 ? ("\n" + "screenshotOverLength".tr) : ""),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: (lengthPercentage * 100).ceil() > 100
+                                      ? E().threadPageTextSelectedColor
+                                      : E().threadPageTextUnselectedColor),
+                            ),
+                          ),
+                        )
                     ],
                   ),
                 ),

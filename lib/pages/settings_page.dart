@@ -114,26 +114,6 @@ class SettingsPageState extends State<SettingsPage> {
                   },
                 ),
                 Divider(height: 1),
-                SettingItemCell(
-                  title: "clearCache".tr,
-                  showArrow: false,
-                  onTap: () {
-                    AdaptiveComponents.showAlertDialog(
-                      context,
-                      title: "clearCache".tr,
-                      onDismiss: (value) async {
-                        if (value == AlertResult.confirm) {
-                          await Helper.deleteAppDir();
-                          await Helper.deleteCacheDir();
-                          if (mounted) {
-                            setState(() {});
-                          }
-                        }
-                      },
-                    );
-                  },
-                ),
-                Divider(height: 1),
                 NonPaddingListTile(
                   contentPadding: EdgeInsets.only(left: 15, right: 5),
                   title: Text(
@@ -188,42 +168,42 @@ class SettingsPageState extends State<SettingsPage> {
                       }),
                   onTap: null,
                 ),
-                // Divider(height: 1),
-                // NonPaddingListTile(
-                //   contentPadding: EdgeInsets.only(left: 15, right: 5),
-                //   title: Text(
-                //     "simpleHome".tr,
-                //     style: TextStyle(
-                //       color: E().otherPagePrimaryTextColor,
-                //       fontWeight: FontWeight.normal,
-                //     ),
-                //   ),
-                //   trailing: Switch(
-                //       value: LocalStorage.getIsSimpleHomeEnabled(),
-                //       onChanged: (newValue) async {
-                //         await LocalStorage.setIsSimpleHomeEnabled(newValue);
-                //         eventBus.emit(UPDATE_SIMPLE_HOME_SETTING);
-                //         setState(() {});
-                //       }),
-                //   onTap: null,
-                // ),
-                // NonPaddingListTile(
-                //   contentPadding: EdgeInsets.only(left: 15, right: 5),
-                //   title: Text(
-                //     "clipBoardDetection".tr,
-                //     style: TextStyle(
-                //       color: E().otherPagePrimaryTextColor,
-                //       fontWeight: FontWeight.normal,
-                //     ),
-                //   ),
-                //   trailing: Switch(
-                //       value: LocalStorage.getIsClipBoardDetectionEnabled(),
-                //       onChanged: (newValue) async {
-                //         await LocalStorage.setIsClipBoardDetectionEnabled(newValue);
-                //         setState(() {});
-                //       }),
-                //   onTap: null,
-                // ),
+                Divider(height: 1),
+                NonPaddingListTile(
+                  contentPadding: EdgeInsets.only(left: 15, right: 5),
+                  title: Text(
+                    "simpleHome".tr,
+                    style: TextStyle(
+                      color: E().otherPagePrimaryTextColor,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  trailing: Switch(
+                      value: LocalStorage.getIsSimpleHomeEnabled(),
+                      onChanged: (newValue) async {
+                        await LocalStorage.setIsSimpleHomeEnabled(newValue);
+                        eventBus.emit(UPDATE_SIMPLE_HOME_SETTING);
+                        setState(() {});
+                      }),
+                  onTap: null,
+                ),
+                NonPaddingListTile(
+                  contentPadding: EdgeInsets.only(left: 15, right: 5),
+                  title: Text(
+                    "clipBoardDetection".tr,
+                    style: TextStyle(
+                      color: E().otherPagePrimaryTextColor,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  trailing: Switch(
+                      value: LocalStorage.getIsClipBoardDetectionEnabled(),
+                      onChanged: (newValue) async {
+                        await LocalStorage.setIsClipBoardDetectionEnabled(newValue);
+                        setState(() {});
+                      }),
+                  onTap: null,
+                ),
                 if (UniversalPlatform.isAndroid) Divider(height: 1),
                 // if (UniversalPlatform.isAndroid)
                 //   SettingItemCell(
@@ -276,6 +256,26 @@ class SettingsPageState extends State<SettingsPage> {
                     await LocalStorage.setCurrentToken('');
                     Navigator.of(context).pushNamedAndRemoveUntil('login_page', (Route<dynamic> route) => false,
                         arguments: LoginPageRouteArg());
+                  },
+                ),
+                Divider(height: 1),
+                SettingItemCell(
+                  title: "clearCache".tr,
+                  showArrow: false,
+                  onTap: () {
+                    AdaptiveComponents.showAlertDialog(
+                      context,
+                      title: "clearCache".tr,
+                      onDismiss: (value) async {
+                        if (value == AlertResult.confirm) {
+                          await Helper.deleteAppDir();
+                          await Helper.deleteCacheDir();
+                          if (mounted) {
+                            setState(() {});
+                          }
+                        }
+                      },
+                    );
                   },
                 ),
                 Divider(height: 1),

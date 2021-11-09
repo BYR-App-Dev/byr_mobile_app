@@ -186,6 +186,7 @@ abstract class UploadedExtractor<T> {
   bool getIsAudioLocal(T upload);
   String getImgThumbnail(T upload);
   String getShowUrl(T upload);
+  String getOriginalUrl(T upload);
   bool getIsPreview(T upload);
   bool getIsUsed(T upload);
   String getFileName(T upload);
@@ -285,6 +286,11 @@ class PreviewUploadedExtractor extends UploadedExtractor<PreviewUpload> {
       return false;
     }
   }
+
+  @override
+  String getOriginalUrl(PreviewUpload upload) {
+    return upload.path;
+  }
 }
 
 class UploadedModelUploadedExtractor extends UploadedExtractor<UploadedModel> {
@@ -370,5 +376,10 @@ class UploadedModelUploadedExtractor extends UploadedExtractor<UploadedModel> {
   @override
   String getFileName(UploadedModel upload) {
     return upload.name ?? " ";
+  }
+
+  @override
+  String getOriginalUrl(UploadedModel upload) {
+    return NForumService.makeBBSURL(upload.url).replaceFirst('/api/', '/open/');
   }
 }

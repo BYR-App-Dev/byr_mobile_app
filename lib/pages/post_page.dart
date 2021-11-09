@@ -784,39 +784,39 @@ class PostPageState extends State<PostPage> with AutomaticKeepAliveClientMixin {
                       : "replyTrans".tr,
             ),
             actions: <Widget>[
-              // Consumer<PostArticleProvider>(
-              //   builder: (_, provider, __) {
-              //     return FlatButton.icon(
-              //       icon: Icon(
-              //         Icons.compare,
-              //         color: E().editPageTopBarButtonColor,
-              //       ),
-              //       onPressed: () {
-              //         if (!_preview) {
-              //           FormState _form = _formKey.currentState as FormState;
-              //           if (_form != null && _form.validate()) {
-              //             _preview = !_preview;
-              //             if (mounted) {
-              //               setState(() {});
-              //             }
-              //           }
-              //         } else {
-              //           _preview = !_preview;
-              //           if (mounted) {
-              //             setState(() {});
-              //           }
-              //         }
-              //       },
-              //       label: Text(
-              //         "", // _preview ? "close".tr + "preview".tr : "preview".tr,
-              //         style: TextStyle(
-              //           fontSize: 17,
-              //           color: E().topBarTitleNormalColor,
-              //         ),
-              //       ),
-              //     );
-              //   },
-              // ),
+              Consumer<PostArticleProvider>(
+                builder: (_, provider, __) {
+                  return FlatButton.icon(
+                    icon: Icon(
+                      Icons.compare,
+                      color: E().editPageTopBarButtonColor,
+                    ),
+                    onPressed: () {
+                      if (!_preview) {
+                        FormState _form = _formKey.currentState as FormState;
+                        if (_form != null && _form.validate()) {
+                          _preview = !_preview;
+                          if (mounted) {
+                            setState(() {});
+                          }
+                        }
+                      } else {
+                        _preview = !_preview;
+                        if (mounted) {
+                          setState(() {});
+                        }
+                      }
+                    },
+                    label: Text(
+                      "", // _preview ? "close".tr + "preview".tr : "preview".tr,
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: E().topBarTitleNormalColor,
+                      ),
+                    ),
+                  );
+                },
+              ),
               Consumer<PostArticleProvider>(
                 builder: (_, provider, __) {
                   return FlatButton.icon(
