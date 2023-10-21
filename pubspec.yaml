@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 3.0.0+1
 
 environment:
-  sdk: ">=2.10.0 <3.0.0"
+  sdk: ">=2.11.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -12,51 +12,51 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   cupertino_icons: ^0.1.3
-  http: ^0.13.0
+  http: ^0.13.3
   json_annotation: ^3.0.1
-  hive: ^1.4.4
-  hive_flutter: ^0.3.1
+  hive: ^2.2.3
+  hive_flutter: ^1.0.0
   get: ^4.1.4
-  flutter_cache_manager: ^1.4.1
+  flutter_cache_manager: ^3.3.0
   provider: ^4.3.2+1
-  path_provider: ^1.6.14
+  path_provider: ^2.0.2
   universal_platform: ^0.1.3
   tuple: ^1.0.3
   transparent_image: ^1.0.0
-  cached_network_image: ^2.2.0+1
+  cached_network_image: ^3.2.0
   font_awesome_flutter: ^8.8.1
   pull_to_refresh: ^2.0.0
   flutter_gifimage: ^1.0.0
   shimmer: ^1.1.1
-  qr_flutter: ^3.2.0
+  qr_flutter: ^4.0.0
   markdown: ^2.1.8
   flutter_markdown: ^0.4.3
   fast_gbk: ^0.1.2+1
-  image_picker: ^0.6.7+6
+  image_picker: ^0.8.4+1
   url_launcher: ^6.0.4
   extended_text_field: ^8.0.0
   extended_image: ^4.0.1
   extended_text: ^7.0.0
   characters: ^1.0.0
   share: ^0.6.5
-  audioplayers: ^0.15.1
-  file_picker: ^1.13.3
-  permission_handler: ^5.0.1+1
+  audioplayers: ^0.20.1
+  file_picker: ^4.4.0
+  permission_handler: ^8.1.6
   flutter_audio_recorder: ^0.5.5
   flutter_staggered_grid_view: ^0.3.2
   flutter_icons: ^1.0.0+1
   ota_update: ^2.4.1
-  uni_links: ^0.4.0
+  uni_links: ^0.5.1
   modal_bottom_sheet: ^2.0.0
-  toast: ^0.1.5	
-  webview_flutter: ^0.3.22+1
+  toast: ^0.1.5
+  webview_flutter: ^2.0.13
   video_player: ^2.1.6
   flutter_windowmanager: ^0.2.0
-  ai_barcode: ^1.1.4
+  ai_barcode: ^3.2.0
   encrypt:
     git:
       url: https://github.com/BYR-App-Dev/encrypt.git
-      ref: 6f3c9703c8164112820b0ce10d3ffb95018b0848
+      ref: 8b5af21675b1d120361cbf1b95d0408198c27daf
   flutter_device_information: ^0.1.3
   pull_to_refresh_notification: ^1.1.2
   speech_recognition:
@@ -65,25 +65,24 @@ dependencies:
       ref: master
   like_button:
     git:
-      url: git://github.com/BYR-App-Dev/like_button
+      url: https://github.com/BYR-App-Dev/like_button
       ref: 8cb0ffb20205c0d183e379a30ef2ae261d667704
   gallery_saver:
     git:
-      url: git://github.com/BYR-App-Dev/gallery_saver
-      ref: f2216552808a7b4ea84ecdcabfb7a93591362121
-  scroll_to_index: 
+      url: https://github.com/EricMoin/gallery_saver
+  scroll_to_index:
     git:
-      url: git://github.com/wdjwxh/scroll-to-index
-  tinycolor: 
+      url: https://github.com/wdjwxh/scroll-to-index
+  tinycolor:
     git:
-      url: git://github.com/BYR-App-Dev/tinycolor
+      url: https://github.com/BYR-App-Dev/tinycolor
   loaded_list_view:
     git:
-      url: git://github.com/BYR-App-Dev/LoadedListView
+      url: https://github.com/BYR-App-Dev/LoadedListView
   secrets:
     git:
-      url: ssh://git@github.com/BYR-App-Dev/secrets.git
-      ref: ee6a32e0fd14aa2b0931a4722c1118dbba895b0f
+      url: https://github.com/EricMoin/Secrets.git
+      ref: 8043233143af3d9d37494fb10cc69110420f5404
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -91,10 +90,8 @@ dev_dependencies:
   json_serializable: ^3.4.1
 
 dependency_overrides:
-  path_provider: ^2.0.2
   file: ^6.0.0
-  crypto: ^3.0.0
-  http: ^0.13.0
+  args: ^2.0.0
 
 flutter:
   uses-material-design: true
@@ -110,6 +107,6 @@ flutter:
     - resources/login_page/
     - resources/thread/
   fonts:
-   - family:  BYRIcons
-     fonts:
-      - asset: fonts/BYRIcons.ttf
+    - family:  BYRIcons
+      fonts:
+        - asset: fonts/BYRIcons.ttf

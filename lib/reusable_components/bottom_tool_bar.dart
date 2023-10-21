@@ -303,20 +303,23 @@ class BottomToolBar extends StatelessWidget {
                   onItemTap: (int index) async {
                     provider.hideKeyBoard();
                     if (index == 0) {
-                      var image = await ImagePicker.pickImage(source: ImageSource.camera);
-                      if (image == null) {
+                      var XImage = await ImagePicker().pickImage(
+                          source: ImageSource.camera);
+                      if (XImage == null) {
                         return;
                       }
-                      var size = await image.length();
-                      provider.addAttach(image.uri.toString(), 1, size);
+                      var file = File(XImage.path);
+                      var size = await file.length();
+                      provider.addAttach(file.uri.toString(), 1, size);
                     }
                     if (index == 1) {
-                      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-                      if (image == null) {
+                      var XImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+                      if (XImage == null) {
                         return;
                       }
-                      var size = await image.length();
-                      provider.addAttach(image.uri.toString(), 1, size);
+                      var file = File(XImage.path);
+                      var size = await file.length();
+                      provider.addAttach(file.uri.toString(), 1, size);
                     }
                   },
                 );
@@ -356,20 +359,21 @@ class BottomToolBar extends StatelessWidget {
                       );
                     }
                     if (index == 1) {
-                      File audioFile = await FilePicker.getFile(
+                      var picker = await FilePicker.platform.pickFiles(
                         type: FileType.custom,
                         allowedExtensions: ['mp3', 'm4a'],
                       );
-                      if (audioFile == null) {
+                      if (picker.isBlank == null) {
                         return;
                       }
-                      var size = await audioFile.length();
+                      var file =  File(picker.files[0].path);
+                      var size = await file.length();
                       AdaptiveComponents.showAlertDialog(
                         context,
                         content: "audioPostWarning".tr,
                         onDismiss: (value) {
                           if (value == AlertResult.confirm) {
-                            provider.addAttach(audioFile.uri.toString(), 2, size);
+                            provider.addAttach(file.path, 2, size);
                           }
                         },
                       );
