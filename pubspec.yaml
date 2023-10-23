@@ -69,7 +69,7 @@ dependencies:
       ref: 8cb0ffb20205c0d183e379a30ef2ae261d667704
   gallery_saver:
     git:
-      url: https://github.com/EricMoin/gallery_saver
+      url: https://github.com/BYR-App-Dev/gallery_saver
   scroll_to_index:
     git:
       url: https://github.com/wdjwxh/scroll-to-index
@@ -80,9 +80,8 @@ dependencies:
     git:
       url: https://github.com/BYR-App-Dev/LoadedListView
   secrets:
-    git:
-      url: https://github.com/EricMoin/Secrets.git
-      ref: 8043233143af3d9d37494fb10cc69110420f5404
+  git:
+      url: ssh://git@github.com/BYR-App-Dev/secrets.git
 dev_dependencies:
   flutter_test:
     sdk: flutter
